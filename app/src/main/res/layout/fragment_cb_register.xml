@@ -1,0 +1,169 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <data class="com.coupleblog.fragment.RegisterBinding">
+        <variable
+            name="fragment"
+            type="com.coupleblog.fragment.CB_RegisterFragment" />
+    </data>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/constraintLayout"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/normal_margin"
+            app:layout_constraintEnd_toStartOf="@+id/right_margin_line"
+            app:layout_constraintStart_toStartOf="@+id/left_margin_line"
+            app:layout_constraintTop_toBottomOf="@+id/login_button">
+
+            <TextView
+                android:id="@+id/policy_text_view"
+                style="@style/normal_text_style"
+                android:onClick="@{()->fragment.personalInfoPolicyButton()}"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:background="?android:attr/selectableItemBackground"
+                android:text="@string/str_personal_information_policy"
+                android:textColor="@color/blue"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_chainStyle="packed"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintVertical_bias="0.0" />
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+        <TextView
+            android:id="@+id/title_text_view"
+            style="@style/title_text_style"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/margin_64dp"
+            android:text="@string/str_register"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/email_text_input_layout"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/margin_24dp"
+            app:endIconMode="clear_text"
+            app:errorEnabled="true"
+            app:hintEnabled="true"
+            app:layout_constraintEnd_toStartOf="@+id/right_margin_line"
+            app:layout_constraintStart_toStartOf="@+id/left_margin_line"
+            app:layout_constraintTop_toBottomOf="@+id/user_name_text_input_layout"
+            app:layout_constraintWidth_max="@dimen/button_max_length">
+
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/email_edit_text"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="@string/str_email" />
+
+        </com.google.android.material.textfield.TextInputLayout>
+
+        <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/password_text_input_layout"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/margin_24dp"
+            app:endIconMode="password_toggle"
+            app:errorEnabled="true"
+            app:hintEnabled="true"
+            app:layout_constraintEnd_toStartOf="@+id/right_margin_line"
+            app:layout_constraintStart_toStartOf="@+id/left_margin_line"
+            app:layout_constraintTop_toBottomOf="@+id/email_text_input_layout"
+            app:layout_constraintWidth_max="@dimen/button_max_length">
+
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/password_edit_text"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="@string/str_password" />
+
+        </com.google.android.material.textfield.TextInputLayout>
+
+        <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/password_again_text_input_layout"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/margin_24dp"
+            app:endIconMode="password_toggle"
+            app:errorEnabled="true"
+            app:hintEnabled="true"
+            app:layout_constraintEnd_toStartOf="@+id/right_margin_line"
+            app:layout_constraintStart_toStartOf="@+id/left_margin_line"
+            app:layout_constraintTop_toBottomOf="@+id/password_text_input_layout"
+            app:layout_constraintWidth_max="@dimen/button_max_length">
+
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/password_again_edit_text"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="@string/str_password_again" />
+
+        </com.google.android.material.textfield.TextInputLayout>
+
+        <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/user_name_text_input_layout"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/margin_64dp"
+            app:endIconMode="clear_text"
+            app:errorEnabled="true"
+            app:hintEnabled="true"
+            app:layout_constraintEnd_toStartOf="@+id/right_margin_line"
+            app:layout_constraintStart_toStartOf="@+id/left_margin_line"
+            app:layout_constraintTop_toBottomOf="@+id/title_text_view"
+            app:layout_constraintWidth_max="@dimen/button_max_length">
+
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/user_name_edit_text"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="@string/str_user_name" />
+
+        </com.google.android.material.textfield.TextInputLayout>
+
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/login_button"
+            style="@style/mtrl_button_style"
+            android:onClick="@{()->fragment.signUpButton()}"
+            android:layout_width="0dp"
+            android:layout_height="@dimen/button_height"
+            android:layout_marginTop="@dimen/margin_24dp"
+            android:backgroundTint="@color/purple"
+            android:text="@string/str_sign_up"
+            app:layout_constraintEnd_toStartOf="@+id/right_margin_line"
+            app:layout_constraintStart_toStartOf="@+id/left_margin_line"
+            app:layout_constraintTop_toBottomOf="@+id/password_again_text_input_layout"
+            app:layout_constraintWidth_max="@dimen/button_max_length"
+            app:rippleColor="@color/ripple_purple" />
+
+        <androidx.constraintlayout.widget.Guideline
+            android:id="@+id/left_margin_line"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            app:layout_constraintGuide_begin="@dimen/margin_16dp" />
+
+        <androidx.constraintlayout.widget.Guideline
+            android:id="@+id/right_margin_line"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            app:layout_constraintGuide_end="@dimen/margin_16dp" />
+
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</layout>

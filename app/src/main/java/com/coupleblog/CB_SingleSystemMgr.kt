@@ -2,6 +2,7 @@ package com.coupleblog
 
 import android.annotation.SuppressLint
 import android.app.Activity
+import android.content.Context
 import android.widget.Toast
 
 class CB_SingleSystemMgr
@@ -10,6 +11,7 @@ class CB_SingleSystemMgr
     enum class ACTIVITY_TYPE
     {
         MAIN,
+        REGISTER,
         ACTIVITY_TYPE_END
     }
 
@@ -36,22 +38,22 @@ class CB_SingleSystemMgr
         fun isDialog(type : DIALOG_TYPE) = isDialog[type.ordinal]
 
         @SuppressLint("ShowToast")
-        fun showToast(activity: Activity, text : CharSequence)
+        fun showToast(context: Context, text : CharSequence)
         {
             if (isToastMessage())
                 toast?.cancel()
 
-            toast = Toast.makeText(activity.applicationContext, text, Toast.LENGTH_SHORT)
+            toast = Toast.makeText(context, text, Toast.LENGTH_SHORT)
             toast!!.show()
         }
 
         @SuppressLint("ShowToast")
-        fun showToast(activity : Activity, resId : Int)
+        fun showToast(context: Context, resId : Int)
         {
             if (isToastMessage())
                 toast?.cancel()
 
-            toast = Toast.makeText(activity.applicationContext, resId, Toast.LENGTH_SHORT)
+            toast = Toast.makeText(context, resId, Toast.LENGTH_SHORT)
             toast!!.show()
         }
 

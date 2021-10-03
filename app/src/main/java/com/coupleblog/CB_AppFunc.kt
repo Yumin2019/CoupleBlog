@@ -30,6 +30,10 @@ import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
 import com.coupleblog.parent.CB_BaseActivity
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
+import com.google.firebase.auth.FirebaseAuth
+import com.google.firebase.auth.ktx.auth
+import com.google.firebase.database.ktx.database
+import com.google.firebase.ktx.Firebase
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.delay
@@ -70,6 +74,10 @@ class CB_AppFunc
         val mainScope                        = CoroutineScope(Dispatchers.Main)
         val defaultScope                     = CoroutineScope(Dispatchers.Default)
         val PERMISSION_REQUEST               = 100
+
+        fun getUid() = FirebaseAuth.getInstance().currentUser!!.uid
+        fun getAuth() = Firebase.auth
+        fun getDataBase() = Firebase.database.reference
 
         // Shared Preferences: Config
         fun getSharedPref(activity: CB_BaseActivity): SharedPreferences

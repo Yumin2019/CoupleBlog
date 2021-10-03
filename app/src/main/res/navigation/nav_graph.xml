@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/nav_graph"
+    app:startDestination="@id/CB_LoginFragment">
+
+    <fragment
+        android:id="@+id/CB_LoginFragment"
+        android:name="com.coupleblog.fragment.CB_LoginFragment"
+        android:label="fragment_cb_login"
+        tools:layout="@layout/fragment_cb_login" >
+        <action
+            android:id="@+id/action_CB_LoginFragment_to_CB_MainFragment"
+            app:destination="@id/CB_MainFragment" />
+        <action
+            android:id="@+id/action_CB_LoginFragment_to_CB_RegisterFragment"
+            app:destination="@id/CB_RegisterFragment" />
+    </fragment>
+
+    <fragment
+        android:id="@+id/CB_MainFragment"
+        android:name="com.coupleblog.fragment.CB_MainFragment"
+        android:label="fragment_cb_login"
+        tools:layout="@layout/fragment_cb_main" >
+        <action
+            android:id="@+id/action_CB_MainFragment_to_CB_LoginFragment"
+            app:destination="@id/CB_LoginFragment" />
+    </fragment>
+
+    <fragment
+        android:id="@+id/CB_RegisterFragment"
+        android:name="com.coupleblog.fragment.CB_RegisterFragment"
+        android:label="fragment_cb_register"
+        tools:layout="@layout/fragment_cb_register" >
+        <action
+            android:id="@+id/action_CB_RegisterFragment_to_CB_LoginFragment"
+            app:destination="@id/CB_LoginFragment" />
+        <action
+            android:id="@+id/action_CB_RegisterFragment_to_CB_InfoFragment"
+            app:destination="@id/CB_InfoFragment" />
+    </fragment>
+
+    <fragment
+        android:id="@+id/CB_InfoFragment"
+        android:name="com.coupleblog.fragment.CB_InfoFragment"
+        android:label="fragment_cb_info"
+        tools:layout="@layout/fragment_cb_info" >
+        <action
+            android:id="@+id/action_CB_InfoFragment_to_CB_RegisterFragment"
+            app:destination="@id/CB_RegisterFragment" />
+    </fragment>
+</navigation>
