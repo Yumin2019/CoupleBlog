@@ -1,6 +1,5 @@
 package com.coupleblog
 
-import android.Manifest
 import android.annotation.SuppressLint
 import android.app.Activity
 import android.content.Context
@@ -8,12 +7,8 @@ import android.content.DialogInterface
 import android.content.Intent
 import android.content.SharedPreferences
 import android.content.pm.ActivityInfo
-import android.content.pm.PackageManager
-import android.database.Cursor
 import android.graphics.*
-import android.net.Uri
 import android.os.Build
-import android.provider.MediaStore
 import android.text.Editable
 import android.text.Editable.Factory.getInstance
 import android.text.format.DateFormat
@@ -24,22 +19,23 @@ import android.view.Window
 import android.view.WindowManager
 import android.view.inputmethod.InputMethodManager
 import android.widget.EditText
-import android.widget.ImageView
 import androidx.annotation.RequiresApi
 import androidx.core.app.ActivityCompat
-import androidx.core.content.ContextCompat
+import com.coupleblog.model.CB_User
 import com.coupleblog.parent.CB_BaseActivity
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.ktx.auth
+import com.google.firebase.database.DataSnapshot
+import com.google.firebase.database.DatabaseError
+import com.google.firebase.database.ValueEventListener
 import com.google.firebase.database.ktx.database
+import com.google.firebase.database.ktx.getValue
 import com.google.firebase.ktx.Firebase
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
-import java.io.File
-import java.io.FileOutputStream
 import java.text.SimpleDateFormat
 import java.util.*
 
@@ -75,9 +71,28 @@ class CB_AppFunc
         val defaultScope                     = CoroutineScope(Dispatchers.Default)
         val PERMISSION_REQUEST               = 100
 
+        var _curUser: CB_User? = null
+        val curUser get() = _curUser!!
+
         fun getUid() = FirebaseAuth.getInstance().currentUser!!.uid
         fun getAuth() = Firebase.auth
         fun getDataBase() = Firebase.database.reference
+        fun getUsersRoot() = getDataBase().child("users")
+        fun getUserPostsRoot() = getDataBase().child("user-posts")
+        fun getCouplesRoot() = getDataBase().child("couples")
+        fun getPostCommentsRoot() = getDataBase().child("post-comments")
+
+        @SuppressLint("ConstantLocale")
+        val isKorea = Locale.getDefault().toString().startsWith("ko")
+
+        @SuppressLint("SimpleDateFormat")
+        val strSaveDateFormat = SimpleDateFormat("yyyyMMddHHmm") // 202109102201
+
+        @SuppressLint("SimpleDateFormat")
+        val strOutputDateFormatKor = SimpleDateFormat("yyyy.mm.dd. HH:mm") // 2021. 9. 6. 23:43
+
+        @SuppressLint("SimpleDateFormat")
+        val strOutputDateFormat = SimpleDateFormat("dd MMM yyyy, HH:mm") // 17 Oct 2020, 23:43
 
         // Shared Preferences: Config
         fun getSharedPref(activity: CB_BaseActivity): SharedPreferences
@@ -99,28 +114,36 @@ class CB_AppFunc
              val bAutoLogin          = pref.getBoolean("bAutoLogin", false)
          */
 
-        @SuppressLint("SimpleDateFormat")
-        val hashTimeStampFormat = SimpleDateFormat("yyyyMMddHHmmssSSS")
 
-        @SuppressLint("SimpleDateFormat")
-        val dateFormat = SimpleDateFormat("yyyyMMddHHmmss")
+        fun getUserInfo(context: Activity, funcSuccess: (()->Unit?))
+        {
+            // 유저 정보를 받아오는 함수이다. (갱신)
+            // 로그인 인증 상황 및 유저 데이터 변경시 호출한다.
+            getUsersRoot().child(getUid()).addListenerForSingleValueEvent(object :
+                ValueEventListener {
+                override fun onDataChange(snapshot: DataSnapshot)
+                {
+                    _curUser = snapshot.getValue<CB_User>()
 
-        @SuppressLint("SimpleDateFormat")
-        val timeStampFormat = SimpleDateFormat("yyyyMMdd_HHmmss")
+                    if(_curUser == null)
+                    {
+                        Log.e(strTag, "User Info load failed")
+                        okDialog(context, context.getString(R.string.str_error),
+                            context.getString(R.string.str_user_info_load_failed), R.drawable.error_icon, true)
+                    }
+                    else
+                    {
+                        // 성공 시에만 처리하는 함수
+                        funcSuccess.invoke()
+                    }
+                }
 
-        @SuppressLint("SimpleDateFormat")
-        val dayFormat = SimpleDateFormat("20yy.MM.dd(E)")
-
-        @SuppressLint("SimpleDateFormat")
-        val dayFormatMonthDay = SimpleDateFormat("MM.dd(E)")
-
-        @SuppressLint("SimpleDateFormat")
-        val dayFormatDay = SimpleDateFormat("dd(E)")
-
-        @SuppressLint("SimpleDateFormat")
-        val timeFormat = SimpleDateFormat("a hh:mm")
-
-
+                override fun onCancelled(error: DatabaseError)
+                {
+                    Log.e(strTag, "User Info load cancelled", error.toException())
+                }
+            })
+        }
 
         fun checkNullObject(obj: Any?, strTag: String, strMessage: String)
         {
@@ -297,61 +320,43 @@ class CB_AppFunc
 
         fun stringToEditable(str: String): Editable = getInstance().newEditable(str)
 
-        // Date 값을 주면 format에 맞춰서 String을 반환.
-        fun getDayString(date: Date): String = dayFormat.format(date)
-        fun getTimeString(date: Date): String = timeFormat.format(date)
-        fun getDayString(strDate: String): String = dayFormat.format(stringToDate(strDate)) // ~년 ~월 ~일(월) 15:00
-        fun getTimeString(strDate: String): String = timeFormat.format(stringToDate(strDate))
-
-        fun getDateStringWithoutYear(date: Date): String
-        {
-            return dayFormatMonthDay.format(date) + " " + getTimeString(date) // ~월 ~일(월) 15:00
-        }
-
-        fun getDateStringWithoutMonth(date: Date): String
-        {
-            return dayFormatDay.format(date) + " " + getTimeString(date) // ~일(월) 15:00
-        }
-
-        fun getDateString(date: Date): String
-        {
-            return getDayString(date) + " " + getTimeString(date)
-        }
-
-        // String 값을 Date값으로 변환
-        fun stringToDate(strDate: String)
+        // 저장된 데이터를 파싱해서 calendar 반환
+        fun stringToCalendar(strDate: String): Calendar
         = let {
-                  val date = dateFormat.parse(strDate)
+                  val date = strSaveDateFormat.parse(strDate)
                   if(date == null)
                   {
                       Log.e(strTag, "strDate can't be parsed")
                       assert(false)
-                      Date()
+                      getCurCalendar()
                   }
                   else
                   {
-                      val calendar = Calendar.getInstance()
+                      val calendar = getCurCalendar()
                       calendar.time = date
-                      getDate(calendar)
+                      calendar
                   }
-            }
+        }
 
-        fun dateToString(date: Date) = DateFormat.format("yyyyMMddHHmmss", date).toString()
+        // 저장을 위한 dateString 얻기
+        fun getDateStringForSave() = calendarToSaveString(getCurCalendar())
+        fun calendarToSaveString(calendar: Calendar) = DateFormat.format("yyyyMMddHHmm", calendar).toString()
+        fun getCurCalendar(): Calendar = Calendar.getInstance()
 
-        fun getCurDate() = Date(Calendar.getInstance().timeInMillis)
-        fun getAfter30MinsDate() = Date(Calendar.getInstance().apply { add(Calendar.MINUTE, 30) }.timeInMillis)
-        fun getNextHourDate() = Date(Calendar.getInstance().apply { add(Calendar.HOUR_OF_DAY, 1) }.timeInMillis)
-        fun getCurDateString() = dateToString(getCurDate())
-        fun getAfter30MinsDateString() = dateToString(getAfter30MinsDate())
-        fun getNextHourDateString() = dateToString(getNextHourDate())
 
-        fun getDate(calendar: Calendar) = Date(calendar.timeInMillis)
-
-        fun dateToCalendar(date: Date): Calendar
+        // 로컬 지역에 따라서 출력용 dateString 얻기
+        fun getDateStringForOutput(calendar: Calendar): String
         {
-            val calendar = Calendar.getInstance()
-            calendar.time = date
-            return calendar
+            return if(isKorea)
+            {
+                // 한국식 표기
+                DateFormat.format("yyyy.mm.dd. HH:mm", calendar).toString()
+            }
+            else
+            {
+                // 영국식 표기(나머지)
+                DateFormat.format("dd MMM yyyy, HH:mm", calendar).toString()
+            }
         }
 
         @RequiresApi(Build.VERSION_CODES.M)

@@ -4,33 +4,27 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import androidx.core.app.ActivityCompat
 import androidx.core.widget.doAfterTextChanged
-import androidx.databinding.DataBindingUtil
 import androidx.navigation.fragment.findNavController
 import com.coupleblog.CB_AppFunc
 import com.coupleblog.CB_SingleSystemMgr
 import com.coupleblog.R
 import com.coupleblog.dialog.CB_LoadingDialog
+import com.coupleblog.model.CB_Couple
 import com.coupleblog.model.CB_User
 import com.coupleblog.parent.CB_BaseFragment
-import com.google.firebase.auth.FirebaseAuth
-import com.google.firebase.auth.ktx.auth
-import com.google.firebase.database.DatabaseReference
-import com.google.firebase.database.ktx.database
-import com.google.firebase.ktx.Firebase
 
-
-class CB_RegisterFragment : CB_BaseFragment("RegisterFragment") {
+class CB_RegisterFragment : CB_BaseFragment("RegisterFragment")
+{
 
     private var _binding            : RegisterBinding? = null
     private val binding get() = _binding!!
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View
     {
-        _binding = DataBindingUtil.inflate(inflater, R.layout.fragment_cb_login, container, false)
+        _binding = RegisterBinding.inflate(inflater, container, false)
         binding.apply {
-            lifecycleOwner  = this@CB_RegisterFragment
+            lifecycleOwner  = viewLifecycleOwner
             fragment        = this@CB_RegisterFragment
         }
         return binding.root
@@ -111,7 +105,17 @@ class CB_RegisterFragment : CB_BaseFragment("RegisterFragment") {
         val activity = requireActivity()
         val context = requireContext()
 
-        if(binding.userNameTextInputLayout.error != null)
+        val strUserName = binding.userNameEditText.text.toString()
+        val strEmail = binding.emailEditText.text.toString()
+        val strPassword = binding.passwordEditText.text.toString()
+        val strPasswordAgain = binding.passwordAgainEditText.text.toString()
+
+        if(strUserName.isEmpty() || strEmail.isEmpty() || strPassword.isEmpty() || strPasswordAgain.isEmpty())
+        {
+            // 초기에 빈 경우를 막는다.
+            return
+        }
+        else if(binding.userNameTextInputLayout.error != null)
         {
             CB_AppFunc.okDialog(activity, context.getString(R.string.str_error),
                 binding.userNameTextInputLayout.error.toString(), R.drawable.error_icon, true)
@@ -139,10 +143,6 @@ class CB_RegisterFragment : CB_BaseFragment("RegisterFragment") {
         // password, email are not empty
         val dialog = CB_LoadingDialog(activity).apply { show() }
 
-        val strUserName = binding.userNameEditText.text.toString()
-        val strEmail = binding.emailEditText.text.toString()
-        val strPassword = binding.passwordEditText.text.toString()
-
         CB_AppFunc.getAuth().createUserWithEmailAndPassword(strEmail, strPassword)
             .addOnCompleteListener { task ->
 
@@ -152,8 +152,13 @@ class CB_RegisterFragment : CB_BaseFragment("RegisterFragment") {
                 {
                     // 회원가입 성공시 User 정보를 users 항목에 저장한다.
                     val uid = task.result?.user!!.uid
-                    val user = CB_User(strUserName, strEmail, "")
-                    CB_AppFunc.getDataBase().child("users").child(uid).setValue(user)
+                    val user = CB_User(strUserName, strEmail, CB_AppFunc.getDateStringForSave(), "")
+
+                    CB_AppFunc._curUser = user
+                    CB_AppFunc.getUsersRoot().child(uid).setValue(user)
+
+                    // Couple 정보도 couples 항목에 저장한다. (기본값)
+                    CB_AppFunc.getCouplesRoot().child(uid).setValue(CB_Couple())
 
                     findNavController().navigate(R.id.action_CB_RegisterFragment_to_CB_LoginFragment)
                 }

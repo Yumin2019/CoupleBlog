@@ -24,9 +24,9 @@ class CB_LoginFragment : CB_BaseFragment("LoginFragment") {
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View
     {
-        _binding = DataBindingUtil.inflate(inflater, R.layout.fragment_cb_login, container, false)
+        _binding = LoginBinding.inflate(inflater, container, false)
         binding.apply {
-            lifecycleOwner  = this@CB_LoginFragment
+            lifecycleOwner  = viewLifecycleOwner
             fragment        = this@CB_LoginFragment
         }
         return binding.root
@@ -71,7 +71,14 @@ class CB_LoginFragment : CB_BaseFragment("LoginFragment") {
         val activity = requireActivity()
         val context = requireContext()
 
-        if(binding.emailTextInputLayout.error != null)
+        val strEmail = binding.emailEditText.text.toString()
+        val strPassword = binding.passwordEditText.text.toString()
+
+        if(strEmail.isEmpty() || strPassword.isEmpty())
+        {
+            return
+        }
+        else if(binding.emailTextInputLayout.error != null)
         {
             CB_AppFunc.okDialog(activity, context.getString(R.string.str_error),
                 binding.emailTextInputLayout.error.toString(), R.drawable.error_icon, true)
@@ -87,9 +94,6 @@ class CB_LoginFragment : CB_BaseFragment("LoginFragment") {
         // password, email are not empty
         val dialog = CB_LoadingDialog(activity).apply { show() }
 
-        val strEmail = binding.emailEditText.text.toString()
-        val strPassword = binding.passwordEditText.text.toString()
-
         CB_AppFunc.getAuth().signInWithEmailAndPassword(strEmail, strPassword)
             .addOnCompleteListener { task ->
 
@@ -98,7 +102,11 @@ class CB_LoginFragment : CB_BaseFragment("LoginFragment") {
                 if(task.isSuccessful)
                 {
                     // 로그인 성공
-                    findNavController().navigate(R.id.action_CB_LoginFragment_to_CB_MainFragment)
+                    CB_AppFunc.getUserInfo(activity,
+                    funcSuccess =
+                    {
+                        findNavController().navigate(R.id.action_CB_LoginFragment_to_CB_MainFragment)
+                    })
                 }
                 else
                 {
@@ -107,7 +115,6 @@ class CB_LoginFragment : CB_BaseFragment("LoginFragment") {
                         context.getString(R.string.str_sign_in_failed), R.drawable.error_icon, true)
                 }
             }
-
     }
 
     fun registerButton()
@@ -121,9 +128,13 @@ class CB_LoginFragment : CB_BaseFragment("LoginFragment") {
         super.onStart()
 
         // if it's possible to login by auto
-
         CB_AppFunc.getAuth().currentUser?.let {
-            findNavController().navigate(R.id.action_CB_LoginFragment_to_CB_MainFragment)
+            CB_AppFunc.getUserInfo(requireActivity(),
+            funcSuccess =
+            {
+                // 유저 정보를 제대로 가져온 경우에만 이동한다.
+                findNavController().navigate(R.id.action_CB_LoginFragment_to_CB_MainFragment)
+            })
         }
     }
 

@@ -10,10 +10,6 @@ open class CB_BaseActivity(val strTag : String,
                            val actFlag : CB_SingleSystemMgr.ACTIVITY_TYPE)
     : AppCompatActivity()
 {
-    var isExitByDoubleClick = false
-    var firstTime : Long = 0
-    var secondTime : Long = 0
-
     override fun onCreate(savedInstanceState: Bundle?)
     {
         super.onCreate(savedInstanceState)
@@ -41,24 +37,7 @@ open class CB_BaseActivity(val strTag : String,
         CB_SingleSystemMgr.releaseActivity(actFlag)
     }
 
-    override fun onBackPressed()
-    {
-        if(!isExitByDoubleClick)
-            super.onBackPressed()
-
-        secondTime = System.currentTimeMillis()
-        if(secondTime - firstTime < 2000)
-        {
-            super.onBackPressed()
-            finishAffinity()
-        }
-        else
-        {
-            CB_SingleSystemMgr.showToast(this, "뒤로가기를 한번 더 누르시면 종료됩니다.")
-        }
-
-        firstTime = secondTime
-    }
+    override fun onBackPressed() {}
 
     // if you want to add other processes in exitButton, override this func
     open fun exitButton()

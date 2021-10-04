@@ -22,6 +22,13 @@
         <item name="android:textAlignment">center</item>
     </style>
 
+    <style name="post_title_text_view">
+        <item name="fontFamily">@font/lora_regular</item>
+        <item name="android:textSize">@dimen/post_title_text_size</item>
+        <item name="android:textColor">@color/black</item>
+        <item name="android:textAlignment">viewStart</item>
+    </style>
+
     <style name="mtrl_button_style">
         <item name="android:text">@string/str_sign_in</item>
         <item name="android:textColor">@color/white</item>
@@ -29,6 +36,12 @@
         <item name="android:fontFamily">@font/lora_regular</item>
         <item name="android:insetTop">0dp</item>
         <item name="android:insetBottom">0dp</item>
+    </style>
+
+    <style name="divider">
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">1dp</item>
+        <item name="android:background">?android:attr/listDivider</item>
     </style>
 
     <style name="TitleStyle" parent="MaterialAlertDialog.MaterialComponents.Title.Text">

@@ -26,6 +26,12 @@
         <action
             android:id="@+id/action_CB_MainFragment_to_CB_LoginFragment"
             app:destination="@id/CB_LoginFragment" />
+        <action
+            android:id="@+id/action_CB_MainFragment_to_CB_PostDetailFragment"
+            app:destination="@id/CB_PostDetailFragment" >
+            <argument android:name="postKey" app:nullable="false"
+                app:argType="string" android:defaultValue=""/>
+        </action>
     </fragment>
 
     <fragment
@@ -49,5 +55,16 @@
         <action
             android:id="@+id/action_CB_InfoFragment_to_CB_RegisterFragment"
             app:destination="@id/CB_RegisterFragment" />
+    </fragment>
+
+    <fragment
+        android:id="@+id/CB_PostDetailFragment"
+        android:name="com.coupleblog.fragment.CB_PostDetailFragment"
+        android:label="fragment_cb_post_detail"
+        tools:layout="@layout/fragment_cb_post_detail" >
+
+        <action
+            android:id="@+id/action_CB_PostDetailFragment_to_CB_MainFragment"
+            app:destination="@id/CB_MainFragment" />
     </fragment>
 </navigation>

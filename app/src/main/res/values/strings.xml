@@ -242,6 +242,7 @@ Couple blog 은(는) 정보주체의 이용정보를 저장하고 수시로 불�
     <string name="str_loading">Loading …</string>
 
     <string name="str_register">Register</string>
+    <string name="str_post">Post</string>
     <string name="str_register_msg">if you do not have an account</string>
     <string name="str_personal_information_policy_msg">if you want to see</string>
     <string name="str_personal_information_policy">Personal information processing policy</string>
@@ -250,10 +251,12 @@ Couple blog 은(는) 정보주체의 이용정보를 저장하고 수시로 불�
     <string name="str_input_password_again">Please input your password again</string>
     <string name="str_press_back_to_exit">Press Back again to exit</string>
     <string name="str_user_name">User Name(Display Name)</string>
+    <string name="str_comment_hint">Write a comment…</string>
     <string name="str_password_again_error">Password isn\'t same</string>
     <string name="str_invalid_format_error">It\'s invalid format</string>
     <string name="str_sign_in_failed">Sign in failed</string>
     <string name="str_sign_up_failed">Sign out failed</string>
+    <string name="str_user_info_load_failed">User Info Load failed</string>
 
     <string name="str_error">Error</string>
     <string name="str_warning">Warning</string>
