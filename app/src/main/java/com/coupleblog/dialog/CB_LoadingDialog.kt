@@ -5,7 +5,7 @@ import android.content.Context
 import android.graphics.Color
 import android.graphics.drawable.ColorDrawable
 import android.view.ViewGroup
-import com.coupleblog.CB_SingleSystemMgr
+import com.coupleblog.singleton.CB_SingleSystemMgr
 import com.coupleblog.R
 
 class CB_LoadingDialog(context: Context, callbackFunc: ((dialog: Dialog) -> Unit)? = null) : Dialog(context)

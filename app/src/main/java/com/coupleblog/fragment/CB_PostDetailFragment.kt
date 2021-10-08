@@ -28,15 +28,16 @@ class CB_PostDetailFragment: CB_BaseFragment("PostDetail")
         return binding.root
     }
 
+    override fun backPressed()
+    {
+        findNavController().popBackStack()
+    }
+
     override fun onDestroy()
     {
         super.onDestroy()
         _binding = null
     }
 
-    override fun backPressButton()
-    {
-        findNavController().navigate(R.id.action_CB_InfoFragment_to_CB_RegisterFragment)
-    }
-
+    // 작업 해야 한다.
 }

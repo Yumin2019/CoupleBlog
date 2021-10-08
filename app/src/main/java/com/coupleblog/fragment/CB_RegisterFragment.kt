@@ -6,8 +6,8 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.core.widget.doAfterTextChanged
 import androidx.navigation.fragment.findNavController
-import com.coupleblog.CB_AppFunc
-import com.coupleblog.CB_SingleSystemMgr
+import com.coupleblog.singleton.CB_AppFunc
+import com.coupleblog.singleton.CB_SingleSystemMgr
 import com.coupleblog.R
 import com.coupleblog.dialog.CB_LoadingDialog
 import com.coupleblog.model.CB_Couple
@@ -34,64 +34,106 @@ class CB_RegisterFragment : CB_BaseFragment("RegisterFragment")
     {
         super.onViewCreated(view, savedInstanceState)
 
-        binding.userNameEditText.doAfterTextChanged { text ->
+        binding.userNameEditText.apply {
 
-            if(text?.isEmpty() == true)
-            {
-                binding.userNameTextInputLayout.error = requireContext().getString(R.string.str_input_email)
+            doAfterTextChanged { text ->
+
+                if(text?.isEmpty() == true)
+                {
+                    binding.userNameTextInputLayout.error = CB_AppFunc.application.getString(R.string.str_input_email)
+                }
+                else
+                {
+                    binding.userNameTextInputLayout.error = null
+                }
             }
-            else
-            {
-                binding.userNameTextInputLayout.error = null
+
+            // Next EditText
+            setOnEditorActionListener { v, actionId, event ->
+
+                CB_AppFunc.openIME(binding.emailEditText, requireActivity())
+                true
             }
         }
 
-        binding.emailEditText.doAfterTextChanged { text ->
+        binding.emailEditText.apply {
 
-            if(text?.isEmpty() == true)
-            {
-                binding.emailTextInputLayout.error = requireContext().getString(R.string.str_input_email)
+            doAfterTextChanged { text ->
+
+                if(text?.isEmpty() == true)
+                {
+                    binding.emailTextInputLayout.error = CB_AppFunc.application.getString(R.string.str_input_email)
+                }
+                else
+                {
+                    binding.emailTextInputLayout.error = null
+                }
             }
-            else
-            {
-                binding.emailTextInputLayout.error = null
+
+            // Next EditText
+            setOnEditorActionListener { v, actionId, event ->
+
+                CB_AppFunc.openIME(binding.passwordEditText, requireActivity())
+                true
+            }
+
+        }
+
+        binding.passwordEditText.apply {
+
+            doAfterTextChanged { text ->
+
+                if(text?.isEmpty() == true)
+                {
+                    binding.passwordTextInputLayout.error =
+                        CB_AppFunc.application.getString(R.string.str_input_password)
+                }
+                else
+                {
+                    binding.passwordTextInputLayout.error = null
+                }
+
+                // password again쪽을 다시 처리한다.
+                if(text.toString() != binding.passwordAgainEditText.text.toString())
+                {
+                    binding.passwordAgainTextInputLayout.error =
+                        CB_AppFunc.application.getString(R.string.str_input_password)
+                }
+                else
+                {
+                    binding.passwordAgainTextInputLayout.error = null
+                }
+            }
+
+            // Next EditText
+            setOnEditorActionListener { v, actionId, event ->
+
+                CB_AppFunc.openIME(binding.passwordAgainEditText, requireActivity())
+                true
             }
         }
 
-        binding.passwordEditText.doAfterTextChanged { text ->
+        binding.passwordAgainEditText.apply {
 
-            if(text?.isEmpty() == true)
-            {
-                binding.passwordTextInputLayout.error =
-                    requireContext().getString(R.string.str_input_password)
-            }
-            else
-            {
-                binding.passwordTextInputLayout.error = null
+            doAfterTextChanged { text ->
+
+                if(text.toString() != binding.passwordEditText.text.toString())
+                {
+                    binding.passwordAgainTextInputLayout.error =
+                        CB_AppFunc.application.getString(R.string.str_password_again_error)
+                }
+                else
+                {
+                    binding.passwordAgainTextInputLayout.error = null
+                }
             }
 
-            // password again쪽을 다시 처리한다.
-            if(text.toString() != binding.passwordAgainEditText.text.toString())
-            {
-                binding.passwordAgainTextInputLayout.error =
-                    requireContext().getString(R.string.str_input_password)
-            }
-            else
-            {
-                binding.passwordAgainTextInputLayout.error = null
-            }
-        }
+            // Done Sign Up
+            setOnEditorActionListener { v, actionId, event ->
 
-        binding.passwordAgainEditText.doAfterTextChanged { text ->
-
-            if(text.toString() != binding.passwordEditText.text.toString())
-            {
-                binding.passwordAgainTextInputLayout.error =
-                    requireContext().getString(R.string.str_password_again_error)
-            }
-            else
-            {
-                binding.passwordAgainTextInputLayout.error = null
+                CB_AppFunc.clearFocusing(requireActivity())
+                signUpButton()
+                true
             }
         }
     }
@@ -103,7 +145,7 @@ class CB_RegisterFragment : CB_BaseFragment("RegisterFragment")
 
         infoLog("signInButton")
         val activity = requireActivity()
-        val context = requireContext()
+        val context = CB_AppFunc.application
 
         val strUserName = binding.userNameEditText.text.toString()
         val strEmail = binding.emailEditText.text.toString()
@@ -160,7 +202,8 @@ class CB_RegisterFragment : CB_BaseFragment("RegisterFragment")
                     // Couple 정보도 couples 항목에 저장한다. (기본값)
                     CB_AppFunc.getCouplesRoot().child(uid).setValue(CB_Couple())
 
-                    findNavController().navigate(R.id.action_CB_RegisterFragment_to_CB_LoginFragment)
+                    // Login Fragment
+                    backPressed()
                 }
                 else
                 {
@@ -175,7 +218,30 @@ class CB_RegisterFragment : CB_BaseFragment("RegisterFragment")
     fun personalInfoPolicyButton()
     {
         infoLog("personalInfoPolicyButton")
-        findNavController().navigate(R.id.action_CB_RegisterFragment_to_CB_InfoFragment)
+        beginAction(R.id.action_CB_RegisterFragment_to_CB_InfoFragment, R.id.CB_RegisterFragment)
+    }
+
+    override fun onResume()
+    {
+        super.onResume()
+
+        with(binding)
+        {
+            userNameEditText.text?.clear()
+            emailEditText.text?.clear()
+            passwordEditText.text?.clear()
+            passwordAgainEditText.text?.clear()
+
+            userNameTextInputLayout.error = null
+            emailTextInputLayout.error = null
+            passwordTextInputLayout.error = null
+            passwordAgainTextInputLayout.error = null
+        }
+    }
+
+    override fun backPressed()
+    {
+        findNavController().popBackStack()
     }
 
     override fun onDestroy()
@@ -183,10 +249,4 @@ class CB_RegisterFragment : CB_BaseFragment("RegisterFragment")
         super.onDestroy()
         _binding = null
     }
-
-    override fun backPressButton()
-    {
-        findNavController().navigate(R.id.action_CB_RegisterFragment_to_CB_LoginFragment)
-    }
-
 }

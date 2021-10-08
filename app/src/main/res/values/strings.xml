@@ -239,6 +239,8 @@ Couple blog 은(는) 정보주체의 이용정보를 저장하고 수시로 불�
     <string name="str_email">Email</string>
     <string name="str_password">Password</string>
     <string name="str_password_again">Password again</string>
+    <string name="str_title">Title</string>
+    <string name="str_text">Text</string>
     <string name="str_loading">Loading …</string>
 
     <string name="str_register">Register</string>

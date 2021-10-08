@@ -5,6 +5,7 @@
     xmlns:android="http://schemas.android.com/apk/res/android">
 
     <data class="com.coupleblog.fragment.PostItemBinding">
+
         <variable
             name="fragment"
             type="com.coupleblog.parent.CB_PostListFragment" />

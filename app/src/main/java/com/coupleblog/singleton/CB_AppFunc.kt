@@ -1,7 +1,8 @@
-package com.coupleblog
+package com.coupleblog.singleton
 
 import android.annotation.SuppressLint
 import android.app.Activity
+import android.app.Application
 import android.content.Context
 import android.content.DialogInterface
 import android.content.Intent
@@ -21,6 +22,7 @@ import android.view.inputmethod.InputMethodManager
 import android.widget.EditText
 import androidx.annotation.RequiresApi
 import androidx.core.app.ActivityCompat
+import com.coupleblog.R
 import com.coupleblog.model.CB_User
 import com.coupleblog.parent.CB_BaseActivity
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
@@ -69,6 +71,7 @@ class CB_AppFunc
         val strTag                           = "CB_AppFunc"
         val mainScope                        = CoroutineScope(Dispatchers.Main)
         val defaultScope                     = CoroutineScope(Dispatchers.Default)
+        lateinit var application: Application
         val PERMISSION_REQUEST               = 100
 
         var _curUser: CB_User? = null
@@ -383,7 +386,10 @@ class CB_AppFunc
 
         fun rightToLeftAnimation(activity: Activity)
         {
-            activity.overridePendingTransition(R.anim.anim_slide_in_right, R.anim.anim_slide_out_left)
+            activity.overridePendingTransition(
+                R.anim.anim_slide_in_right,
+                R.anim.anim_slide_out_left
+            )
         }
 
         fun bottomToTopAnimation(activity: Activity)

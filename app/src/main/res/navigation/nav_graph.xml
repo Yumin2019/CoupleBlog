@@ -24,14 +24,14 @@
         android:label="fragment_cb_login"
         tools:layout="@layout/fragment_cb_main" >
         <action
-            android:id="@+id/action_CB_MainFragment_to_CB_LoginFragment"
-            app:destination="@id/CB_LoginFragment" />
-        <action
             android:id="@+id/action_CB_MainFragment_to_CB_PostDetailFragment"
             app:destination="@id/CB_PostDetailFragment" >
             <argument android:name="postKey" app:nullable="false"
                 app:argType="string" android:defaultValue=""/>
         </action>
+        <action
+            android:id="@+id/action_CB_MainFragment_to_CB_NewPostFragment"
+            app:destination="@id/CB_NewPostFragment" />
     </fragment>
 
     <fragment
@@ -39,9 +39,6 @@
         android:name="com.coupleblog.fragment.CB_RegisterFragment"
         android:label="fragment_cb_register"
         tools:layout="@layout/fragment_cb_register" >
-        <action
-            android:id="@+id/action_CB_RegisterFragment_to_CB_LoginFragment"
-            app:destination="@id/CB_LoginFragment" />
         <action
             android:id="@+id/action_CB_RegisterFragment_to_CB_InfoFragment"
             app:destination="@id/CB_InfoFragment" />
@@ -52,9 +49,6 @@
         android:name="com.coupleblog.fragment.CB_InfoFragment"
         android:label="fragment_cb_info"
         tools:layout="@layout/fragment_cb_info" >
-        <action
-            android:id="@+id/action_CB_InfoFragment_to_CB_RegisterFragment"
-            app:destination="@id/CB_RegisterFragment" />
     </fragment>
 
     <fragment
@@ -62,9 +56,12 @@
         android:name="com.coupleblog.fragment.CB_PostDetailFragment"
         android:label="fragment_cb_post_detail"
         tools:layout="@layout/fragment_cb_post_detail" >
+    </fragment>
 
-        <action
-            android:id="@+id/action_CB_PostDetailFragment_to_CB_MainFragment"
-            app:destination="@id/CB_MainFragment" />
+    <fragment
+        android:id="@+id/CB_NewPostFragment"
+        android:name="com.coupleblog.fragment.CB_NewPostFragment"
+        android:label="fragment_cb_new_post"
+        tools:layout="@layout/fragment_cb_new_post" >
     </fragment>
 </navigation>

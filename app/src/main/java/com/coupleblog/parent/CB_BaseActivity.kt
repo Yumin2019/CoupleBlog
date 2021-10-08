@@ -3,8 +3,8 @@ package com.coupleblog.parent
 import android.os.Bundle
 import android.util.Log
 import androidx.appcompat.app.AppCompatActivity
-import com.coupleblog.CB_AppFunc
-import com.coupleblog.CB_SingleSystemMgr
+import com.coupleblog.singleton.CB_AppFunc
+import com.coupleblog.singleton.CB_SingleSystemMgr
 
 open class CB_BaseActivity(val strTag : String,
                            val actFlag : CB_SingleSystemMgr.ACTIVITY_TYPE)
@@ -36,8 +36,6 @@ open class CB_BaseActivity(val strTag : String,
         Log.i(strTag, "onDestroy")
         CB_SingleSystemMgr.releaseActivity(actFlag)
     }
-
-    override fun onBackPressed() {}
 
     // if you want to add other processes in exitButton, override this func
     open fun exitButton()

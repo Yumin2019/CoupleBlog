@@ -1,10 +1,11 @@
-package com.coupleblog
+package com.coupleblog.singleton
 
 import android.view.View
 import android.widget.ImageView
 import android.widget.TextView
 import androidx.databinding.BindingAdapter
 import androidx.recyclerview.widget.RecyclerView
+import com.coupleblog.R
 import com.coupleblog.model.REACTION_TYPE
 
 @BindingAdapter("bind:layout_manager")
@@ -17,6 +18,12 @@ fun setLayoutManager(recyclerView: RecyclerView, layoutManager: RecyclerView.Lay
 fun setAdapter(recyclerView: RecyclerView, adapter: RecyclerView.Adapter<*>)
 {
     recyclerView.adapter = adapter
+}
+
+@BindingAdapter("bind:visible")
+fun setVisibility(view: View, flag: Boolean)
+{
+    view.visibility = if(flag) View.VISIBLE else View.GONE
 }
 
 @BindingAdapter("bind:date_text")

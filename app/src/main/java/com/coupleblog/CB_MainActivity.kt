@@ -1,54 +1,45 @@
 package com.coupleblog
 
-import android.content.Intent
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import androidx.core.view.isGone
 import androidx.core.view.isVisible
 import androidx.databinding.DataBindingUtil
 import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.findNavController
+import androidx.navigation.fragment.findNavController
 import com.coupleblog.parent.CB_BaseActivity
-import com.google.firebase.FirebaseApp
+import com.coupleblog.singleton.CB_AppFunc
+import com.coupleblog.singleton.CB_SingleSystemMgr
+import com.coupleblog.singleton.CB_ViewModel
 
 class CB_MainActivity : CB_BaseActivity("MainActivity", CB_SingleSystemMgr.ACTIVITY_TYPE.MAIN)
 {
     lateinit var binding    : MainActivityBinding
-    lateinit var viewModel  : CB_MainViewModel
 
     override fun onCreate(savedInstanceState: Bundle?)
     {
         super.onCreate(savedInstanceState)
 
-        viewModel = ViewModelProvider(this).get(CB_MainViewModel::class.java)
         binding   = DataBindingUtil.setContentView(this, R.layout.activity_cb_main)
         binding.apply {
             lifecycleOwner = this@CB_MainActivity
             activity       = this@CB_MainActivity
-            viewModel      = this@CB_MainActivity.viewModel
+            viewModel      = CB_ViewModel.Companion
         }
 
-        // Init FirebaseApp
-        //FirebaseApp.initializeApp(application)
-        //setSupportActionBar(binding.toolbar)
-
-        findNavController(R.id.nav_host_fragment).apply {
-
-            setGraph(R.navigation.nav_graph)
-            addOnDestinationChangedListener{ controller, destination, arguments ->
-
-                // MainFragment 에 오는 경우에 floating 버튼을 켜준다.
-                if (destination.id == R.id.CB_MainFragment)
-                {
-                    binding.addFloatingButton.isVisible = true
-                }
-                else
-                {
-                    binding.addFloatingButton.isGone = false
-                }
-            }
-        }
-
+        // Init
+        CB_AppFunc.application = application
+        findNavController(R.id.nav_host_fragment).setGraph(R.navigation.nav_graph)
     }
 
+    // Add 버튼 함수 (MainFragment - MyPostLists 에서 사용한다)
+    // 해당 상황이 맞는 경우에만 visible 처리가 되어 있다.
+    fun newPostButton()
+    {
+        val navController = findNavController(R.id.nav_host_fragment)
+        if(navController.currentDestination?.id != R.id.CB_MainFragment)
+            return
+
+        navController.navigate(R.id.action_CB_MainFragment_to_CB_NewPostFragment)
+    }
 }

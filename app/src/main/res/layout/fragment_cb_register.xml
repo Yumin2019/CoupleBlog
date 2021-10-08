@@ -68,6 +68,8 @@
                 android:id="@+id/email_edit_text"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:inputType="text"
+                android:imeOptions="actionNext"
                 android:hint="@string/str_email" />
 
         </com.google.android.material.textfield.TextInputLayout>
@@ -89,6 +91,8 @@
                 android:id="@+id/password_edit_text"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:inputType="textPassword"
+                android:imeOptions="actionNext"
                 android:hint="@string/str_password" />
 
         </com.google.android.material.textfield.TextInputLayout>
@@ -110,6 +114,8 @@
                 android:id="@+id/password_again_edit_text"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:inputType="textPassword"
+                android:imeOptions="actionDone"
                 android:hint="@string/str_password_again" />
 
         </com.google.android.material.textfield.TextInputLayout>
@@ -131,6 +137,8 @@
                 android:id="@+id/user_name_edit_text"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:inputType="text"
+                android:imeOptions="actionNext"
                 android:hint="@string/str_user_name" />
 
         </com.google.android.material.textfield.TextInputLayout>

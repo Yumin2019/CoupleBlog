@@ -1,6 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <layout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto">
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:bind="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
 
     <data class="com.coupleblog.MainActivityBinding">
 
@@ -10,7 +12,8 @@
 
         <variable
             name="viewModel"
-            type="com.coupleblog.CB_MainViewModel" />
+            type="com.coupleblog.singleton.CB_ViewModel.Companion" />
+
     </data>
 
     <androidx.coordinatorlayout.widget.CoordinatorLayout
@@ -31,6 +34,9 @@
 
         <com.google.android.material.floatingactionbutton.FloatingActionButton
             android:id="@+id/add_floating_button"
+            tools:visibility="visible"
+            android:onClick="@{()->activity.newPostButton()}"
+            bind:visible="@{viewModel.bAddButton}"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="bottom|end"

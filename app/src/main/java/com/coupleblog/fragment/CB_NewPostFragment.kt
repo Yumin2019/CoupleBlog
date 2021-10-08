@@ -5,33 +5,42 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.navigation.fragment.findNavController
-import com.coupleblog.R
 import com.coupleblog.parent.CB_BaseFragment
 
-
-class CB_InfoFragment : CB_BaseFragment("InfoFragment") {
-
-    private var _binding            : InfoBinding? = null
+class CB_NewPostFragment: CB_BaseFragment("NewPostFragment")
+{
+    private var _binding            : NewPostBinding? = null
     private val binding get() = _binding!!
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View
     {
-        _binding = InfoBinding.inflate(inflater, container, false)
+        _binding = NewPostBinding.inflate(inflater, container, false)
         binding.apply {
             lifecycleOwner  = viewLifecycleOwner
-            fragment        = this@CB_InfoFragment
+            fragment        = this@CB_NewPostFragment
         }
         return binding.root
+    }
+
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?)
+    {
+        super.onViewCreated(view, savedInstanceState)
+
+    }
+
+    fun postButton()
+    {
+        // 작업중
+    }
+
+    override fun backPressed()
+    {
+        findNavController().popBackStack()
     }
 
     override fun onDestroy()
     {
         super.onDestroy()
         _binding = null
-    }
-
-    override fun backPressed()
-    {
-        findNavController().popBackStack()
     }
 }

@@ -4,17 +4,12 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import androidx.core.app.ActivityCompat.finishAffinity
 import androidx.core.widget.doAfterTextChanged
-import androidx.databinding.DataBindingUtil
-import androidx.navigation.fragment.findNavController
-import com.coupleblog.CB_AppFunc
-import com.coupleblog.CB_SingleSystemMgr
+import com.coupleblog.singleton.CB_AppFunc
+import com.coupleblog.singleton.CB_SingleSystemMgr
 import com.coupleblog.R
 import com.coupleblog.dialog.CB_LoadingDialog
 import com.coupleblog.parent.CB_BaseFragment
-import com.google.firebase.auth.ktx.auth
-import com.google.firebase.ktx.Firebase
 
 
 class CB_LoginFragment : CB_BaseFragment("LoginFragment") {
@@ -36,29 +31,65 @@ class CB_LoginFragment : CB_BaseFragment("LoginFragment") {
     {
         super.onViewCreated(view, savedInstanceState)
 
-        binding.emailEditText.doAfterTextChanged { text ->
+        binding.emailEditText.apply {
 
-            if(text?.isEmpty() == true)
-            {
-                binding.emailTextInputLayout.error = requireContext().getString(R.string.str_input_email)
+            doAfterTextChanged { text ->
+
+                if(text?.isEmpty() == true)
+                {
+                    binding.emailTextInputLayout.error = CB_AppFunc.application.getString(R.string.str_input_email)
+                }
+                else
+                {
+                    binding.emailTextInputLayout.error = null
+                }
             }
-            else
-            {
-                binding.emailTextInputLayout.error = null
+
+            // Next editText
+            setOnEditorActionListener { v, actionId, event ->
+
+                CB_AppFunc.openIME(binding.passwordEditText, requireActivity())
+                true
             }
         }
 
-        binding.passwordEditText.doAfterTextChanged { text ->
+        binding.passwordEditText.apply {
 
-            if(text?.isEmpty() == true)
-            {
-                binding.passwordTextInputLayout.error = requireContext().getString(R.string.str_input_password)
-            }
-            else
-            {
-                binding.passwordTextInputLayout.error = null
+            doAfterTextChanged { text ->
+
+                if(text?.isEmpty() == true)
+                {
+                    binding.passwordTextInputLayout.error = CB_AppFunc.application.getString(R.string.str_input_password)
+                }
+                else
+                {
+                    binding.passwordTextInputLayout.error = null
+                }
+
             }
 
+            // Done : 로그인 시도
+            setOnEditorActionListener { v, actionId, event ->
+
+                CB_AppFunc.clearFocusing(requireActivity())
+                signInButton()
+                true
+            }
+
+        }
+    }
+
+    override fun onResume()
+    {
+        super.onResume()
+
+        with(binding)
+        {
+            emailEditText.text?.clear()
+            passwordEditText.text?.clear()
+
+            emailTextInputLayout.error = null
+            passwordTextInputLayout.error = null
         }
     }
 
@@ -69,7 +100,7 @@ class CB_LoginFragment : CB_BaseFragment("LoginFragment") {
 
         infoLog("signInButton")
         val activity = requireActivity()
-        val context = requireContext()
+        val context = CB_AppFunc.application
 
         val strEmail = binding.emailEditText.text.toString()
         val strPassword = binding.passwordEditText.text.toString()
@@ -105,7 +136,7 @@ class CB_LoginFragment : CB_BaseFragment("LoginFragment") {
                     CB_AppFunc.getUserInfo(activity,
                     funcSuccess =
                     {
-                        findNavController().navigate(R.id.action_CB_LoginFragment_to_CB_MainFragment)
+                        beginAction(R.id.action_CB_LoginFragment_to_CB_MainFragment, R.id.CB_LoginFragment)
                     })
                 }
                 else
@@ -120,7 +151,7 @@ class CB_LoginFragment : CB_BaseFragment("LoginFragment") {
     fun registerButton()
     {
         infoLog("registerButton")
-        findNavController().navigate(R.id.action_CB_LoginFragment_to_CB_RegisterFragment)
+        beginAction(R.id.action_CB_LoginFragment_to_CB_RegisterFragment, R.id.CB_LoginFragment)
     }
 
     override fun onStart()
@@ -132,8 +163,8 @@ class CB_LoginFragment : CB_BaseFragment("LoginFragment") {
             CB_AppFunc.getUserInfo(requireActivity(),
             funcSuccess =
             {
-                // 유저 정보를 제대로 가져온 경우에만 이동한다.
-                findNavController().navigate(R.id.action_CB_LoginFragment_to_CB_MainFragment)
+                // 유저 정보를 제대로 가져온 경우에만 이동한다
+                beginAction(R.id.action_CB_LoginFragment_to_CB_MainFragment, R.id.CB_LoginFragment)
             })
         }
     }
@@ -144,21 +175,9 @@ class CB_LoginFragment : CB_BaseFragment("LoginFragment") {
         _binding = null
     }
 
-    var firstTime : Long = 0
-    var secondTime : Long = 0
-
-    override fun backPressButton()
+    override fun backPressed()
     {
-        secondTime = System.currentTimeMillis()
-        if(secondTime - firstTime < 2000)
-        {
-            finishAffinity(requireActivity())
-        }
-        else
-        {
-            CB_SingleSystemMgr.showToast(requireContext(), requireContext().getString(R.string.str_press_back_to_exit))
-        }
-
-        firstTime = secondTime
+        finalBackPressed()
     }
+
 }
