@@ -37,7 +37,7 @@ class CB_LoginFragment : CB_BaseFragment("LoginFragment") {
 
                 if(text?.isEmpty() == true)
                 {
-                    binding.emailTextInputLayout.error = CB_AppFunc.application.getString(R.string.str_input_email)
+                    binding.emailTextInputLayout.error = getString(R.string.str_input_email)
                 }
                 else
                 {
@@ -59,7 +59,7 @@ class CB_LoginFragment : CB_BaseFragment("LoginFragment") {
 
                 if(text?.isEmpty() == true)
                 {
-                    binding.passwordTextInputLayout.error = CB_AppFunc.application.getString(R.string.str_input_password)
+                    binding.passwordTextInputLayout.error = getString(R.string.str_input_password)
                 }
                 else
                 {

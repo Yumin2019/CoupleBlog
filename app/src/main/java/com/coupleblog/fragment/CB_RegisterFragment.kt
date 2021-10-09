@@ -13,6 +13,10 @@ import com.coupleblog.dialog.CB_LoadingDialog
 import com.coupleblog.model.CB_Couple
 import com.coupleblog.model.CB_User
 import com.coupleblog.parent.CB_BaseFragment
+import com.google.firebase.FirebaseException
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.launch
+import kotlinx.coroutines.tasks.await
 
 class CB_RegisterFragment : CB_BaseFragment("RegisterFragment")
 {
@@ -40,7 +44,7 @@ class CB_RegisterFragment : CB_BaseFragment("RegisterFragment")
 
                 if(text?.isEmpty() == true)
                 {
-                    binding.userNameTextInputLayout.error = CB_AppFunc.application.getString(R.string.str_input_email)
+                    binding.userNameTextInputLayout.error = getString(R.string.str_input_email)
                 }
                 else
                 {
@@ -62,7 +66,7 @@ class CB_RegisterFragment : CB_BaseFragment("RegisterFragment")
 
                 if(text?.isEmpty() == true)
                 {
-                    binding.emailTextInputLayout.error = CB_AppFunc.application.getString(R.string.str_input_email)
+                    binding.emailTextInputLayout.error = getString(R.string.str_input_email)
                 }
                 else
                 {
@@ -85,8 +89,7 @@ class CB_RegisterFragment : CB_BaseFragment("RegisterFragment")
 
                 if(text?.isEmpty() == true)
                 {
-                    binding.passwordTextInputLayout.error =
-                        CB_AppFunc.application.getString(R.string.str_input_password)
+                    binding.passwordTextInputLayout.error = getString(R.string.str_input_password)
                 }
                 else
                 {
@@ -96,8 +99,7 @@ class CB_RegisterFragment : CB_BaseFragment("RegisterFragment")
                 // password again쪽을 다시 처리한다.
                 if(text.toString() != binding.passwordAgainEditText.text.toString())
                 {
-                    binding.passwordAgainTextInputLayout.error =
-                        CB_AppFunc.application.getString(R.string.str_input_password)
+                    binding.passwordAgainTextInputLayout.error = getString(R.string.str_input_password)
                 }
                 else
                 {
@@ -119,8 +121,7 @@ class CB_RegisterFragment : CB_BaseFragment("RegisterFragment")
 
                 if(text.toString() != binding.passwordEditText.text.toString())
                 {
-                    binding.passwordAgainTextInputLayout.error =
-                        CB_AppFunc.application.getString(R.string.str_password_again_error)
+                    binding.passwordAgainTextInputLayout.error = getString(R.string.str_password_again_error)
                 }
                 else
                 {
@@ -188,26 +189,44 @@ class CB_RegisterFragment : CB_BaseFragment("RegisterFragment")
         CB_AppFunc.getAuth().createUserWithEmailAndPassword(strEmail, strPassword)
             .addOnCompleteListener { task ->
 
-                dialog.cancel()
-
                 if(task.isSuccessful)
                 {
-                    // 회원가입 성공시 User 정보를 users 항목에 저장한다.
-                    val uid = task.result?.user!!.uid
-                    val user = CB_User(strUserName, strEmail, CB_AppFunc.getDateStringForSave(), "")
+                    CB_AppFunc.networkScope.launch {
+                        try
+                        {
+                            // 회원가입 성공시 User 정보를 users 항목에 저장한다.
+                            val uid = task.result?.user!!.uid
+                            val user = CB_User(strUserName, strEmail, CB_AppFunc.getDateStringForSave(), "")
 
-                    CB_AppFunc._curUser = user
-                    CB_AppFunc.getUsersRoot().child(uid).setValue(user)
+                            CB_AppFunc._curUser = user
+                            CB_AppFunc.getUsersRoot().child(uid).setValue(user).await()
 
-                    // Couple 정보도 couples 항목에 저장한다. (기본값)
-                    CB_AppFunc.getCouplesRoot().child(uid).setValue(CB_Couple())
+                            // Couple 정보도 couples 항목에 저장한다. (기본값)
+                            CB_AppFunc.getCouplesRoot().child(uid).setValue(CB_Couple()).await()
 
-                    // Login Fragment
-                    backPressed()
+                            launch(Dispatchers.Main)
+                            {
+                                // Login Fragment
+                                dialog.cancel()
+                                backPressed()
+                            }
+                        }
+                        catch(e: FirebaseException)
+                        {
+                            e.printStackTrace()
+                            launch(Dispatchers.Main)
+                            {
+                                dialog.cancel()
+                                CB_AppFunc.okDialog(activity, context.getString(R.string.str_error),
+                                    context.getString(R.string.str_value_update_failed), R.drawable.error_icon, true)
+                            }
+                        }
+                    }
                 }
                 else
                 {
                     // 회원가입 실패
+                    dialog.cancel()
                     CB_AppFunc.okDialog(activity, context.getString(R.string.str_error),
                         context.getString(R.string.str_sign_up_failed), R.drawable.error_icon, true)
                 }

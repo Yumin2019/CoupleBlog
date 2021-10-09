@@ -12,7 +12,7 @@ import com.google.firebase.database.IgnoreExtraProperties
 
 @IgnoreExtraProperties
 data class CB_User(
-    var strUerName           : String? = ""  ,      // displayName
+    var strUserName           : String? = ""  ,      // displayName
     var strUserEmail         : String? = ""  ,      // 유저 이메일
     var strSignUpDate        : String? = ""  ,
     /* var strUserImgUrl     : String? = ""*/      // 유저 프로필 이미지 Url

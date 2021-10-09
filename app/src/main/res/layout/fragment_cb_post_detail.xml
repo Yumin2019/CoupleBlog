@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <layout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:bind="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools">
 
     <data class="com.coupleblog.fragment.PostDetailBinding">
@@ -8,6 +9,10 @@
         <variable
             name="fragment"
             type="com.coupleblog.fragment.CB_PostDetailFragment" />
+
+        <variable
+            name="layoutManager"
+            type="androidx.recyclerview.widget.RecyclerView.LayoutManager"/>
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout
@@ -70,6 +75,20 @@
                     app:layout_constraintTop_toTopOf="@+id/author_image_view"
                     tools:text="Yumin Kim" />
 
+                <TextView
+                    android:id="@+id/modify_text_view"
+                    style="@style/normal_text_style"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginEnd="@dimen/margin_16dp"
+                    android:text="@string/str_edit_post"
+                    android:visibility="gone"
+                    tools:visibility="visible"
+                    android:textColor="@color/blue"
+                    app:layout_constraintBottom_toBottomOf="@+id/post_date_text_view"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintTop_toTopOf="@+id/post_date_text_view" />
+
                 <ImageView
                     android:id="@+id/author_image_view"
                     android:layout_width="@dimen/icon_image_size"
@@ -78,7 +97,7 @@
                     android:layout_marginTop="@dimen/normal_margin"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toBottomOf="@+id/post_title_text_view"
-                    app:srcCompat="@drawable/ic_baseline_account_circle_24" />
+                    android:src="@drawable/ic_baseline_account_circle_24" />
 
                 <View
                     android:id="@+id/view"
@@ -100,6 +119,17 @@
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toBottomOf="@+id/view"
                     tools:layout_height="130dp"
+                    tools:visibility="visible" />
+
+                <ImageView
+                    android:id="@+id/reaction_image_view"
+                    android:layout_width="@dimen/icon_image_size"
+                    android:layout_height="@dimen/icon_image_size"
+                    android:visibility="gone"
+                    app:layout_constraintBottom_toTopOf="@+id/view"
+                    app:layout_constraintStart_toEndOf="@+id/post_date_text_view"
+                    app:layout_constraintTop_toBottomOf="@+id/post_title_text_view"
+                    tools:src="@drawable/haha_icon"
                     tools:visibility="visible" />
 
                 <TextView
@@ -169,8 +199,9 @@
                     android:layout_width="0dp"
                     android:layout_height="0dp"
                     android:layout_marginTop="@dimen/normal_margin"
+                    bind:layout_manager="@{layoutManager}"
                     android:nestedScrollingEnabled="false"
-                    android:padding="@dimen/normal_margin"
+                    tools:listitem="@layout/comment_item"
                     app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintEnd_toEndOf="@+id/comment_post_button"
                     app:layout_constraintStart_toStartOf="@+id/comment_text_input_layout"

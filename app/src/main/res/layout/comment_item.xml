@@ -1,0 +1,111 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:bind="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <data class="com.coupleblog.adapter.CommentItemBinding">
+
+        <variable name="fragment"
+            type="com.coupleblog.fragment.CB_PostDetailFragment"/>
+
+        <variable
+            name="commentData"
+            type="com.coupleblog.model.CB_Comment" />
+
+        <variable
+            name="commentKey"
+            type="String" />
+    </data>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <ImageView
+            android:id="@+id/author_image_view"
+            android:layout_width="@dimen/icon_image_size"
+            android:layout_height="@dimen/icon_image_size"
+            android:layout_marginTop="@dimen/normal_margin"
+            android:layout_marginBottom="@dimen/normal_margin"
+            android:src="@drawable/ic_baseline_account_circle_24"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <TextView
+            android:id="@+id/author_text_view"
+            style="@style/normal_text_style"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            bind:user_uid="@{commentData.strAuthorUid}"
+            android:layout_marginStart="@dimen/normal_margin"
+            android:layout_marginTop="@dimen/normal_margin"
+            app:layout_constraintStart_toEndOf="@+id/author_image_view"
+            app:layout_constraintTop_toTopOf="parent"
+            tools:text="Yumin Kim" />
+
+        <TextView
+            android:id="@+id/comment_text_view"
+            style="@style/normal_text_style"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/normal_margin"
+            android:layout_marginBottom="@dimen/normal_margin"
+            android:maxLines="10"
+            android:textAlignment="viewStart"
+            android:text="@{commentData.strComment}"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toStartOf="@+id/reaction_image_view"
+            app:layout_constraintStart_toStartOf="@+id/author_text_view"
+            app:layout_constraintTop_toBottomOf="@+id/author_text_view"
+            tools:text="This is comment" />
+
+        <TextView
+            android:id="@+id/comment_date_text_view"
+            style="@style/normal_text_style"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:paddingStart="@dimen/margin_16dp"
+            android:paddingEnd="@dimen/margin_16dp"
+            bind:date_text="@{commentData.strCommentDate}"
+            android:textAlignment="viewStart"
+            android:textColor="@color/gray"
+            app:layout_constraintBottom_toBottomOf="@+id/author_text_view"
+            app:layout_constraintStart_toEndOf="@+id/author_text_view"
+            app:layout_constraintTop_toTopOf="@+id/author_text_view"
+            tools:text="10 Oct 2021" />
+
+
+        <ImageView
+            android:id="@+id/reaction_image_view"
+            android:layout_width="@dimen/icon_image_size_small"
+            android:layout_height="@dimen/icon_image_size_small"
+            app:layout_constraintBottom_toBottomOf="@+id/comment_date_text_view"
+            app:layout_constraintStart_toEndOf="@+id/comment_date_text_view"
+            app:layout_constraintTop_toTopOf="@+id/comment_date_text_view"
+            bind:icon_image="@{commentData.IIconType}"
+            tools:src="@drawable/haha_icon" />
+
+        <View
+            android:id="@+id/view"
+            style="@style/divider"
+            android:layout_height="1dp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="parent" />
+
+        <ImageView
+            android:id="@+id/menu_image_view"
+            android:layout_width="30dp"
+            android:layout_height="30dp"
+            android:onClick="@{()->fragment.menuButton()}"
+            android:layout_marginEnd="@dimen/normal_margin"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:srcCompat="@drawable/ic_baseline_list_24" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</layout>

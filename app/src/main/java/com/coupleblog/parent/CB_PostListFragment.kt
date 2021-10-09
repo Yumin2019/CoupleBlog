@@ -5,9 +5,8 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.core.os.bundleOf
-import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
-import com.coupleblog.CB_PostAdapter
+import com.coupleblog.adapter.CB_PostAdapter
 import com.coupleblog.R
 import com.coupleblog.fragment.AllPostsBinding
 import com.coupleblog.fragment.CB_PostDetailFragment

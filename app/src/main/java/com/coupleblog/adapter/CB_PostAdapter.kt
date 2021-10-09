@@ -1,17 +1,15 @@
-package com.coupleblog
+package com.coupleblog.adapter
 
 import android.view.LayoutInflater
-import android.view.View
 import android.view.ViewGroup
 import androidx.databinding.DataBindingUtil
-import androidx.lifecycle.ViewModel
 import androidx.recyclerview.widget.RecyclerView
+import com.coupleblog.R
 import com.coupleblog.fragment.PostItemBinding
 import com.coupleblog.model.CB_Post
 import com.coupleblog.parent.CB_PostListFragment
 import com.firebase.ui.database.FirebaseRecyclerAdapter
 import com.firebase.ui.database.FirebaseRecyclerOptions
-import com.google.firebase.FirebaseOptions
 
 // FirebaseRecyclerAdapter 내부에서 데이터를 Query 값으로 가지고 있는다.
 class CB_PostAdapter(val fragment: CB_PostListFragment, options: FirebaseRecyclerOptions<CB_Post>)

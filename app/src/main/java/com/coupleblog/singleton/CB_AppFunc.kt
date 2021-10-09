@@ -71,11 +71,15 @@ class CB_AppFunc
         val strTag                           = "CB_AppFunc"
         val mainScope                        = CoroutineScope(Dispatchers.Main)
         val defaultScope                     = CoroutineScope(Dispatchers.Default)
+        val networkScope                     = CoroutineScope(Dispatchers.IO)
         lateinit var application: Application
         val PERMISSION_REQUEST               = 100
 
         var _curUser: CB_User? = null
         val curUser get() = _curUser!!
+
+        var _coupleUser: CB_User? = null
+        val coupleUser get() = _coupleUser!!
 
         fun getUid() = FirebaseAuth.getInstance().currentUser!!.uid
         fun getAuth() = Firebase.auth
@@ -127,7 +131,6 @@ class CB_AppFunc
                 override fun onDataChange(snapshot: DataSnapshot)
                 {
                     _curUser = snapshot.getValue<CB_User>()
-
                     if(_curUser == null)
                     {
                         Log.e(strTag, "User Info load failed")
@@ -136,14 +139,48 @@ class CB_AppFunc
                     }
                     else
                     {
-                        // 성공 시에만 처리하는 함수
-                        funcSuccess.invoke()
+                        // 커플 정보가 있는 경우에는 커플 정보를 받도록 처리한다.
+                        if(curUser.strCoupleUid != null && curUser.strCoupleUid!!.isNotEmpty())
+                        {
+                            getUsersRoot().child(curUser.strCoupleUid!!).addListenerForSingleValueEvent(object :
+                            ValueEventListener{
+                                override fun onDataChange(snapshot: DataSnapshot)
+                                {
+                                    _coupleUser = snapshot.getValue<CB_User>()
+                                    if(_coupleUser == null)
+                                    {
+                                        Log.e(strTag, "User Info load failed")
+                                        okDialog(context, context.getString(R.string.str_error),
+                                            context.getString(R.string.str_user_info_load_failed), R.drawable.error_icon, true)
+                                        return
+                                    }
+
+                                    // 자신의 정보, 커플 정보를 가져왔다면 넘어간다.
+                                    funcSuccess.invoke()
+                                }
+
+                                override fun onCancelled(error: DatabaseError)
+                                {
+                                    Log.e(strTag, "User Info load cancelled", error.toException())
+                                    okDialog(context, context.getString(R.string.str_error),
+                                        context.getString(R.string.str_user_info_load_failed), R.drawable.error_icon, true)
+                                }
+                            })
+                        }
+                        else
+                        {
+                            // 커플 정보가 없다면 넘어간다.
+                            _coupleUser = CB_User()
+                            funcSuccess.invoke()
+                        }
                     }
                 }
 
                 override fun onCancelled(error: DatabaseError)
                 {
                     Log.e(strTag, "User Info load cancelled", error.toException())
+                    okDialog(context, context.getString(R.string.str_error),
+                        context.getString(R.string.str_user_info_load_failed), R.drawable.error_icon, true)
                 }
             })
         }
@@ -330,7 +367,7 @@ class CB_AppFunc
                   if(date == null)
                   {
                       Log.e(strTag, "strDate can't be parsed")
-                      assert(false)
+                      //assert(false)
                       getCurCalendar()
                   }
                   else

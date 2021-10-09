@@ -57,6 +57,7 @@ dependencies {
     implementation 'com.google.firebase:firebase-auth-ktx'
     implementation 'com.firebaseui:firebase-ui-database:8.0.0'
     implementation 'androidx.arch.core:core-runtime:2.1.0'
+    implementation 'org.jetbrains.kotlinx:kotlinx-coroutines-play-services:1.1.1'
 
     // opensource
     implementation 'com.github.ybq:Android-SpinKit:1.4.0'

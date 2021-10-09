@@ -8,6 +8,17 @@ import androidx.recyclerview.widget.RecyclerView
 import com.coupleblog.R
 import com.coupleblog.model.REACTION_TYPE
 
+@BindingAdapter("bind:user_uid")
+fun setTextByUid(textView: TextView, strUid: String)
+{
+    // current User's uid or couple's uid
+    textView.text =
+        if (strUid == CB_AppFunc.getUid())
+            CB_AppFunc.curUser.strUserName
+        else
+            CB_AppFunc.coupleUser.strUserName
+}
+
 @BindingAdapter("bind:layout_manager")
 fun setLayoutManager(recyclerView: RecyclerView, layoutManager: RecyclerView.LayoutManager)
 {
@@ -44,7 +55,7 @@ fun setIconImage(imageView: ImageView, iIconType: Int)
         REACTION_TYPE.LOVE.ordinal -> R.drawable.love_icon
         REACTION_TYPE.SAD.ordinal -> R.drawable.sad_icon
         REACTION_TYPE.WOW.ordinal -> R.drawable.wow_icon
-        else ->  -1
+        else ->  -1 // NONE
     }
 
     if (resId != -1)

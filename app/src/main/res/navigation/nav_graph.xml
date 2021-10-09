@@ -26,7 +26,7 @@
         <action
             android:id="@+id/action_CB_MainFragment_to_CB_PostDetailFragment"
             app:destination="@id/CB_PostDetailFragment" >
-            <argument android:name="postKey" app:nullable="false"
+            <argument android:name="strPostKey" app:nullable="false"
                 app:argType="string" android:defaultValue=""/>
         </action>
         <action
