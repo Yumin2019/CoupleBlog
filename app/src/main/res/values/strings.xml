@@ -245,15 +245,26 @@ Couple blog 은(는) 정보주체의 이용정보를 저장하고 수시로 불�
     <string name="str_discard">Discard</string>
     <string name="str_loading">Loading …</string>
 
+    <string name="str_love_icon">Love icon</string>
+    <string name="str_like_icon">Like icon</string>
+    <string name="str_check_icon">Check icon</string>
+    <string name="str_haha_icon">Haha icon</string>
+    <string name="str_wow_icon">Wow icon</string>
+    <string name="str_sad_icon">Sad icon</string>
+    <string name="str_edit_post">Edit post</string>
+    <string name="str_delete_post">Delete post</string>
+    <string name="str_my_post_menu">Post menu</string>
+    <string name="str_couple_post_menu">Reaction icons</string>
+
     <string name="str_register">Register</string>
     <string name="str_post">Post</string>
-    <string name="str_edit_post">EDIT POST</string>
     <string name="str_register_msg">if you don\'t have an account</string>
     <string name="str_personal_information_policy_msg">if you want to see</string>
     <string name="str_personal_information_policy">Personal information processing policy</string>
     <string name="str_input_email">Please input your email</string>
     <string name="str_input_password">Please input your password</string>
     <string name="str_input_password_again">Please input your password again</string>
+    <string name="str_input_comment">Please input your comment</string>
     <string name="str_input_title">Please input your title</string>
     <string name="str_post_confirm">Do you really want to post?</string>
     <string name="str_post_discard">Do you really want to discard?</string>
@@ -268,6 +279,7 @@ Couple blog 은(는) 정보주체의 이용정보를 저장하고 수시로 불�
     <string name="str_post_failed">Post failed</string>
     <string name="str_user_info_load_failed">User information load failed</string>
     <string name="str_comment_list_load_failed">Comment list load failed</string>
+    <string name="str_post_data_load_failed">Post data load failed</string>
 
     <string name="str_error">Error</string>
     <string name="str_warning">Warning</string>

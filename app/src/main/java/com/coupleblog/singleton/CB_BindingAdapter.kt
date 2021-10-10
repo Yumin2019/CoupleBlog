@@ -26,7 +26,7 @@ fun setLayoutManager(recyclerView: RecyclerView, layoutManager: RecyclerView.Lay
 }
 
 @BindingAdapter("bind:adapter")
-fun setAdapter(recyclerView: RecyclerView, adapter: RecyclerView.Adapter<*>)
+fun setAdapter(recyclerView: RecyclerView, adapter: RecyclerView.Adapter<*>?)
 {
     recyclerView.adapter = adapter
 }
@@ -42,6 +42,12 @@ fun setDateText(textView: TextView, strDate: String)
 {
     val calendar = CB_AppFunc.stringToCalendar(strDate)
     textView.text = CB_AppFunc.getDateStringForOutput(calendar)
+}
+
+@BindingAdapter("bind:drawable_id")
+fun setImage(imageView: ImageView, iResIdx: Int)
+{
+    imageView.setImageResource(iResIdx)
 }
 
 @BindingAdapter("bind:icon_image")

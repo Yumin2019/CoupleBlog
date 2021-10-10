@@ -96,7 +96,7 @@ class CB_CommentAdapter(private val fragment: CB_PostDetailFragment,
         // register childEventListener to commentRef
         commentRef.addChildEventListener(childEventListener)
 
-        // we store this listener so it can be removed on stop
+        // keep it so it can be removed on app stop
         this.childEventListener = childEventListener
     }
 

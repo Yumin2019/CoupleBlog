@@ -1,6 +1,7 @@
 package com.coupleblog.fragment
 
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -13,6 +14,7 @@ import com.coupleblog.model.REACTION_TYPE
 import com.coupleblog.parent.CB_BaseFragment
 import com.coupleblog.singleton.CB_AppFunc
 import com.coupleblog.singleton.CB_SingleSystemMgr
+import com.coupleblog.singleton.CB_ViewModel
 import com.coupleblog.singleton.setIconImage
 import com.google.firebase.FirebaseException
 import kotlinx.coroutines.Dispatchers
@@ -38,6 +40,8 @@ class CB_NewPostFragment: CB_BaseFragment("NewPostFragment")
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View
     {
+        CB_ViewModel.bAddButton.postValue(false)
+
         _binding = NewPostBinding.inflate(inflater, container, false)
         binding.apply {
             lifecycleOwner  = viewLifecycleOwner
@@ -145,7 +149,7 @@ class CB_NewPostFragment: CB_BaseFragment("NewPostFragment")
                     {
                         // 저장을 완료한 이후에 다시 mainFragment 로 이동한다.
                         dialog.cancel()
-                        findNavController().popBackStack()
+                        beginAction(R.id.action_CB_NewPostFragment_to_CB_MainFragment, R.id.CB_NewPostFragment)
                     }
                 }
                 catch (e: FirebaseException)
@@ -183,7 +187,8 @@ class CB_NewPostFragment: CB_BaseFragment("NewPostFragment")
             // 아무것도 작성한 것이 없다면 바로 메인화면 이동
             if(strTitle.isEmpty() && strText.isEmpty())
             {
-                findNavController().popBackStack()
+                // NewPostFragment 에서는 navigate 기능을 이용한다.
+                beginAction(R.id.action_CB_NewPostFragment_to_CB_MainFragment, R.id.CB_NewPostFragment)
                 return
             }
         }
@@ -194,7 +199,7 @@ class CB_NewPostFragment: CB_BaseFragment("NewPostFragment")
             getString(R.string.str_discard),
             yesListener = { dialog, witch ->
 
-                findNavController().popBackStack()
+                beginAction(R.id.action_CB_NewPostFragment_to_CB_MainFragment, R.id.CB_NewPostFragment)
 
             }, getString(R.string.str_cancel), null)
     }

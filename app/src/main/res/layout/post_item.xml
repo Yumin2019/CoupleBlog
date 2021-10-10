@@ -39,9 +39,10 @@
             app:layout_constraintWidth_max="@dimen/button_max_length">
 
             <androidx.constraintlayout.widget.ConstraintLayout
-                android:onClick="@{()->fragment.clickedPostItem(postKey)}"
+                android:onClick="@{()->fragment.clickedPostItem(postKey, postData.strAuthorUid)}"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content">
+                android:layout_height="wrap_content"
+                android:background="?android:attr/selectableItemBackground">
 
                 <ImageView
                     android:id="@+id/post_image_view"
@@ -51,7 +52,8 @@
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toTopOf="parent"
-                    tools:visibility="visible" />
+                    android:visibility="gone"
+                    tools:visibility="gone" />
 
                 <TextView
                     android:id="@+id/post_title_text_view"

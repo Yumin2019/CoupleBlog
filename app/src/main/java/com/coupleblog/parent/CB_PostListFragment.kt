@@ -26,6 +26,7 @@ abstract class CB_PostListFragment : CB_BaseFragment("PostList")
         binding.apply {
             lifecycleOwner      = viewLifecycleOwner
             fragment            = this@CB_PostListFragment
+            adapter             = this@CB_PostListFragment.adapter
 
             // LayoutManager 를 가지고 순서를 뒤집는다.
             layoutManager       = LinearLayoutManager(activity).apply {
@@ -45,19 +46,27 @@ abstract class CB_PostListFragment : CB_BaseFragment("PostList")
         super.onCreate(savedInstanceState)
 
         // FirebaseRecyclerAdapter 를 생성하여 바인딩한다.
-        val options = FirebaseRecyclerOptions.Builder<CB_Post>()
-            .setQuery(getQuery(), CB_Post::class.java)
-            .build()
-        adapter = CB_PostAdapter(this@CB_PostListFragment, options)
+        // Query 값이 null 이라면 설정하지 않는다.
+        val query = getQuery()
+        if(query != null)
+        {
+            val options = FirebaseRecyclerOptions.Builder<CB_Post>()
+                .setQuery(query, CB_Post::class.java)
+                .build()
+            adapter = CB_PostAdapter(this@CB_PostListFragment, options)
+        }
     }
 
     // 각 List Fragment 마다 원하는 쿼리를 작성한다.
-    abstract fun getQuery(): Query
+    abstract fun getQuery(): Query?
 
-    fun clickedPostItem(postKey: String)
+    fun clickedPostItem(postKey: String, strAuthorUid: String)
     {
-        // PostDetailFragment 를 실행할 때 인자로 "postKey" - string 값을 준다.
-        val args = bundleOf(CB_PostDetailFragment.ARGU_POST_KEY to postKey)
+        // PostDetailFragment 를 실행할 때 인자로 postKey, strAuthorUid 정보를 준다.
+        val args = bundleOf(
+            CB_PostDetailFragment.ARGU_POST_KEY to postKey,
+            CB_PostDetailFragment.ARGU_AUTHOR_UID to strAuthorUid
+        )
         beginAction(R.id.action_CB_MainFragment_to_CB_PostDetailFragment, R.id.CB_MainFragment, args)
     }
 

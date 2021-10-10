@@ -19,6 +19,7 @@ class CB_SingleSystemMgr
         DATE_PICKER,
         // CUSTOM DIALOG
         LOADING_DIALOG,
+        ITEM_LIST_DIALOG,
 
         // MATERIAL DIALOG CUSTOM
         OK_DIALOG,
@@ -30,7 +31,7 @@ class CB_SingleSystemMgr
     {
         private var isActivity = BooleanArray(ACTIVITY_TYPE.ACTIVITY_TYPE_END.ordinal)
         private var isDialog = BooleanArray(DIALOG_TYPE.DIALOG_TYPE_END.ordinal)
-        var toast : Toast? = null
+        private var toast : Toast? = null
 
         private fun isToastMessage() = (toast != null)
         fun isActivity(type : ACTIVITY_TYPE) = isActivity[type.ordinal]

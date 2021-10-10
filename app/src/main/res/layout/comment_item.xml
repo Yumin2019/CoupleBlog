@@ -101,11 +101,12 @@
             android:layout_width="30dp"
             android:layout_height="30dp"
             android:onClick="@{()->fragment.menuButton()}"
+            android:background="?android:attr/selectableItemBackground"
             android:layout_marginEnd="@dimen/normal_margin"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toTopOf="parent"
-            app:srcCompat="@drawable/ic_baseline_list_24" />
+            android:src="@drawable/ic_baseline_list_24" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>

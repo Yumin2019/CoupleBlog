@@ -361,21 +361,19 @@ class CB_AppFunc
         fun stringToEditable(str: String): Editable = getInstance().newEditable(str)
 
         // 저장된 데이터를 파싱해서 calendar 반환
-        fun stringToCalendar(strDate: String): Calendar
+        fun stringToCalendar(strDate: String?): Calendar
         = let {
-                  val date = strSaveDateFormat.parse(strDate)
-                  if(date == null)
-                  {
-                      Log.e(strTag, "strDate can't be parsed")
-                      //assert(false)
-                      getCurCalendar()
-                  }
-                  else
-                  {
-                      val calendar = getCurCalendar()
-                      calendar.time = date
-                      calendar
-                  }
+
+            if (strDate == null || strDate.isEmpty())
+            {
+                Log.e(strTag, "strDate can't be parsed")
+                return@let getCurCalendar()
+            }
+
+            val date = strSaveDateFormat.parse(strDate)
+            val calendar = getCurCalendar()
+            calendar.time = date!!
+            calendar
         }
 
         // 저장을 위한 dateString 얻기

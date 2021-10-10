@@ -8,10 +8,13 @@ import com.google.firebase.database.Query
 
 class CB_CouplePostsFragment: CB_PostListFragment()
 {
-    override fun getQuery(): Query
+    override fun getQuery(): Query?
     {
         // user-posts - uid -> post 정보
-        val coupleUid = CB_AppFunc.curUser.strCoupleUid ?: ""
+        val coupleUid = CB_AppFunc.curUser.strCoupleUid
+        if(coupleUid == null || coupleUid.isEmpty())
+            return null
+
         return CB_AppFunc.getUserPostsRoot().child(coupleUid)
     }
 }

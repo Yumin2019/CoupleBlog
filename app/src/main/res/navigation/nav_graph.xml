@@ -26,8 +26,13 @@
         <action
             android:id="@+id/action_CB_MainFragment_to_CB_PostDetailFragment"
             app:destination="@id/CB_PostDetailFragment" >
+
             <argument android:name="strPostKey" app:nullable="false"
                 app:argType="string" android:defaultValue=""/>
+
+            <argument android:name="strAuthorUid" app:nullable="false"
+                app:argType="string" android:defaultValue=""/>
+
         </action>
         <action
             android:id="@+id/action_CB_MainFragment_to_CB_NewPostFragment"
@@ -56,6 +61,11 @@
         android:name="com.coupleblog.fragment.CB_PostDetailFragment"
         android:label="fragment_cb_post_detail"
         tools:layout="@layout/fragment_cb_post_detail" >
+        <action
+            android:id="@+id/action_CB_PostDetailFragment_to_CB_MainFragment"
+            app:destination="@id/CB_MainFragment"
+            app:popUpTo="@+id/CB_MainFragment"
+            app:popUpToInclusive="true" />
     </fragment>
 
     <fragment
@@ -63,5 +73,10 @@
         android:name="com.coupleblog.fragment.CB_NewPostFragment"
         android:label="fragment_cb_new_post"
         tools:layout="@layout/fragment_cb_new_post" >
+        <action
+            android:id="@+id/action_CB_NewPostFragment_to_CB_MainFragment"
+            app:destination="@id/CB_MainFragment"
+            app:popUpTo="@+id/CB_MainFragment"
+            app:popUpToInclusive="true" />
     </fragment>
 </navigation>
