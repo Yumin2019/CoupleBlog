@@ -34,9 +34,15 @@
                 app:argType="string" android:defaultValue=""/>
 
         </action>
+
         <action
             android:id="@+id/action_CB_MainFragment_to_CB_NewPostFragment"
-            app:destination="@id/CB_NewPostFragment" />
+            app:destination="@id/CB_NewPostFragment">
+
+            <argument android:name="strPostKey" app:nullable="false"
+                app:argType="string" android:defaultValue=""/>
+
+        </action>
     </fragment>
 
     <fragment
@@ -66,6 +72,16 @@
             app:destination="@id/CB_MainFragment"
             app:popUpTo="@+id/CB_MainFragment"
             app:popUpToInclusive="true" />
+
+        <action
+            android:id="@+id/action_CB_PostDetailFragment_to_CB_NewPostFragment"
+            app:destination="@id/CB_NewPostFragment">
+
+        <argument android:name="strPostKey" app:nullable="false"
+            app:argType="string" android:defaultValue=""/>
+
+        </action>
+
     </fragment>
 
     <fragment

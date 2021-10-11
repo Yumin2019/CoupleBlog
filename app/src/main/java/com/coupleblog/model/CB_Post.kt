@@ -9,7 +9,7 @@ import java.util.HashMap
 enum class REACTION_TYPE
 {
     NONE,
-    LOVE,
+    HEART,
     LIKE,
     CHECK,
     HAHA,

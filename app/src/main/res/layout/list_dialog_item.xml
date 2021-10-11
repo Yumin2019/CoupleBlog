@@ -25,15 +25,14 @@
             style="@style/post_title_text_view"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:layout_marginStart="@dimen/margin_16dp"
             android:layout_marginEnd="@dimen/normal_margin"
             android:paddingStart="@dimen/margin_16dp"
             android:paddingEnd="@dimen/margin_16dp"
+            android:text="@{strText}"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toEndOf="@+id/item_image_view"
             app:layout_constraintTop_toTopOf="parent"
-            android:text="@{strText}"
             tools:text="haha" />
 
         <ImageView

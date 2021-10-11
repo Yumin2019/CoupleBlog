@@ -12,5 +12,16 @@ class CB_ViewModel
 
         // PostDetailFragment
         var tPost      = MutableLiveData(CB_Post())
+        var isMyPost   = MutableLiveData(true)
+
+        // NewPostFragment
+        var strTitle   = MutableLiveData("")
+        var strBody    = MutableLiveData("")
+
+        fun resetNewPostFragmentLiveData()
+        {
+            strTitle.postValue("")
+            strBody.postValue("")
+        }
     }
 }

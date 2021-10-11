@@ -15,8 +15,11 @@ import com.coupleblog.parent.CB_BaseFragment
 import com.coupleblog.singleton.CB_AppFunc
 import com.coupleblog.singleton.CB_SingleSystemMgr
 import com.coupleblog.singleton.CB_ViewModel
-import com.coupleblog.singleton.setIconImage
 import com.google.firebase.FirebaseException
+import com.google.firebase.database.DataSnapshot
+import com.google.firebase.database.DatabaseError
+import com.google.firebase.database.ValueEventListener
+import com.google.firebase.database.ktx.getValue
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.tasks.await
@@ -37,6 +40,8 @@ class CB_NewPostFragment: CB_BaseFragment("NewPostFragment")
 {
     private var _binding            : NewPostBinding? = null
     private val binding get() = _binding!!
+    var editPostKey = ""
+    var postData: CB_Post? = null
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View
     {
@@ -46,6 +51,7 @@ class CB_NewPostFragment: CB_BaseFragment("NewPostFragment")
         binding.apply {
             lifecycleOwner  = viewLifecycleOwner
             fragment        = this@CB_NewPostFragment
+            viewModel       = CB_ViewModel.Companion
         }
         return binding.root
     }
@@ -53,6 +59,50 @@ class CB_NewPostFragment: CB_BaseFragment("NewPostFragment")
     override fun onViewCreated(view: View, savedInstanceState: Bundle?)
     {
         super.onViewCreated(view, savedInstanceState)
+
+        editPostKey = requireArguments().getString(CB_PostDetailFragment.ARGU_POST_KEY)!!
+        if(editPostKey.isNotEmpty())
+        {
+            // if edit state, load post data with postKey
+            CB_AppFunc.getUserPostsRoot().child(CB_AppFunc.getUid()).child(editPostKey).addListenerForSingleValueEvent(object :
+            ValueEventListener {
+
+                override fun onDataChange(snapshot: DataSnapshot)
+                {
+                    postData = snapshot.getValue<CB_Post>()
+                    if(postData == null)
+                    {
+                        Log.e(strTag, "post data load cancelled")
+                        CB_AppFunc.okDialog(requireActivity(), getString(R.string.str_error),
+                            getString(R.string.str_post_data_load_failed), R.drawable.error_icon, false,
+                        listener = { dialog, witch ->
+
+                            // 에러상황이면 취소 못하게 하고 그냥 확인 누르면 PostDetailFragment로 보낸다.
+                            // 즉, 이후에 postData값은 null일 수 없다.
+                            findNavController().popBackStack()
+                        })
+                        return
+                    }
+
+                    CB_ViewModel.apply {
+                        strTitle.postValue(postData!!.strTitle)
+                        strBody.postValue(postData!!.strBody)
+                    }
+                }
+
+                override fun onCancelled(error: DatabaseError)
+                {
+                    Log.e(strTag, "post data load cancelled", error.toException())
+                    CB_AppFunc.okDialog(requireActivity(), getString(R.string.str_error),
+                        getString(R.string.str_post_data_load_failed), R.drawable.error_icon, true)
+                }
+            })
+        }
+        else
+        {
+            // init "" at live data
+            CB_ViewModel.resetNewPostFragmentLiveData()
+        }
 
         binding.titleEditText.apply {
 
@@ -96,8 +146,8 @@ class CB_NewPostFragment: CB_BaseFragment("NewPostFragment")
         infoLog("postButton")
         val activity = requireActivity()
 
-        val strTitle = binding.titleEditText.text.toString()
-        val strText = binding.textEditText.text.toString()
+        val strTitle = CB_ViewModel.strTitle.value!!
+        val strText = CB_ViewModel.strBody.value!!
         // val imageView = binding.postImageView
 
         if(strTitle.isEmpty())
@@ -124,32 +174,55 @@ class CB_NewPostFragment: CB_BaseFragment("NewPostFragment")
 
                 try
                 {
-                    // user-posts - userUid - postKey1 - CB_Post
-                    val uidRootRef = CB_AppFunc.getUserPostsRoot().child(CB_AppFunc.getUid())
-                    val postKey = uidRootRef.push().key
-
-                    if(postKey == null)
+                    if(editPostKey.isNotEmpty())
                     {
-                        // PostKey 가 없는 경우 dialog 처리
+                        // if edit state, modify post and save
+                        postData!!.apply {
+                            this.strTitle       = strTitle
+                            strBody             = strText
+                            strRecentEditDate   = CB_AppFunc.getDateStringForSave()
+                        }
+
+                        CB_AppFunc.getUserPostsRoot().child(CB_AppFunc.getUid())
+                            .child(editPostKey).setValue(postData).await()
+
                         launch(Dispatchers.Main)
                         {
+                            // 저장을 완료한 이후에 다시 PostDetailFragment 로 이동한다.
                             dialog.cancel()
-                            CB_AppFunc.okDialog(activity, getString(R.string.str_error),
-                                getString(R.string.str_post_failed), R.drawable.error_icon, true)
+                            findNavController().popBackStack()
                         }
-                        return@launch
                     }
-
-                    // 해당 경로에 Post 데이터를 저장한다.
-                    val strDate = CB_AppFunc.getDateStringForSave()
-                    val tPost = CB_Post(CB_AppFunc.getUid(), strTitle, strText, REACTION_TYPE.NONE.ordinal, strDate, strDate)
-                    uidRootRef.child(postKey).setValue(tPost).await()
-
-                    launch(Dispatchers.Main)
+                    else
                     {
-                        // 저장을 완료한 이후에 다시 mainFragment 로 이동한다.
-                        dialog.cancel()
-                        beginAction(R.id.action_CB_NewPostFragment_to_CB_MainFragment, R.id.CB_NewPostFragment)
+                        // if add state
+                        // user-posts - userUid - postKey1 - CB_Post
+                        val uidRootRef = CB_AppFunc.getUserPostsRoot().child(CB_AppFunc.getUid())
+                        val postKey = uidRootRef.push().key
+
+                        if(postKey == null)
+                        {
+                            // PostKey 가 없는 경우 dialog 처리
+                            launch(Dispatchers.Main)
+                            {
+                                dialog.cancel()
+                                CB_AppFunc.okDialog(activity, getString(R.string.str_error),
+                                    getString(R.string.str_post_failed), R.drawable.error_icon, true)
+                            }
+                            return@launch
+                        }
+
+                        // 해당 경로에 Post 데이터를 저장한다.
+                        val strDate = CB_AppFunc.getDateStringForSave()
+                        val tPost = CB_Post(CB_AppFunc.getUid(), strTitle, strText, REACTION_TYPE.NONE.ordinal, strDate, strDate)
+                        uidRootRef.child(postKey).setValue(tPost).await()
+
+                        launch(Dispatchers.Main)
+                        {
+                            // 저장을 완료한 이후에 다시 mainFragment 로 이동한다.
+                            dialog.cancel()
+                            beginAction(R.id.action_CB_NewPostFragment_to_CB_MainFragment, R.id.CB_NewPostFragment)
+                        }
                     }
                 }
                 catch (e: FirebaseException)
@@ -178,14 +251,23 @@ class CB_NewPostFragment: CB_BaseFragment("NewPostFragment")
         if(CB_SingleSystemMgr.isDialog(CB_SingleSystemMgr.DIALOG_TYPE.LOADING_DIALOG))
             return
 
-        with(binding)
-        {
-            val strTitle = titleEditText.text.toString()
-            val strText = textEditText.text.toString()
-            // val image = setIconImage()
+        val strTitle = CB_ViewModel.strTitle.value!!
+        val strText = CB_ViewModel.strBody.value!!
+        // val image = setIconImage()
 
-            // 아무것도 작성한 것이 없다면 바로 메인화면 이동
-            if(strTitle.isEmpty() && strText.isEmpty())
+        // 변경사항이 없는 경우에 뒤로가기 버튼을 누른 경우
+        if(editPostKey.isNotEmpty())
+        {
+            if(strTitle == postData!!.strTitle && strText == postData!!.strBody)
+            {
+                // 여부를 묻지 않고 바로 나간다.
+                findNavController().popBackStack()
+                return
+            }
+        }
+        else
+        {
+            if (strTitle.isEmpty() && strText.isEmpty())
             {
                 // NewPostFragment 에서는 navigate 기능을 이용한다.
                 beginAction(R.id.action_CB_NewPostFragment_to_CB_MainFragment, R.id.CB_NewPostFragment)
@@ -193,13 +275,20 @@ class CB_NewPostFragment: CB_BaseFragment("NewPostFragment")
             }
         }
 
-        // 뭔가 적혀 있었으면 여부를 묻는다.
+        // 변경사항이 있으면 여부를 묻는다.
         CB_AppFunc.confirmDialog(requireActivity(), getString(R.string.str_warning),
-            getString(R.string.str_post_discard), R.drawable.warning_icon, true,
+            getString(R.string.str_discard_msg), R.drawable.warning_icon, true,
             getString(R.string.str_discard),
             yesListener = { dialog, witch ->
 
-                beginAction(R.id.action_CB_NewPostFragment_to_CB_MainFragment, R.id.CB_NewPostFragment)
+                if(editPostKey.isNotEmpty())
+                {
+                    findNavController().popBackStack()
+                }
+                else
+                {
+                    beginAction(R.id.action_CB_NewPostFragment_to_CB_MainFragment, R.id.CB_NewPostFragment)
+                }
 
             }, getString(R.string.str_cancel), null)
     }

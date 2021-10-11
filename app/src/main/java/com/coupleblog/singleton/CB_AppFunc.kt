@@ -474,7 +474,7 @@ class CB_AppFunc
                 .setTitle(str_title)
                 .setMessage(str_message)
                 .setCancelable(bCancelable)
-                .setPositiveButton("확인", listener)
+                .setPositiveButton(context.getString(R.string.str_ok), listener)
                 .setOnDismissListener {
                     CB_SingleSystemMgr.releaseDialog(CB_SingleSystemMgr.DIALOG_TYPE.OK_DIALOG)
                 }

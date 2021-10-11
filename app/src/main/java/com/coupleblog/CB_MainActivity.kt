@@ -1,12 +1,14 @@
 package com.coupleblog
 
 import android.os.Bundle
+import androidx.core.os.bundleOf
 import androidx.core.view.isGone
 import androidx.core.view.isVisible
 import androidx.databinding.DataBindingUtil
 import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.findNavController
 import androidx.navigation.fragment.findNavController
+import com.coupleblog.fragment.CB_PostDetailFragment
 import com.coupleblog.parent.CB_BaseActivity
 import com.coupleblog.singleton.CB_AppFunc
 import com.coupleblog.singleton.CB_SingleSystemMgr
@@ -40,6 +42,9 @@ class CB_MainActivity : CB_BaseActivity("MainActivity", CB_SingleSystemMgr.ACTIV
         if(navController.currentDestination?.id != R.id.CB_MainFragment)
             return
 
-        navController.navigate(R.id.action_CB_MainFragment_to_CB_NewPostFragment)
+        // we use NewPostFragment for editing and adding
+        // so we pass empty string when we want to add new post
+        val arguments = bundleOf(CB_PostDetailFragment.ARGU_POST_KEY to "")
+        navController.navigate(R.id.action_CB_MainFragment_to_CB_NewPostFragment, arguments)
     }
 }

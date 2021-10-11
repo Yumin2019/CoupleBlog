@@ -28,14 +28,18 @@ class CB_ItemListDialog(context: Activity, strTitle: String,
 {
     init
     {
-        val binding: ItemListBinding = DataBindingUtil.setContentView(context, R.layout.dialog_cb_list_item)
+        val binding: ItemListBinding = DataBindingUtil.inflate(LayoutInflater.from(context),
+            R.layout.dialog_cb_list_item, null, false)
+
+        setContentView(binding.root)
         binding.apply {
             this.strTitle   = strTitle
             adapter         = ItemListAdapter(this@CB_ItemListDialog, itemList)
             itemRecyclerView.hasFixedSize()
         }
 
-        window!!.apply{
+
+        window!!.apply {
             setBackgroundDrawable(ColorDrawable(Color.TRANSPARENT))
             setLayout(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT)
         }
@@ -59,13 +63,13 @@ class ItemListAdapter(private val dialog: Dialog, private val itemList: ArrayLis
     {
         fun bind(dialogItem: DialogItem, dialog: Dialog)
         {
-            binding.apply {
+             binding.apply {
                 strText     = dialogItem.strText
                 iIconRes    = dialogItem.iIconRes
 
                 // if you click one item, dismiss dialog
                 container.setOnClickListener {
-                    dialog.dismiss()
+                    dialog.cancel()
                     dialogItem.callback.invoke()
                 }
                 executePendingBindings()
@@ -76,7 +80,7 @@ class ItemListAdapter(private val dialog: Dialog, private val itemList: ArrayLis
     override fun onCreateViewHolder(viewGroup: ViewGroup, viewType: Int): ViewHolder =
         DataBindingUtil.inflate<DialogItemBinding>(
             LayoutInflater.from(viewGroup.context),
-            R.layout.comment_item, viewGroup, false
+            R.layout.list_dialog_item, viewGroup, false
         ).let { ViewHolder(it) }
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) =

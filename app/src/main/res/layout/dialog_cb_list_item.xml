@@ -44,6 +44,7 @@
 
             <androidx.recyclerview.widget.RecyclerView
                 android:id="@+id/item_recycler_view"
+                android:overScrollMode="never"
                 bind:adapter="@{adapter}"
                 app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
                 android:layout_width="0dp"
