@@ -10,4 +10,11 @@
         android:visible="true"
         app:showAsAction="never" />
 
+    <item
+        android:icon="@drawable/ic_baseline_mail_24"
+        android:id="@+id/action_mailbox"
+        android:title="@string/str_mailbox"
+        android:visible="true"
+        app:showAsAction="ifRoom" />
+
 </menu>

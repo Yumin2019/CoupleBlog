@@ -233,6 +233,7 @@ Couple blog 은(는) 정보주체의 이용정보를 저장하고 수시로 불�
     </string>
 
     <string name="app_name">Couple blog</string>
+    <string name="str_mailbox">Mail Box</string>
     <string name="str_sign_in">Sign In</string>
     <string name="str_sign_out">Sign Out</string>
     <string name="str_sign_up">Sign Up</string>
@@ -280,12 +281,13 @@ Couple blog 은(는) 정보주체의 이용정보를 저장하고 수시로 불�
     <string name="str_comment_hint">Write a comment…</string>
     <string name="str_password_again_error">Password isn\'t same</string>
     <string name="str_invalid_format_error">It\'s invalid format</string>
-    <string name="str_sign_in_failed">Sign in failed</string>
-    <string name="str_sign_up_failed">Sign out failed</string>
+    <string name="str_sign_in_failed">Failed to sign in</string>
+    <string name="str_sign_up_failed">Failed to sign out</string>
     <string name="str_value_update_failed">Value update failed</string>
     <string name="str_post_failed">Post failed</string>
     <string name="str_user_info_load_failed">User information load failed</string>
     <string name="str_comment_list_load_failed">Comment list load failed</string>
+    <string name="str_mail_list_load_failed">Mail list load failed</string>
     <string name="str_post_data_load_failed">Post data load failed</string>
     <string name="str_post_delete_failed">Post delete failed</string>
     <string name="str_reaction_icon_attach_failed">Reaction icon attach failed</string>

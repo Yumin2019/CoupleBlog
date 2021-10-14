@@ -14,6 +14,9 @@ import com.coupleblog.parent.CB_BaseFragment
 import com.coupleblog.singleton.CB_ViewModel
 import com.google.android.material.tabs.TabLayoutMediator
 import com.coupleblog.fragment.PAGE_TYPE.*
+import com.google.firebase.database.DataSnapshot
+import com.google.firebase.database.DatabaseError
+import com.google.firebase.database.ValueEventListener
 
 enum class PAGE_TYPE
 {
@@ -105,6 +108,24 @@ class CB_MainFragment : CB_BaseFragment("MainFragment")
 
                 // 프레그먼트를 종료시킨다.
                 findNavController().popBackStack()
+                true
+            }
+
+            R.id.action_mailbox ->
+            {
+                // move to mailBox Fragment
+            /*    CB_AppFunc.getMailBoxRoot().child(CB_AppFunc.getUid()).addListenerForSingleValueEvent(object :
+                    ValueEventListener {
+                    override fun onDataChange(snapshot: DataSnapshot)
+                    {
+                        if(!snapshot.exists())
+                        {
+                            CB_AppFunc.getMailBoxRoot().child(CB_AppFunc.getUid()).setValue()
+                        }
+                    }
+
+                    override fun onCancelled(error: DatabaseError) {}
+                })*/
                 true
             }
             else -> {super.onOptionsItemSelected(item)}

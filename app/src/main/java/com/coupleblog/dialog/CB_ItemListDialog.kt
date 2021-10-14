@@ -38,7 +38,6 @@ class CB_ItemListDialog(context: Activity, strTitle: String,
             itemRecyclerView.hasFixedSize()
         }
 
-
         window!!.apply {
             setBackgroundDrawable(ColorDrawable(Color.TRANSPARENT))
             setLayout(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT)

@@ -88,6 +88,7 @@ class CB_AppFunc
         fun getUserPostsRoot() = getDataBase().child("user-posts")
         fun getCouplesRoot() = getDataBase().child("couples")
         fun getPostCommentsRoot() = getDataBase().child("post-comments")
+        fun getMailBoxRoot() = getDataBase().child("user-mails")
 
         @SuppressLint("ConstantLocale")
         val isKorea = Locale.getDefault().toString().startsWith("ko")
