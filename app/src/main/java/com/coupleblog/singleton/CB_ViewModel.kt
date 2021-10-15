@@ -8,6 +8,8 @@ class CB_ViewModel
 {
     companion object
     {
+        // when you go out of mainFragment
+        // when you click view pages
         var bAddButton = MutableLiveData(false)
 
         // PostDetailFragment
@@ -23,5 +25,39 @@ class CB_ViewModel
             strTitle.postValue("")
             strBody.postValue("")
         }
+
+        // MailBoxFragment
+        val emailCheckedList = ArrayList<Int>()
+
+        fun clearCheckedList() { emailCheckedList.clear() }
+        fun checkEmail(iIdx: Int)
+        {
+            if(!findCheck(iIdx))
+            {
+                // at first
+                emailCheckedList.add(iIdx)
+            }
+            else
+            {
+                assert(false) { "tried to add invalid value" }
+            }
+        }
+        fun unCheckEmail(iIdx: Int)
+        {
+            if(!emailCheckedList.remove(iIdx))
+            {
+                assert(false) { "tried to delete invalid value" }
+            }
+        }
+        fun emailCheckedSize() = emailCheckedList.size
+        fun findCheck(iIdx: Int): Boolean
+        {
+            emailCheckedList.forEach {
+                if(it == iIdx)
+                    return true
+            }
+            return false
+        }
+
     }
 }

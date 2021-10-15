@@ -55,7 +55,7 @@
             android:textColor="@color/gray"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toTopOf="parent"
-            tools:text="10 Oct 2021, 23:43" />
+            tools:text="10 Oct 2021, 23:43"/>
 
         <ImageView
             android:id="@+id/checkbox_image_view"

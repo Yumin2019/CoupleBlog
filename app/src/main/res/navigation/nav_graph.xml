@@ -43,6 +43,9 @@
                 app:argType="string" android:defaultValue=""/>
 
         </action>
+        <action
+            android:id="@+id/action_CB_MainFragment_to_CB_MailBoxFragment"
+            app:destination="@id/CB_MailBoxFragment" />
     </fragment>
 
     <fragment
@@ -91,6 +94,18 @@
         tools:layout="@layout/fragment_cb_new_post" >
         <action
             android:id="@+id/action_CB_NewPostFragment_to_CB_MainFragment"
+            app:destination="@id/CB_MainFragment"
+            app:popUpTo="@+id/CB_MainFragment"
+            app:popUpToInclusive="true" />
+    </fragment>
+
+    <fragment
+        android:id="@+id/CB_MailBoxFragment"
+        android:name="com.coupleblog.fragment.CB_MailBoxFragment"
+        android:label="fragment_cb_mail_box"
+        tools:layout="@layout/fragment_cb_mailbox" >
+        <action
+            android:id="@+id/action_CB_MailBoxFragment_to_CB_MainFragment"
             app:destination="@id/CB_MainFragment"
             app:popUpTo="@+id/CB_MainFragment"
             app:popUpToInclusive="true" />

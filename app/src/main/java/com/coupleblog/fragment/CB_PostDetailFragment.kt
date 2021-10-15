@@ -103,7 +103,6 @@ class CB_PostDetailFragment: CB_BaseFragment("PostDetail")
         super.onStart()
 
         // add value event listener to the post
-        // onCreate, onDestroy에서 안 하는 이유는 잘 모르겠는데 아마 이유가 있어서 이런 거 같다. (따라가자)
         val postListener = object : ValueEventListener
         {
             override fun onDataChange(snapshot: DataSnapshot)

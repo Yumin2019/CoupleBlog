@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <layout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:bind="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools">
 
     <data class="com.coupleblog.fragment.MailboxBinding">
@@ -8,6 +9,10 @@
         <variable
             name="fragment"
             type="com.coupleblog.fragment.CB_MailBoxFragment" />
+
+        <variable
+            name="layoutManager"
+            type="androidx.recyclerview.widget.LinearLayoutManager"/>
 
         <variable
             name="viewModel"
@@ -36,15 +41,29 @@
                 android:layout_width="match_parent"
                 android:layout_height="match_parent">
 
-
                 <androidx.recyclerview.widget.RecyclerView
+                    android:id="@+id/mail_recycler_view"
                     android:layout_width="0dp"
                     android:layout_height="0dp"
-                    tools:listitem="@layout/mail_item"
                     app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toTopOf="parent" />
+                    app:layout_constraintTop_toTopOf="parent"
+                    bind:layout_manager="@{layoutManager}"
+                    tools:listitem="@layout/mail_item" />
+
+                <com.google.android.material.floatingactionbutton.FloatingActionButton
+                    android:id="@+id/add_floating_button"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginEnd="@dimen/margin_24dp"
+                    android:layout_marginBottom="@dimen/margin_24dp"
+                    android:src="@drawable/ic_baseline_mail_24"
+                    app:layout_constraintBottom_toBottomOf="@+id/mail_recycler_view"
+                    app:layout_constraintEnd_toEndOf="@+id/mail_recycler_view"
+                    app:maxImageSize="30dp"
+                    app:tint="@color/white"
+                    tools:visibility="visible" />
 
             </androidx.constraintlayout.widget.ConstraintLayout>
 

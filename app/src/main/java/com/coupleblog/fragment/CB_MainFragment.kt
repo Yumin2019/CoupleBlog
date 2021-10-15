@@ -114,18 +114,7 @@ class CB_MainFragment : CB_BaseFragment("MainFragment")
             R.id.action_mailbox ->
             {
                 // move to mailBox Fragment
-            /*    CB_AppFunc.getMailBoxRoot().child(CB_AppFunc.getUid()).addListenerForSingleValueEvent(object :
-                    ValueEventListener {
-                    override fun onDataChange(snapshot: DataSnapshot)
-                    {
-                        if(!snapshot.exists())
-                        {
-                            CB_AppFunc.getMailBoxRoot().child(CB_AppFunc.getUid()).setValue()
-                        }
-                    }
-
-                    override fun onCancelled(error: DatabaseError) {}
-                })*/
+                beginAction(R.id.action_CB_MainFragment_to_CB_MailBoxFragment, R.id.CB_MainFragment)
                 true
             }
             else -> {super.onOptionsItemSelected(item)}
@@ -141,7 +130,7 @@ class CB_MainFragment : CB_BaseFragment("MainFragment")
     override fun onDestroy()
     {
         super.onDestroy()
-        _binding = null
         CB_ViewModel.bAddButton.postValue(false)
+        _binding = null
     }
 }

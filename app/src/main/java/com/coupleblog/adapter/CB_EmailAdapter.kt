@@ -4,16 +4,12 @@ import com.coupleblog.fragment.CB_MailBoxFragment
 import com.coupleblog.fragment.MailItemBinding
 import com.coupleblog.model.CB_Mail
 
-package com.coupleblog.adapter
-
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.databinding.DataBindingUtil
 import androidx.recyclerview.widget.RecyclerView
 import com.coupleblog.R
-import com.coupleblog.fragment.CB_PostDetailFragment
-import com.coupleblog.model.CB_Comment
 import com.coupleblog.singleton.CB_AppFunc
 import com.google.firebase.database.ChildEventListener
 import com.google.firebase.database.DataSnapshot
@@ -22,7 +18,7 @@ import com.google.firebase.database.DatabaseReference
 import com.google.firebase.database.ktx.getValue
 
 class CB_EmailAdapter(private val fragment: CB_MailBoxFragment,
-                        private val emailRef: DatabaseReference)
+                      private val emailRef: DatabaseReference)
     : RecyclerView.Adapter<CB_EmailAdapter.ViewHolder>()
 {
     companion object
@@ -118,6 +114,10 @@ class CB_EmailAdapter(private val fragment: CB_MailBoxFragment,
             binding.apply {
                 fragment    = argFragment
                 mailData    = argMailBox
+                checkboxImageView.setOnClickListener {
+                    // add n-th index
+                    layoutPosition
+                }
                 executePendingBindings()
             }
         }
@@ -133,5 +133,4 @@ class CB_EmailAdapter(private val fragment: CB_MailBoxFragment,
         holder.bind(fragment, emailList[position])
 
     override fun getItemCount(): Int = emailList.size
-
 }
