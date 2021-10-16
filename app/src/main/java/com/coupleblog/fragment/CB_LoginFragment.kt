@@ -142,8 +142,8 @@ class CB_LoginFragment : CB_BaseFragment("LoginFragment") {
                 else
                 {
                     // 로그인 실패
-                    CB_AppFunc.okDialog(activity, context.getString(R.string.str_error),
-                        context.getString(R.string.str_sign_in_failed), R.drawable.error_icon, true)
+                    CB_AppFunc.okDialog(activity, R.string.str_error,
+                        R.string.str_sign_in_failed, R.drawable.error_icon, true)
                 }
             }
     }

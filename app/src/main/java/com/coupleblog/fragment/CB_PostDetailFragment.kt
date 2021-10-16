@@ -117,8 +117,8 @@ class CB_PostDetailFragment: CB_BaseFragment("PostDetail")
             override fun onCancelled(error: DatabaseError)
             {
                 Log.e(CB_CommentAdapter.strTag, "onCancelled:post load")
-                CB_AppFunc.okDialog(requireActivity(), getString(R.string.str_error),
-                    getString(R.string.str_post_data_load_failed), R.drawable.error_icon, true)
+                CB_AppFunc.okDialog(requireActivity(), R.string.str_error,
+                    R.string.str_post_data_load_failed, R.drawable.error_icon, true)
             }
         }
 
@@ -143,7 +143,7 @@ class CB_PostDetailFragment: CB_BaseFragment("PostDetail")
 
     override fun backPressed()
     {
-        beginAction(R.id.action_CB_PostDetailFragment_to_CB_MainFragment, R.id.CB_PostDetailFragment)
+        findNavController().popBackStack()
     }
 
     override fun onDestroy()
@@ -270,8 +270,8 @@ class CB_PostDetailFragment: CB_BaseFragment("PostDetail")
                 launch(Dispatchers.Main)
                 {
                     dialog.cancel()
-                    CB_AppFunc.okDialog(requireActivity(), getString(R.string.str_error),
-                        getString(R.string.str_post_failed), R.drawable.error_icon, true)
+                    CB_AppFunc.okDialog(requireActivity(), R.string.str_error,
+                        R.string.str_post_failed, R.drawable.error_icon, true)
                 }
             }
         }
@@ -285,10 +285,10 @@ class CB_PostDetailFragment: CB_BaseFragment("PostDetail")
         if(CB_SingleSystemMgr.isDialog(CB_SingleSystemMgr.DIALOG_TYPE.CONFIRM_DIALOG))
             return
 
-        CB_AppFunc.confirmDialog(requireActivity(), getString(R.string.str_warning),
-            getString(R.string.str_delete_msg), R.drawable.warning_icon, true,
-            getString(R.string.str_delete),
-            yesListener = { confirmDialog, witch ->
+        CB_AppFunc.confirmDialog(requireActivity(), R.string.str_warning,
+            R.string.str_delete_msg, R.drawable.warning_icon, true,
+            R.string.str_delete,
+            yesListener = { _, _ ->
 
                 // if user really want to delete, delete comment
                 val dialog = CB_LoadingDialog(requireContext()).apply { show() }
@@ -312,16 +312,19 @@ class CB_PostDetailFragment: CB_BaseFragment("PostDetail")
                         launch(Dispatchers.Main)
                         {
                             dialog.cancel()
-                            CB_AppFunc.okDialog(requireActivity(), getString(R.string.str_error),
-                                getString(R.string.str_post_delete_failed), R.drawable.error_icon, true)
+                            CB_AppFunc.okDialog(requireActivity(), R.string.str_error,
+                                R.string.str_post_delete_failed, R.drawable.error_icon, true)
                         }
                     }
                 }
-            }, getString(R.string.str_cancel), null)
+            }, R.string.str_cancel, null)
     }
 
     fun commentReactionIconsButton(strCommentKey: String, commentData: CB_Comment)
     {
+        if(CB_SingleSystemMgr.isDialog(CB_SingleSystemMgr.DIALOG_TYPE.ITEM_LIST_DIALOG))
+            return
+
         val listItem = arrayListOf(
             DialogItem(getString(R.string.str_none_icon), R.drawable.ic_baseline_do_not_disturb_24,
                 callback = { setCommentReactionIcon(REACTION_TYPE.NONE, strCommentKey, commentData) }),
@@ -378,8 +381,8 @@ class CB_PostDetailFragment: CB_BaseFragment("PostDetail")
                 launch(Dispatchers.Main)
                 {
                     dialog.cancel()
-                    CB_AppFunc.okDialog(requireActivity(), getString(R.string.str_error),
-                        getString(R.string.str_reaction_icon_attach_failed), R.drawable.error_icon, true)
+                    CB_AppFunc.okDialog(requireActivity(), R.string.str_error,
+                        R.string.str_reaction_icon_attach_failed, R.drawable.error_icon, true)
                 }
             }
         }
@@ -415,8 +418,8 @@ class CB_PostDetailFragment: CB_BaseFragment("PostDetail")
                 launch(Dispatchers.Main)
                 {
                     dialog.cancel()
-                    CB_AppFunc.okDialog(requireActivity(), getString(R.string.str_error),
-                        getString(R.string.str_reaction_icon_attach_failed), R.drawable.error_icon, true)
+                    CB_AppFunc.okDialog(requireActivity(), R.string.str_error,
+                        R.string.str_reaction_icon_attach_failed, R.drawable.error_icon, true)
                 }
             }
         }
@@ -435,9 +438,10 @@ class CB_PostDetailFragment: CB_BaseFragment("PostDetail")
             return
 
         // we ask the user if you really want to delete post
-        CB_AppFunc.confirmDialog(requireActivity(), getString(R.string.str_warning), getString(R.string.str_delete_msg),
-            R.drawable.warning_icon, true,  getString(R.string.str_delete),
-            yesListener = { comfirmDialog, witch ->
+        CB_AppFunc.confirmDialog(requireActivity(), R.string.str_warning, R.string.str_delete_msg,
+            R.drawable.warning_icon, true,
+            R.string.str_delete,
+            yesListener = { _, _ ->
 
                 // if user really want to delete, delete post
                 val dialog = CB_LoadingDialog(requireContext()).apply { show() }
@@ -454,7 +458,7 @@ class CB_PostDetailFragment: CB_BaseFragment("PostDetail")
                         {
                             // if success, move to MainFragment
                             dialog.cancel()
-                            beginAction(R.id.action_CB_PostDetailFragment_to_CB_MainFragment, R.id.CB_PostDetailFragment)
+                            backPressed()
                         }
                     }
                     catch(e: FirebaseException)
@@ -464,13 +468,13 @@ class CB_PostDetailFragment: CB_BaseFragment("PostDetail")
                         launch(Dispatchers.Main)
                         {
                             dialog.cancel()
-                            CB_AppFunc.okDialog(requireActivity(), getString(R.string.str_error),
-                                getString(R.string.str_post_delete_failed), R.drawable.error_icon, true)
+                            CB_AppFunc.okDialog(requireActivity(), R.string.str_error,
+                                R.string.str_post_delete_failed, R.drawable.error_icon, true)
                         }
                     }
                 }
 
-            }, getString(R.string.str_cancel), null)
+            }, R.string.str_cancel, null)
     }
 
     fun postButton()
@@ -479,8 +483,8 @@ class CB_PostDetailFragment: CB_BaseFragment("PostDetail")
         val strComment = binding.commentEditText.text.toString()
         if(strComment.isEmpty())
         {
-            CB_AppFunc.okDialog(requireActivity(), getString(R.string.str_warning),
-                getString(R.string.str_input_comment), R.drawable.warning_icon, true)
+            CB_AppFunc.okDialog(requireActivity(), R.string.str_warning,
+                R.string.str_input_comment, R.drawable.warning_icon, true)
             return
         }
 
@@ -504,8 +508,8 @@ class CB_PostDetailFragment: CB_BaseFragment("PostDetail")
                 launch(Dispatchers.Main)
                 {
                     dialog.cancel()
-                    CB_AppFunc.okDialog(requireActivity(), getString(R.string.str_error),
-                        getString(R.string.str_post_failed), R.drawable.error_icon, true)
+                    CB_AppFunc.okDialog(requireActivity(), R.string.str_error,
+                        R.string.str_post_failed, R.drawable.error_icon, true)
                 }
             }
         }

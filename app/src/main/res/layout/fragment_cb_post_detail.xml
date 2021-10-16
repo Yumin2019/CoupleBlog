@@ -200,7 +200,6 @@
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toEndOf="@+id/comment_text_input_layout"
                     app:layout_constraintTop_toTopOf="@+id/comment_text_input_layout"
-                    app:layout_constraintWidth_max="@dimen/button_max_length"
                     app:rippleColor="@color/ripple_purple" />
 
                 <androidx.recyclerview.widget.RecyclerView

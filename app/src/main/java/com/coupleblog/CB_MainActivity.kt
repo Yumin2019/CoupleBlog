@@ -9,6 +9,7 @@ import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.findNavController
 import androidx.navigation.fragment.findNavController
 import com.coupleblog.fragment.CB_PostDetailFragment
+import com.coupleblog.fragment.PAGE_TYPE
 import com.coupleblog.parent.CB_BaseActivity
 import com.coupleblog.singleton.CB_AppFunc
 import com.coupleblog.singleton.CB_SingleSystemMgr
@@ -36,15 +37,28 @@ class CB_MainActivity : CB_BaseActivity("MainActivity", CB_SingleSystemMgr.ACTIV
 
     // Add 버튼 함수 (MainFragment - MyPostLists 에서 사용한다)
     // 해당 상황이 맞는 경우에만 visible 처리가 되어 있다.
-    fun newPostButton()
+    fun floatingButton()
     {
         val navController = findNavController(R.id.nav_host_fragment)
         if(navController.currentDestination?.id != R.id.CB_MainFragment)
             return
 
-        // we use NewPostFragment for editing and adding
-        // so we pass empty string when we want to add new post
-        val arguments = bundleOf(CB_PostDetailFragment.ARGU_POST_KEY to "")
-        navController.navigate(R.id.action_CB_MainFragment_to_CB_NewPostFragment, arguments)
+        when(CB_ViewModel.iPageType.value)
+        {
+            PAGE_TYPE.MY_POSTS.ordinal ->
+            {
+                // we use NewPostFragment for editing and adding
+                // so we pass empty string when we want to add new post
+                val arguments = bundleOf(CB_PostDetailFragment.ARGU_POST_KEY to "")
+                navController.navigate(R.id.action_CB_MainFragment_to_CB_NewPostFragment, arguments)
+            }
+
+            PAGE_TYPE.MAILBOX.ordinal ->
+            {
+                navController.navigate(R.id.action_CB_MainFragment_to_CB_NewMailFragment)
+            }
+            else -> {}
+        }
+
     }
 }

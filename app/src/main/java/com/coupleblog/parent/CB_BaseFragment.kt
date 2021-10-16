@@ -35,6 +35,7 @@ abstract class CB_BaseFragment(val strTag: String) : Fragment()
         }
 
         requireActivity().onBackPressedDispatcher.addCallback(this, callback)
+        infoLog("onCreate")
     }
 
     @SuppressLint("ClickableViewAccessibility")
@@ -88,7 +89,7 @@ abstract class CB_BaseFragment(val strTag: String) : Fragment()
         }
         else
         {
-            CB_SingleSystemMgr.showToast(CB_AppFunc.application, getString(R.string.str_press_back_to_exit))
+            CB_SingleSystemMgr.showToast(R.string.str_press_back_to_exit)
         }
 
         firstTime = secondTime

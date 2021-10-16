@@ -1,6 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
 <string name="str_personal_information_processing_policy">
+Couple Blog Dev: I used Papago translator. sorry if it has contextual errors.
+
 In order to protect the personal information of the data subject and to quickly and smoothly handle the grievances under Article 30 of the Personal Information Protection Act, (https://blog.naver.com/lmj3322) establishes and discloses personal information processing policies as follows.\n\n
 
 ○ This personal information processing policy will take effect from January 1, 2021.\n\n
@@ -232,7 +234,7 @@ Couple blog 은(는) 정보주체의 이용정보를 저장하고 수시로 불�
 ① 이 개인정보처리방침은 2021년 1월 1부터 적용됩니다.\n\n
     </string>
 
-    <string name="app_name">Couple blog</string>
+    <string name="app_name">Couple Blog</string>
     <string name="str_mailbox">Mail Box</string>
     <string name="str_sign_in">Sign In</string>
     <string name="str_sign_out">Sign Out</string>
@@ -240,6 +242,7 @@ Couple blog 은(는) 정보주체의 이용정보를 저장하고 수시로 불�
     <string name="str_email">Email</string>
     <string name="str_password">Password</string>
     <string name="str_password_again">Password again</string>
+    <string name="str_to">To</string>
     <string name="str_title">Title</string>
     <string name="str_text">Text</string>
     <string name="str_cancel">Cancel</string>
@@ -262,9 +265,15 @@ Couple blog 은(는) 정보주체의 이용정보를 저장하고 수시로 불�
     <string name="str_my_post_menu">Post menu</string>
     <string name="str_comment_menu">Comment menu</string>
 
+    <string name="str_choose_mail_type">Choose mail type</string>
+    <string name="str_mail_type_normal">Mail</string>
+    <string name="str_mail_type_release_note">Release Note</string>
+    <string name="str_mail_type_request_couple">Request couple</string>
+
     <string name="str_ok">OK</string>
     <string name="str_register">Register</string>
     <string name="str_post">Post</string>
+    <string name="str_send">Send</string>
     <string name="str_register_msg">if you don\'t have an account</string>
     <string name="str_personal_information_policy_msg">if you want to see</string>
     <string name="str_personal_information_policy">Personal information processing policy</string>
@@ -273,6 +282,7 @@ Couple blog 은(는) 정보주체의 이용정보를 저장하고 수시로 불�
     <string name="str_input_password_again">Please input your password again</string>
     <string name="str_input_comment">Please input your comment</string>
     <string name="str_input_title">Please input your title</string>
+    <string name="str_input_recipient">Please specify at least one recipient.</string>
     <string name="str_post_confirm">Do you really want to post?</string>
     <string name="str_discard_msg">Do you really want to discard?</string>
     <string name="str_delete_msg">Do you really want to delete?</string>
@@ -283,6 +293,9 @@ Couple blog 은(는) 정보주체의 이용정보를 저장하고 수시로 불�
     <string name="str_invalid_format_error">It\'s invalid format</string>
     <string name="str_sign_in_failed">Failed to sign in</string>
     <string name="str_sign_up_failed">Failed to sign out</string>
+    <string name="str_failed_to_find_user">Failed to find user</string>
+    <string name="str_tried_to_request_to_yourself">You can\'t be a couple with yourself</string>
+    <string name="str_user_is_couple_already">This user is already a couple</string>
     <string name="str_value_update_failed">Value update failed</string>
     <string name="str_post_failed">Post failed</string>
     <string name="str_user_info_load_failed">User information load failed</string>

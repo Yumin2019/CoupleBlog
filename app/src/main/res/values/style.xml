@@ -36,6 +36,7 @@
         <item name="android:fontFamily">@font/lora_regular</item>
         <item name="android:insetTop">0dp</item>
         <item name="android:insetBottom">0dp</item>
+        <item name="layout_constraintWidth_max">@dimen/button_max_length</item>
     </style>
 
     <style name="divider">
@@ -61,21 +62,19 @@
     </style>
 
     <style name="MaterialDialogTheme" parent="ThemeOverlay.MaterialComponents.MaterialAlertDialog">
-        /* rounded border */
+        <!-- rounded border -->
         <item name="alertDialogStyle">@style/MaterialAlertDialogStyle</item>
 
-        /* button styles */
+        <!-- button styles -->
         <item name="buttonBarPositiveButtonStyle">@style/ButtonStyle</item>
         <item name="buttonBarNeutralButtonStyle">@style/ButtonStyle</item>
         <item name="buttonBarNegativeButtonStyle">@style/ButtonStyle</item>
 
-        /* text styles */
+        <!-- text styles -->
         <item name="materialAlertDialogTitleTextStyle">@style/TitleStyle</item>
         <item name="materialAlertDialogBodyTextStyle">@style/BodyTextStyle</item>
-
         <item name="materialAlertDialogTitleIconStyle">@style/TitleIconStyle</item>
 
-        // dim
         <item name="android:backgroundDimAmount">0.6</item>
     </style>
 
@@ -101,10 +100,10 @@
         <item name="android:paddingStart">@dimen/margin_24dp</item>
         <item name="android:paddingEnd">@dimen/margin_24dp</item>
 
-        /* in English always uppercase */
+        <!--in English always uppercase -->
         <item name="android:textAllCaps">true</item>
 
-        // rounded shape
+        <!-- rounded shape-->
         <item name="shapeAppearance">@style/RoundShapeAppearance</item>
     </style>
 

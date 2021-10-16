@@ -3,16 +3,18 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools">
 
-    <data class="com.coupleblog.fragment.NewPostBinding">
+    <data class="com.coupleblog.fragment.NewMailBinding">
 
         <variable
             name="fragment"
-            type="com.coupleblog.fragment.CB_NewPostFragment" />
+            type="com.coupleblog.fragment.CB_NewMailFragment" />
 
         <variable
             name="viewModel"
             type="com.coupleblog.singleton.CB_ViewModel.Companion"/>
     </data>
+
+
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
@@ -36,35 +38,6 @@
                 android:layout_width="match_parent"
                 android:layout_height="match_parent">
 
-                <com.google.android.material.textfield.TextInputLayout
-                    android:id="@+id/title_text_input_layout"
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    app:endIconMode="clear_text"
-                    app:hintEnabled="true"
-                    app:counterEnabled="true"
-                    app:counterMaxLength="30"
-                    app:errorEnabled="true"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toTopOf="parent"
-                    app:layout_constraintWidth_max="@dimen/button_max_length">
-
-                    <com.google.android.material.textfield.TextInputEditText
-                        android:id="@+id/title_edit_text"
-                        style="@style/post_title_text_view"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:maxLength="30"
-                        android:textAlignment="viewStart"
-                        tools:text="Hello world"
-                        android:text="@={viewModel.strTitle}"
-                        android:hint="@string/str_title"
-                        android:imeOptions="actionNext"
-                        android:inputType="text" />
-
-                </com.google.android.material.textfield.TextInputLayout>
-
                 <ImageView
                     android:id="@+id/post_image_view"
                     android:layout_width="0dp"
@@ -74,23 +47,97 @@
                     android:background="@color/gray"
                     android:visibility="gone"
                     app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintHorizontal_bias="0.0"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toBottomOf="@+id/title_text_input_layout"
                     tools:layout_height="130dp"
                     tools:visibility="visible" />
 
                 <com.google.android.material.textfield.TextInputLayout
+                    android:id="@+id/recipient_text_input_layout"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    app:counterEnabled="true"
+                    app:counterMaxLength="30"
+                    app:endIconMode="clear_text"
+                    app:errorEnabled="true"
+                    app:hintEnabled="true"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent"
+                    app:layout_constraintWidth_max="@dimen/button_max_length">
+
+                    <com.google.android.material.textfield.TextInputEditText
+                        android:id="@+id/recipient_edit_text"
+                        style="@style/normal_text_style"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="@dimen/margin_16dp"
+                        android:layout_marginTop="@dimen/margin_16dp"
+                        android:layout_marginEnd="@dimen/margin_16dp"
+                        android:gravity="start"
+                        android:hint="@string/str_to"
+                        android:imeOptions="actionDone"
+                        android:inputType="text"
+                        android:maxLength="30"
+                        android:maxLines="1"
+                        android:textAlignment="viewStart"
+                        app:layout_constraintBottom_toTopOf="@+id/view2"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toBottomOf="@+id/post_image_view"
+                        tools:text="yumingames@gmail.com" />
+
+                </com.google.android.material.textfield.TextInputLayout>
+
+                <com.google.android.material.textfield.TextInputLayout
+                    android:id="@+id/title_text_input_layout"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    app:counterEnabled="true"
+                    app:counterMaxLength="30"
+                    app:endIconMode="clear_text"
+                    app:errorEnabled="true"
+                    app:hintEnabled="true"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/recipient_text_input_layout"
+                    app:layout_constraintWidth_max="@dimen/button_max_length">
+
+                    <com.google.android.material.textfield.TextInputEditText
+                        android:id="@+id/title_edit_text"
+                        style="@style/normal_text_style"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="@dimen/margin_16dp"
+                        android:layout_marginTop="@dimen/margin_16dp"
+                        android:layout_marginEnd="@dimen/margin_16dp"
+                        android:gravity="start"
+                        android:hint="@string/str_title"
+                        android:imeOptions="actionDone"
+                        android:inputType="text"
+                        android:maxLength="30"
+                        android:maxLines="1"
+                        android:textAlignment="viewStart"
+                        app:layout_constraintBottom_toTopOf="@+id/view2"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toBottomOf="@+id/post_image_view"
+                        tools:text="How to send a mail" />
+
+                </com.google.android.material.textfield.TextInputLayout>
+
+                <com.google.android.material.textfield.TextInputLayout
                     android:id="@+id/text_input_layout"
                     android:layout_width="0dp"
-                    android:layout_height="0dp"
-                    app:counterEnabled="true"
-                    app:endIconMode="none"
+                    android:layout_height="wrap_content"
                     app:boxStrokeWidth="0dp"
                     app:boxStrokeWidthFocused="0dp"
-                    app:hintEnabled="true"
-                    app:errorEnabled="false"
+                    app:counterEnabled="true"
                     app:counterMaxLength="250"
-                    app:layout_constraintBottom_toTopOf="@+id/view2"
+                    app:endIconMode="none"
+                    app:errorEnabled="false"
+                    app:hintEnabled="true"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toBottomOf="@+id/post_image_view"
@@ -101,17 +148,16 @@
                         style="@style/normal_text_style"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:minHeight="475dp"
                         android:layout_marginStart="@dimen/margin_16dp"
                         android:layout_marginTop="@dimen/margin_16dp"
                         android:layout_marginEnd="@dimen/margin_16dp"
                         android:background="@android:color/transparent"
                         android:gravity="start"
                         android:hint="@string/str_text"
-                        android:inputType="text"
                         android:maxLines="10"
+                        android:inputType="text"
                         android:maxLength="250"
-                        android:text="@={viewModel.strBody}"
+                        android:minHeight="350dp"
                         android:textAlignment="viewStart"
                         app:layout_constraintBottom_toTopOf="@+id/view2"
                         app:layout_constraintEnd_toEndOf="parent"
@@ -121,25 +167,27 @@
 
                 </com.google.android.material.textfield.TextInputLayout>
 
+
                 <View
-                    android:id="@+id/view2"
+                    android:id="@+id/view"
                     style="@style/divider"
                     android:layout_marginBottom="@dimen/margin_16dp"
-                    app:layout_constraintBottom_toTopOf="@+id/post_button"
+                    app:layout_constraintBottom_toTopOf="@+id/send_button"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent" />
 
+
                 <com.google.android.material.button.MaterialButton
-                    android:id="@+id/post_button"
+                    android:id="@+id/send_button"
                     style="@style/mtrl_button_style"
-                    android:onClick="@{()->fragment.postButton()}"
+                    android:onClick="@{()->fragment.sendButton()}"
                     android:layout_width="0dp"
                     android:layout_height="@dimen/button_height"
                     android:layout_marginStart="@dimen/margin_16dp"
                     android:layout_marginEnd="@dimen/margin_16dp"
                     android:layout_marginBottom="@dimen/margin_16dp"
                     android:backgroundTint="@color/purple"
-                    android:text="@string/str_post"
+                    android:text="@string/str_send"
                     app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"

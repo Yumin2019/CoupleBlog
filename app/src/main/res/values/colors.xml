@@ -15,6 +15,7 @@
     <color name="purple">#995FFD</color>
     <color name="light_purple">#B388FF</color>
     <color name="blue">#2979FF</color>
+    <color name="red">#F50057</color>
 
     <color name="colorPrimary">#00E5FF</color>
     <color name="colorPrimaryDark">#00B0FF</color>

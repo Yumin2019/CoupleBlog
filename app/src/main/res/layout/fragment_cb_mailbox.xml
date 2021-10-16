@@ -12,63 +12,29 @@
 
         <variable
             name="layoutManager"
-            type="androidx.recyclerview.widget.LinearLayoutManager"/>
+            type="androidx.recyclerview.widget.LinearLayoutManager" />
 
         <variable
             name="viewModel"
-            type="com.coupleblog.singleton.CB_ViewModel.Companion"/>
+            type="com.coupleblog.singleton.CB_ViewModel.Companion" />
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 
-        <com.google.android.material.card.MaterialCardView
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/mail_recycler_view"
             android:layout_width="0dp"
             android:layout_height="0dp"
-            app:cardBackgroundColor="@color/white"
-            app:cardCornerRadius="@dimen/margin_16dp"
-            app:cardElevation="6dp"
-            app:cardPreventCornerOverlap="true"
-            app:cardUseCompatPadding="true"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintWidth_max="@dimen/button_max_length">
-
-            <androidx.constraintlayout.widget.ConstraintLayout
-                android:layout_width="match_parent"
-                android:layout_height="match_parent">
-
-                <androidx.recyclerview.widget.RecyclerView
-                    android:id="@+id/mail_recycler_view"
-                    android:layout_width="0dp"
-                    android:layout_height="0dp"
-                    app:layout_constraintBottom_toBottomOf="parent"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toTopOf="parent"
-                    bind:layout_manager="@{layoutManager}"
-                    tools:listitem="@layout/mail_item" />
-
-                <com.google.android.material.floatingactionbutton.FloatingActionButton
-                    android:id="@+id/add_floating_button"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginEnd="@dimen/margin_24dp"
-                    android:layout_marginBottom="@dimen/margin_24dp"
-                    android:src="@drawable/ic_baseline_mail_24"
-                    app:layout_constraintBottom_toBottomOf="@+id/mail_recycler_view"
-                    app:layout_constraintEnd_toEndOf="@+id/mail_recycler_view"
-                    app:maxImageSize="30dp"
-                    app:tint="@color/white"
-                    tools:visibility="visible" />
-
-            </androidx.constraintlayout.widget.ConstraintLayout>
-
-        </com.google.android.material.card.MaterialCardView>
+            bind:layout_manager="@{layoutManager}"
+            tools:listitem="@layout/mail_item" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
+
 
 </layout>

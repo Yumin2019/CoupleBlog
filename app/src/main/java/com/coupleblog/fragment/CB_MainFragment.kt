@@ -17,11 +17,13 @@ import com.coupleblog.fragment.PAGE_TYPE.*
 import com.google.firebase.database.DataSnapshot
 import com.google.firebase.database.DatabaseError
 import com.google.firebase.database.ValueEventListener
+import kotlinx.coroutines.launch
 
 enum class PAGE_TYPE
 {
     MY_POSTS,
     COUPLE_POSTS,
+    MAILBOX,
 
     PAGE_TYPE_NONE,
 }
@@ -47,12 +49,12 @@ class CB_MainFragment : CB_BaseFragment("MainFragment")
         setHasOptionsMenu(true)
 
         // 각 부분별 처리를 할 Fragment 를 가지고 adapter 를 생성한다.
-        val pagerAdapter = object : FragmentStateAdapter(parentFragmentManager, viewLifecycleOwner.lifecycle) {
+        val pagerAdapter = object : FragmentStateAdapter(childFragmentManager, viewLifecycleOwner.lifecycle) {
             private val fragments = arrayOf<Fragment>(
                 CB_MyPostsFragment(),
-                CB_CouplePostsFragment()
+                CB_CouplePostsFragment(),
+                CB_MailBoxFragment()
             )
-
             override fun createFragment(position: Int) = fragments[position]
             override fun getItemCount() = fragments.size
         }
@@ -60,22 +62,34 @@ class CB_MainFragment : CB_BaseFragment("MainFragment")
        // ViewPager 설정
        with(binding)
        {
-           // ViewPager2 에 어댑터를 연결한다.
            container.apply {
 
-               adapter = pagerAdapter
                registerOnPageChangeCallback(object: ViewPager2.OnPageChangeCallback() {
                    override fun onPageSelected(position: Int)
                    {
                        super.onPageSelected(position)
+                       CB_ViewModel.iPageType.postValue(position)
+
                        when(position)
                        {
-                           MY_POSTS.ordinal -> { CB_ViewModel.bAddButton.postValue(true) }
+                           MY_POSTS.ordinal     ->
+                           {
+                               CB_ViewModel.bAddButton.postValue(true)
+                           }
                            COUPLE_POSTS.ordinal -> { CB_ViewModel.bAddButton.postValue(false) }
+                           MAILBOX.ordinal      -> { CB_ViewModel.bAddButton.postValue(true) }
                            else -> {}
                        }
                    }
                })
+
+               // ViewPager2 에 어댑터를 연결한다.
+               adapter = pagerAdapter
+               // set recent page
+              /* CB_AppFunc.mainScope.launch {
+                   setCurrentItem(CB_ViewModel.iPageType.value!!, false)
+               }*/
+
            }
 
            TabLayoutMediator(tabLayout, container) { tabLayout, position ->
@@ -84,8 +98,9 @@ class CB_MainFragment : CB_BaseFragment("MainFragment")
                tabLayout.text = when(position)
                {
                    // 마지막에 추가된 Fragment가 backPress 이벤트를 받는다.
-                   MY_POSTS.ordinal  -> "My Posts"
-                   else -> "Couple Posts"
+                   MY_POSTS.ordinal     -> "My Posts"
+                   COUPLE_POSTS.ordinal -> "Couple Posts"
+                   else                 -> "Mail Box"
                }
 
            }.attach()
@@ -111,12 +126,6 @@ class CB_MainFragment : CB_BaseFragment("MainFragment")
                 true
             }
 
-            R.id.action_mailbox ->
-            {
-                // move to mailBox Fragment
-                beginAction(R.id.action_CB_MainFragment_to_CB_MailBoxFragment, R.id.CB_MainFragment)
-                true
-            }
             else -> {super.onOptionsItemSelected(item)}
         }
 

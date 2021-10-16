@@ -217,8 +217,8 @@ class CB_RegisterFragment : CB_BaseFragment("RegisterFragment")
                             launch(Dispatchers.Main)
                             {
                                 dialog.cancel()
-                                CB_AppFunc.okDialog(activity, context.getString(R.string.str_error),
-                                    context.getString(R.string.str_value_update_failed), R.drawable.error_icon, true)
+                                CB_AppFunc.okDialog(activity, R.string.str_error,
+                                    R.string.str_value_update_failed, R.drawable.error_icon, true)
                             }
                         }
                     }
@@ -227,8 +227,8 @@ class CB_RegisterFragment : CB_BaseFragment("RegisterFragment")
                 {
                     // 회원가입 실패
                     dialog.cancel()
-                    CB_AppFunc.okDialog(activity, context.getString(R.string.str_error),
-                        context.getString(R.string.str_sign_up_failed), R.drawable.error_icon, true)
+                    CB_AppFunc.okDialog(activity, R.string.str_error,
+                        R.string.str_sign_up_failed, R.drawable.error_icon, true)
                 }
             }
 

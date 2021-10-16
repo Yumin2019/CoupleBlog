@@ -1,6 +1,7 @@
 package com.coupleblog.singleton
 
 import androidx.lifecycle.MutableLiveData
+import com.coupleblog.fragment.PAGE_TYPE
 import com.coupleblog.model.CB_Post
 
 // we'll use LiveData with SingleTon because it's simple
@@ -8,9 +9,10 @@ class CB_ViewModel
 {
     companion object
     {
-        // when you go out of mainFragment
+        // when you go out of MainFragment
         // when you click view pages
         var bAddButton = MutableLiveData(false)
+        var iPageType = MutableLiveData(PAGE_TYPE.MY_POSTS.ordinal)
 
         // PostDetailFragment
         var tPost      = MutableLiveData(CB_Post())
@@ -27,6 +29,7 @@ class CB_ViewModel
         }
 
         // MailBoxFragment
+        var bMailButton = MutableLiveData(false)
         val emailCheckedList = ArrayList<Int>()
 
         fun clearCheckedList() { emailCheckedList.clear() }

@@ -4,21 +4,10 @@
     xmlns:tools="http://schemas.android.com/tools">
 
     <item
-        android:icon="@drawable/ic_baseline_exit_to_app_24"
-        android:iconTint="@color/white"
         android:id="@+id/action_logout"
         android:title="@string/str_sign_out"
         android:visible="true"
         app:showAsAction="never"
-        tools:targetApi="o" />
-
-    <item
-        android:icon="@drawable/ic_baseline_mail_24"
-        android:iconTint="@color/white"
-        android:id="@+id/action_mailbox"
-        android:title="@string/str_mailbox"
-        android:visible="true"
-        app:showAsAction="ifRoom"
-        tools:targetApi="o" />
+     />
 
 </menu>

@@ -10,8 +10,13 @@
             type="Integer" />
 
         <variable
+            name="iColorRes"
+            type="Integer" />
+
+        <variable
             name="strText"
             type="String" />
+
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout
@@ -46,6 +51,7 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
             bind:drawable_id="@{iIconRes}"
+            bind:color_id="@{iColorRes}"
             tools:src="@drawable/haha_icon" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>

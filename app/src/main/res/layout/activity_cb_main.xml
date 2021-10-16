@@ -34,17 +34,18 @@
 
         <com.google.android.material.floatingactionbutton.FloatingActionButton
             android:id="@+id/add_floating_button"
-            tools:visibility="visible"
-            android:onClick="@{()->activity.newPostButton()}"
-            bind:visible="@{viewModel.bAddButton}"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="bottom|end"
             android:layout_marginEnd="@dimen/margin_24dp"
             android:layout_marginBottom="@dimen/margin_24dp"
-            android:src="@drawable/ic_baseline_add_24"
-            app:maxImageSize="50dp"
-            app:tint="@color/white" />
+            android:onClick="@{()->activity.floatingButton()}"
+            android:src="@drawable/ic_add"
+            app:maxImageSize="35dp"
+            app:tint="@color/white"
+            bind:page_idx="@{viewModel.IPageType}"
+            bind:visible="@{viewModel.bAddButton}"
+            tools:visibility="visible" />
 
         <FrameLayout
             android:layout_width="match_parent"

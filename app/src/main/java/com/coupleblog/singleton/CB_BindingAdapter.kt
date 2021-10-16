@@ -6,8 +6,9 @@ import android.widget.TextView
 import androidx.databinding.BindingAdapter
 import androidx.recyclerview.widget.RecyclerView
 import com.coupleblog.R
+import com.coupleblog.fragment.PAGE_TYPE
 import com.coupleblog.model.REACTION_TYPE
-
+import com.google.android.material.floatingactionbutton.FloatingActionButton
 
 
 @BindingAdapter("bind:user_uid")
@@ -39,6 +40,24 @@ fun setVisibility(view: View, flag: Boolean)
     view.visibility = if(flag) View.VISIBLE else View.GONE
 }
 
+@BindingAdapter("bind:page_idx")
+fun setFloatingButtonImg(floatingActionButton: FloatingActionButton, iPageIdx: Int)
+{
+    when(iPageIdx)
+    {
+        PAGE_TYPE.MY_POSTS.ordinal ->
+        {
+            floatingActionButton.setImageResource(R.drawable.ic_add)
+        }
+
+        PAGE_TYPE.MAILBOX.ordinal ->
+        {
+            floatingActionButton.setImageResource(R.drawable.ic_baseline_mail_24)
+        }
+        else -> {}
+    }
+}
+
 @BindingAdapter("bind:comment_uid")
 fun setVisibility(view: View, strAuthorUid: String)
 {
@@ -66,6 +85,13 @@ fun setImage(imageView: ImageView, iResIdx: Int)
     imageView.setImageResource(iResIdx)
 }
 
+@BindingAdapter("bind:color_id")
+fun setImageColor(imageView: ImageView, iColorRes: Int)
+{
+    if(iColorRes == -1)
+        return
+    imageView.imageTintList = CB_AppFunc.getColorStateList(iColorRes)
+}
 @BindingAdapter("bind:icon_image")
 fun setIconImage(imageView: ImageView, iIconType: Int)
 {

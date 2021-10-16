@@ -90,8 +90,8 @@ class CB_EmailAdapter(private val fragment: CB_MailBoxFragment,
             override fun onCancelled(error: DatabaseError)
             {
                 Log.e(strTag, "onCancelled:mail list")
-                CB_AppFunc.okDialog(fragment.requireActivity(), fragment.getString(R.string.str_error),
-                    fragment.getString(R.string.str_comment_list_load_failed), R.drawable.error_icon, true)
+                CB_AppFunc.okDialog(fragment.requireActivity(), R.string.str_error,
+                    R.string.str_comment_list_load_failed, R.drawable.error_icon, true)
             }
         }
 
@@ -109,11 +109,12 @@ class CB_EmailAdapter(private val fragment: CB_MailBoxFragment,
 
     class ViewHolder(private val binding: MailItemBinding) : RecyclerView.ViewHolder(binding.root)
     {
-        fun bind(argFragment: CB_MailBoxFragment, argMailBox: CB_Mail)
+        fun bind(argFragment: CB_MailBoxFragment, argMailBox: CB_Mail, argMailKey: String)
         {
             binding.apply {
                 fragment    = argFragment
                 mailData    = argMailBox
+                mailKey     = argMailKey
                 checkboxImageView.setOnClickListener {
                     // add n-th index
                     layoutPosition
@@ -130,7 +131,7 @@ class CB_EmailAdapter(private val fragment: CB_MailBoxFragment,
         ).let { ViewHolder(it) }
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) =
-        holder.bind(fragment, emailList[position])
+        holder.bind(fragment, emailList[position], emailKeyList[position])
 
     override fun getItemCount(): Int = emailList.size
 }

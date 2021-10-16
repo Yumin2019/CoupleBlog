@@ -33,8 +33,8 @@ class CB_CommentEditDialog(context: Activity, fragment: CB_PostDetailFragment,
                 val strComment = commentEditText.text.toString()
                 if(strComment.isEmpty())
                 {
-                    CB_AppFunc.okDialog(context, context.getString(R.string.str_warning),
-                       context.getString(R.string.str_input_comment), R.drawable.warning_icon, true)
+                    CB_AppFunc.okDialog(context, R.string.str_warning,
+                       R.string.str_input_comment, R.drawable.warning_icon, true)
                     return@setOnClickListener
                 }
 

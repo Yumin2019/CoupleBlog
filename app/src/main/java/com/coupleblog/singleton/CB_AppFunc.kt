@@ -8,6 +8,7 @@ import android.content.DialogInterface
 import android.content.Intent
 import android.content.SharedPreferences
 import android.content.pm.ActivityInfo
+import android.content.res.ColorStateList
 import android.graphics.*
 import android.os.Build
 import android.text.Editable
@@ -22,6 +23,7 @@ import android.view.inputmethod.InputMethodManager
 import android.widget.EditText
 import androidx.annotation.RequiresApi
 import androidx.core.app.ActivityCompat
+import androidx.core.content.ContextCompat
 import com.coupleblog.R
 import com.coupleblog.model.CB_User
 import com.coupleblog.parent.CB_BaseActivity
@@ -108,6 +110,19 @@ class CB_AppFunc
             return activity.getSharedPreferences("Config", 0) // PRIVATE
         }
 
+        fun getColorStateList(colorResId: Int): ColorStateList
+        {
+            return ColorStateList.valueOf(ContextCompat.getColor(application, colorResId))
+        }
+
+        fun getColorValue(colorResId: Int): Int
+        {
+            return ContextCompat.getColor(application, colorResId)
+        }
+
+        val emailRegex = "^[0-9a-zA-Z]([-_.]?[0-9a-zA-Z])*@[0-9a-zA-Z]([-_.]?[0-9a-zA-Z])*.[a-zA-Z]{2,3}$".toRegex()
+
+
         /*   SharedPreferences(Config) Data
              strUserId          : String        default : null
              strUserPassword    : String        default : null
@@ -135,8 +150,8 @@ class CB_AppFunc
                     if(_curUser == null)
                     {
                         Log.e(strTag, "User Info load failed")
-                        okDialog(context, context.getString(R.string.str_error),
-                            context.getString(R.string.str_user_info_load_failed), R.drawable.error_icon, true)
+                        okDialog(context, R.string.str_error,
+                            R.string.str_user_info_load_failed, R.drawable.error_icon, true)
                     }
                     else
                     {
@@ -151,8 +166,8 @@ class CB_AppFunc
                                     if(_coupleUser == null)
                                     {
                                         Log.e(strTag, "User Info load failed")
-                                        okDialog(context, context.getString(R.string.str_error),
-                                            context.getString(R.string.str_user_info_load_failed), R.drawable.error_icon, true)
+                                        okDialog(context, R.string.str_error,
+                                            R.string.str_user_info_load_failed, R.drawable.error_icon, true)
                                         return
                                     }
 
@@ -163,8 +178,8 @@ class CB_AppFunc
                                 override fun onCancelled(error: DatabaseError)
                                 {
                                     Log.e(strTag, "User Info load cancelled", error.toException())
-                                    okDialog(context, context.getString(R.string.str_error),
-                                        context.getString(R.string.str_user_info_load_failed), R.drawable.error_icon, true)
+                                    okDialog(context, R.string.str_error,
+                                        R.string.str_user_info_load_failed, R.drawable.error_icon, true)
                                 }
                             })
                         }
@@ -180,19 +195,10 @@ class CB_AppFunc
                 override fun onCancelled(error: DatabaseError)
                 {
                     Log.e(strTag, "User Info load cancelled", error.toException())
-                    okDialog(context, context.getString(R.string.str_error),
-                        context.getString(R.string.str_user_info_load_failed), R.drawable.error_icon, true)
+                    okDialog(context, R.string.str_error,
+                        R.string.str_user_info_load_failed, R.drawable.error_icon, true)
                 }
             })
-        }
-
-        fun checkNullObject(obj: Any?, strTag: String, strMessage: String)
-        {
-            if (obj != null)
-                return
-
-            Log.e(strTag, strMessage)
-            assert(false)
         }
 
         fun requestPermission(activity: Activity, arrPermission: Array<String>)
@@ -359,6 +365,31 @@ class CB_AppFunc
             }
         }*/
 
+        fun getString(iStrRes: Int): String { return application.getString(iStrRes) }
+
+        // get gmt offset, return value is minutes
+        fun getGMTOffset(): Int
+        {
+            val calendar = Calendar.getInstance(Locale.getDefault())
+            return (calendar[Calendar.ZONE_OFFSET] + calendar[Calendar.DST_OFFSET]) / (60 * 1000)
+        }
+
+        // UTC 기준의 시간을 로컬 시간으로 변환하여 String 으로 전달.
+        fun convertUtcToLocale(strDate: String): String
+        {
+            val calendar = Calendar.getInstance(TimeZone.getTimeZone("UTC")).apply {
+
+                // UTC 기준으로 calendar 생성
+                time = stringToDate(strDate)
+
+                // UTC 기준을 Locale 기준으로 교체한다.
+                add(Calendar.MINUTE, getGMTOffset())
+            }
+
+            // 변환된 날짜 정보를 string 으로 return
+            return calendarToSaveString(calendar)
+        }
+
         fun stringToEditable(str: String): Editable = getInstance().newEditable(str)
 
         // 저장된 데이터를 파싱해서 calendar 반환
@@ -377,8 +408,21 @@ class CB_AppFunc
             calendar
         }
 
+        fun stringToDate(strDate: String?): Date
+        = let {
+
+            if (strDate == null || strDate.isEmpty())
+            {
+                Log.e(strTag, "strDate can't be parsed")
+                return@let Date()
+            }
+
+            return@let strSaveDateFormat.parse(strDate)!!
+        }
+
         // 저장을 위한 dateString 얻기
         fun getDateStringForSave() = calendarToSaveString(getCurCalendar())
+            // gmt offset을 고려한다.
         fun calendarToSaveString(calendar: Calendar) = DateFormat.format("yyyyMMddHHmm", calendar).toString()
         fun getCurCalendar(): Calendar = Calendar.getInstance()
 
@@ -463,7 +507,14 @@ class CB_AppFunc
             imm.showSoftInput(editText, InputMethodManager.SHOW_IMPLICIT)
         }
 
-        fun okDialog(context: Context, str_title: String?, str_message: String?,
+        // replace string to resId
+        fun okDialog(context: Activity, iResTitle: Int, iResMessage:Int,
+                     iconId: Int?, bCancelable: Boolean, listener: DialogInterface.OnClickListener? = null)
+        {
+            okDialog(context, getString(iResTitle), getString(iResMessage), iconId, bCancelable, listener)
+        }
+
+        fun okDialog(context: Activity, str_title: String?, str_message: String?,
                      iconId: Int?, bCancelable: Boolean, listener: DialogInterface.OnClickListener? = null)
         {
             if (CB_SingleSystemMgr.isDialog(CB_SingleSystemMgr.DIALOG_TYPE.OK_DIALOG))
@@ -475,13 +526,22 @@ class CB_AppFunc
                 .setTitle(str_title)
                 .setMessage(str_message)
                 .setCancelable(bCancelable)
-                .setPositiveButton(context.getString(R.string.str_ok), listener)
+                .setPositiveButton(getString(R.string.str_ok), listener)
                 .setOnDismissListener {
                     CB_SingleSystemMgr.releaseDialog(CB_SingleSystemMgr.DIALOG_TYPE.OK_DIALOG)
                 }
 
             iconId?.let { dialog.setIcon(iconId) }
             dialog.show()
+        }
+
+        // replace string to resId
+        fun confirmDialog(context: Context, iResTitle: Int, iResMessage: Int, iconId: Int?,
+                          bCancelable: Boolean, iYesText: Int, yesListener: DialogInterface.OnClickListener?,
+                          iNoText: Int, noListener: DialogInterface.OnClickListener?)
+        {
+            confirmDialog(context, getString(iResTitle), getString(iResMessage), iconId, bCancelable,
+            getString(iYesText), yesListener, getString(iNoText), noListener)
         }
 
         fun confirmDialog(context: Context, str_title: String?, str_message: String, iconId: Int?,

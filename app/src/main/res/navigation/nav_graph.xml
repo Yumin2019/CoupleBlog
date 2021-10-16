@@ -41,11 +41,11 @@
 
             <argument android:name="strPostKey" app:nullable="false"
                 app:argType="string" android:defaultValue=""/>
-
         </action>
         <action
-            android:id="@+id/action_CB_MainFragment_to_CB_MailBoxFragment"
-            app:destination="@id/CB_MailBoxFragment" />
+            android:id="@+id/action_CB_MainFragment_to_CB_NewMailFragment"
+            app:destination="@id/CB_NewMailFragment" />
+
     </fragment>
 
     <fragment
@@ -70,11 +70,6 @@
         android:name="com.coupleblog.fragment.CB_PostDetailFragment"
         android:label="fragment_cb_post_detail"
         tools:layout="@layout/fragment_cb_post_detail" >
-        <action
-            android:id="@+id/action_CB_PostDetailFragment_to_CB_MainFragment"
-            app:destination="@id/CB_MainFragment"
-            app:popUpTo="@+id/CB_MainFragment"
-            app:popUpToInclusive="true" />
 
         <action
             android:id="@+id/action_CB_PostDetailFragment_to_CB_NewPostFragment"
@@ -91,23 +86,13 @@
         android:id="@+id/CB_NewPostFragment"
         android:name="com.coupleblog.fragment.CB_NewPostFragment"
         android:label="fragment_cb_new_post"
-        tools:layout="@layout/fragment_cb_new_post" >
-        <action
-            android:id="@+id/action_CB_NewPostFragment_to_CB_MainFragment"
-            app:destination="@id/CB_MainFragment"
-            app:popUpTo="@+id/CB_MainFragment"
-            app:popUpToInclusive="true" />
-    </fragment>
+        tools:layout="@layout/fragment_cb_new_post" />
 
     <fragment
-        android:id="@+id/CB_MailBoxFragment"
-        android:name="com.coupleblog.fragment.CB_MailBoxFragment"
-        android:label="fragment_cb_mail_box"
-        tools:layout="@layout/fragment_cb_mailbox" >
-        <action
-            android:id="@+id/action_CB_MailBoxFragment_to_CB_MainFragment"
-            app:destination="@id/CB_MainFragment"
-            app:popUpTo="@+id/CB_MainFragment"
-            app:popUpToInclusive="true" />
+        android:id="@+id/CB_NewMailFragment"
+        android:name="com.coupleblog.fragment.CB_NewMailFragment"
+        android:label="fragment_cb_new_mail"
+        tools:layout="@layout/fragment_cb_new_mail" >
+
     </fragment>
 </navigation>
