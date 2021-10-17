@@ -36,8 +36,9 @@
         <TextView
             android:id="@+id/author_text_view"
             style="@style/normal_text_style"
-            android:layout_width="wrap_content"
+            android:layout_width="@dimen/normal_field_size"
             android:layout_height="wrap_content"
+            android:textAlignment="viewStart"
             bind:user_uid="@{commentData.strAuthorUid}"
             android:layout_marginStart="@dimen/normal_margin"
             android:layout_marginTop="@dimen/normal_margin"
@@ -53,10 +54,10 @@
             android:layout_marginTop="@dimen/normal_margin"
             android:layout_marginBottom="@dimen/normal_margin"
             android:maxLines="10"
-            android:textAlignment="viewStart"
             android:text="@{commentData.strComment}"
+            android:textAlignment="viewStart"
             app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toStartOf="@+id/reaction_image_view"
+            app:layout_constraintEnd_toEndOf="@+id/comment_date_text_view"
             app:layout_constraintStart_toStartOf="@+id/author_text_view"
             app:layout_constraintTop_toBottomOf="@+id/author_text_view"
             tools:text="This is comment" />
@@ -64,7 +65,7 @@
         <TextView
             android:id="@+id/comment_date_text_view"
             style="@style/normal_text_style"
-            android:layout_width="wrap_content"
+            android:layout_width="@dimen/normal_field_size"
             android:layout_height="wrap_content"
             android:paddingStart="@dimen/margin_16dp"
             android:paddingEnd="@dimen/margin_16dp"
@@ -74,16 +75,17 @@
             app:layout_constraintBottom_toBottomOf="@+id/author_text_view"
             app:layout_constraintStart_toEndOf="@+id/author_text_view"
             app:layout_constraintTop_toTopOf="@+id/author_text_view"
-            tools:text="10 Oct 2021" />
+            tools:text="10 Oct 2021 15:33" />
 
 
         <ImageView
             android:id="@+id/reaction_image_view"
             android:layout_width="@dimen/icon_image_size_small"
             android:layout_height="@dimen/icon_image_size_small"
-            app:layout_constraintBottom_toBottomOf="@+id/comment_date_text_view"
-            app:layout_constraintStart_toEndOf="@+id/comment_date_text_view"
-            app:layout_constraintTop_toTopOf="@+id/comment_date_text_view"
+            android:layout_marginEnd="4dp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toStartOf="@+id/menu_image_view"
+            app:layout_constraintTop_toTopOf="parent"
             bind:icon_image="@{commentData.IIconType}"
             tools:src="@drawable/haha_icon" />
 
@@ -100,14 +102,13 @@
             android:id="@+id/menu_image_view"
             android:layout_width="30dp"
             android:layout_height="30dp"
-            bind:comment_uid="@{commentData.strAuthorUid}"
-            android:onClick="@{()->fragment.commentMenuButton(commentKey, commentData)}"
             android:background="?android:attr/selectableItemBackground"
-            android:layout_marginEnd="@dimen/normal_margin"
+            android:onClick="@{()->fragment.commentMenuButton(commentKey, commentData)}"
+            android:src="@drawable/ic_baseline_list_24"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toTopOf="parent"
-            android:src="@drawable/ic_baseline_list_24" />
+            bind:comment_uid="@{commentData.strAuthorUid}" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>

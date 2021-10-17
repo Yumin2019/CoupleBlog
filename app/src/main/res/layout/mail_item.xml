@@ -21,21 +21,15 @@
     </data>
 
     <com.google.android.material.card.MaterialCardView
+        style="@style/card_view_style"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        app:cardBackgroundColor="@color/white"
-        android:layout_marginTop="@dimen/margin_16dp"
-        android:layout_marginRight="@dimen/normal_margin"
-        android:layout_marginLeft="@dimen/normal_margin"
-        app:cardElevation="6dp"
-        app:cardPreventCornerOverlap="true"
-        app:layout_constraintWidth_max="@dimen/button_max_length">
+        android:layout_height="wrap_content">
 
         <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:onClick="@{()->fragment.emailItem(mailData, mailKey)}"
-            android:background="?android:attr/selectableItemBackground">
+            android:background="?android:attr/selectableItemBackground"
+            android:onClick="@{()->fragment.emailItem(mailData, mailKey)}">
 
             <ImageView
                 android:id="@+id/checkbox_image_view"
@@ -71,48 +65,38 @@
                 app:tint="@color/gray"
                 tools:src="@drawable/ic_baseline_favorite_border_24" />
 
-            <androidx.constraintlayout.widget.ConstraintLayout
-                android:layout_width="wrap_content"
+            <TextView
+                android:id="@+id/send_date_text_view"
+                style="@style/normal_text_style"
+                android:layout_width="@dimen/normal_field_size"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="@dimen/normal_margin"
-                android:layout_marginBottom="@dimen/normal_margin"
-                app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintStart_toEndOf="@+id/heart_image_view"
-                app:layout_constraintTop_toTopOf="parent">
+                android:layout_marginTop="4dp"
+                android:paddingStart="@dimen/margin_16dp"
+                android:paddingEnd="@dimen/margin_16dp"
+                android:textAlignment="viewStart"
+                android:textColor="@color/gray"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/mail_title_text_view"
+                bind:date_text="@{mailData.strSendDate}"
+                tools:text="10 Oct 2021, 23:43" />
 
-                <TextView
-                    android:id="@+id/send_date_text_view"
-                    style="@style/normal_text_style"
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="4dp"
-                    android:paddingStart="@dimen/margin_16dp"
-                    android:paddingEnd="@dimen/margin_16dp"
-                    android:textAlignment="viewStart"
-                    android:textColor="@color/gray"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@+id/mail_title_text_view"
-                    bind:date_text="@{mailData.strSendDate}"
-                    tools:text="10 Oct 2021, 23:43" />
-
-                <TextView
-                    android:id="@+id/mail_title_text_view"
-                    style="@style/normal_text_style"
-                    android:layout_width="200dp"
-                    android:layout_height="wrap_content"
-                    android:ellipsize="end"
-                    android:maxLines="1"
-                    android:paddingStart="@dimen/margin_16dp"
-                    android:paddingEnd="@dimen/margin_16dp"
-                    android:text="@{mailData.strTitle}"
-                    android:textAlignment="viewStart"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toTopOf="parent"
-                    tools:text="How to love you poonam"
-                    tools:textColor="@color/blue" />
-            </androidx.constraintlayout.widget.ConstraintLayout>
+            <TextView
+                android:id="@+id/mail_title_text_view"
+                style="@style/normal_text_style"
+                android:layout_width="@dimen/normal_field_size"
+                android:layout_height="wrap_content"
+                android:ellipsize="end"
+                android:maxLines="1"
+                android:paddingStart="@dimen/margin_16dp"
+                android:paddingEnd="@dimen/margin_16dp"
+                android:text="@{mailData.strTitle}"
+                android:textAlignment="viewStart"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                tools:text="How to love you"
+                tools:textColor="@color/blue" />
 
         </androidx.constraintlayout.widget.ConstraintLayout>
 

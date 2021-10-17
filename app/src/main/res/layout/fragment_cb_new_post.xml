@@ -21,16 +21,11 @@
         <com.google.android.material.card.MaterialCardView
             android:layout_width="0dp"
             android:layout_height="0dp"
-            app:cardBackgroundColor="@color/white"
-            app:cardCornerRadius="@dimen/margin_16dp"
-            app:cardElevation="6dp"
-            app:cardPreventCornerOverlap="true"
-            app:cardUseCompatPadding="true"
+            style="@style/card_view_style"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintWidth_max="@dimen/button_max_length">
+            app:layout_constraintTop_toTopOf="parent">
 
             <androidx.constraintlayout.widget.ConstraintLayout
                 android:layout_width="match_parent"
@@ -56,6 +51,7 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:maxLength="30"
+                        android:maxLines="1"
                         android:textAlignment="viewStart"
                         tools:text="Hello world"
                         android:text="@={viewModel.strTitle}"
@@ -108,7 +104,7 @@
                         android:background="@android:color/transparent"
                         android:gravity="start"
                         android:hint="@string/str_text"
-                        android:inputType="text"
+                        android:inputType="textMultiLine"
                         android:maxLines="10"
                         android:maxLength="250"
                         android:text="@={viewModel.strBody}"

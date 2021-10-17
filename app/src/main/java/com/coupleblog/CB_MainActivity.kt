@@ -28,6 +28,8 @@ class CB_MainActivity : CB_BaseActivity("MainActivity", CB_SingleSystemMgr.ACTIV
             lifecycleOwner = this@CB_MainActivity
             activity       = this@CB_MainActivity
             viewModel      = CB_ViewModel.Companion
+
+            setSupportActionBar(toolbar)
         }
 
         // Init

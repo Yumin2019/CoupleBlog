@@ -45,7 +45,7 @@
             style="@style/title_text_style"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginTop="@dimen/margin_64dp"
+            android:layout_marginTop="@dimen/margin_24dp"
             android:text="@string/str_register"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
@@ -69,6 +69,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:inputType="text"
+                android:maxLines="1"
                 android:imeOptions="actionNext"
                 android:hint="@string/str_email" />
 
@@ -92,6 +93,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:inputType="textPassword"
+                android:maxLines="1"
                 android:imeOptions="actionNext"
                 android:hint="@string/str_password" />
 
@@ -116,6 +118,7 @@
                 android:layout_height="wrap_content"
                 android:inputType="textPassword"
                 android:imeOptions="actionDone"
+                android:maxLines="1"
                 android:hint="@string/str_password_again" />
 
         </com.google.android.material.textfield.TextInputLayout>
@@ -124,7 +127,7 @@
             android:id="@+id/user_name_text_input_layout"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:layout_marginTop="@dimen/margin_64dp"
+            android:layout_marginTop="@dimen/margin_24dp"
             app:endIconMode="clear_text"
             app:errorEnabled="true"
             app:hintEnabled="true"
@@ -137,9 +140,10 @@
                 android:id="@+id/user_name_edit_text"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:inputType="text"
+                android:hint="@string/str_user_name"
+                android:maxLines="1"
                 android:imeOptions="actionNext"
-                android:hint="@string/str_user_name" />
+                android:inputType="text" />
 
         </com.google.android.material.textfield.TextInputLayout>
 
