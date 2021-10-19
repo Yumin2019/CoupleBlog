@@ -68,15 +68,15 @@
             <TextView
                 android:id="@+id/send_date_text_view"
                 style="@style/normal_text_style"
-                android:layout_width="@dimen/normal_field_size"
+                android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="4dp"
                 android:paddingStart="@dimen/margin_16dp"
                 android:paddingEnd="@dimen/margin_16dp"
                 android:textAlignment="viewStart"
                 android:textColor="@color/gray"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintStart_toEndOf="@+id/heart_image_view"
                 app:layout_constraintTop_toBottomOf="@+id/mail_title_text_view"
                 bind:date_text="@{mailData.strSendDate}"
                 tools:text="10 Oct 2021, 23:43" />
@@ -84,7 +84,7 @@
             <TextView
                 android:id="@+id/mail_title_text_view"
                 style="@style/normal_text_style"
-                android:layout_width="@dimen/normal_field_size"
+                android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:ellipsize="end"
                 android:maxLines="1"
@@ -92,8 +92,7 @@
                 android:paddingEnd="@dimen/margin_16dp"
                 android:text="@{mailData.strTitle}"
                 android:textAlignment="viewStart"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintStart_toEndOf="@+id/heart_image_view"
                 app:layout_constraintTop_toTopOf="parent"
                 tools:text="How to love you"
                 tools:textColor="@color/blue" />

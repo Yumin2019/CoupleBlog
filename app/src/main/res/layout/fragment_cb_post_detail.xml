@@ -107,7 +107,7 @@
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toBottomOf="@+id/view"
                     tools:layout_height="130dp"
-                    tools:visibility="gone" />
+                    tools:visibility="visible" />
 
                 <ImageView
                     android:id="@+id/reaction_image_view"
@@ -175,6 +175,7 @@
                         android:id="@+id/comment_edit_text"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
+                        android:inputType="textMultiLine"
                         android:maxLines="5"
                         android:hint="@string/str_comment_hint" />
 

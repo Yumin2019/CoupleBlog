@@ -74,6 +74,7 @@ class CB_AppFunc
         val mainScope                        = CoroutineScope(Dispatchers.Main)
         val defaultScope                     = CoroutineScope(Dispatchers.Default)
         val networkScope                     = CoroutineScope(Dispatchers.IO)
+
         lateinit var application: Application
         val PERMISSION_REQUEST               = 100
 

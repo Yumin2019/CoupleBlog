@@ -192,6 +192,7 @@ class CB_NewMailFragment: CB_BaseFragment("NewMailFragment")
                     // save mail data at user-mails/uid/mailKey/mail data
                     CB_AppFunc.getMailBoxRoot().child(strRecipientUid).push().setValue(mail)
                     backPressed()
+                    CB_SingleSystemMgr.showToast(R.string.str_success_send_mail)
                 }
 
                 override fun onCancelled(error: DatabaseError)

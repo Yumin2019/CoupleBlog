@@ -2,6 +2,7 @@ package com.coupleblog.singleton
 
 import androidx.lifecycle.MutableLiveData
 import com.coupleblog.fragment.PAGE_TYPE
+import com.coupleblog.model.CB_Mail
 import com.coupleblog.model.CB_Post
 
 // we'll use LiveData with SingleTon because it's simple
@@ -27,6 +28,9 @@ class CB_ViewModel
             strTitle.postValue("")
             strBody.postValue("")
         }
+
+        // MailDetailFragment
+        var tMail = MutableLiveData(CB_Mail())
 
         // MailBoxFragment
         var bMailButton = MutableLiveData(false)

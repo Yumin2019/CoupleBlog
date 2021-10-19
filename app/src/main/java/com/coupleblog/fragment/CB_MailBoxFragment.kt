@@ -83,10 +83,13 @@ class CB_MailBoxFragment: CB_BaseFragment("MailBoxFragment")
 
     fun emailItem(mailData: CB_Mail, mailKey: String)
     {
-        if(CB_SingleSystemMgr.isDialog(CB_SingleSystemMgr.DIALOG_TYPE.CONFIRM_DIALOG))
-            return
+       // 메일 아이템을 클릭한 경우, 메일 정보를 출력한다.
 
-        if(mailData.iMailType == MAIL_TYPE.REQUEST_COUPLE.ordinal)
+
+      /*
+           if(CB_SingleSystemMgr.isDialog(CB_SingleSystemMgr.DIALOG_TYPE.CONFIRM_DIALOG))
+            return
+      if(mailData.iMailType == MAIL_TYPE.REQUEST_COUPLE.ordinal)
         {
             CB_AppFunc.confirmDialog(requireActivity(), "Couple Request", "you want to allow this request from $mailData.strSenderUid",
             R.drawable.haha_icon, true,
@@ -120,6 +123,6 @@ class CB_MailBoxFragment: CB_BaseFragment("MailBoxFragment")
                     })
 
                 }, "no", null)
-        }
+        }*/
     }
 }

@@ -1,0 +1,159 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:bind="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <data class="com.coupleblog.fragment.MailDetailBinding">
+
+        <variable
+            name="fragment"
+            type="com.coupleblog.fragment.CB_MailDetailFragment" />
+
+        <variable
+            name="viewModel"
+            type="com.coupleblog.singleton.CB_ViewModel.Companion" />
+    </data>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <com.google.android.material.card.MaterialCardView
+            style="@style/card_view_style"
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent">
+
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent">
+
+                <TextView
+                    android:id="@+id/mail_title_text_view"
+                    style="@style/title_text_style"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:text="@{viewModel.TMail.strTitle}"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintHorizontal_bias="0.0"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent"
+                    tools:text="How to love you" />
+
+                <TextView
+                    android:id="@+id/mail_date_text_view"
+                    style="@style/normal_text_style"
+                    android:layout_width="@dimen/normal_field_size"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="4dp"
+                    android:textAlignment="viewStart"
+                    android:textColor="@color/gray"
+                    app:layout_constraintBottom_toTopOf="@+id/view"
+                    app:layout_constraintStart_toStartOf="@+id/author_text_view"
+                    app:layout_constraintTop_toBottomOf="@+id/author_text_view"
+                    bind:date_text="@{viewModel.TMail.strSendDate}"
+                    tools:text="10 Oct 2021 16:33" />
+
+                <TextView
+                    android:id="@+id/author_text_view"
+                    style="@style/normal_text_style"
+                    android:layout_width="@dimen/normal_field_size"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="@dimen/normal_margin"
+                    android:layout_marginTop="@dimen/normal_margin"
+                    android:textAlignment="viewStart"
+                    app:layout_constraintBottom_toTopOf="@+id/mail_date_text_view"
+                    app:layout_constraintStart_toEndOf="@+id/author_image_view"
+                    app:layout_constraintTop_toBottomOf="@+id/mail_title_text_view"
+                    bind:user_uid="@{viewModel.TMail.strSenderUid}"
+                    tools:text="Yumin Kim" />
+
+                <ImageView
+                    android:id="@+id/author_image_view"
+                    android:layout_width="@dimen/icon_image_size"
+                    android:layout_height="@dimen/icon_image_size"
+                    android:layout_marginStart="@dimen/normal_margin"
+                    android:src="@drawable/ic_baseline_account_circle_24"
+                    app:layout_constraintBottom_toBottomOf="@+id/view"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/mail_title_text_view" />
+
+                <View
+                    android:id="@+id/view"
+                    style="@style/divider"
+                    android:layout_marginTop="@dimen/normal_margin"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/mail_date_text_view" />
+
+                <ImageView
+                    android:id="@+id/mail_image_view"
+                    android:layout_width="0dp"
+                    android:layout_height="130dp"
+                    android:layout_marginTop="@dimen/margin_16dp"
+                    android:background="@color/gray"
+                    android:visibility="gone"
+                    app:layout_constraintEnd_toEndOf="@+id/post_text_view"
+                    app:layout_constraintStart_toStartOf="@+id/post_text_view"
+                    app:layout_constraintTop_toBottomOf="@+id/view"
+                    tools:layout_height="130dp"
+                    tools:visibility="visible" />
+
+
+                <ImageView
+                    android:id="@+id/heart_image_view"
+                    android:layout_width="@dimen/icon_image_size"
+                    android:layout_height="@dimen/icon_image_size"
+                    android:layout_marginStart="@dimen/normal_margin"
+                    android:layout_marginEnd="4dp"
+                    android:onClick="@{()->fragment.heartButton()}"
+                    android:src="@{viewModel.TMail.BHeartIcon ? @drawable/ic_baseline_favorite_border_24 : @drawable/ic_baseline_favorite_24}"
+                    app:layout_constraintBottom_toTopOf="@+id/view"
+                    app:layout_constraintEnd_toStartOf="@+id/menu_image_view"
+                    app:layout_constraintTop_toBottomOf="@+id/mail_title_text_view"
+                    app:tint="@color/gray"
+                    tools:src="@drawable/ic_baseline_favorite_border_24"
+                    tools:visibility="visible" />
+
+                <ImageView
+                    android:id="@+id/menu_image_view"
+                    android:layout_width="30dp"
+                    android:layout_height="30dp"
+                    android:layout_marginEnd="@dimen/normal_margin"
+                    android:background="?android:attr/selectableItemBackground"
+                    android:onClick="@{()->fragment.menuButton()}"
+                    android:src="@drawable/ic_baseline_list_24"
+                    app:layout_constraintBottom_toTopOf="@+id/view"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/mail_title_text_view" />
+
+                <TextView
+                    android:id="@+id/post_text_view"
+                    style="@style/normal_text_style"
+                    android:layout_width="0dp"
+                    android:layout_height="0dp"
+                    android:layout_marginStart="@dimen/normal_margin"
+                    android:layout_marginTop="@dimen/margin_16dp"
+                    android:layout_marginEnd="@dimen/normal_margin"
+                    android:layout_marginBottom="@dimen/margin_16dp"
+                    android:padding="@dimen/normal_margin"
+                    android:text="@{viewModel.TMail.strMessage}"
+                    android:textAlignment="viewStart"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/mail_image_view"
+                    tools:background="@color/blue"
+                    tools:text="I Love you\nI Love you\nI Love you\nI Love you\n" />
+
+            </androidx.constraintlayout.widget.ConstraintLayout>
+
+        </com.google.android.material.card.MaterialCardView>
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+</layout>

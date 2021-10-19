@@ -251,6 +251,7 @@ Couple blog 은(는) 정보주체의 이용정보를 저장하고 수시로 불�
     <string name="str_loading">Loading …</string>
 
     <string name="str_none_icon">No icon</string>
+    <string name="str_heart">Heart</string>
     <string name="str_heart_icon">Heart icon</string>
     <string name="str_like_icon">Like icon</string>
     <string name="str_check_icon">Check icon</string>
@@ -260,10 +261,13 @@ Couple blog 은(는) 정보주체의 이용정보를 저장하고 수시로 불�
     <string name="str_edit_post">Edit post</string>
     <string name="str_delete_post">Delete post</string>
     <string name="str_edit_comment">Edit comment</string>
+    <string name="str_delete_mail">Delete mail</string>
+    <string name="str_reply_mail">Reply</string>
     <string name="str_delete_comment">Delete comment</string>
     <string name="str_reaction_icons">Reaction icons</string>
     <string name="str_my_post_menu">Post menu</string>
     <string name="str_comment_menu">Comment menu</string>
+    <string name="str_mail_menu">Mail menu</string>
 
     <string name="str_choose_mail_type">Choose mail type</string>
     <string name="str_mail_type_normal">Mail</string>
@@ -300,13 +304,15 @@ Couple blog 은(는) 정보주체의 이용정보를 저장하고 수시로 불�
     <string name="str_post_failed">Post failed</string>
     <string name="str_user_info_load_failed">User information load failed</string>
     <string name="str_comment_list_load_failed">Comment list load failed</string>
+    <string name="str_mail_load_failed">Mail load failed</string>
     <string name="str_mail_list_load_failed">Mail list load failed</string>
     <string name="str_post_data_load_failed">Post data load failed</string>
     <string name="str_post_delete_failed">Post delete failed</string>
+    <string name="str_failed_to_change_heart_state">Failed to change heart</string>
     <string name="str_reaction_icon_attach_failed">Reaction icon attach failed</string>
     <string name="str_error">Error</string>
     <string name="str_warning">Warning</string>
     <string name="str_information">Information</string>
 
-
+    <string name="str_success_send_mail">sending mail was successful.</string>
 </resources>
