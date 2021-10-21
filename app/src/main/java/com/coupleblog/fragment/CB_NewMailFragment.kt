@@ -10,7 +10,6 @@ import com.coupleblog.R
 import com.coupleblog.dialog.CB_ItemListDialog
 import com.coupleblog.dialog.DialogItem
 import com.coupleblog.model.CB_Mail
-import com.coupleblog.model.CB_User
 import com.coupleblog.model.MAIL_TYPE
 import com.coupleblog.parent.CB_BaseFragment
 import com.coupleblog.singleton.CB_AppFunc
@@ -19,7 +18,6 @@ import com.coupleblog.singleton.CB_ViewModel
 import com.google.firebase.database.DataSnapshot
 import com.google.firebase.database.DatabaseError
 import com.google.firebase.database.ValueEventListener
-import com.google.firebase.database.ktx.getValue
 
 class CB_NewMailFragment: CB_BaseFragment("NewMailFragment")
 {
@@ -92,9 +90,15 @@ class CB_NewMailFragment: CB_BaseFragment("NewMailFragment")
         val strTitle = binding.titleEditText.text.toString()
         val strText  = binding.textEditText.text.toString()
 
-        if(strTitle.isEmpty() || strRecipient.isEmpty())
+        if(strTitle.isEmpty())
         {
             // 초기에 빈 경우를 막는다.
+            CB_SingleSystemMgr.showToast(R.string.str_input_title)
+            return
+        }
+        else if(strRecipient.isEmpty())
+        {
+            CB_SingleSystemMgr.showToast(R.string.str_input_recipient)
             return
         }
         else if(binding.recipientTextInputLayout.error != null)
@@ -192,7 +196,7 @@ class CB_NewMailFragment: CB_BaseFragment("NewMailFragment")
                     // save mail data at user-mails/uid/mailKey/mail data
                     CB_AppFunc.getMailBoxRoot().child(strRecipientUid).push().setValue(mail)
                     backPressed()
-                    CB_SingleSystemMgr.showToast(R.string.str_success_send_mail)
+                    CB_SingleSystemMgr.showToast(R.string.str_send_mail_success)
                 }
 
                 override fun onCancelled(error: DatabaseError)

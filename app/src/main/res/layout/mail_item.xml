@@ -26,6 +26,8 @@
         android:layout_height="wrap_content">
 
         <androidx.constraintlayout.widget.ConstraintLayout
+            android:paddingBottom="@dimen/normal_margin"
+            android:paddingTop="@dimen/normal_margin"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:background="?android:attr/selectableItemBackground"
@@ -55,10 +57,12 @@
 
             <ImageView
                 android:id="@+id/heart_image_view"
+                android:onClick="@{()->fragment.heartButton(mailKey)}"
                 android:layout_width="@dimen/icon_image_size_small"
                 android:layout_height="@dimen/icon_image_size_small"
                 android:layout_marginStart="@dimen/normal_margin"
-                android:src="@{mailData.BHeartIcon ? @drawable/ic_baseline_favorite_border_24 : @drawable/ic_baseline_favorite_24}"
+                bind:heart_icon_tint="@{mailData.BHeartIcon}"
+                android:src="@{mailData.BHeartIcon ? @drawable/ic_baseline_favorite_24 : @drawable/ic_baseline_favorite_border_24}"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintStart_toEndOf="@+id/checkbox_image_view"
                 app:layout_constraintTop_toTopOf="parent"

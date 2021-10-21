@@ -33,7 +33,6 @@ class CB_ViewModel
         var tMail = MutableLiveData(CB_Mail())
 
         // MailBoxFragment
-        var bMailButton = MutableLiveData(false)
         val emailCheckedList = ArrayList<Int>()
 
         fun clearCheckedList() { emailCheckedList.clear() }

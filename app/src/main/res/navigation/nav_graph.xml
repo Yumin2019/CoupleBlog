@@ -46,6 +46,15 @@
             android:id="@+id/action_CB_MainFragment_to_CB_NewMailFragment"
             app:destination="@id/CB_NewMailFragment" />
 
+        <action
+            android:id="@+id/action_CB_MainFragment_to_CB_MailDetailFragment"
+            app:destination="@id/CB_MailDetailFragment">
+
+            <argument android:name="strMailKey" app:nullable="false"
+                app:argType="string" android:defaultValue=""/>
+
+        </action>
+
     </fragment>
 
     <fragment
@@ -95,4 +104,12 @@
         tools:layout="@layout/fragment_cb_new_mail" >
 
     </fragment>
+
+    <fragment
+        android:id="@+id/CB_MailDetailFragment"
+        android:name="com.coupleblog.fragment.CB_MailDetailFragment"
+        android:label="fragment_cb_mail_detail"
+        tools:layout="@layout/fragment_cb_mail_detail" />
+
+
 </navigation>

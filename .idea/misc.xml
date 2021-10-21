@@ -9,6 +9,7 @@
         <entry key="..\:/Users/lmj33/CoupleBlog/app/src/main/res/drawable/ic_baseline_add_48.xml" value="0.23914473684210527" />
         <entry key="..\:/Users/lmj33/CoupleBlog/app/src/main/res/drawable/ic_baseline_check_box_24.xml" value="0.23914473684210527" />
         <entry key="..\:/Users/lmj33/CoupleBlog/app/src/main/res/drawable/ic_baseline_favorite_24.xml" value="0.24144736842105263" />
+        <entry key="..\:/Users/lmj33/CoupleBlog/app/src/main/res/drawable/ic_baseline_favorite_border_24.xml" value="0.1" />
         <entry key="..\:/Users/lmj33/CoupleBlog/app/src/main/res/drawable/ic_baseline_mail_24.xml" value="0.14473684210526316" />
         <entry key="..\:/Users/lmj33/CoupleBlog/app/src/main/res/drawable/ic_launcher_background.xml" value="0.38229166666666664" />
         <entry key="..\:/Users/lmj33/CoupleBlog/app/src/main/res/font-v26/font.xml" value="0.19537037037037036" />
@@ -26,7 +27,7 @@
         <entry key="..\:/Users/lmj33/CoupleBlog/app/src/main/res/layout/fragment_cb_info.xml" value="0.2" />
         <entry key="..\:/Users/lmj33/CoupleBlog/app/src/main/res/layout/fragment_cb_login.xml" value="0.264" />
         <entry key="..\:/Users/lmj33/CoupleBlog/app/src/main/res/layout/fragment_cb_mail_detail.xml" value="0.23125" />
-        <entry key="..\:/Users/lmj33/CoupleBlog/app/src/main/res/layout/fragment_cb_mailbox.xml" value="0.4" />
+        <entry key="..\:/Users/lmj33/CoupleBlog/app/src/main/res/layout/fragment_cb_mailbox.xml" value="0.3245686113393591" />
         <entry key="..\:/Users/lmj33/CoupleBlog/app/src/main/res/layout/fragment_cb_main.xml" value="0.176" />
         <entry key="..\:/Users/lmj33/CoupleBlog/app/src/main/res/layout/fragment_cb_new_mail.xml" value="0.264" />
         <entry key="..\:/Users/lmj33/CoupleBlog/app/src/main/res/layout/fragment_cb_new_post.xml" value="0.264" />

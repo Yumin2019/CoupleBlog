@@ -111,11 +111,11 @@
                     android:layout_marginStart="@dimen/normal_margin"
                     android:layout_marginEnd="4dp"
                     android:onClick="@{()->fragment.heartButton()}"
-                    android:src="@{viewModel.TMail.BHeartIcon ? @drawable/ic_baseline_favorite_border_24 : @drawable/ic_baseline_favorite_24}"
+                    bind:heart_icon_tint="@{viewModel.TMail.BHeartIcon}"
+                    android:src="@{viewModel.TMail.BHeartIcon ? @drawable/ic_baseline_favorite_24 : @drawable/ic_baseline_favorite_border_24}"
                     app:layout_constraintBottom_toTopOf="@+id/view"
                     app:layout_constraintEnd_toStartOf="@+id/menu_image_view"
                     app:layout_constraintTop_toBottomOf="@+id/mail_title_text_view"
-                    app:tint="@color/gray"
                     tools:src="@drawable/ic_baseline_favorite_border_24"
                     tools:visibility="visible" />
 

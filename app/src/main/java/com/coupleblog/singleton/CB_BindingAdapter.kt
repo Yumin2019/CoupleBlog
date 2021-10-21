@@ -12,7 +12,7 @@ import com.google.android.material.floatingactionbutton.FloatingActionButton
 
 
 @BindingAdapter("bind:user_uid")
-fun setTextByUid(textView: TextView, strUid: String)
+fun setTextByUid(textView: TextView, strUid: String?)
 {
     // current User's uid or couple's uid
     textView.text =
@@ -22,8 +22,16 @@ fun setTextByUid(textView: TextView, strUid: String)
             CB_AppFunc.coupleUser.strUserName
 }
 
+@BindingAdapter("bind:heart_icon_tint")
+fun setHeartIconTint(imageView: ImageView, boolean: Boolean)
+{
+    imageView.imageTintList =
+    if(boolean)  CB_AppFunc.getColorStateList(R.color.red)
+    else         CB_AppFunc.getColorStateList(R.color.gray)
+}
+
 @BindingAdapter("bind:layout_manager")
-fun setLayoutManager(recyclerView: RecyclerView, layoutManager: RecyclerView.LayoutManager)
+fun setLayoutManager(recyclerView: RecyclerView, layoutManager: RecyclerView.LayoutManager?)
 {
     recyclerView.layoutManager = layoutManager
 }
@@ -35,9 +43,9 @@ fun setAdapter(recyclerView: RecyclerView, adapter: RecyclerView.Adapter<*>?)
 }
 
 @BindingAdapter("bind:visible")
-fun setVisibility(view: View, flag: Boolean)
+fun setVisibility(view: View, flag: Boolean?)
 {
-    view.visibility = if(flag) View.VISIBLE else View.GONE
+    view.visibility = if(flag == true) View.VISIBLE else View.GONE
 }
 
 @BindingAdapter("bind:page_idx")
@@ -59,7 +67,7 @@ fun setFloatingButtonImg(floatingActionButton: FloatingActionButton, iPageIdx: I
 }
 
 @BindingAdapter("bind:comment_uid")
-fun setVisibility(view: View, strAuthorUid: String)
+fun setVisibility(view: View, strAuthorUid: String?)
 {
     // if this user has a permission, visible or gone
     if(CB_ViewModel.isMyPost.value!! || strAuthorUid == CB_AppFunc.getUid())
@@ -73,8 +81,11 @@ fun setVisibility(view: View, strAuthorUid: String)
 }
 
 @BindingAdapter("bind:date_text")
-fun setDateText(textView: TextView, strDate: String)
+fun setDateText(textView: TextView, strDate: String?)
 {
+    if(strDate == null)
+        return
+
     val calendar = CB_AppFunc.stringToCalendar(strDate)
     textView.text = CB_AppFunc.getDateStringForOutput(calendar)
 }

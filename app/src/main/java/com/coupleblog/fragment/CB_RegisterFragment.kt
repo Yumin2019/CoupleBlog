@@ -208,6 +208,7 @@ class CB_RegisterFragment : CB_BaseFragment("RegisterFragment")
                             {
                                 // Login Fragment
                                 dialog.cancel()
+                                CB_SingleSystemMgr.showToast(R.string.str_registration_success)
                                 backPressed()
                             }
                         }

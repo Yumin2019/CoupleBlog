@@ -262,6 +262,7 @@ class CB_PostDetailFragment: CB_BaseFragment("PostDetail")
                 launch(Dispatchers.Main)
                 {
                     dialog.cancel()
+                    CB_SingleSystemMgr.showToast(R.string.str_comment_edited)
                 }
             }
             catch (e: FirebaseException)
@@ -303,6 +304,7 @@ class CB_PostDetailFragment: CB_BaseFragment("PostDetail")
                         launch(Dispatchers.Main)
                         {
                             dialog.cancel()
+                            CB_SingleSystemMgr.showToast(R.string.str_comment_deleted)
                         }
                     }
                     catch(e: FirebaseException)
@@ -458,6 +460,7 @@ class CB_PostDetailFragment: CB_BaseFragment("PostDetail")
                         {
                             // if success, move to MainFragment
                             dialog.cancel()
+                            CB_SingleSystemMgr.showToast(R.string.str_post_deleted)
                             backPressed()
                         }
                     }
@@ -500,7 +503,11 @@ class CB_PostDetailFragment: CB_BaseFragment("PostDetail")
                 val comment = CB_Comment(CB_AppFunc.getUid(), strComment, CB_AppFunc.getDateStringForSave())
                 commentRef.push().setValue(comment).await()
 
-                dialog.cancel()
+                launch(Dispatchers.Main)
+                {
+                    dialog.cancel()
+                    CB_SingleSystemMgr.showToast(R.string.str_comment_posted)
+                }
             }
             catch(e: FirebaseException)
             {

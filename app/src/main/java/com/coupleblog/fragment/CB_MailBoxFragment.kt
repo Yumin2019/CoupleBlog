@@ -4,23 +4,23 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import androidx.navigation.fragment.findNavController
+import androidx.core.os.bundleOf
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.coupleblog.R
-import com.coupleblog.adapter.CB_CommentAdapter
 import com.coupleblog.adapter.CB_EmailAdapter
-import com.coupleblog.dialog.CB_ItemListDialog
-import com.coupleblog.dialog.DialogItem
 import com.coupleblog.model.*
 import com.coupleblog.parent.CB_BaseFragment
 import com.coupleblog.singleton.CB_AppFunc
 import com.coupleblog.singleton.CB_SingleSystemMgr
 import com.coupleblog.singleton.CB_ViewModel
+import com.google.firebase.FirebaseException
 import com.google.firebase.database.DataSnapshot
 import com.google.firebase.database.DatabaseError
 import com.google.firebase.database.DatabaseReference
 import com.google.firebase.database.ValueEventListener
 import com.google.firebase.database.ktx.getValue
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.launch
 
 class CB_MailBoxFragment: CB_BaseFragment("MailBoxFragment")
 {
@@ -28,7 +28,7 @@ class CB_MailBoxFragment: CB_BaseFragment("MailBoxFragment")
     private val binding get() = _binding!!
 
     private var adapter: CB_EmailAdapter? = null
-    private lateinit var emailRef: DatabaseReference
+    private lateinit var mailBoxRef: DatabaseReference
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View
     {
@@ -44,31 +44,30 @@ class CB_MailBoxFragment: CB_BaseFragment("MailBoxFragment")
         return binding.root
     }
 
-    override fun onStart()
-    {
-        super.onStart()
-
-        // MailAdapter
-        adapter = CB_EmailAdapter(this@CB_MailBoxFragment, emailRef)
-        binding.mailRecyclerView.adapter = adapter
-        CB_ViewModel.bMailButton.postValue(true)
-    }
-
-    override fun onStop()
-    {
-        super.onStop()
-        adapter?.clearListener()
-        CB_ViewModel.bMailButton.postValue(false)
-    }
-
     override fun onCreate(savedInstanceState: Bundle?)
     {
         super.onCreate(savedInstanceState)
         CB_ViewModel.clearCheckedList()
 
         // get emailRef
-        emailRef = CB_AppFunc.getMailBoxRoot().child(CB_AppFunc.getUid())
+        mailBoxRef = CB_AppFunc.getMailBoxRoot().child(CB_AppFunc.getUid())
     }
+
+    override fun onStart()
+    {
+        super.onStart()
+
+        // MailAdapter
+        adapter = CB_EmailAdapter(this@CB_MailBoxFragment, mailBoxRef)
+        binding.mailRecyclerView.adapter = adapter
+    }
+
+    override fun onStop()
+    {
+        super.onStop()
+        adapter?.clearListener()
+    }
+
 
     override fun onDestroy()
     {
@@ -81,9 +80,47 @@ class CB_MailBoxFragment: CB_BaseFragment("MailBoxFragment")
         finalBackPressed()
     }
 
+    fun heartButton(mailKey: String)
+    {
+        // change heart icon state in this mail
+        CB_AppFunc.networkScope.launch {
+
+            try
+            {
+                val mailRef = mailBoxRef.child(mailKey)
+                mailRef.addListenerForSingleValueEvent(object: ValueEventListener{
+                    override fun onDataChange(snapshot: DataSnapshot)
+                    {
+                        // get data and update data from server
+                        val mail = snapshot.getValue<CB_Mail>()!!
+                        mail.bHeartIcon = !mail.bHeartIcon!!
+                        mailRef.setValue(mail)
+                    }
+
+                    override fun onCancelled(error: DatabaseError)
+                    {
+                        CB_AppFunc.okDialog(requireActivity(), R.string.str_error,
+                            R.string.str_failed_to_change_heart_state, R.drawable.error_icon, true)
+                    }
+                })
+            }
+            catch (e: FirebaseException)
+            {
+                e.printStackTrace()
+                launch(Dispatchers.Main)
+                {
+                    CB_AppFunc.okDialog(requireActivity(), R.string.str_error,
+                        R.string.str_failed_to_change_heart_state, R.drawable.error_icon, true)
+                }
+            }
+        }
+    }
+
     fun emailItem(mailData: CB_Mail, mailKey: String)
     {
-       // 메일 아이템을 클릭한 경우, 메일 정보를 출력한다.
+        // 메일 아이템을 클릭한 경우, 메일 디테일 화면을 출력한다.
+        beginAction(R.id.action_CB_MainFragment_to_CB_MailDetailFragment, R.id.CB_MainFragment,
+            bundleOf(CB_MailDetailFragment.ARGU_MAIL_KEY to mailKey))
 
 
       /*

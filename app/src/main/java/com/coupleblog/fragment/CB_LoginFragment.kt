@@ -10,6 +10,7 @@ import com.coupleblog.singleton.CB_SingleSystemMgr
 import com.coupleblog.R
 import com.coupleblog.dialog.CB_LoadingDialog
 import com.coupleblog.parent.CB_BaseFragment
+import kotlinx.coroutines.launch
 
 
 class CB_LoginFragment : CB_BaseFragment("LoginFragment") {
@@ -105,9 +106,14 @@ class CB_LoginFragment : CB_BaseFragment("LoginFragment") {
         val strEmail = binding.emailEditText.text.toString()
         val strPassword = binding.passwordEditText.text.toString()
 
-        if(strEmail.isEmpty() || strPassword.isEmpty())
+        if(strEmail.isEmpty())
         {
+            CB_SingleSystemMgr.showToast(R.string.str_input_email)
             return
+        }
+        else if(strPassword.isEmpty())
+        {
+            CB_SingleSystemMgr.showToast(R.string.str_input_password)
         }
         else if(binding.emailTextInputLayout.error != null)
         {
@@ -129,7 +135,6 @@ class CB_LoginFragment : CB_BaseFragment("LoginFragment") {
             .addOnCompleteListener { task ->
 
                 dialog.cancel()
-
                 if(task.isSuccessful)
                 {
                     // 로그인 성공
@@ -137,7 +142,7 @@ class CB_LoginFragment : CB_BaseFragment("LoginFragment") {
                     funcSuccess =
                     {
                         beginAction(R.id.action_CB_LoginFragment_to_CB_MainFragment, R.id.CB_LoginFragment)
-                    })
+                    }, null)
                 }
                 else
                 {
@@ -160,12 +165,18 @@ class CB_LoginFragment : CB_BaseFragment("LoginFragment") {
 
         // if it's possible to login by auto
         CB_AppFunc.getAuth().currentUser?.let {
+
+            val dialog = CB_LoadingDialog(requireActivity()).apply { show() }
             CB_AppFunc.getUserInfo(requireActivity(),
             funcSuccess =
             {
-                // 유저 정보를 제대로 가져온 경우에만 이동한다
-                beginAction(R.id.action_CB_LoginFragment_to_CB_MainFragment, R.id.CB_LoginFragment)
-            })
+                CB_AppFunc.mainScope.launch {
+                    // 유저 정보를 제대로 가져온 경우에만 이동한다
+                    dialog.cancel()
+                    CB_SingleSystemMgr.showToast(R.string.str_auto_login_success)
+                    beginAction(R.id.action_CB_LoginFragment_to_CB_MainFragment, R.id.CB_LoginFragment)
+                }
+            }, null)
         }
     }
 

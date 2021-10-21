@@ -141,7 +141,8 @@ class CB_NewPostFragment: CB_BaseFragment("NewPostFragment")
 
         if(strTitle.isEmpty())
         {
-            // 초기에 빈 경우를 막는다.
+            // 초기에 빈 경우를 막는다
+            CB_SingleSystemMgr.showToast(R.string.str_input_title)
             return
         }
         else if(binding.titleTextInputLayout.error != null)
@@ -179,6 +180,7 @@ class CB_NewPostFragment: CB_BaseFragment("NewPostFragment")
                         {
                             // 저장을 완료한 이후에 다시 PostDetailFragment 로 이동한다.
                             dialog.cancel()
+                            CB_SingleSystemMgr.showToast(R.string.str_post_edited)
                             findNavController().popBackStack()
                         }
                     }
@@ -210,6 +212,7 @@ class CB_NewPostFragment: CB_BaseFragment("NewPostFragment")
                         {
                             // 저장을 완료한 이후에 다시 mainFragment 로 이동한다.
                             dialog.cancel()
+                            CB_SingleSystemMgr.showToast(R.string.str_post_posted)
                             findNavController().popBackStack()
                         }
                     }

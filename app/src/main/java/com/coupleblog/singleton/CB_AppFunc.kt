@@ -139,7 +139,7 @@ class CB_AppFunc
          */
 
 
-        fun getUserInfo(context: Activity, funcSuccess: (()->Unit?))
+        fun getUserInfo(context: Activity, funcSuccess: (()->Unit)?, funcFailure: (() -> Unit)?)
         {
             // 유저 정보를 받아오는 함수이다. (갱신)
             // 로그인 인증 상황 및 유저 데이터 변경시 호출한다.
@@ -153,6 +153,7 @@ class CB_AppFunc
                         Log.e(strTag, "User Info load failed")
                         okDialog(context, R.string.str_error,
                             R.string.str_user_info_load_failed, R.drawable.error_icon, true)
+                        funcFailure?.invoke()
                     }
                     else
                     {
@@ -173,7 +174,7 @@ class CB_AppFunc
                                     }
 
                                     // 자신의 정보, 커플 정보를 가져왔다면 넘어간다.
-                                    funcSuccess.invoke()
+                                    funcSuccess?.invoke()
                                 }
 
                                 override fun onCancelled(error: DatabaseError)
@@ -181,6 +182,7 @@ class CB_AppFunc
                                     Log.e(strTag, "User Info load cancelled", error.toException())
                                     okDialog(context, R.string.str_error,
                                         R.string.str_user_info_load_failed, R.drawable.error_icon, true)
+                                    funcFailure?.invoke()
                                 }
                             })
                         }
@@ -188,7 +190,7 @@ class CB_AppFunc
                         {
                             // 커플 정보가 없다면 넘어간다.
                             _coupleUser = CB_User()
-                            funcSuccess.invoke()
+                            funcSuccess?.invoke()
                         }
                     }
                 }
@@ -198,6 +200,7 @@ class CB_AppFunc
                     Log.e(strTag, "User Info load cancelled", error.toException())
                     okDialog(context, R.string.str_error,
                         R.string.str_user_info_load_failed, R.drawable.error_icon, true)
+                    funcFailure?.invoke()
                 }
             })
         }

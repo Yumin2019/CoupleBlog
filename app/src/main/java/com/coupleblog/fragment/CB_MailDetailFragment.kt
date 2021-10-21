@@ -31,7 +31,7 @@ class CB_MailDetailFragment : CB_BaseFragment("MailDetail")
 {
     companion object
     {
-        const val ARGU_MAIL_KEY = "mailKey"
+        const val ARGU_MAIL_KEY = "strMailKey"
     }
 
     private lateinit var mailKey: String
@@ -42,10 +42,13 @@ class CB_MailDetailFragment : CB_BaseFragment("MailDetail")
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View
     {
+        CB_ViewModel.bAddButton.value = false
+
         _binding = MailDetailBinding.inflate(inflater, container, false)
         binding.apply {
             lifecycleOwner  = viewLifecycleOwner
             fragment        = this@CB_MailDetailFragment
+            viewModel       = CB_ViewModel.Companion
         }
         return binding.root
     }
@@ -95,15 +98,52 @@ class CB_MailDetailFragment : CB_BaseFragment("MailDetail")
 
     fun deleteMail()
     {
-        // delete this mail in my mail box
+        if(CB_SingleSystemMgr.isDialog(CB_SingleSystemMgr.DIALOG_TYPE.CONFIRM_DIALOG))
+            return
 
+        if(CB_SingleSystemMgr.isDialog(CB_SingleSystemMgr.DIALOG_TYPE.LOADING_DIALOG))
+            return
+
+        // check if user really want to delete this mail
+        CB_AppFunc.confirmDialog(requireActivity(), R.string.str_warning,
+            R.string.str_delete_msg, R.drawable.warning_icon, true,
+            R.string.str_delete, yesListener = { _, _ ->
+
+                val dialog = CB_LoadingDialog(requireActivity()).apply { show() }
+
+                CB_AppFunc.networkScope.launch {
+
+                    try
+                    {
+                        mailRef.setValue(null)
+                        launch(Dispatchers.Main)
+                        {
+                            dialog.cancel()
+                            CB_SingleSystemMgr.showToast(R.string.str_mail_deleted)
+                            backPressed()
+                        }
+                    }
+                    catch (e: FirebaseException)
+                    {
+                        e.printStackTrace()
+                        launch(Dispatchers.Main)
+                        {
+                            dialog.cancel()
+                            CB_AppFunc.okDialog(requireActivity(), R.string.str_error,
+                                R.string.str_failed_to_delete_mail, R.drawable.error_icon, true)
+                        }
+                    }
+                }
+
+            }, R.string.str_cancel, null)
     }
 
     fun heartButton()
     {
-        // change heart icon state in this mail
-        val dialog = CB_LoadingDialog(requireActivity()).apply { show() }
+        if(CB_SingleSystemMgr.isDialog(CB_SingleSystemMgr.DIALOG_TYPE.LOADING_DIALOG))
+            return
 
+        // change heart icon state in this mail
         CB_AppFunc.networkScope.launch {
 
             try
@@ -113,18 +153,17 @@ class CB_MailDetailFragment : CB_BaseFragment("MailDetail")
                 {
                     // local data
                     prevMail.bHeartIcon = !(prevMail.bHeartIcon!!)
+                    CB_ViewModel.tMail.value = prevMail
 
-                }.join()
-
-                // server data
-                mailRef.setValue(prevMail)
+                    // server data
+                    mailRef.setValue(prevMail)
+                }
             }
             catch (e: FirebaseException)
             {
                 e.printStackTrace()
                 launch(Dispatchers.Main)
                 {
-                    dialog.cancel()
                     CB_AppFunc.okDialog(requireActivity(), R.string.str_error,
                         R.string.str_failed_to_change_heart_state, R.drawable.error_icon, true)
                 }
