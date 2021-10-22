@@ -6,6 +6,7 @@ import android.widget.TextView
 import androidx.databinding.BindingAdapter
 import androidx.recyclerview.widget.RecyclerView
 import com.coupleblog.R
+import com.coupleblog.adapter.CB_EmailAdapter
 import com.coupleblog.fragment.PAGE_TYPE
 import com.coupleblog.model.REACTION_TYPE
 import com.google.android.material.floatingactionbutton.FloatingActionButton

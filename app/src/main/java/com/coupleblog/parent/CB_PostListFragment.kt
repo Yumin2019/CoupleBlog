@@ -2,16 +2,16 @@ package com.coupleblog.parent
 
 import android.annotation.SuppressLint
 import android.os.Bundle
-import android.view.LayoutInflater
-import android.view.View
-import android.view.ViewGroup
+import android.view.*
 import androidx.core.os.bundleOf
+import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.coupleblog.adapter.CB_PostAdapter
 import com.coupleblog.R
 import com.coupleblog.fragment.AllPostsBinding
 import com.coupleblog.fragment.CB_PostDetailFragment
 import com.coupleblog.model.CB_Post
+import com.coupleblog.singleton.CB_AppFunc
 import com.firebase.ui.database.FirebaseRecyclerOptions
 import com.google.firebase.database.Query
 
@@ -45,6 +45,7 @@ abstract class CB_PostListFragment : CB_BaseFragment("PostList")
     override fun onCreate(savedInstanceState: Bundle?)
     {
         super.onCreate(savedInstanceState)
+        setHasOptionsMenu(true)
 
         // FirebaseRecyclerAdapter 를 생성하여 바인딩한다.
         // Query 값이 null 이라면 설정하지 않는다.
@@ -56,6 +57,30 @@ abstract class CB_PostListFragment : CB_BaseFragment("PostList")
                 .build()
             adapter = CB_PostAdapter(this@CB_PostListFragment, options)
         }
+    }
+
+    override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater)
+    {
+        inflater.inflate(R.menu.menu_main, menu)
+    }
+
+    override fun onOptionsItemSelected(item: MenuItem): Boolean
+    {
+        when(item.itemId)
+        {
+            R.id.action_logout ->
+            {
+                // 로그아웃을 진행한다.
+                CB_AppFunc.getAuth().signOut()
+
+                // 프레그먼트를 종료시킨다.
+                findNavController().popBackStack()
+            }
+
+            else -> {super.onOptionsItemSelected(item)}
+        }
+
+        return true
     }
 
     // 각 List Fragment 마다 원하는 쿼리를 작성한다.

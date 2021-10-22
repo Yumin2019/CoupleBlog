@@ -46,7 +46,6 @@ class CB_MainFragment : CB_BaseFragment("MainFragment")
     override fun onViewCreated(view: View, savedInstanceState: Bundle?)
     {
         super.onViewCreated(view, savedInstanceState)
-        setHasOptionsMenu(true)
 
         // 각 부분별 처리를 할 Fragment 를 가지고 adapter 를 생성한다.
         val pagerAdapter = object : FragmentStateAdapter(childFragmentManager, viewLifecycleOwner.lifecycle) {
@@ -105,30 +104,6 @@ class CB_MainFragment : CB_BaseFragment("MainFragment")
 
            }.attach()
        }
-    }
-
-    override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater)
-    {
-        inflater.inflate(R.menu.menu_main, menu)
-    }
-
-    override fun onOptionsItemSelected(item: MenuItem): Boolean
-    {
-        return when(item.itemId)
-        {
-            R.id.action_logout ->
-            {
-                // 로그아웃을 진행한다.
-                CB_AppFunc.getAuth().signOut()
-
-                // 프레그먼트를 종료시킨다.
-                findNavController().popBackStack()
-                true
-            }
-
-            else -> {super.onOptionsItemSelected(item)}
-        }
-
     }
 
     override fun backPressed()

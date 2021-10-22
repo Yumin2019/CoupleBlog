@@ -11,6 +11,7 @@ import androidx.databinding.DataBindingUtil
 import androidx.recyclerview.widget.RecyclerView
 import com.coupleblog.R
 import com.coupleblog.singleton.CB_AppFunc
+import com.coupleblog.singleton.CB_ViewModel
 import com.google.firebase.database.ChildEventListener
 import com.google.firebase.database.DataSnapshot
 import com.google.firebase.database.DatabaseError
@@ -41,6 +42,7 @@ class CB_EmailAdapter(private val fragment: CB_MailBoxFragment,
 
                 emailKeyList.add(snapshot.key!!)
                 emailList.add(mail!!)
+                CB_ViewModel.checkList.add(false)
                 notifyItemChanged(emailList.size - 1)
             }
 
@@ -76,6 +78,7 @@ class CB_EmailAdapter(private val fragment: CB_MailBoxFragment,
                     // 해당 아이템을 삭제한다.
                     emailKeyList.removeAt(mailIdx)
                     emailList.removeAt(mailIdx)
+                    CB_ViewModel.checkList.removeAt(mailIdx)
                     notifyItemRemoved(mailIdx)
                 }
                 else
@@ -105,9 +108,10 @@ class CB_EmailAdapter(private val fragment: CB_MailBoxFragment,
     fun clearListener()
     {
         childEventListener?.let { emailRef.removeEventListener(it) }
+        CB_ViewModel.checkList.clear()
     }
 
-    class ViewHolder(private val binding: MailItemBinding) : RecyclerView.ViewHolder(binding.root)
+    class ViewHolder(val binding: MailItemBinding) : RecyclerView.ViewHolder(binding.root)
     {
         fun bind(argFragment: CB_MailBoxFragment, argMailBox: CB_Mail, argMailKey: String)
         {
@@ -115,10 +119,8 @@ class CB_EmailAdapter(private val fragment: CB_MailBoxFragment,
                 fragment    = argFragment
                 mailData    = argMailBox
                 mailKey     = argMailKey
-                checkboxImageView.setOnClickListener {
-                    // add n-th index
-                    layoutPosition
-                }
+                viewHolder  = this@ViewHolder
+                viewModel   = CB_ViewModel.Companion
                 executePendingBindings()
             }
         }

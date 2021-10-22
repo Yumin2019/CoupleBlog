@@ -1,9 +1,16 @@
 package com.coupleblog.singleton
 
+import android.annotation.SuppressLint
 import androidx.lifecycle.MutableLiveData
+import androidx.recyclerview.widget.RecyclerView
+import com.coupleblog.ListLiveData
+import com.coupleblog.R
+import com.coupleblog.adapter.CB_EmailAdapter
 import com.coupleblog.fragment.PAGE_TYPE
 import com.coupleblog.model.CB_Mail
 import com.coupleblog.model.CB_Post
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.launch
 
 // we'll use LiveData with SingleTon because it's simple
 class CB_ViewModel
@@ -33,37 +40,17 @@ class CB_ViewModel
         var tMail = MutableLiveData(CB_Mail())
 
         // MailBoxFragment
-        val emailCheckedList = ArrayList<Int>()
+        val checkList = ArrayList<Boolean>() // checkList for checking mails
 
-        fun clearCheckedList() { emailCheckedList.clear() }
-        fun checkEmail(iIdx: Int)
+        fun checkMail(viewHolder: RecyclerView.ViewHolder)
         {
-            if(!findCheck(iIdx))
-            {
-                // at first
-                emailCheckedList.add(iIdx)
-            }
-            else
-            {
-                assert(false) { "tried to add invalid value" }
-            }
-        }
-        fun unCheckEmail(iIdx: Int)
-        {
-            if(!emailCheckedList.remove(iIdx))
-            {
-                assert(false) { "tried to delete invalid value" }
-            }
-        }
-        fun emailCheckedSize() = emailCheckedList.size
-        fun findCheck(iIdx: Int): Boolean
-        {
-            emailCheckedList.forEach {
-                if(it == iIdx)
-                    return true
-            }
-            return false
-        }
+            val iIdx = viewHolder.layoutPosition
+            checkList[iIdx] = !checkList[iIdx]
 
+            val iRes = if(checkList[iIdx]) R.drawable.ic_baseline_check_box_24
+                       else                R.drawable.ic_baseline_check_box_outline_blank_24
+
+            (viewHolder as CB_EmailAdapter.ViewHolder).binding.checkboxImageView.setImageResource(iRes)
+        }
     }
 }

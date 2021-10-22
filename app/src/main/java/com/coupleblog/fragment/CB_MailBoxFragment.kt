@@ -1,11 +1,11 @@
 package com.coupleblog.fragment
 
 import android.os.Bundle
-import android.view.LayoutInflater
-import android.view.View
-import android.view.ViewGroup
+import android.view.*
 import androidx.core.os.bundleOf
+import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.RecyclerView
 import com.coupleblog.R
 import com.coupleblog.adapter.CB_EmailAdapter
 import com.coupleblog.model.*
@@ -47,10 +47,54 @@ class CB_MailBoxFragment: CB_BaseFragment("MailBoxFragment")
     override fun onCreate(savedInstanceState: Bundle?)
     {
         super.onCreate(savedInstanceState)
-        CB_ViewModel.clearCheckedList()
+        setHasOptionsMenu(true)
 
         // get emailRef
         mailBoxRef = CB_AppFunc.getMailBoxRoot().child(CB_AppFunc.getUid())
+    }
+
+    override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater)
+    {
+        inflater.inflate(R.menu.menu_mail_box, menu)
+    }
+
+    override fun onOptionsItemSelected(item: MenuItem): Boolean
+    {
+        when(item.itemId)
+        {
+            R.id.action_logout ->
+            {
+                // 로그아웃을 진행한다.
+                CB_AppFunc.getAuth().signOut()
+
+                // 프레그먼트를 종료시킨다.
+                findNavController().popBackStack()
+            }
+
+            R.id.action_delete_mail ->
+            {
+
+            }
+
+            R.id.action_heart_mark ->
+            {
+
+            }
+
+            R.id.action_read_mark ->
+            {
+
+            }
+
+            R.id.action_select_all ->
+            {
+
+            }
+
+            else -> {super.onOptionsItemSelected(item)}
+        }
+
+        return true
     }
 
     override fun onStart()
@@ -67,7 +111,6 @@ class CB_MailBoxFragment: CB_BaseFragment("MailBoxFragment")
         super.onStop()
         adapter?.clearListener()
     }
-
 
     override fun onDestroy()
     {

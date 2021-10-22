@@ -18,6 +18,14 @@
             name="mailData"
             type="com.coupleblog.model.CB_Mail" />
 
+        <variable
+            name="viewHolder"
+            type="androidx.recyclerview.widget.RecyclerView.ViewHolder" />
+
+        <variable
+            name="viewModel"
+            type="com.coupleblog.singleton.CB_ViewModel.Companion" />
+
     </data>
 
     <com.google.android.material.card.MaterialCardView
@@ -35,10 +43,12 @@
 
             <ImageView
                 android:id="@+id/checkbox_image_view"
+                android:onClick="@{()->viewModel.checkMail(viewHolder)}"
                 android:layout_width="@dimen/icon_image_size_small"
                 android:layout_height="@dimen/icon_image_size_small"
                 android:layout_marginStart="@dimen/normal_margin"
-                android:src="@drawable/ic_baseline_check_box_outline_blank_24"
+                tools:src="@drawable/ic_baseline_check_box_outline_blank_24"
+                android:src="@{viewModel.checkList[viewHolder.layoutPosition] ? @drawable/ic_baseline_check_box_24 : @drawable/ic_baseline_check_box_outline_blank_24}"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent" />
@@ -80,6 +90,7 @@
                 android:textAlignment="viewStart"
                 android:textColor="@color/gray"
                 app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toStartOf="@+id/sender_text_view"
                 app:layout_constraintStart_toEndOf="@+id/heart_image_view"
                 app:layout_constraintTop_toBottomOf="@+id/mail_title_text_view"
                 bind:date_text="@{mailData.strSendDate}"
@@ -96,6 +107,7 @@
                 android:paddingEnd="@dimen/margin_16dp"
                 android:text="@{mailData.strTitle}"
                 android:textAlignment="viewStart"
+                app:layout_constraintEnd_toStartOf="@+id/sender_text_view"
                 app:layout_constraintStart_toEndOf="@+id/heart_image_view"
                 app:layout_constraintTop_toTopOf="parent"
                 tools:text="How to love you"

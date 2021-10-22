@@ -250,6 +250,11 @@ Couple blog 은(는) 정보주체의 이용정보를 저장하고 수시로 불�
     <string name="str_delete">Delete</string>
     <string name="str_loading">Loading …</string>
 
+    <string name="str_read_mark">Read mark</string>
+    <string name="str_heart_mark">Heart mark</string>
+    <string name="str_select_all">Select all</string>
+
+
     <string name="str_none_icon">No icon</string>
     <string name="str_heart">Heart</string>
     <string name="str_heart_icon">Heart icon</string>
