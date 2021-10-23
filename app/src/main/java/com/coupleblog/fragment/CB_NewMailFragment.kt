@@ -1,9 +1,7 @@
 package com.coupleblog.fragment
 
 import android.os.Bundle
-import android.view.LayoutInflater
-import android.view.View
-import android.view.ViewGroup
+import android.view.*
 import androidx.core.widget.doAfterTextChanged
 import androidx.navigation.fragment.findNavController
 import com.coupleblog.R
@@ -37,9 +35,50 @@ class CB_NewMailFragment: CB_BaseFragment("NewMailFragment")
         return binding.root
     }
 
+     override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater)
+    {
+        inflater.inflate(R.menu.menu_new_mail, menu)
+    }
+
+    override fun onOptionsItemSelected(item: MenuItem): Boolean
+    {
+        when (item.itemId)
+        {
+            R.id.action_recipients ->
+            {
+                // 수신인 지정 기능이다.
+                // 자신과 커플(있는 경우)의 이메일을 설정할 수 있는 dialog를 제공한다.
+                val itemList = ArrayList<DialogItem>()
+                itemList.add(DialogItem(CB_AppFunc.curUser.strUserName!!, R.drawable.haha_icon,
+                callback = {
+
+                    binding.recipientEditText.text =
+                        CB_AppFunc.stringToEditable(CB_AppFunc.curUser.strUserEmail!!)
+                }))
+
+                // if a couple
+                if(!CB_AppFunc.curUser.strCoupleUid.isNullOrEmpty())
+                {
+                    itemList.add(DialogItem(CB_AppFunc.coupleUser.strUserName!!, R.drawable.ic_baseline_favorite_24,
+                        callback = {
+
+                            binding.recipientEditText.text =
+                                CB_AppFunc.stringToEditable(CB_AppFunc.coupleUser.strUserEmail!!)
+                        }, R.color.red))
+                }
+
+                CB_ItemListDialog(requireActivity(), CB_AppFunc.getString(R.string.str_recipients), itemList, true)
+            }
+            else -> { super.onOptionsItemSelected(item) }
+        }
+
+        return true
+    }
+
     override fun onViewCreated(view: View, savedInstanceState: Bundle?)
     {
         super.onViewCreated(view, savedInstanceState)
+        setHasOptionsMenu(true)
 
         binding.recipientEditText.apply {
 
@@ -121,18 +160,25 @@ class CB_NewMailFragment: CB_BaseFragment("NewMailFragment")
             callback = {
                 // normal mail
                 sendMail(MAIL_TYPE.NORMAL, strRecipient, strTitle, strText)
-            }, R.color.gray)
+            }, R.color.grey)
         )
 
         // if this user isn't a couple
         if(CB_AppFunc.curUser.strCoupleUid.isNullOrEmpty())
         {
-            listItem.add(DialogItem(getString(R.string.str_mail_type_request_couple), R.drawable.ic_baseline_favorite_24,
+            listItem.add(DialogItem(getString(R.string.str_request_couple), R.drawable.ic_baseline_favorite_24,
                 callback = {
                     // request couple
                     sendMail(MAIL_TYPE.REQUEST_COUPLE, strRecipient, strTitle, strText)
                 }, R.color.red)
             )
+        }
+
+        if(listItem.size == 1)
+        {
+            // if this user hasn't any options.
+            sendMail(MAIL_TYPE.NORMAL, strRecipient, strTitle, strText)
+            return
         }
 
         // if use is an admin

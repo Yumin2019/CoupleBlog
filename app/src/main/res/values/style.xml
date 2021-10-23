@@ -63,7 +63,7 @@
     <style name="BodyTextStyle" parent="MaterialAlertDialog.MaterialComponents.Title.Text">
         <item name="fontFamily">@font/lora_regular</item>
         <item name="android:textSize">18sp</item>
-        <item name="android:textColor">@color/darker_gray</item>
+        <item name="android:textColor">@color/darker_grey</item>
         <item name="android:singleLine">false</item>
         <item name="android:maxLines">100</item>
         <item name="android:ellipsize">none</item>
@@ -101,7 +101,7 @@
 
     <style name="ButtonStyle" parent="Widget.MaterialComponents.Button.TextButton.Dialog">
         <item name="backgroundTint">@android:color/transparent</item>
-        <item name="rippleColor">@color/ripple_gray</item>
+        <item name="rippleColor">@color/ripple_grey</item>
         <item name="fontFamily">@font/lora_regular</item>
         <item name="android:textColor">@color/purple</item>
         <item name="android:textSize">18sp</item>

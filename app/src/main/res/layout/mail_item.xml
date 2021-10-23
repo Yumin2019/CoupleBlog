@@ -76,7 +76,7 @@
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintStart_toEndOf="@+id/checkbox_image_view"
                 app:layout_constraintTop_toTopOf="parent"
-                app:tint="@color/gray"
+                app:tint="@color/grey"
                 tools:src="@drawable/ic_baseline_favorite_border_24" />
 
             <TextView
@@ -88,7 +88,7 @@
                 android:paddingStart="@dimen/margin_16dp"
                 android:paddingEnd="@dimen/margin_16dp"
                 android:textAlignment="viewStart"
-                android:textColor="@color/gray"
+                android:textColor="@color/grey"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toStartOf="@+id/sender_text_view"
                 app:layout_constraintStart_toEndOf="@+id/heart_image_view"
@@ -110,8 +110,10 @@
                 app:layout_constraintEnd_toStartOf="@+id/sender_text_view"
                 app:layout_constraintStart_toEndOf="@+id/heart_image_view"
                 app:layout_constraintTop_toTopOf="parent"
+                tools:textColor="@color/grey"
+                android:textColor="@{mailData.BRead ? @color/grey : @color/blue}"
                 tools:text="How to love you"
-                tools:textColor="@color/blue" />
+                />
 
         </androidx.constraintlayout.widget.ConstraintLayout>
 

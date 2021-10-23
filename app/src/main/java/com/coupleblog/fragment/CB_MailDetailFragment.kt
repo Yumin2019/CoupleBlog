@@ -2,6 +2,7 @@ package com.coupleblog.fragment
 
 
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -10,7 +11,9 @@ import com.coupleblog.R
 import com.coupleblog.dialog.CB_ItemListDialog
 import com.coupleblog.dialog.CB_LoadingDialog
 import com.coupleblog.dialog.DialogItem
+import com.coupleblog.model.CB_Couple
 import com.coupleblog.model.CB_Mail
+import com.coupleblog.model.CB_User
 import com.coupleblog.model.REACTION_TYPE
 import com.coupleblog.parent.CB_BaseFragment
 import com.coupleblog.singleton.CB_AppFunc
@@ -72,7 +75,14 @@ class CB_MailDetailFragment : CB_BaseFragment("MailDetail")
                 val mail = snapshot.getValue<CB_Mail>()
                 mail?.let {
                     // update mail data
-                    CB_ViewModel.tMail.postValue(mail)
+                    CB_ViewModel.tMail.value = mail
+
+                    if(!mail.bRead!!)
+                    {
+                        // if it's an unread mail
+                        mail.bRead = true
+                        mailRef.setValue(mail)
+                    }
                 }
             }
 
@@ -193,4 +203,89 @@ class CB_MailDetailFragment : CB_BaseFragment("MailDetail")
 
         CB_ItemListDialog(requireActivity(), getString(R.string.str_mail_menu), listItem, true)
     }
+
+    fun coupleRequestButton()
+    {
+        if(CB_SingleSystemMgr.isDialog(CB_SingleSystemMgr.DIALOG_TYPE.CONFIRM_DIALOG))
+            return
+
+        // dialog 를 출력하여 해당 유저와 커플이 되길 원하는지 판단한다.
+        // 1. 자신한테 요청 메세지를 보낼 수는 없다. V
+        // 2. 이미 커플인 상태라면 해당 버튼을 누를 수 없다. (gone) V
+        // 3. 커플이면 요청 메일을 보낼 수 없다. V
+        val mailData = CB_ViewModel.tMail.value!!
+
+        // sender 정보를 토대로 유저 정보를 찾아온다.
+        CB_AppFunc.getUsersRoot().child(mailData.strSenderUid!!).addListenerForSingleValueEvent(object: ValueEventListener {
+
+            override fun onDataChange(snapshot: DataSnapshot)
+            {
+                val senderUserInfo = snapshot.getValue<CB_User>()
+                if(senderUserInfo == null)
+                {
+                    CB_AppFunc.okDialog(requireActivity(), R.string.str_error,
+                        R.string.str_failed_to_find_user, R.drawable.error_icon, false)
+                    return
+                }
+
+                if(!senderUserInfo.strCoupleUid.isNullOrEmpty())
+                {
+                    // 4. 내가 커플이 아닌데, 보낸 상대가 이미 커플이라면 나는 요청을 수락하거나 거절할 수 없다.
+                    CB_AppFunc.okDialog(requireActivity(), R.string.str_error,
+                        R.string.str_user_is_couple_already, R.drawable.error_icon, false)
+                    return
+                }
+
+                // 다른 사람이 보낸 요청이고 두 사람 모두 커플이 아닌 경우에 dialog 를 출력하여 여부를 확인한다.
+                CB_AppFunc.confirmDialog(requireActivity(), getString(R.string.str_request_couple),
+                    getString(R.string.str_request_couple_msg) + senderUserInfo.strUserName,
+                            R.drawable.haha_icon, /*  유저 이미지*/ true,
+                    getString(R.string.str_yes),
+                    yesListener = { _, _ ->
+
+                        val prevUser = CB_AppFunc.curUser
+                        val coupleUid = mailData.strSenderUid!!
+                        val myUid = CB_AppFunc.getUid()
+
+                        // 유저 정보 수정 내꺼
+                        prevUser.strCoupleUid = coupleUid
+                        CB_AppFunc.getUsersRoot().child(myUid).setValue(prevUser)
+                        CB_AppFunc.getCouplesRoot().child(myUid).setValue(CB_Couple(coupleUid))
+
+                        CB_AppFunc.getUsersRoot().child(coupleUid)
+                            .addListenerForSingleValueEvent(object : ValueEventListener {
+                                override fun onDataChange(snapshot: DataSnapshot) {
+
+                                    // 커플꺼
+                                    CB_AppFunc.coupleUser = snapshot.getValue<CB_User>()!!
+                                    CB_AppFunc.coupleUser.strCoupleUid = myUid
+                                    CB_AppFunc.getUsersRoot().child(coupleUid).setValue(CB_AppFunc.coupleUser)
+                                    CB_AppFunc.getCouplesRoot().child(coupleUid).setValue(CB_Couple(myUid))
+
+                                    CB_SingleSystemMgr.showToast(R.string.str_you_became_couple)
+
+                                    // move to MainFragment but new MainFragment for query refresh
+                                    beginAction(R.id.action_CB_MailDetailFragment_to_CB_MainFragment, R.id.CB_MailDetailFragment)
+                                }
+
+                                override fun onCancelled(error: DatabaseError)
+                                {
+                                    CB_AppFunc.okDialog(requireActivity(), R.string.str_error,
+                                        R.string.str_failed_to_find_user, R.drawable.error_icon, false)
+                                    Log.e(strTag, "couple user load failed" + error.message)
+                                }
+                            })
+
+                    }, getString(R.string.str_no), null)
+            }
+
+            override fun onCancelled(error: DatabaseError)
+            {
+                CB_AppFunc.okDialog(requireActivity(), R.string.str_error,
+                    R.string.str_failed_to_find_user, R.drawable.error_icon, false)
+                Log.e(strTag, "couple user load failed" + error.message)
+            }
+        })
+    }
+
 }

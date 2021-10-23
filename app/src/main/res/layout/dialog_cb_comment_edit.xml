@@ -78,7 +78,7 @@
                 android:layout_height="wrap_content"
                 android:paddingStart="@dimen/margin_16dp"
                 android:paddingEnd="@dimen/margin_16dp"
-                android:textColor="@color/gray"
+                android:textColor="@color/grey"
                 app:layout_constraintBottom_toBottomOf="@+id/author_text_view"
                 app:layout_constraintStart_toEndOf="@+id/author_text_view"
                 app:layout_constraintTop_toTopOf="@+id/author_text_view"

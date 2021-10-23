@@ -109,7 +109,15 @@
         android:id="@+id/CB_MailDetailFragment"
         android:name="com.coupleblog.fragment.CB_MailDetailFragment"
         android:label="fragment_cb_mail_detail"
-        tools:layout="@layout/fragment_cb_mail_detail" />
+        tools:layout="@layout/fragment_cb_mail_detail" >
+
+        <!--커플이 성사된 이후에 listFragment query 갱신을 위해 사용한다. 완전히 날리는 방식-->
+        <action
+            android:id="@+id/action_CB_MailDetailFragment_to_CB_MainFragment"
+            app:destination="@id/CB_MainFragment"
+            app:popUpTo="@id/CB_MainFragment"
+            app:popUpToInclusive="@id/CB_MainFragment"/>
+    </fragment>
 
 
 </navigation>

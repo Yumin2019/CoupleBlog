@@ -65,6 +65,7 @@ class CB_MailBoxFragment: CB_BaseFragment("MailBoxFragment")
             R.id.action_logout ->
             {
                 // 로그아웃을 진행한다.
+                CB_AppFunc.cleanUpListener()
                 CB_AppFunc.getAuth().signOut()
 
                 // 프레그먼트를 종료시킨다.
@@ -73,23 +74,124 @@ class CB_MailBoxFragment: CB_BaseFragment("MailBoxFragment")
 
             R.id.action_delete_mail ->
             {
+                if(CB_ViewModel.checkList.isEmpty())
+                {
+                    CB_SingleSystemMgr.showToast(R.string.str_check_mail)
+                    return true
+                }
 
+                // 선택한 메일 항목에 대해서 삭제한다.
+                CB_AppFunc.networkScope.launch {
+
+                    try
+                    {
+                        val mailBoxRef = CB_AppFunc.getMailBoxRoot().child(CB_AppFunc.getUid())
+                        for(i in CB_ViewModel.checkList.indices)
+                        {
+                            if(CB_ViewModel.checkList[i])
+                            {
+                                mailBoxRef.child(adapter!!.emailKeyList[i]).setValue(null)
+                            }
+                        }
+
+                        launch(Dispatchers.Main)
+                        {
+                            CB_SingleSystemMgr.showToast(R.string.str_deleted_these)
+                        }
+                    }
+                    catch(e: FirebaseException)
+                    {
+                        e.printStackTrace()
+                        launch(Dispatchers.Main)
+                        {
+                            CB_AppFunc.okDialog(requireActivity(), R.string.str_error,
+                                R.string.str_failed_to_delete_mail, R.drawable.error_icon, true)
+                        }
+                    }
+                }
             }
 
             R.id.action_heart_mark ->
             {
+                if(CB_ViewModel.checkList.isEmpty())
+                {
+                    CB_SingleSystemMgr.showToast(R.string.str_check_mail)
+                    return true
+                }
 
+                // 선택한 메일 항목에 대해서 heart icon 변경
+                CB_AppFunc.networkScope.launch {
+
+                    try
+                    {
+                        val mailBoxRef = CB_AppFunc.getMailBoxRoot().child(CB_AppFunc.getUid())
+                        for(i in CB_ViewModel.checkList.indices)
+                        {
+                            if(CB_ViewModel.checkList[i])
+                            {
+                                val prevData = adapter!!.emailList[i]
+                                prevData.bHeartIcon = !prevData.bHeartIcon!!
+                                mailBoxRef.child(adapter!!.emailKeyList[i]).setValue(prevData)
+                            }
+                        }
+
+                        // no toast when we change icons
+                    }
+                    catch(e: FirebaseException)
+                    {
+                        e.printStackTrace()
+                        launch(Dispatchers.Main)
+                        {
+                            CB_AppFunc.okDialog(requireActivity(), R.string.str_error,
+                                R.string.str_failed_to_change_heart_state, R.drawable.error_icon, true)
+                        }
+                    }
+                }
             }
 
             R.id.action_read_mark ->
             {
+                // same with heart code below
+                if(CB_ViewModel.checkList.isEmpty())
+                {
+                    CB_SingleSystemMgr.showToast(R.string.str_check_mail)
+                    return true
+                }
 
+                // 선택한 메일 항목에 대해서 heart icon 변경
+                CB_AppFunc.networkScope.launch {
+
+                    try
+                    {
+                        val mailBoxRef = CB_AppFunc.getMailBoxRoot().child(CB_AppFunc.getUid())
+                        for(i in CB_ViewModel.checkList.indices)
+                        {
+                            if(CB_ViewModel.checkList[i])
+                            {
+                                val prevData = adapter!!.emailList[i]
+                                prevData.bRead = !prevData.bRead!!
+                                mailBoxRef.child(adapter!!.emailKeyList[i]).setValue(prevData)
+                            }
+                        }
+
+                        // no toast when we change icons
+                    }
+                    catch(e: FirebaseException)
+                    {
+                        e.printStackTrace()
+                        launch(Dispatchers.Main)
+                        {
+                            CB_AppFunc.okDialog(requireActivity(), R.string.str_error,
+                                R.string.str_failed_to_change_read_state, R.drawable.error_icon, true)
+                        }
+                    }
+                }
             }
 
-            R.id.action_select_all ->
+          /*  R.id.action_select_all ->
             {
 
-            }
+            }*/
 
             else -> {super.onOptionsItemSelected(item)}
         }
@@ -164,45 +266,5 @@ class CB_MailBoxFragment: CB_BaseFragment("MailBoxFragment")
         // 메일 아이템을 클릭한 경우, 메일 디테일 화면을 출력한다.
         beginAction(R.id.action_CB_MainFragment_to_CB_MailDetailFragment, R.id.CB_MainFragment,
             bundleOf(CB_MailDetailFragment.ARGU_MAIL_KEY to mailKey))
-
-
-      /*
-           if(CB_SingleSystemMgr.isDialog(CB_SingleSystemMgr.DIALOG_TYPE.CONFIRM_DIALOG))
-            return
-      if(mailData.iMailType == MAIL_TYPE.REQUEST_COUPLE.ordinal)
-        {
-            CB_AppFunc.confirmDialog(requireActivity(), "Couple Request", "you want to allow this request from $mailData.strSenderUid",
-            R.drawable.haha_icon, true,
-                "yes", yesListener = { _, _ ->
-
-                    // 수정해야한다 무조건
-                    val prevUser = CB_AppFunc.curUser
-                    val coupleUid = mailData.strSenderUid!!
-                    val myUid = CB_AppFunc.getUid()
-
-                    // 유저 정보 수정 내꺼
-                    prevUser.strCoupleUid = coupleUid
-                    CB_AppFunc.getUsersRoot().child(myUid).setValue(prevUser)
-                    CB_AppFunc.getCouplesRoot().child(myUid).setValue( CB_Couple(coupleUid))
-
-                    CB_AppFunc.getUsersRoot().child(coupleUid).addListenerForSingleValueEvent(object: ValueEventListener{
-                        override fun onDataChange(snapshot: DataSnapshot) {
-
-                            // 커플꺼
-                            CB_AppFunc._coupleUser = snapshot.getValue<CB_User>()!!
-                            CB_AppFunc.coupleUser.strCoupleUid = myUid
-                            CB_AppFunc.getUsersRoot().child(coupleUid).setValue(CB_AppFunc.coupleUser)
-                            CB_AppFunc.getCouplesRoot().child(coupleUid).setValue( CB_Couple(myUid))
-
-                            CB_SingleSystemMgr.showToast("Couple request OK")
-                        }
-
-                        override fun onCancelled(error: DatabaseError) {
-                            TODO("Not yet implemented")
-                        }
-                    })
-
-                }, "no", null)
-        }*/
     }
 }

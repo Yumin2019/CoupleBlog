@@ -6,21 +6,60 @@ import android.widget.TextView
 import androidx.databinding.BindingAdapter
 import androidx.recyclerview.widget.RecyclerView
 import com.coupleblog.R
-import com.coupleblog.adapter.CB_EmailAdapter
 import com.coupleblog.fragment.PAGE_TYPE
+import com.coupleblog.model.CB_User
+import com.coupleblog.model.MAIL_TYPE
 import com.coupleblog.model.REACTION_TYPE
 import com.google.android.material.floatingactionbutton.FloatingActionButton
+import com.google.firebase.database.DataSnapshot
+import com.google.firebase.database.DatabaseError
+import com.google.firebase.database.ValueEventListener
+import com.google.firebase.database.ktx.getValue
 
 
 @BindingAdapter("bind:user_uid")
 fun setTextByUid(textView: TextView, strUid: String?)
 {
+    if(strUid.isNullOrEmpty())
+        return
+
     // current User's uid or couple's uid
-    textView.text =
-        if (strUid == CB_AppFunc.getUid())
-            CB_AppFunc.curUser.strUserName
-        else
-            CB_AppFunc.coupleUser.strUserName
+    when(strUid)
+    {
+        CB_AppFunc.getUid() ->
+        {
+            textView.text = CB_AppFunc.curUser.strUserName
+        }
+
+        CB_AppFunc.curUser.strCoupleUid ->
+        {
+            textView.text = CB_AppFunc.coupleUser.strUserName
+        }
+        else ->
+        {
+            // if it's unknowns uid, find user info
+            CB_AppFunc.getUsersRoot().child(strUid).addListenerForSingleValueEvent(object: ValueEventListener{
+
+                override fun onDataChange(snapshot: DataSnapshot)
+                {
+                    val userInfo = snapshot.getValue<CB_User>()
+                    textView.text = if(userInfo == null)
+                    {
+                        CB_AppFunc.getString(R.string.str_unknown)
+                    }
+                    else
+                    {
+                        userInfo.strUserName
+                    }
+                }
+
+                override fun onCancelled(error: DatabaseError)
+                {
+                    textView.text = CB_AppFunc.getString(R.string.str_unknown)
+                }
+            })
+        }
+    }
 }
 
 @BindingAdapter("bind:heart_icon_tint")
@@ -28,7 +67,7 @@ fun setHeartIconTint(imageView: ImageView, boolean: Boolean)
 {
     imageView.imageTintList =
     if(boolean)  CB_AppFunc.getColorStateList(R.color.red)
-    else         CB_AppFunc.getColorStateList(R.color.gray)
+    else         CB_AppFunc.getColorStateList(R.color.grey)
 }
 
 @BindingAdapter("bind:layout_manager")
@@ -47,6 +86,22 @@ fun setAdapter(recyclerView: RecyclerView, adapter: RecyclerView.Adapter<*>?)
 fun setVisibility(view: View, flag: Boolean?)
 {
     view.visibility = if(flag == true) View.VISIBLE else View.GONE
+}
+
+@BindingAdapter("bind:mail_type")
+fun setCoupleRequestTextView(textView: TextView, iMailType: Int)
+{
+    // already this user is a couple
+    if(!CB_AppFunc.curUser.strCoupleUid.isNullOrEmpty())
+    {
+        textView.visibility = View.GONE
+        return
+    }
+
+    if(iMailType == MAIL_TYPE.REQUEST_COUPLE.ordinal)
+        textView.visibility = View.VISIBLE
+    else
+        textView.visibility = View.GONE
 }
 
 @BindingAdapter("bind:page_idx")

@@ -12,6 +12,7 @@ import com.coupleblog.fragment.AllPostsBinding
 import com.coupleblog.fragment.CB_PostDetailFragment
 import com.coupleblog.model.CB_Post
 import com.coupleblog.singleton.CB_AppFunc
+import com.coupleblog.singleton.CB_ViewModel
 import com.firebase.ui.database.FirebaseRecyclerOptions
 import com.google.firebase.database.Query
 
@@ -71,6 +72,7 @@ abstract class CB_PostListFragment : CB_BaseFragment("PostList")
             R.id.action_logout ->
             {
                 // 로그아웃을 진행한다.
+                CB_AppFunc.cleanUpListener()
                 CB_AppFunc.getAuth().signOut()
 
                 // 프레그먼트를 종료시킨다.

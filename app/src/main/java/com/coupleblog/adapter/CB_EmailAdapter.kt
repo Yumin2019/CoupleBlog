@@ -28,8 +28,8 @@ class CB_EmailAdapter(private val fragment: CB_MailBoxFragment,
     }
 
     private var childEventListener: ChildEventListener? = null
-    private val emailKeyList = ArrayList<String>()
-    private val emailList = ArrayList<CB_Mail>()
+    val emailKeyList = ArrayList<String>()
+    val emailList = ArrayList<CB_Mail>()
 
     init
     {

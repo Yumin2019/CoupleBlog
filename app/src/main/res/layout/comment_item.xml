@@ -69,12 +69,13 @@
             android:layout_height="wrap_content"
             android:paddingStart="@dimen/margin_16dp"
             android:paddingEnd="@dimen/margin_16dp"
-            bind:date_text="@{commentData.strCommentDate}"
             android:textAlignment="viewStart"
-            android:textColor="@color/gray"
+            android:textColor="@color/grey"
             app:layout_constraintBottom_toBottomOf="@+id/author_text_view"
+            app:layout_constraintEnd_toStartOf="@+id/reaction_image_view"
             app:layout_constraintStart_toEndOf="@+id/author_text_view"
             app:layout_constraintTop_toTopOf="@+id/author_text_view"
+            bind:date_text="@{commentData.strCommentDate}"
             tools:text="10 Oct 2021 15:33" />
 
 

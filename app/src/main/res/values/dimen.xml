@@ -15,7 +15,7 @@
     <dimen name="button_max_length">500dp</dimen>
     <dimen name="button_height">50dp</dimen>
     <dimen name="edit_text_height">50dp</dimen>
-    <dimen name="normal_field_size">145dp</dimen>
+    <dimen name="normal_field_size">150dp</dimen>
     <dimen name="icon_image_size">35dp</dimen>
     <dimen name="icon_image_size_small">25dp</dimen>
 </resources>

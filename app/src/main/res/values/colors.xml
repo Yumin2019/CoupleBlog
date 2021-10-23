@@ -7,9 +7,9 @@
     <color name="teal_700">#FF018786</color>
     <color name="black">#FF000000</color>
     <color name="white">#FFFFFFFF</color>
-    <color name="gray">#AAAAAA</color>
-    <color name="darker_gray">#3E3E3E</color>
-    <color name="ripple_gray">#C8C8C8</color>
+    <color name="grey">#AAAAAA</color>
+    <color name="darker_grey">#3E3E3E</color>
+    <color name="ripple_grey">#C8C8C8</color>
 
     <color name="ripple_purple">#3B008F</color>
     <color name="purple">#995FFD</color>

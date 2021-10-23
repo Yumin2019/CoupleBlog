@@ -81,8 +81,10 @@ class CB_AppFunc
         var _curUser: CB_User? = null
         val curUser get() = _curUser!!
 
-        var _coupleUser: CB_User? = null
-        val coupleUser get() = _coupleUser!!
+        var coupleUser: CB_User = CB_User()
+
+        var userInfoListener: ValueEventListener? = null
+        var coupleUserInfoListener: ValueEventListener? = null
 
         fun getUid() = FirebaseAuth.getInstance().currentUser!!.uid
         fun getAuth() = Firebase.auth
@@ -157,41 +159,9 @@ class CB_AppFunc
                     }
                     else
                     {
-                        // 커플 정보가 있는 경우에는 커플 정보를 받도록 처리한다.
-                        if(curUser.strCoupleUid != null && curUser.strCoupleUid!!.isNotEmpty())
-                        {
-                            getUsersRoot().child(curUser.strCoupleUid!!).addListenerForSingleValueEvent(object :
-                            ValueEventListener{
-                                override fun onDataChange(snapshot: DataSnapshot)
-                                {
-                                    _coupleUser = snapshot.getValue<CB_User>()
-                                    if(_coupleUser == null)
-                                    {
-                                        Log.e(strTag, "User Info load failed")
-                                        okDialog(context, R.string.str_error,
-                                            R.string.str_user_info_load_failed, R.drawable.error_icon, true)
-                                        return
-                                    }
-
-                                    // 자신의 정보, 커플 정보를 가져왔다면 넘어간다.
-                                    funcSuccess?.invoke()
-                                }
-
-                                override fun onCancelled(error: DatabaseError)
-                                {
-                                    Log.e(strTag, "User Info load cancelled", error.toException())
-                                    okDialog(context, R.string.str_error,
-                                        R.string.str_user_info_load_failed, R.drawable.error_icon, true)
-                                    funcFailure?.invoke()
-                                }
-                            })
-                        }
-                        else
-                        {
-                            // 커플 정보가 없다면 넘어간다.
-                            _coupleUser = CB_User()
-                            funcSuccess?.invoke()
-                        }
+                        // 나의 정보가 존재하는 경우. 내부적으로 커플 정보가 있으면 listener 추가
+                        addEventListenerToUserInfo()
+                        funcSuccess?.invoke()
                     }
                 }
 
@@ -203,6 +173,79 @@ class CB_AppFunc
                     funcFailure?.invoke()
                 }
             })
+        }
+
+        /* 리스너의 장점
+           1. 커플이 아닌 경우든 커플인 경우든, 항상 최신의 정보를 보장한다.
+
+         */
+        fun addEventListenerToUserInfo()
+        {
+            // 이전 메모리가 남아 있는 경우인데 정리가 제대로 되지 않은 것이다.
+            if(userInfoListener != null)
+                return
+
+            userInfoListener = object : ValueEventListener {
+
+                override fun onDataChange(snapshot: DataSnapshot)
+                {
+                    _curUser = snapshot.getValue<CB_User>()!!
+
+                    // 커플이 된 경우를 확인하여 추가한다.
+                    addEventListenerToCoupleUserInfo()
+                }
+
+                override fun onCancelled(error: DatabaseError)
+                {
+                    Log.e(strTag, "User Info load cancelled", error.toException())
+                }
+            }
+
+            getUsersRoot().child(getUid()).addValueEventListener(userInfoListener!!)
+        }
+
+        fun addEventListenerToCoupleUserInfo()
+        {
+            // 커플이 아닌 유저의 경우에는 listener 처리를 하지 않는다.
+            if (curUser.strCoupleUid.isNullOrEmpty())
+            {
+                if(coupleUserInfoListener != null && !coupleUser.strCoupleUid.isNullOrEmpty())
+                {
+                    // 만약 이전 데이터가 남아있다면... 정리한다.
+                    cleanUpCoupleUserListener()
+                }
+                return
+            }
+
+            coupleUserInfoListener = object : ValueEventListener {
+
+                override fun onDataChange(snapshot: DataSnapshot)
+                {
+                    coupleUser = snapshot.getValue<CB_User>()!!
+                }
+
+                override fun onCancelled(error: DatabaseError)
+                {
+                    Log.e(strTag, "User Info load cancelled", error.toException())
+                }
+            }
+
+            getUsersRoot().child(curUser.strCoupleUid!!).addValueEventListener(coupleUserInfoListener!!)
+        }
+
+        // 로그아웃시 호출한다.
+        fun cleanUpListener()
+        {
+            userInfoListener?.let {  getUsersRoot().child(getUid()).removeEventListener(it) }
+            userInfoListener = null
+            cleanUpCoupleUserListener()
+        }
+
+        fun cleanUpCoupleUserListener()
+        {
+            coupleUserInfoListener?.let {  getUsersRoot().child(curUser.strCoupleUid!!).removeEventListener(it) }
+            coupleUserInfoListener = null
+            coupleUser = CB_User() // default value
         }
 
         fun requestPermission(activity: Activity, arrPermission: Array<String>)

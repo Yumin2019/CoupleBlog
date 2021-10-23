@@ -51,7 +51,7 @@
                     android:layout_height="wrap_content"
                     android:layout_marginTop="4dp"
                     android:textAlignment="viewStart"
-                    android:textColor="@color/gray"
+                    android:textColor="@color/grey"
                     app:layout_constraintBottom_toTopOf="@+id/view"
                     app:layout_constraintStart_toStartOf="@+id/author_text_view"
                     app:layout_constraintTop_toBottomOf="@+id/author_text_view"
@@ -95,7 +95,7 @@
                     android:layout_width="0dp"
                     android:layout_height="130dp"
                     android:layout_marginTop="@dimen/margin_16dp"
-                    android:background="@color/gray"
+                    android:background="@color/grey"
                     android:visibility="gone"
                     app:layout_constraintEnd_toEndOf="@+id/post_text_view"
                     app:layout_constraintStart_toStartOf="@+id/post_text_view"
@@ -143,12 +143,27 @@
                     android:padding="@dimen/normal_margin"
                     android:text="@{viewModel.TMail.strMessage}"
                     android:textAlignment="viewStart"
-                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintBottom_toTopOf="@+id/couple_request_text_view"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toBottomOf="@+id/mail_image_view"
                     tools:background="@color/blue"
                     tools:text="I Love you\nI Love you\nI Love you\nI Love you\n" />
+
+                <TextView
+                    android:id="@+id/couple_request_text_view"
+                    style="@style/subtitle_text_style"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    bind:mail_type="@{viewModel.TMail.IMailType}"
+                    android:onClick="@{()->fragment.coupleRequestButton()}"
+                    android:layout_marginBottom="@dimen/margin_16dp"
+                    android:background="?android:attr/selectableItemBackground"
+                    android:text="@string/str_couple_request_mail"
+                    android:textColor="@color/blue"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent" />
 
             </androidx.constraintlayout.widget.ConstraintLayout>
 

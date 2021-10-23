@@ -239,6 +239,7 @@ Couple blog 은(는) 정보주체의 이용정보를 저장하고 수시로 불�
     <string name="str_sign_in">Sign In</string>
     <string name="str_sign_out">Sign Out</string>
     <string name="str_sign_up">Sign Up</string>
+    <string name="str_recipients">Recipients</string>
     <string name="str_email">Email</string>
     <string name="str_password">Password</string>
     <string name="str_password_again">Password again</string>
@@ -277,7 +278,9 @@ Couple blog 은(는) 정보주체의 이용정보를 저장하고 수시로 불�
     <string name="str_choose_mail_type">Choose mail type</string>
     <string name="str_mail_type_normal">Mail</string>
     <string name="str_mail_type_release_note">Release Note</string>
-    <string name="str_mail_type_request_couple">Request couple</string>
+    <string name="str_request_couple">Request couple</string>
+    <string name="str_request_couple_msg">You want to allow this request from\n</string>
+    <string name="str_couple_request_mail">This is a couple request mail.</string>
 
     <string name="str_ok">OK</string>
     <string name="str_register">Register</string>
@@ -292,12 +295,13 @@ Couple blog 은(는) 정보주체의 이용정보를 저장하고 수시로 불�
     <string name="str_input_comment">Please input your comment</string>
     <string name="str_input_title">Please input your title</string>
     <string name="str_input_recipient">Please specify at least one recipient.</string>
+    <string name="str_check_mail">Please specify at least one mail.</string>
     <string name="str_post_confirm">Do you really want to post?</string>
     <string name="str_discard_msg">Do you really want to discard?</string>
     <string name="str_delete_msg">Do you really want to delete?</string>
     <string name="str_press_back_to_exit">Press Back again to exit</string>
     <string name="str_user_name">User Name(Display Name)</string>
-    <string name="str_comment_hint">Write a comment…</string>
+    <string name="str_comment_hint">Write a comment…</string>ㅁ
     <string name="str_password_again_error">Password isn\'t same</string>
     <string name="str_invalid_format_error">It\'s invalid format</string>
     <string name="str_sign_in_failed">Failed to sign in</string>
@@ -314,8 +318,13 @@ Couple blog 은(는) 정보주체의 이용정보를 저장하고 수시로 불�
     <string name="str_post_data_load_failed">Post data load failed</string>
     <string name="str_post_delete_failed">Failed to delete post</string>
     <string name="str_failed_to_delete_mail">Failed to delete Mail</string>
-    <string name="str_failed_to_change_heart_state">Failed to change heart</string>
+    <string name="str_failed_to_change_heart_state">Failed to change heart state</string>
+    <string name="str_failed_to_change_read_state">Failed to change read state</string>
     <string name="str_reaction_icon_attach_failed">Reaction icon attach failed</string>
+    <string name="str_you_became_couple">You became a couple.</string>
+    <string name="str_unknown">Unknown</string>
+    <string name="str_yes">Yes</string>
+    <string name="str_no">No</string>
     <string name="str_error">Error</string>
     <string name="str_warning">Warning</string>
     <string name="str_information">Information</string>
@@ -323,6 +332,7 @@ Couple blog 은(는) 정보주체의 이용정보를 저장하고 수시로 불�
     <string name="str_auto_login_success">Auto login was successful.</string>
     <string name="str_send_mail_success">Sending mail was successful.</string>
     <string name="str_mail_deleted">You deleted this mail.</string>
+    <string name="str_deleted_these">You deleted these.</string>
     <string name="str_post_deleted">You deleted this post.</string>
     <string name="str_post_edited">You edited this post.</string>
     <string name="str_post_posted">Posting was successful.</string>

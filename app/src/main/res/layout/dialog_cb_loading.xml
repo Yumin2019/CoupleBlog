@@ -34,7 +34,7 @@
             android:layout_height="100dp"
             android:layout_gravity="center"
             android:layout_marginTop="@dimen/margin_16dp"
-            tools:background="@color/gray"
+            tools:background="@color/grey"
             app:SpinKit_Color="@color/colorPrimary"
             app:SpinKit_Style="FadingCircle"
             app:layout_constraintBottom_toTopOf="@+id/loading_text_view"
