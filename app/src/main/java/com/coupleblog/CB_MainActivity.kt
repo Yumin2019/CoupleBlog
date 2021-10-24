@@ -14,6 +14,7 @@ import com.coupleblog.parent.CB_BaseActivity
 import com.coupleblog.singleton.CB_AppFunc
 import com.coupleblog.singleton.CB_SingleSystemMgr
 import com.coupleblog.singleton.CB_ViewModel
+import com.google.android.material.snackbar.Snackbar
 
 class CB_MainActivity : CB_BaseActivity("MainActivity", CB_SingleSystemMgr.ACTIVITY_TYPE.MAIN)
 {
@@ -32,9 +33,17 @@ class CB_MainActivity : CB_BaseActivity("MainActivity", CB_SingleSystemMgr.ACTIV
             setSupportActionBar(toolbar)
         }
 
+
         // Init
         CB_AppFunc.application = application
+        CB_AppFunc.binding = binding
         findNavController(R.id.nav_host_fragment).setGraph(R.navigation.nav_graph)
+    }
+
+    override fun onDestroy()
+    {
+        super.onDestroy()
+        CB_AppFunc.binding = null
     }
 
     // Add 버튼 함수 (MainFragment - MyPostLists 에서 사용한다)

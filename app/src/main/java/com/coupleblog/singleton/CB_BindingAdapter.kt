@@ -142,7 +142,8 @@ fun setDateText(textView: TextView, strDate: String?)
     if(strDate == null)
         return
 
-    val calendar = CB_AppFunc.stringToCalendar(strDate)
+    // UTC to Local
+    val calendar = CB_AppFunc.convertUtcToLocale(strDate)
     textView.text = CB_AppFunc.getDateStringForOutput(calendar)
 }
 

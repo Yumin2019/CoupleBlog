@@ -38,7 +38,12 @@ class CB_MailBoxFragment: CB_BaseFragment("MailBoxFragment")
         binding.apply {
             lifecycleOwner  = viewLifecycleOwner
             fragment        = this@CB_MailBoxFragment
-            layoutManager   = LinearLayoutManager(context)
+
+            layoutManager   = LinearLayoutManager(context).apply {
+                reverseLayout = true
+                stackFromEnd  = true
+            }
+
             viewModel       = CB_ViewModel.Companion
         }
         return binding.root
@@ -74,7 +79,18 @@ class CB_MailBoxFragment: CB_BaseFragment("MailBoxFragment")
 
             R.id.action_delete_mail ->
             {
-                if(CB_ViewModel.checkList.isEmpty())
+                // same with heart code below
+                var hasCheck = false
+                for(i in CB_ViewModel.checkList.indices)
+                {
+                    if(CB_ViewModel.checkList[i])
+                    {
+                        hasCheck = true
+                        break
+                    }
+                }
+
+                if(!hasCheck)
                 {
                     CB_SingleSystemMgr.showToast(R.string.str_check_mail)
                     return true
@@ -113,7 +129,18 @@ class CB_MailBoxFragment: CB_BaseFragment("MailBoxFragment")
 
             R.id.action_heart_mark ->
             {
-                if(CB_ViewModel.checkList.isEmpty())
+                // same with heart code below
+                var hasCheck = false
+                for(i in CB_ViewModel.checkList.indices)
+                {
+                    if(CB_ViewModel.checkList[i])
+                    {
+                        hasCheck = true
+                        break
+                    }
+                }
+
+                if(!hasCheck)
                 {
                     CB_SingleSystemMgr.showToast(R.string.str_check_mail)
                     return true
@@ -152,6 +179,22 @@ class CB_MailBoxFragment: CB_BaseFragment("MailBoxFragment")
             R.id.action_read_mark ->
             {
                 // same with heart code below
+                var hasCheck = false
+                for(i in CB_ViewModel.checkList.indices)
+                {
+                    if(CB_ViewModel.checkList[i])
+                    {
+                        hasCheck = true
+                        break
+                    }
+                }
+
+                if(!hasCheck)
+                {
+                    CB_SingleSystemMgr.showToast(R.string.str_check_mail)
+                    return true
+                }
+
                 if(CB_ViewModel.checkList.isEmpty())
                 {
                     CB_SingleSystemMgr.showToast(R.string.str_check_mail)

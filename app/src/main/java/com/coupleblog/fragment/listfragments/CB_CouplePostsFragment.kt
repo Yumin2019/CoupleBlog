@@ -15,7 +15,7 @@ class CB_CouplePostsFragment: CB_PostListFragment()
     {
         // user-posts - uid -> post 정보
         val coupleUid = CB_AppFunc.curUser.strCoupleUid
-        if(coupleUid == null || coupleUid.isEmpty())
+        if(coupleUid.isNullOrEmpty())
             return null
 
         return CB_AppFunc.getUserPostsRoot().child(coupleUid)

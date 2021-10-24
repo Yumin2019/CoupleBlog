@@ -13,6 +13,7 @@ import com.coupleblog.singleton.CB_SingleSystemMgr
 import com.coupleblog.R
 import android.view.MotionEvent
 import android.view.View.OnTouchListener
+import com.google.android.material.snackbar.Snackbar
 
 
 abstract class CB_BaseFragment(val strTag: String) : Fragment()

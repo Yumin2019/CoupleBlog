@@ -44,8 +44,8 @@
             <ImageView
                 android:id="@+id/checkbox_image_view"
                 android:onClick="@{()->viewModel.checkMail(viewHolder)}"
-                android:layout_width="@dimen/icon_image_size_small"
-                android:layout_height="@dimen/icon_image_size_small"
+                android:layout_width="@dimen/icon_image_size"
+                android:layout_height="@dimen/icon_image_size"
                 android:layout_marginStart="@dimen/normal_margin"
                 tools:src="@drawable/ic_baseline_check_box_outline_blank_24"
                 android:src="@{viewModel.checkList[viewHolder.layoutPosition] ? @drawable/ic_baseline_check_box_24 : @drawable/ic_baseline_check_box_outline_blank_24}"
@@ -68,8 +68,8 @@
             <ImageView
                 android:id="@+id/heart_image_view"
                 android:onClick="@{()->fragment.heartButton(mailKey)}"
-                android:layout_width="@dimen/icon_image_size_small"
-                android:layout_height="@dimen/icon_image_size_small"
+                android:layout_width="@dimen/icon_image_size"
+                android:layout_height="@dimen/icon_image_size"
                 android:layout_marginStart="@dimen/normal_margin"
                 bind:heart_icon_tint="@{mailData.BHeartIcon}"
                 android:src="@{mailData.BHeartIcon ? @drawable/ic_baseline_favorite_24 : @drawable/ic_baseline_favorite_border_24}"

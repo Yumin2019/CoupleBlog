@@ -24,10 +24,12 @@ import android.widget.EditText
 import androidx.annotation.RequiresApi
 import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
+import com.coupleblog.MainActivityBinding
 import com.coupleblog.R
 import com.coupleblog.model.CB_User
 import com.coupleblog.parent.CB_BaseActivity
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
+import com.google.android.material.snackbar.Snackbar
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.ktx.auth
 import com.google.firebase.database.DataSnapshot
@@ -76,12 +78,16 @@ class CB_AppFunc
         val networkScope                     = CoroutineScope(Dispatchers.IO)
 
         lateinit var application: Application
+        // we have to give null to it on app end
+        var binding: MainActivityBinding? = null
+
         val PERMISSION_REQUEST               = 100
 
         var _curUser: CB_User? = null
         val curUser get() = _curUser!!
 
-        var coupleUser: CB_User = CB_User()
+        var _coupleUser: CB_User? = CB_User()
+        val coupleUser get() = _coupleUser!!
 
         var userInfoListener: ValueEventListener? = null
         var coupleUserInfoListener: ValueEventListener? = null
@@ -96,7 +102,7 @@ class CB_AppFunc
         fun getMailBoxRoot() = getDataBase().child("user-mails")
 
         @SuppressLint("ConstantLocale")
-        val isKorea = Locale.getDefault().toString().startsWith("ko")
+        val isKorea = (Locale.getDefault().language == "ko")
 
         @SuppressLint("SimpleDateFormat")
         val strSaveDateFormat = SimpleDateFormat("yyyyMMddHHmm") // 202109102201
@@ -161,7 +167,39 @@ class CB_AppFunc
                     {
                         // 나의 정보가 존재하는 경우. 내부적으로 커플 정보가 있으면 listener 추가
                         addEventListenerToUserInfo()
-                        funcSuccess?.invoke()
+
+                        if(curUser.strCoupleUid.isNullOrEmpty())
+                        {
+                            funcSuccess?.invoke()
+                            _coupleUser = CB_User()
+                        }
+                        else
+                        {
+                            // 커플 정보가 있는 경우
+                            getUsersRoot().child(curUser.strCoupleUid!!).addListenerForSingleValueEvent(object : ValueEventListener {
+                                override fun onDataChange(snapshot: DataSnapshot)
+                                {
+                                    _coupleUser = snapshot.getValue<CB_User>()
+                                    if(_coupleUser == null)
+                                    {
+                                        Log.e(strTag, "User Info load failed")
+                                        okDialog(context, R.string.str_error,
+                                            R.string.str_user_info_load_failed, R.drawable.error_icon, true)
+                                        funcFailure?.invoke()
+                                        return
+                                    }
+
+                                    funcSuccess?.invoke()
+                                }
+
+                                override fun onCancelled(error: DatabaseError)
+                                {
+                                    funcFailure?.invoke()
+                                    Log.e(strTag, "couple info load failed")
+                                }
+                            })
+
+                        }
                     }
                 }
 
@@ -221,7 +259,7 @@ class CB_AppFunc
 
                 override fun onDataChange(snapshot: DataSnapshot)
                 {
-                    coupleUser = snapshot.getValue<CB_User>()!!
+                    _coupleUser = snapshot.getValue<CB_User>()!!
                 }
 
                 override fun onCancelled(error: DatabaseError)
@@ -245,7 +283,7 @@ class CB_AppFunc
         {
             coupleUserInfoListener?.let {  getUsersRoot().child(curUser.strCoupleUid!!).removeEventListener(it) }
             coupleUserInfoListener = null
-            coupleUser = CB_User() // default value
+            _coupleUser = CB_User() // default value
         }
 
         fun requestPermission(activity: Activity, arrPermission: Array<String>)
@@ -414,29 +452,6 @@ class CB_AppFunc
 
         fun getString(iStrRes: Int): String { return application.getString(iStrRes) }
 
-        // get gmt offset, return value is minutes
-        fun getGMTOffset(): Int
-        {
-            val calendar = Calendar.getInstance(Locale.getDefault())
-            return (calendar[Calendar.ZONE_OFFSET] + calendar[Calendar.DST_OFFSET]) / (60 * 1000)
-        }
-
-        // UTC 기준의 시간을 로컬 시간으로 변환하여 String 으로 전달.
-        fun convertUtcToLocale(strDate: String): String
-        {
-            val calendar = Calendar.getInstance(TimeZone.getTimeZone("UTC")).apply {
-
-                // UTC 기준으로 calendar 생성
-                time = stringToDate(strDate)
-
-                // UTC 기준을 Locale 기준으로 교체한다.
-                add(Calendar.MINUTE, getGMTOffset())
-            }
-
-            // 변환된 날짜 정보를 string 으로 return
-            return calendarToSaveString(calendar)
-        }
-
         fun stringToEditable(str: String): Editable = getInstance().newEditable(str)
 
         // 저장된 데이터를 파싱해서 calendar 반환
@@ -455,6 +470,24 @@ class CB_AppFunc
             calendar
         }
 
+        // get gmt offset, return value is minutes
+        fun getGMTOffset(): Int
+        {
+            val calendar = Calendar.getInstance(Locale.getDefault())
+            return (calendar[Calendar.ZONE_OFFSET] + calendar[Calendar.DST_OFFSET]) / (60 * 1000)
+        }
+
+        // UTC 기준의 시간을 로컬 시간으로 변환하여 String 으로 전달.
+        fun convertUtcToLocale(strDate: String): Calendar
+        = Calendar.getInstance(TimeZone.getTimeZone("UTC")).apply {
+
+            // UTC 기준으로 calendar 생성
+            time = stringToDate(strDate)
+
+            // UTC 기준을 Locale 기준으로 교체한다.
+            add(Calendar.MINUTE, getGMTOffset())
+        }
+
         fun stringToDate(strDate: String?): Date
         = let {
 
@@ -468,9 +501,18 @@ class CB_AppFunc
         }
 
         // 저장을 위한 dateString 얻기
-        fun getDateStringForSave() = calendarToSaveString(getCurCalendar())
+        fun getDateStringForSave(): String
+        {
+            val calendar = getCurCalendar().apply {
+
+                // 로컬 기준의 시간을 영국 기준으로 변경하여 저장한다.
+                add(Calendar.MINUTE, -getGMTOffset())
+            }
+
+            return calendarToSaveString(calendar)
+        }
             // gmt offset을 고려한다.
-        fun calendarToSaveString(calendar: Calendar) = DateFormat.format("yyyyMMddHHmm", calendar).toString()
+        fun calendarToSaveString(calendar: Calendar) = DateFormat.format("yyyyMMddHHmm", calendar.time).toString()
         fun getCurCalendar(): Calendar = Calendar.getInstance()
 
 
@@ -480,12 +522,12 @@ class CB_AppFunc
             return if(isKorea)
             {
                 // 한국식 표기
-                DateFormat.format("yyyy.mm.dd. HH:mm", calendar).toString()
+                DateFormat.format("yyyy.MM.dd. HH:mm", calendar.time).toString()
             }
             else
             {
                 // 영국식 표기(나머지)
-                DateFormat.format("dd MMM yyyy, HH:mm", calendar).toString()
+                DateFormat.format("dd MMM yyyy, HH:mm", calendar.time).toString()
             }
         }
 
@@ -552,6 +594,23 @@ class CB_AppFunc
             val imm = context.getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager
             editText.requestFocus()
             imm.showSoftInput(editText, InputMethodManager.SHOW_IMPLICIT)
+        }
+
+        fun showSnackbar(iMsgRes: Int, iSnackbarLength: Int = Snackbar.LENGTH_SHORT,
+                         iActionRes: Int? = null, actionFunc: (()->Unit)? = null)
+        {
+            val snackbar = Snackbar.make(binding!!.rootView, iMsgRes, iSnackbarLength)
+            if(iActionRes != null)
+            {
+                snackbar.setAction(iActionRes)
+                {
+                    actionFunc?.invoke()
+                }
+            }
+
+            snackbar.setAnchorView(binding!!.fragmentLayout)
+                    .setAnimationMode(Snackbar.ANIMATION_MODE_FADE)
+                    .show()
         }
 
         // replace string to resId

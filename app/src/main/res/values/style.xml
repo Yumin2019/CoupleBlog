@@ -109,10 +109,33 @@
         <item name="android:paddingEnd">@dimen/margin_24dp</item>
 
         <!--in English always uppercase -->
-        <item name="android:textAllCaps">true</item>
+        <item name="android:textAllCaps">false</item>
 
         <!-- rounded shape-->
         <item name="shapeAppearance">@style/RoundShapeAppearance</item>
+    </style>
+
+    <!-- Toolbar Style -->
+    <style name="ToolbarStyle" parent="@style/Widget.AppCompat.Toolbar">
+        <item name="titleTextAppearance">@style/toolbarTextStyle</item>
+        <item name="subtitleTextAppearance">@style/toolbarTextStyle</item>
+    </style>
+
+    <style name="toolbarTextStyle" parent="TextAppearance.Widget.AppCompat.Toolbar.Title">
+        <item name="android:textColor">@color/white</item>
+        <item name="android:textSize">@dimen/subtitle_text_size</item>
+        <item name="android:fontFamily">@font/lora_regular</item>
+    </style>
+
+    <style name="toolbarMenuItemTextStyle">
+        <item name="android:textColor">@color/black</item>
+        <item name="android:textSize">18sp</item>
+        <item name="android:fontFamily">@font/lora_regular</item>
+    </style>
+
+    <style name="tabTextStyle">
+        <item name="android:textSize">18sp</item>
+        <item name="android:fontFamily">@font/lora_regular</item>
     </style>
 
 </resources>

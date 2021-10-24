@@ -14,7 +14,6 @@ import com.coupleblog.dialog.DialogItem
 import com.coupleblog.model.CB_Couple
 import com.coupleblog.model.CB_Mail
 import com.coupleblog.model.CB_User
-import com.coupleblog.model.REACTION_TYPE
 import com.coupleblog.parent.CB_BaseFragment
 import com.coupleblog.singleton.CB_AppFunc
 import com.coupleblog.singleton.CB_SingleSystemMgr
@@ -25,7 +24,6 @@ import com.google.firebase.database.DatabaseError
 import com.google.firebase.database.DatabaseReference
 import com.google.firebase.database.ValueEventListener
 import com.google.firebase.database.ktx.getValue
-import io.reactivex.rxjava3.internal.util.NotificationLite.getValue
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import java.lang.IllegalArgumentException
@@ -257,15 +255,14 @@ class CB_MailDetailFragment : CB_BaseFragment("MailDetail")
                                 override fun onDataChange(snapshot: DataSnapshot) {
 
                                     // 커플꺼
-                                    CB_AppFunc.coupleUser = snapshot.getValue<CB_User>()!!
+                                    CB_AppFunc._coupleUser = snapshot.getValue<CB_User>()!!
                                     CB_AppFunc.coupleUser.strCoupleUid = myUid
                                     CB_AppFunc.getUsersRoot().child(coupleUid).setValue(CB_AppFunc.coupleUser)
                                     CB_AppFunc.getCouplesRoot().child(coupleUid).setValue(CB_Couple(myUid))
 
                                     CB_SingleSystemMgr.showToast(R.string.str_you_became_couple)
 
-                                    // move to MainFragment but new MainFragment for query refresh
-                                    beginAction(R.id.action_CB_MailDetailFragment_to_CB_MainFragment, R.id.CB_MailDetailFragment)
+                                    backPressed()
                                 }
 
                                 override fun onCancelled(error: DatabaseError)
