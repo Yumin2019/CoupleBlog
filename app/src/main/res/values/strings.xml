@@ -234,7 +234,17 @@ Couple blog 은(는) 정보주체의 이용정보를 저장하고 수시로 불�
 ① 이 개인정보처리방침은 2021년 1월 1부터 적용됩니다.\n\n
     </string>
 
+    <string name="str_profile_name_exam">Yumin Kim</string>
+    <string name="str_profile_email_exam">yumingames@gmail.com</string>
+    <!-- example texts -->
+
     <string name="app_name">Couple Blog</string>
+
+    <string name="str_online">◆ Online</string>
+    <string name="str_n_minutes_ago">◆ %dm ago</string>
+    <string name="str_n_hours_n_minutes_ago">◆ %dh %dm ago</string>
+    <string name="str_n_days_ago">◆ %ddays ago</string>
+    <string name="str_n_months_ago">◆ %dmonths ago</string>
     <string name="str_mailbox">Mail Box</string>
     <string name="str_sign_in">Sign In</string>
     <string name="str_sign_out">Sign Out</string>
@@ -254,7 +264,6 @@ Couple blog 은(는) 정보주체의 이용정보를 저장하고 수시로 불�
     <string name="str_read_mark">Read mark</string>
     <string name="str_heart_mark">Heart mark</string>
     <string name="str_select_all">Select all</string>
-
 
     <string name="str_none_icon">No icon</string>
     <string name="str_heart">Heart</string>

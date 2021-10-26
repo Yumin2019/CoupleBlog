@@ -17,6 +17,7 @@
 
     <color name="blue">#2979FF</color>
     <color name="red">#F50057</color>
+    <color name="green">#46AC4B</color>
 
     <color name="colorPrimary">@color/purple</color>
     <color name="colorPrimaryVariant">@color/light_purple</color>

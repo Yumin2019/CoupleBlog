@@ -6,21 +6,33 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.navigation.fragment.findNavController
 import com.coupleblog.parent.CB_BaseFragment
+import com.coupleblog.singleton.CB_AppFunc
 
 class CB_ProfileFragment: CB_BaseFragment("Profilefragment")
 {
-    // 여기부터 작업한다.
-
-    private var _binding            : InfoBinding? = null
+    private var _binding            : ProfileBinding? = null
     private val binding get() = _binding!!
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View
     {
-        _binding = InfoBinding.inflate(inflater, container, false)
+        _binding = ProfileBinding.inflate(inflater, container, false)
         binding.apply {
             lifecycleOwner  = viewLifecycleOwner
+            userData = CB_AppFunc.curUser
+            coupleUserData = CB_AppFunc.coupleUser
+            isCouple = !CB_AppFunc.curUser.strCoupleUid.isNullOrEmpty()
         }
         return binding.root
+    }
+
+    fun myProfile()
+    {
+
+    }
+
+    fun coupleProfile()
+    {
+
     }
 
     override fun onDestroy()
@@ -31,6 +43,7 @@ class CB_ProfileFragment: CB_BaseFragment("Profilefragment")
 
     override fun backPressed()
     {
-        findNavController().popBackStack()
+        finalBackPressed()
     }
+
 }

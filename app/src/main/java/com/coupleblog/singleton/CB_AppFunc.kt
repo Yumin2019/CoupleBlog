@@ -146,6 +146,27 @@ class CB_AppFunc
              val bAutoLogin          = pref.getBoolean("bAutoLogin", false)
          */
 
+        /*
+        usersListRef!!.child(user!!.uid).setValue(User(user.displayName, "Online"))
+        onlineStatus = db!!.getReference("users/" + user.uid + "/onlineStatus")
+        connectedRef = FirebaseDatabase.getInstance().getReference(".info/connected")
+        connectedRef!!.addValueEventListener(object : ValueEventListener {
+            override fun onDataChange(snapshot: DataSnapshot) {
+                val connected = snapshot.getValue(Boolean::class.java)!!
+                if (connected) {
+                    onlineStatus!!.onDisconnect().setValue("offline")
+                    onlineStatus!!.setValue("Online")
+                } else {
+                    onlineStatus!!.setValue("offline")
+                }
+            }
+
+            override fun onCancelled(error: DatabaseError) {}
+        })
+    }
+
+         */
+
 
         fun getUserInfo(context: Activity, funcSuccess: (()->Unit)?, funcFailure: (() -> Unit)?)
         {

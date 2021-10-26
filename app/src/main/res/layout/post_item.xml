@@ -51,7 +51,7 @@
                     tools:visibility="gone" />
 
                 <TextView
-                    android:id="@+id/post_title_text_view"
+                    android:id="@+id/user_name_text_view"
                     style="@style/post_title_text_view"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
@@ -76,7 +76,7 @@
                     android:textColor="@color/grey"
                     app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@+id/post_title_text_view"
+                    app:layout_constraintTop_toBottomOf="@+id/user_name_text_view"
                     bind:date_text="@{postData.strPostDate}"
                     tools:text="10 Oct 2021, 23:43" />
 
@@ -87,7 +87,7 @@
                     android:layout_marginEnd="@dimen/margin_16dp"
                     app:layout_constraintBottom_toBottomOf="@+id/post_date_text_view"
                     app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintTop_toTopOf="@+id/post_title_text_view"
+                    app:layout_constraintTop_toTopOf="@+id/user_name_text_view"
                     bind:icon_image="@{postData.IIconType}"
                     tools:src="@drawable/haha_icon" />
             </androidx.constraintlayout.widget.ConstraintLayout>

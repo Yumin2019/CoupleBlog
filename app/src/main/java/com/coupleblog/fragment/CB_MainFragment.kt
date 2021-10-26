@@ -16,6 +16,7 @@ import com.coupleblog.fragment.PAGE_TYPE.*
 
 enum class PAGE_TYPE
 {
+    PROFILE,
     MY_POSTS,
     COUPLE_POSTS,
     MAILBOX,
@@ -45,6 +46,7 @@ class CB_MainFragment : CB_BaseFragment("MainFragment")
         // 각 부분별 처리를 할 Fragment 를 가지고 adapter 를 생성한다.
         val pagerAdapter = object : FragmentStateAdapter(childFragmentManager, viewLifecycleOwner.lifecycle) {
             private val fragments = arrayOf<Fragment>(
+                CB_ProfileFragment(),
                 CB_MyPostsFragment(),
                 CB_CouplePostsFragment(),
                 CB_MailBoxFragment()
@@ -67,6 +69,7 @@ class CB_MainFragment : CB_BaseFragment("MainFragment")
 
                        when(position)
                        {
+                           PROFILE.ordinal      -> { CB_ViewModel.bAddButton.postValue(false) }
                            MY_POSTS.ordinal     ->
                            {
                                CB_ViewModel.bAddButton.postValue(true)
@@ -91,6 +94,8 @@ class CB_MainFragment : CB_BaseFragment("MainFragment")
                tabLayout.text = when(position)
                {
                    // 마지막에 추가된 Fragment가 backPress 이벤트를 받는다.
+                   PROFILE.ordinal     -> "Profile"
+
                    // MainFragment means this user already did login
                    MY_POSTS.ordinal     ->
                    {

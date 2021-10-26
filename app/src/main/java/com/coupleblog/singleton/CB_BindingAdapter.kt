@@ -16,6 +16,24 @@ import com.google.firebase.database.DatabaseError
 import com.google.firebase.database.ValueEventListener
 import com.google.firebase.database.ktx.getValue
 
+@BindingAdapter("bind:user_presence")
+fun setUserPresence(textView: TextView, userData: CB_User)
+{
+    if(userData.isOnline == true)
+    {
+        // online status
+        textView.text = CB_AppFunc.getString(R.string.str_online)
+    }
+    else
+    {
+        textView.text = "offline"
+        // if this user is offline, set format strings
+/*      <string name="str_n_minutes_ago">◆ %dm ago</string>
+        <string name="str_n_hours_n_minutes_ago">◆ %dh %dm ago</string>
+        <string name="str_n_days_ago">◆ %ddays ago</string>
+        <string name="str_n_months_ago">◆ %dmonths ago</string>*/
+    }
+}
 
 @BindingAdapter("bind:user_uid")
 fun setTextByUid(textView: TextView, strUid: String?)
@@ -82,7 +100,7 @@ fun setAdapter(recyclerView: RecyclerView, adapter: RecyclerView.Adapter<*>?)
     recyclerView.adapter = adapter
 }
 
-@BindingAdapter("bind:visible")
+@BindingAdapter("bind:visibility")
 fun setVisibility(view: View, flag: Boolean?)
 {
     view.visibility = if(flag == true) View.VISIBLE else View.GONE

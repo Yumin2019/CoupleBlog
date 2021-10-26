@@ -47,7 +47,7 @@
             app:maxImageSize="35dp"
             app:tint="@color/white"
             bind:page_idx="@{viewModel.IPageType}"
-            bind:visible="@{viewModel.bAddButton}"
+            bind:visibility="@{viewModel.bAddButton}"
             tools:visibility="visible" />
 
         <FrameLayout
