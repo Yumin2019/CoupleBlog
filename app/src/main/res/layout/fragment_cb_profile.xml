@@ -11,17 +11,8 @@
             type="com.coupleblog.fragment.CB_ProfileFragment" />
 
         <variable
-            name="userData"
-            type="com.coupleblog.model.CB_User" />
-
-        <variable
-            name="coupleUserData"
-            type="com.coupleblog.model.CB_User" />
-
-        <variable
-            name="isCouple"
-            type="Boolean" />
-
+            name="viewModel"
+            type="com.coupleblog.singleton.CB_ViewModel.Companion" />
        <!-- <variable
             name="coupleData"
             type="com.coupleblog.model.CB_User" />-->
@@ -49,7 +40,7 @@
                 <TextView
                     android:id="@+id/user_name_text_view"
                     style="@style/post_title_text_view"
-                    android:text="@{userData.strUserName}"
+                    android:text="@{viewModel.curUser.strUserName}"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginStart="@dimen/margin_16dp"
@@ -63,7 +54,7 @@
                 <TextView
                     android:id="@+id/user_email_text_view"
                     style="@style/normal_text_style"
-                    android:text="@{userData.strUserEmail}"
+                    android:text="@{viewModel.curUser.strUserEmail}"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:paddingStart="@dimen/margin_16dp"
@@ -77,6 +68,7 @@
                 <TextView
                     android:id="@+id/user_presence_text_view"
                     style="@style/normal_text_style"
+                    bind:user_presence="@{viewModel.curUser}"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:paddingStart="@dimen/margin_16dp"
@@ -109,7 +101,7 @@
             android:id="@+id/couple_user_card_view"
             style="@style/card_view_style"
             android:onClick="@{()->fragment.coupleProfile()}"
-            bind:visibility="@{isCouple}"
+            bind:visibility="@{!viewModel.curUser.strCoupleUid.isEmpty()}"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             app:layout_constraintEnd_toEndOf="parent"
@@ -124,7 +116,7 @@
                 <TextView
                     android:id="@+id/couple_user_text_view"
                     style="@style/post_title_text_view"
-                    android:text="@{coupleUserData.strUserName}"
+                    android:text="@{viewModel.coupleUser.strUserName}"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginStart="@dimen/margin_16dp"
@@ -138,7 +130,7 @@
                 <TextView
                     android:id="@+id/couple_user_email_text_view"
                     style="@style/normal_text_style"
-                    android:text="@{coupleUserData.strUserEmail}"
+                    android:text="@{viewModel.coupleUser.strUserEmail}"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:paddingStart="@dimen/margin_16dp"
@@ -152,6 +144,7 @@
                 <TextView
                     android:id="@+id/couple_user_presence_text_view"
                     style="@style/normal_text_style"
+                    bind:user_presence="@{viewModel.coupleUser}"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:paddingStart="@dimen/margin_16dp"
@@ -160,7 +153,7 @@
                     android:textColor="@color/grey"
                     app:layout_constraintBottom_toBottomOf="@+id/couple_user_profile_image"
                     app:layout_constraintStart_toStartOf="@+id/couple_user_text_view"
-                    tools:text="@string/str_n_minutes_ago"
+                    tools:text="@string/str_user_presence_exam"
                     tools:textColor="@color/grey" />
 
                 <ImageView

@@ -7,6 +7,7 @@ import android.view.ViewGroup
 import androidx.navigation.fragment.findNavController
 import com.coupleblog.parent.CB_BaseFragment
 import com.coupleblog.singleton.CB_AppFunc
+import com.coupleblog.singleton.CB_ViewModel
 
 class CB_ProfileFragment: CB_BaseFragment("Profilefragment")
 {
@@ -18,9 +19,7 @@ class CB_ProfileFragment: CB_BaseFragment("Profilefragment")
         _binding = ProfileBinding.inflate(inflater, container, false)
         binding.apply {
             lifecycleOwner  = viewLifecycleOwner
-            userData = CB_AppFunc.curUser
-            coupleUserData = CB_AppFunc.coupleUser
-            isCouple = !CB_AppFunc.curUser.strCoupleUid.isNullOrEmpty()
+            viewModel = CB_ViewModel.Companion
         }
         return binding.root
     }

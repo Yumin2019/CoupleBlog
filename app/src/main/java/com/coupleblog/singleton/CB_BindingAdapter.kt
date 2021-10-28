@@ -22,17 +22,71 @@ fun setUserPresence(textView: TextView, userData: CB_User)
     if(userData.isOnline == true)
     {
         // online status
+        textView.setTextColor(CB_AppFunc.getColorStateList(R.color.green))
         textView.text = CB_AppFunc.getString(R.string.str_online)
+        return
     }
-    else
+
+    textView.setTextColor(CB_AppFunc.getColorStateList(R.color.grey))
+
+    // if this user is offline, set format strings
+    if(userData.strLogoutDate.isNullOrEmpty())
     {
-        textView.text = "offline"
-        // if this user is offline, set format strings
-/*      <string name="str_n_minutes_ago">◆ %dm ago</string>
-        <string name="str_n_hours_n_minutes_ago">◆ %dh %dm ago</string>
-        <string name="str_n_days_ago">◆ %ddays ago</string>
-        <string name="str_n_months_ago">◆ %dmonths ago</string>*/
+        textView.text = ""
+        return
     }
+
+    // 현재 시간 - 로그아웃 시간(영국 기준)
+    val logoutDate = CB_AppFunc.stringToCalendar(userData.strLogoutDate).time
+    val curDate = CB_AppFunc.getCalendarForSave().time
+    var iMin = (curDate.time - logoutDate.time).toInt() / (60 * 1000) // millisecond to minute
+    var iHour = iMin / 60
+    val iDay = iHour / 24
+    val iMonth = iDay / 30
+    val iYear = iMonth / 12
+    var strPresence = "◆ "
+
+    if(iYear > 0) // n years
+    {
+        // 1year ago, 2years ago
+        strPresence += "$iYear"
+        strPresence += if(iYear == 1) CB_AppFunc.getString(R.string.str_year_ago)
+                       else           CB_AppFunc.getString(R.string.str_years_ago)
+    }
+    else if(iMonth > 0) // 1 ~ 11 months
+    {
+        // 1month ago, 2months ago
+        strPresence += "$iMonth"
+        strPresence += if(iMonth == 1) CB_AppFunc.getString(R.string.str_month_ago)
+                       else            CB_AppFunc.getString(R.string.str_months_ago)
+    }
+    else if(iDay > 0) // 1 ~ 29 days
+    {
+        CB_AppFunc.getString(R.string.str_h)
+        // 2d ago, 1d 3h ago
+        iHour %= 24
+        strPresence += "$iDay" + CB_AppFunc.getString(R.string.str_d)
+        strPresence += if(iHour > 0)
+                           "$iHour" + CB_AppFunc.getString(R.string.str_h_ago)
+                       else
+                           CB_AppFunc.getString(R.string.str_ago)
+    }
+    else if(iHour > 0) // 1 ~ 23 hours
+    {
+        // 1h ago, 1h 25m ago
+        iMin %= 60
+        strPresence += "$iHour" + CB_AppFunc.getString(R.string.str_h)
+        strPresence += if(iMin > 0)
+                          "$iMin" + CB_AppFunc.getString(R.string.str_m_ago)
+                       else
+                           CB_AppFunc.getString(R.string.str_ago)
+    }
+    else // 0 ~ 59 minutes
+    {
+        strPresence += "$iMin" + CB_AppFunc.getString(R.string.str_m_ago)
+    }
+
+    textView.text = strPresence
 }
 
 @BindingAdapter("bind:user_uid")

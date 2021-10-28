@@ -9,6 +9,7 @@ import com.coupleblog.adapter.CB_EmailAdapter
 import com.coupleblog.fragment.PAGE_TYPE
 import com.coupleblog.model.CB_Mail
 import com.coupleblog.model.CB_Post
+import com.coupleblog.model.CB_User
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 
@@ -21,6 +22,10 @@ class CB_ViewModel
         // when you click view pages
         var bAddButton = MutableLiveData(false)
         var iPageType = MutableLiveData(PAGE_TYPE.MY_POSTS.ordinal)
+
+        // User LiveData
+        var curUser = MutableLiveData<CB_User>()
+        var coupleUser = MutableLiveData<CB_User>()
 
         // PostDetailFragment
         var tPost      = MutableLiveData(CB_Post())

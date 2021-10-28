@@ -34,6 +34,7 @@ import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.ktx.auth
 import com.google.firebase.database.DataSnapshot
 import com.google.firebase.database.DatabaseError
+import com.google.firebase.database.FirebaseDatabase
 import com.google.firebase.database.ValueEventListener
 import com.google.firebase.database.ktx.database
 import com.google.firebase.database.ktx.getValue
@@ -91,10 +92,12 @@ class CB_AppFunc
 
         var userInfoListener: ValueEventListener? = null
         var coupleUserInfoListener: ValueEventListener? = null
+        var presenceListener: ValueEventListener? = null
 
         fun getUid() = FirebaseAuth.getInstance().currentUser!!.uid
         fun getAuth() = Firebase.auth
         fun getDataBase() = Firebase.database.reference
+        fun getDBInstance() = FirebaseDatabase.getInstance()
         fun getUsersRoot() = getDataBase().child("users")
         fun getUserPostsRoot() = getDataBase().child("user-posts")
         fun getCouplesRoot() = getDataBase().child("couples")
@@ -146,27 +149,65 @@ class CB_AppFunc
              val bAutoLogin          = pref.getBoolean("bAutoLogin", false)
          */
 
-        /*
-        usersListRef!!.child(user!!.uid).setValue(User(user.displayName, "Online"))
-        onlineStatus = db!!.getReference("users/" + user.uid + "/onlineStatus")
-        connectedRef = FirebaseDatabase.getInstance().getReference(".info/connected")
-        connectedRef!!.addValueEventListener(object : ValueEventListener {
-            override fun onDataChange(snapshot: DataSnapshot) {
-                val connected = snapshot.getValue(Boolean::class.java)!!
-                if (connected) {
-                    onlineStatus!!.onDisconnect().setValue("offline")
-                    onlineStatus!!.setValue("Online")
-                } else {
-                    onlineStatus!!.setValue("offline")
+        fun getUserPresence()
+        {
+            // set online value to current user's data
+         /*   curUser.apply {
+                isOnline = true
+                strLogoutDate = ""
+                getUsersRoot().child(getUid()).setValue(curUser)
+            }*/
+
+            /*// connect user's online state ref
+            val onlineRef = getDBInstance().getReference("users/" + getUid() + "/isOnline")
+            val logoutDateRef = getDBInstance().getReference("users/" + getUid() + "/strLogoutDate")*/
+
+            // firebase provides online connection system in .info/connected ref
+            val connectedRef = getDBInstance().getReference(".info/connected")
+            presenceListener = object: ValueEventListener{
+
+                override fun onDataChange(snapshot: DataSnapshot)
+                {
+                    val connected = snapshot.getValue(Boolean::class.java)!!
+                    if (connected)
+                    {
+                        curUser.apply {
+                            isOnline = true
+                            strLogoutDate = ""
+                            getUsersRoot().child(getUid()).setValue(curUser)
+                        }
+                     /*   onlineRef.setValue(true)
+                        logoutDateRef.setValue("")*/
+
+                        // set trigger func when it's unconnected
+                        val copy = curUser.copy()
+                        copy.apply {
+                            isOnline = false
+                            strLogoutDate = getDateStringForSave()
+                            getUsersRoot().child(getUid()).onDisconnect().setValue(copy)
+                        }
+                       /* onlineRef.onDisconnect().setValue(false)
+                        logoutDateRef.onDisconnect().setValue(getDateStringForSave())*/
+                    }
+                    else
+                    {
+                        val copy = curUser.copy()
+                        copy.apply {
+                            isOnline = false
+                            strLogoutDate = getDateStringForSave()
+                            getUsersRoot().child(getUid()).onDisconnect().setValue(copy)
+                        }
+                    }
+                }
+
+                override fun onCancelled(error: DatabaseError)
+                {
+                    Log.e("onlineStatus", "failed to load online status")
                 }
             }
 
-            override fun onCancelled(error: DatabaseError) {}
-        })
-    }
-
-         */
-
+            connectedRef.addValueEventListener(presenceListener!!)
+        }
 
         fun getUserInfo(context: Activity, funcSuccess: (()->Unit)?, funcFailure: (() -> Unit)?)
         {
@@ -249,6 +290,7 @@ class CB_AppFunc
                 override fun onDataChange(snapshot: DataSnapshot)
                 {
                     _curUser = snapshot.getValue<CB_User>()!!
+                    CB_ViewModel.curUser.value = curUser
 
                     // 커플이 된 경우를 확인하여 추가한다.
                     addEventListenerToCoupleUserInfo()
@@ -281,6 +323,7 @@ class CB_AppFunc
                 override fun onDataChange(snapshot: DataSnapshot)
                 {
                     _coupleUser = snapshot.getValue<CB_User>()!!
+                    CB_ViewModel.coupleUser.value = coupleUser
                 }
 
                 override fun onCancelled(error: DatabaseError)
@@ -295,8 +338,12 @@ class CB_AppFunc
         // 로그아웃시 호출한다.
         fun cleanUpListener()
         {
-            userInfoListener?.let {  getUsersRoot().child(getUid()).removeEventListener(it) }
+            presenceListener?.let { getDBInstance().getReference(".info/connected").removeEventListener(it) }
+            presenceListener = null
+
+            userInfoListener?.let { getUsersRoot().child(getUid()).removeEventListener(it) }
             userInfoListener = null
+
             cleanUpCoupleUserListener()
         }
 
@@ -522,17 +569,15 @@ class CB_AppFunc
         }
 
         // 저장을 위한 dateString 얻기
-        fun getDateStringForSave(): String
-        {
-            val calendar = getCurCalendar().apply {
+        fun getDateStringForSave(): String = calendarToSaveString(getCalendarForSave())
+        fun getCalendarForSave(): Calendar
+        = getCurCalendar().apply {
 
                 // 로컬 기준의 시간을 영국 기준으로 변경하여 저장한다.
                 add(Calendar.MINUTE, -getGMTOffset())
             }
 
-            return calendarToSaveString(calendar)
-        }
-            // gmt offset을 고려한다.
+        // gmt offset을 고려한다.
         fun calendarToSaveString(calendar: Calendar) = DateFormat.format("yyyyMMddHHmm", calendar.time).toString()
         fun getCurCalendar(): Calendar = Calendar.getInstance()
 

@@ -43,6 +43,9 @@ class CB_MainFragment : CB_BaseFragment("MainFragment")
     {
         super.onViewCreated(view, savedInstanceState)
 
+        // get user's online status after login
+        CB_AppFunc.getUserPresence()
+
         // 각 부분별 처리를 할 Fragment 를 가지고 adapter 를 생성한다.
         val pagerAdapter = object : FragmentStateAdapter(childFragmentManager, viewLifecycleOwner.lifecycle) {
             private val fragments = arrayOf<Fragment>(
@@ -69,7 +72,15 @@ class CB_MainFragment : CB_BaseFragment("MainFragment")
 
                        when(position)
                        {
-                           PROFILE.ordinal      -> { CB_ViewModel.bAddButton.postValue(false) }
+                           PROFILE.ordinal      ->
+                           {
+                               CB_ViewModel.apply {
+                                   var value = coupleUser.value // refresh
+                                   coupleUser.postValue(value)
+
+                                   bAddButton.postValue(false)
+                               }
+                           }
                            MY_POSTS.ordinal     ->
                            {
                                CB_ViewModel.bAddButton.postValue(true)
