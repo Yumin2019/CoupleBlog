@@ -151,17 +151,6 @@ class CB_AppFunc
 
         fun getUserPresence()
         {
-            // set online value to current user's data
-         /*   curUser.apply {
-                isOnline = true
-                strLogoutDate = ""
-                getUsersRoot().child(getUid()).setValue(curUser)
-            }*/
-
-            /*// connect user's online state ref
-            val onlineRef = getDBInstance().getReference("users/" + getUid() + "/isOnline")
-            val logoutDateRef = getDBInstance().getReference("users/" + getUid() + "/strLogoutDate")*/
-
             // firebase provides online connection system in .info/connected ref
             val connectedRef = getDBInstance().getReference(".info/connected")
             presenceListener = object: ValueEventListener{
@@ -176,8 +165,6 @@ class CB_AppFunc
                             strLogoutDate = ""
                             getUsersRoot().child(getUid()).setValue(curUser)
                         }
-                     /*   onlineRef.setValue(true)
-                        logoutDateRef.setValue("")*/
 
                         // set trigger func when it's unconnected
                         val copy = curUser.copy()
@@ -186,8 +173,6 @@ class CB_AppFunc
                             strLogoutDate = getDateStringForSave()
                             getUsersRoot().child(getUid()).onDisconnect().setValue(copy)
                         }
-                       /* onlineRef.onDisconnect().setValue(false)
-                        logoutDateRef.onDisconnect().setValue(getDateStringForSave())*/
                     }
                     else
                     {
