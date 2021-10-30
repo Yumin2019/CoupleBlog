@@ -616,4 +616,47 @@ setting Fragment.
 1. 채팅 기능
 2. 이미지를 업로드 할 수 있는 기능을 추가한다.
 자신의 프로파일 이미지, 포스팅에서 이미지... 
+  
+1. 이미지를 String으로 변환해서 저장한다. at Firebase realtime db (X)
+2. 이미지 파일은 Storage에 저장하고 우리는 해당 경로를 받아둔다. 
 
+그렇다면 어떤 방식으로 경로를 설정해야 하는가?
+이미지를 어떤 상황에서 사용하는가?
+
+=== 커플 정보 리펙토링 === (예정)
+커플 정보에 대한 데이터를 바꿀 필요성이 느껴진다.
+왜냐면 이미 유저 정보로 coupleUser uid를 가지고 있고 이런 상황에서 굳이 데이터를 2개씩 
+가지고 있을 필요는 없어보인다. 
+그냥 user가 couples쪽 coupleKey를 가지고 있도록 하고 이걸 이용해서 공용의 데이터에 
+접근하는 방식이 훨씬 나아 보임
+
+=== 메일 기능 위치 변경 === (예정)
+메일 기능을 솔직히 커플 신청하는 상황 뺴고는 사용하지 않을 것 같다는 생각이 들어서
+메뉴쪽으로 이동하는 것이 좋겠다고 생각하고 있다.
+
+== 신규 기능 커플 앨범 == (예정)
+이번에 새로 추가할 storage기능을 활용하여 커플 사진을 관리할 수 있는 앨범 기능을 추가하면 좋을 것
+같다. 아니면 채팅어플에서 리소스 한번에 보기 같은... 근데 앨범이 더 나을 것 같다.
+
+== 네트워크 or 데이터 연결 여부 확인하는 함수 추가 == (예정)
+함수를 추가한 이후에 로그인 혹은 특정 상황에서 호출해주는 로직이 필요할 것 같다.
+왜냐면... 로드하고서 입장이 안 될 거 아님...
+
+1. 유저 정보(프로필 이미지) users -  uid -  user-info - profile.png 
+2. 포스트 사진		  	 users -  uid -  user-posts - postKey1 - image.png 
+3. 이메일 사진 		 	 users -  uid -  user-mails - mailKey1 - image.png
+4. 커플 관련(추가 예정) couples - coupleKey - .... 
+
+* 데이터 확장자에 따라서 아마 다를 것 같은데 단순 이미지의 경우에는 정보를 로드하고 Glide로 이미지를
+출력해주는 것으로 끝나겠지. 근데 이제.. ppt나 pdf 같은 파일의 경우에는 A가 올리면 B가 다운을
+받아서 볼 수 있는 형식으로 처리가 될 것이다.
+
+* 대부분은 image 파일일 테니 Glide를 사용하면 된다.
+
+- 프로필 이미지 
+회전이 된 이미지라면 바꾸는 처리가 필요하다.
+어떤 이미지든지 용량을 줄이는 처리가 필요하다.
+Glide : 썸네일보기, GIF로딩, 동영상 스틸 보기
+FirebaseStorage storage = FirebaseStorage.getInstance(); // FirebaseStorage 인스턴스 생성
+         StorageReference storageRef = storage.getReference("image.jpg"); // 스토리지 공간을 참조해서 이미지를 가져옴
+         Glide.with(view).load(storageRef).into(image); // Glide를 사용하여 이미지 로드
