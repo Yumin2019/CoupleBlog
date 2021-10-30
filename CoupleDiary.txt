@@ -1,0 +1,619 @@
+2021-07-19
+
+Today is the day that I've been working in my company for 50 days
+It's quite many.. haha I didn't notice about it.
+I've been becoming an android programmer in my company.
+Honestly, I've studied game programming to be a game programmer.
+but I'd be getting tired of it. cause between many of chances to select, I didn't get anything.
+I know that time made me more stronger than before. and make my mind more higher level? to another level
+
+anyways Programming is basically funny. isn't it?
+so the part is not important I think. just do programming what you want most.
+Oh just before my skin of face was really really like a zebra with red color.
+cause my skin is kind of weird. more sensitive? so it makes me feel bad sometimes.
+I need to be care about my skin and body too. to be stronger(?)
+
+I don't know why I mentioned it now. anyways I've been having the mind of Thanks to my company.
+even though my company is something of hard working. they gave me one chance to work there.
+and I need to show my passion to them. and make em think about me(?) as one of their team.
+
+nowadays I've been speking these sentences in Korean. but here is one of English things. 
+so I'll use English haha. 
+
+1. I'll be a lead programmer in uPrism(this is the name of my company)
+2. I'll get much of money like 0.1B Kwon per a year.
+3. I'll get huge of body, especially back part like jigi TV(Youtube)
+4. I'll be a good English speaker that can speak English with foreigners freely.
+
+so for them. I've been speaking English and hearing English songs. haha
+and the sometimes work out. 3 times a week.
+and.... nowadays maybe since 7 days ago, I've been doing one day one commit challege to improve my ability of programming.
+I think today I'll have to listen to some pops and in advance, prepare to go to my company
+one of my wishes is that get vaccinated. cause the line of 9th in train is quite sucked.
+too many people are there. and we hate to be together. I mean cause of covid19
+but we have to go to companies. so... yeah nothing's other way.
+so... I just wanna tell you(to myself)
+
+take care of your body. wear your mask when you out
+wash your hands and body sometime. 
+You'll get vaccinated like phizer moderna or novamax.... etc
+good luck. love you!
+
+2021-07-20
+
+nowadays, I think about me and who I could been.
+if you started your career as a programmer in nekarakube(Naver, Kakao, Line, Coupang, Baemin)
+I guess you could get 40 thousand dollars yearly. (at least)
+
+but I think these are special cases. usually not much of preparing for these companise.
+actually there's lots of what to do in this part. 
+most of people are not doing well. I mean more strongly... 
+
+we need to think about the graph of supply and demand.
+I think if a hansei student got a job and then got paid. 
+
+we'd get 9 dollors per a hour usually.
+for 1 to 3 years, I think it's just kind of investment for my future.
+money is important. but I think it's more important to bring my abilities to the sky.
+
+we're different finacially. 
+some people get 9 dollors per an hour.
+some people get 45 dollors per an hour. 
+
+I wish I could get much of money in my life.
+now is kind of investment. I should try to get my abilities high.
+
+I wish I'll get 0.1B kwon per a year.
+I wish I'll a lead programmer in this company.
+I wish I'll speak English with foreigners freely fluently
+I wish I'll be a man with a good body.
+
+I know these are not easy to do, but I should try to keep approaching to em.
+
+
+
+기존 처리(wrap_content, item)의 문제점
+1. scrollView의 크기를 아이템에 의존하여 animation 처리를 동기화하기 힘들다. (Pass)
+
+2. 아이템의 개수를 늘려도 어느 시점부터는 크기가 늘지 않는 오류가 발생. V
+(NestedScrollView)
+scrollview내부에서 recyclerview가 있는 경우에 문제가 생길 여지가 있다.
+
+3. EditText에서 view의 위치를 제대로 잡지 못하는 문제. V
+해당 위치라고 인식을 하지 않기 때문. (애니메이션)
+
+출력과, 실제 위치. 
+위에 text는 처리를 하고 실제 위치와 동일하다.
+나머지 뷰의 출력은 해당 원래 위치를 기준으로 translation 처리를 하기 때문에
+움직이는 것으로 보인다. (출력은 OK)
+근데 여기서 text의 실제 margin값이 변경이 된다. -> 
+constraintLayout에 의해서 그 아래 뷰들도 영향을 받는다는 이야기.
+즉, 추가한 마진 값 혹은 뺸 마진 값 만큼. 영향을 받아서 올라가거나 내려간다. (실제 좌표 역시)
+근데, 애니메이션 처리를 주지 않는 방식이라 끊어진다. 
+
+그래서 나는 이거 그냥 constraint영향 안 받도록 따로따로 마진 설정하고 ㅋㅋ 
+이후에 애니메이션을 따로따로 줘서.. 위치를 재설정하여 사용했다. 
+이후에 editText가 가려지던 문제가 해결된다.
+
+
+Spinner에서 직접 입력 기능 추가하기. 
+
+처음에 기본 이메일로 설정이 되어 있고 여기서 항목에 따라서 옵션값을 설정할 것이다.
+직접입력 클릭
+text지우기.
+inputType text
+cursorVisible true
+
+나머지는 반대로 처리.
+
+입력 확인 및 전환 처리. imeOptions. 
+참석자 editText 및 추가 항목 더 생각하기
+
+*한번 처리를 한 이후에 droplist가 처리가 안 되어서 focusing지우는 처리마다
+후처리로 옵션값 변경 처리를 넣어줬다.
+
+                <!--android:cursorVisible="false"-->
+
+android:digits= 숫자, 영문자, @ . 
+                android:imeOptions="actionDone"
+                android:inputType="text"
+				
+				    <!--       android:cursorVisible="false"
+                android:focusableInTouchMode="false"-->
+				
+autoCompleteTextView자체가 뭔가. 매칭이 되는 것들을 미리 출력해주는
+개념이라 잘못된 입력 사이에서 뭔가 그냥 기본 설정 중에 하나를 보여주는 이런 처리에
+굉장히 약하다.(못한다)
+
+그래서 우리는 그냥. 이것을 spinner 처리를 위한 용도로 사용하겠다.
+무조건 클릭하면 뜨는 것으로.
+
+  android:focusable="false"
+                android:focusableInTouchMode="false"
+	
+	스피너 항목을 선택할 수 있다. V
+	입력을 할 수 있고(0번) 다른 걸 클릭하면 입력을 못 한다. V
+	
+	AutoCompleteTextView에는 textWatcher를 달아서 값이 바뀌면
+	인식해서 text에서 보낸다. V
+	
+	이후에 아이템을 넣을 때 이것을 인식하도록 한다. OK
+	예외처리(형식에 맞지 않는 경우를 추가했다.) V 
+	
+	제목 글자수 출력. V
+	
+	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
+	
+	
+	
+
+*참석인원은 현재 회의방에 있는 인원인 것 같고 눌러서 나오는 참석자는 초대를 받은 사람 모두를
+뜻하는 것으로 보인다.  
+
+회의 리스트에서 회의 아이템을 클릭한 경우에 정보를 출력하는 기능
+제목, 시작 시간, 종료 시간, 초대자. 참석자. 참석인원 recyclerview. 안건.
+상단에 회의방 번호. 아이콘 111-111-111
+수정, 삭제 버튼.
+전체적으로 회색. (disabled색상)
+안드로이드에서는 오후 02:36 이런 형태로 출력된다.(상세 정보에서)
+// 회의 정보, 비밀번호 같은 것은 출력이 되지 않는데 (수정 화면에서는 당연히 있을 거고..)
+// 회의 정보에 따라서 보여주는 화면도 조금씩 차이가 있을 것이다.
+// if 비밀번호가 없으면, X
+
+
+회의방리스트 UI에서 예약된 회의list 따로 제공. (귀찮음)
+커스텀한 이후에 변경이 일어난 경우에만 Dialog(discard) (귀찮음)
+내부 UI만들기 (귀찮음)
+프로필 변경. Intent처리 밑... 사진 정보 불러오기... 띄우기 확인 같은 거.
+회의방 정보에서 위에 id버튼을 누르면 intent 연결해서 보낼 수 있는 거?
+
+
+
+14일
+1. 회의방UI에서 intent를 통해서 conferenceList에 정보를 전달 및 갱신
+2. ConferenceData 변수 추가
+
+회의 정보UI 및 편집, 삭제 기능 구현할 예정.
+
+8월 15일
+1. fixed type of data when you use intent for return
+2. fixed recycler padding (243dp -> 0dp)
+3. added updateUI func in ConferenceInfoActivity
+
+Dialog, Editing, Deletion ... 
+
+delete Cancel,
+edit
+
+AddActivity 생성시 flag를 추가해서. create / edit상황을 분리.
+edit일때 추가적인 처리로 UI갱신 및 내부 멤버 변수 값 업데이트 처리. (create에서는 초기값만)
+
+8월 16일
+1. 회의 삭제 기능 (회의Info -> 삭제버튼 -> 삭제후 list갱신)
+2. 회의 편집 기능 (회의Info -> 편집버튼 -> 편집 -> Info에서 확인 후 -> list갱신)
+
+내부 회의방 처리, 프로필 이미지 변경 처리, 회의Info id버튼 처리 등이 있음.
+
+
+refactoring 목록
+
+1. MVVM 적용
+2. 화면 전환 가능하도록
+3. Thread -> Coroutine
+4. BaseClass구성. 
+5. 클래스 이름
+
+onCreate tag, registerActivity, statusBar textColor 
+onDestroy tag, release 
+
+onCreate 더블클릭, register, textColor
+onDestroy
+
+profileImageChange 까지 작업.
+
+
+9월 4일
+
+현재 우리 어플은 BaseActivity에서 onCreate, onDestroy가 있으면 이걸 arr에 담아서 처리가 되고 있다.
+이러한 처리가 설계적으로 보기에는 좋은 것은 아닌 것 같지만 가비지 컬렉션의 원칙에 따라 참조 처리를 제대로 없앤다면
+사실 큰 문제는 없을 것이다. 그리고 없애지 않더라도 leak이 생기는 거지 갑자기 다운되고 그러지는 않겠지.
+
+처음에 생각했던 문제는 C++의 가상소멸자 같은 문제처럼 혹시 부모의 소멸자를 호출하지 않는 것은 아닐까?(arr에서 remove처리가 되는 부분)
+찾아보니까 그런 부분은 없다.
+
+예전에 잡았던 문제와 더불어서 드는 생각이... 화면전환과 문제가 있지 않을까?
+
+함수를 호출해서 화면전환을 하는 경우에...  이 경우에 생길 수 있는 문제는 재시작. reStart이다. 
+나는 함수를 호출해서 처리를 하다가 재밌는 현상을 봤는데.. 일단 싱글톤에 flag값을 넣어놓고 A액티비티가 켜지면 true 사라지면, false처리를
+해주고 있었다. 그리고 중복으로 생성시에 assert처리를 한다. 
+
+일단 가로모드에서 A액티비티를 실행시키고 true처리를 한다.
+
+그리고 함수로 세로모드가 되도록 함수를 호출하면(onCreate부분에서) 해당 A액티비티의 onCreate부분이 다시 실행이 되는 것이다. (reStart)
+onCreate -> 화면 전환 -> onCreate 이렇게 처리가 되었고 이 과정에서 이미 생성이 된 액티비티임을 인식하고 assert처리가 나는 것이다.
+
+즉, 우리가 알 수 있는 것은 onCreate -> 화면 전환 -> onDestroy -> onCreate(재시작)이 되는 개념이 아니라는 것이다. 
+더군다나 우리 어플은 onCreate에서 arr에 자신의 객체를 집어 넣는다. 근데 화면전환이 일어나서 또 집어넣는다.
+
+그러면 동일한 객체가 2번 배열에 있게 되는 것이 아닌가? 나중에 onDestory 과정에서 없애는 객체는 하나. 참조가 남은 것은 하나. (leak)
+
+한가지 생각해봐야 하는 문제는 구성변경에 대한 flag처리. 
+화면 전환이 일어나도 재실행을 하지 않는다는 테마의 속성을 추가하더라도 위의 현상이 계속 일어날 것인가? 검증하는 과정이 필요하다. 
+
+일단 기본은 화면전환이 일어나면 해당 화면을 버리고 다시 생성한다.
+onCreate -> 화면전환 -> onDestory -> 재생성 (문제 없음)
+
+여기에 화면 전환 조건을 하나 추가한다. 동작이 제대로 이루어 지는지
+BaseAcitivity : 
+requestedOrientation = ActivityInfo.SCREEN_ORIENTATION_PORTRAIT;
+
+제대로 처리가 된다. 
+내가 하던 중복처리까지 추가했는데 아무 이상이 없다.
+내가 착각을 한 것 같다.
+
+구성변경 옵션을 줘도 문제가 안 생겨. 
+
+9월 4일 dataBinding작업
+
+versionInfoButton passwordChangeButton logoutButton 
+
+clickedConferenceItem joinConf
+
+ConfList에 대한 dataBinding작업을 마쳤다. 이제 전체적으로 테스트를 진행한다.
+
+drawer
+	- 카메라, image처리
+	- 버튼은 눌리는지
+	
+contents
+	- 회의 ~ 버튼 동작
+	- 버튼 눌리는지
+	
+	ConfInfo
+	AddConf
+	
+ <data class="com.bignerdranch.android.uprism.overlay.LicenceInfoBinding">
+     <variable
+         name="activity" type="com.bignerdranch.android.uprism.overlay.Meetings_LicenceInfoActivity"/>
+ </data>
+
+	
+ binding = DataBindingUtil.setContentView(this, R.layout.activity_meetings_version_info)
+   binding.apply{
+       lifecycleOwner = this@Meetings_VersionInfoActivity
+       activity = this@Meetings_VersionInfoActivity
+   }
+   
+AddConfActivity에 대한 작업을 해야 하는데.. 어제 일단 이메일 폼 기능을 포스팅을 해서 이제 깔끔하게 걷어내고 처리를 하겠다. 
+
+1. util class추가(0%->100%)
+ - JsonHelper
+ - HashCode
+ - json-simple lib 추가
+ 
+2. Meetings_Network 클래스 작업중(코드 분석 및 이해, 0%->50%)
+ - Dispatchers.io Coroutine
+ 
+*주요 클래스 몇 가지 작업을 끝낸다면, 많은 시간이 걸리지 않을 것 같습니다. 
+ 
+ANDROID UI(38%->42%)
+1. 회의 목록 불러오는 처리 및 테스트(0%->70%)
+ - 세미나 회의 구분해서 UI처리
+ - 대기실 사용 여부에 따른 UI처리
+ - 회의실 옵션 이미지(locker, password)처리
+
+*예약 회의 리스트에 대한 처리, dataBinding 연결 작업을 추가할 예정입니다.
+
+
+
+일은 또 오지게 많은데... 안 해요. 그렇다고 뭐 할 것이 있냐? 아님 ㅋㅋ
+그냥 뒹굴뒹굴 ㅋㅋㅋ 
+
+애니메이션 처리를 살리려면, 고려해야 하는 상황이 너무 많은 것 같아서 Load하는 방식으로 변경
+NesteadScrollView를 통해 스크롤을 아이템 개수에 따라서 처리하는 방식으로 변경. 
+회의 리스트를 받아오는 처리에서는 mike, camera값이 갱신되고 있지 않다.
+
+-- 테스트 --
+1. 추가 OK
+2. 편집 OK 
+3. 삭제 OK 
+
+1. passwordChanged 처리(MtrlSwitch) 데이터 바인딩 작업
+2. 이메일 추가에서 높이 값이 제대로 안 되는 문제 
+ - recyclerView.setHasFixedSize(true)
+ - 아이템의 개수가 정해진 경우에 사용하는 옵션으로 사이즈 부분에서 문제가 될 수 있다.
+ 
+*profile, passwordChange부분 작업할 예정입니다.
+
+9월 22일
+
+1. ProfileChange 부분(0%->100%)
+ - 갤러리에서 선택 / 카메라 촬영
+ - 코루틴 적용
+ - temp파일 삭제 및 기능 테스트
+ 
+*내일은 PasswordChange 작업 예정입니다.
+
+1. 버전 체크 부분(60%->100%, 테스트X)
+
+*SNS 로그인 작업 예정
+ 
+ 
+이대로 있을 수는 없다. 프로그래밍을 하지 않았다. 오늘도 해야지. 
+일단 Google의 파이어베이스를 토대로하여 Navigation개념으로 메인화면을 작성해본다.
+
+1. Fragment 작업
+ - LoginFragment
+ - RegisterFragment(유저 정보 저장 진행중)
+ 
+2. Navigation 작업 진행중... 
+
+3. AppFunc, SingleSystem 모듈 옮기기
+
+4. Firebase import 작업
+
+2021. 9. 6. 23:43
+yyyy.mm.dd. HH:mm
+
+17 Oct, 2020, 23:43
+dd MMM, yyyy, HH:mm
+
+1. Model 데이터 정리
+2. PostListFragment 처리 (firebaseRecycler)
+3. PostDetailFragment
+4. PostItem xml
+5. 로그인 상황에서 유저 정보 가져오는 코드 추가
+
+* 리스트 뽑아오는 쪽 처리 중, 포스팅 처리 해야 한다.
+
+1. ViewPager2와 Fragment 연결
+2. 회원가입 및 로그인 테스트
+3. BackPressed in Fragment
+4. setOnEditorActionListener (EditText)에 적용
+5. 화면 클릭시 포커싱 풀리도록 처리
+
+1. 타인은 최저 연봉으로 주려한다.
+2. 어리숙하면 최저 연봉으로 주려한다.
+3. 타인이 연봉을 정하도록 두면 최저 연봉 준다.
+ - 내가 아쉬워서 연봉을 정하게 두는 것이다.
+ - 상대방이 아쉽게 해야 한다.
+ 
+1. PostDetailFragment
+2. NewPostFramgent 
+
+A가 댓글을 남겼다면
+A는 댓글 삭제, 수정에 대한 권한을 갖는다.
+
+하지만, 스티커에 대한 기능은 사용할 수 없다.
+B는 스티커 기능을 갖는다. (일단은)
+
+https://www.material.io/components/dialogs/android#using-dialogs
+
+1. PostDetailFragment part(0%->70%)
+ - CommentAdapter
+ 
+2. NewPostFragment(0%->100%)
+ - postButton
+ - backPressedButton
+ 
+3. added reaction icons in postDetail
+
+4. added comment item xml
+
+ 메세지 시스템을 구축하여 커플로 초대하는 부분이 필요하다.
+ 삭제, 편집 기능
+ 스티커 기능(상대방에게 권한이 있음)
+ 
+ 포스트 개념으로 소유자는 편집, 삭제 권한
+ 방문자는 스티커 기능을 할 수 있다.
+
+원인은 중복적인 호출로 인해서 문제가 된다. 이미 데이터가 남아있는 상태에서 문제가 생기는 것이다.
+ android:background="?android:attr/selectableItemBackground"
+
+========================
+
+1. MainFragment에 다시 돌아오는 경우 fragmentMgr 이슈 해결
+ - 스택을 비우고 다시 생성하는 형태로 처리
+ 
+2. postDetailFragment 테스트
+ - 포스트 정보 출력
+ - 코멘트 정보 출력
+ 
+3. NewPostFragment 테스트
+ - 포스트 잘 되는지 확인
+ 
+4. ItemListDialog 추가 (테스트 X)
+ - Title, RecyclerView로 이루어진 형태
+ - 원하는 아이템의 정보(string, icon, callback)를 넣으면
+   처리해주는 형태로 구성
+   
+오늘 할 작업
+1. 포스트 메뉴
+ - 자기 포스트의 경우에는 삭제 또는 수정 기능
+
+	편집 테스트
+	-(Add) 기존 기능 잘 되는지 확인 (postButton, backPressed처리) V 
+	-(Edit) postButton, backPressed V 
+	- 메인 화면에서 바뀌는지 확인 V
+	
+	삭제 테스트 V
+	DB 데이터 확인(수정, 삭제시 데이터 변경 확인) V
+	
+ - 자신의 포스트가 아닌 경우에는 스티커 기능
+	- 스티커 기능 테스트, 메인 화면에서 바뀌는지 확인
+	일단은 임의로 그냥 스티커 기능을 추가해서 처리해본다. v 
+ 
+2. 댓글 기능
+ - 작성자는 스티커를 줄 수 있다. (나중에 Delete기능도 추가한다)
+ - 댓글 작성자는 수정 및 삭제 가능
+ 
+   Edit Comment, Delete Comment, Changes on screen
+   reaction icons V
+ 
+ =======================
+1. 메일 기능 작업중(추가 작업 필요, 50% 정도 진행)
+ - 기본 메일 보내기 추가
+ - 커플 신청 기능 추가
+ - 데이터 갱신 및 테스트
+
+2. 데모버전 시연
+3. dialogItem 클래스에 컬러 값 추가
+4. GMT offset 관련 함수 추가
+
+======= 
+
+1. statusbar 간격이 맞지 않는 문제 해결 V 
+2. 백그라운드로 이동하면 어플이 죽는 오류 해결 V 
+3. 줄 내림이 안 되는 경우가 있다. editText (수정중, multilines)
+
+*Mail Item 수정중 여기부터 간격 다시 잡고 위치 다시 처리하면 될 것 같음.
+
+===== 
+
+4. register Layout에서 UI가 안 보이는 경우가 있음
+
+ 
+1. 메일 기능 작업중
+ - 메일버튼을 클릭시 어떤 목적으로 보내려고 하는지 정한다.
+
+
+2. ListDialog 기능 개선 
+ - 기능 사용시 선택 옵션이 하나 밖에 없는 경우에 
+   중간 과정을 넘기고 실행할 필요가 있다. (굳이 목록이 하나인데 뭘 띄워 띄우기는 ㅋㅋ)
+ - 예를 들어 기본 유저, 커플 유저의 경우에는 굳이 일반적인 메일 항목을 클릭할 필요도 없다.
+ 
+ 요청을 보내려고 하는데 이미 커플이야.
+ 스스로한테 요청을 보내 
+ 
+ 수락을 눌렀는데 이미 이 사람이 커플이야. lmj3aa322@
+ 
+ 기본 메일
+ 릴리즈 노트 - 나중에 플레이스토어 연결
+ 커플 신청
+ // 보낸 메일에 대한 처리를 위해 정보를 가지고 있는 것도 좋을 것 같다. (일단 지원 안 함)
+ // 받은 메일. 삭제. 하트, 답장 
+ 
+ 
+주요한 처리를 하기 위한 정보 처리 항목이 있으면 좋을 듯. 
+개발자 정보, 문의 그런 것도 ... 초대링크 보내기(친구한테)
+
+채팅 기능 연동해서 grid image list 출력하는 기능.
+번역기능.
+
+1. Toast 메세지 추가
+ - 삭제 메시지
+ - 편집 메세지 
+ 
+2. 자동 로그인시 다이얼로그 처리
+
+3. 메일 처리
+ - 삭제
+ - 하트 아이콘 
+ 
+ ===== 여기부터 
+	
+1. Fragment별 메뉴 추가
+2. 메일 체크 처리 진행중
+ - 리스트를 던져주는 방식으로 처리
+
+ 싱글톤에서 관리.
+ 클릭 이벤트에서 체크를 해준다.
+ 
+ adpater의 처리에 따라서 list가 초기화되기 때문에 
+ 화면의 변화가 있으면 날라간다.
+ 
+ 메뉴에서 버튼에 대한 처리를 해보자. 
+1. 메뉴에 대한 처리
+ - 체크한 항목 일괄 삭제
+ - 체크한 항목 일괄 읽음 처리
+    - 내가 처음으로 클릭한 경우. 해당 데이터는 갱신이 되어야 한다.
+ - 체크한 항목 하트 (데이터 베이스에 새로운 데이터, 아이템의 데이터는 changed호출로 변경이 되겠지. 체크 리스트는 그대로)
+ - 체크한 항목 읽음 처리
+ 
+2. 메일 보내는 상황에서 선택지가 없으면 다이얼로그 넘어가기
+3. recipients 메뉴 항목 추가(수신인 지정 기능, 나, 커플 제공)
+4. 커플 신청에 대한 요청이라면 클릭할 수 있는 링크 제공
+textView -> confirmDialog -> 클릭시 이벤트 처리  
+
+5. setTextByUid 함수 개선 
+ - 1st 자신, 2st 커플, 3st 모르는 유저의 정보
+ 
+ ======= 
+ 
+테스트를 해봤는데.. setValue를 하는 순간. listener쪽이 먼저 수신을 받고 데이터의 갱신이 이뤄진다.
+
+테스트 항목
+1. 내 정보가 변한 경우에 업데이트 하는 기능 & 커플 정보 역시 갱신 V 
+2. 커플이 되는 경우에 처리되는 상황 A, B기기 동시에 확인 V
+ - 갱신은 되는데 List쪽 Fragment에 문제가 생겨서 다시 MainFragment를 생성해야 한다.
+ 
+ - A 쪽에서는 갱신이 되었다는 것을 인식해서 다시 처리하는데 전혀 문제가 없지만, 반대쪽에서는 인식하는 과정이 필요하다.
+   리스너가 설정이 되는 경우를 기준으로 하면 될 것 같은데.. 중요한 것은 초기에 설정이 되는 값인지 중간에 
+   추가된 값인지 구분할 필요가 있다. 이러한 구분을 하면서 기능을 추가하면 좋은 것이.. 온라인 상태 or 최근 접속.
+   (이거는 나중에 하고 사실 여기서 해결할 문제는 아닌 것 같다. viewModel flag 처리로 한다.)
+   
+   아마 리스너를 담아놓는 형식으로 처리해야 할 것이라고 생각한다. (여기 작업중)
+   왜 안 되는가? -> onCreate 시점에서 쿼리 값을 지정을 하는데.. 여기서 null이 나오면 앞으로 갱신 처리는
+   전혀 있을 수가 없다. 갱신이 될 수 있는 형태로 변경을 해야 한다.
+   
+   한 쪽이 접속 처리를 안 한 경우 -> A쪽에서 listener 추가 이후에 끝. B는 생각할 필요 없음.
+   양 쪽 모두 접속 처리가 된 경우 -> A, B쪽 모두 listener추가 이후에 커플 서비스가 처리되면 OK 
+   
+    - 온라인 상태 표시 기능을 만들어야 한다. 최근 로그인 시간, 온라인, 오프라인 상태.
+	- 위의 기능을 이용해서 온라인인 상태의 유저에게 실시간으로 메세지를 출력해줄 수 있는 기능을 작성한다. 
+	- Snackbar
+	
+	A의 알람으로 뭔가를 띄워. 그러면 그걸 인식해서 띄워. 
+	전역적으로 처리를 하지 않는다면... Fragment에서 해야 한다는 의미이다. 
+	
+	온라인 시스템을 구축한다.
+	
+	1. GMT Offset 적용
+	 - 저장하는 상황(영국 기준)
+	 - 로드하는 상황(로컬 기준)
+	 
+	2. 디자인 변경
+	 - over scroll mode(스크롤 애니메이션) 제거 
+	 - tabLayout, toolbar 관련 텍스트, 색상 조정(theming)
+	
+	3. mailBoxFragment
+	 - reversed recyclerview 적용
+	 
+	4. snackbar global func 추가
+	 
+	 =====
+로그인할 때 나의 정보를 기록한다. 온라인. ""
+연결이 끊어질 때 나의 정보를 기록한다. 오프라인. 로그아웃 시간 
+그리고 중간에 커플의 정보가 변하는 경우(예를 들면 온라인이라든지)
+해당 정보를 인식해서 databinding처리. 온라인으로 출력한다. 
+
+커플 정보에 대해서는...일단 로드. 갱신이 일어나면 해당 데이터가 처리가 되도록 liveData를 이용하여 처리한다.
+ 
+	*Profile부분 작업 -> 커플 정보 및 유저 정보 출력 -> 온라인 시스템 연동
+	-> 특정 상황에서 메세지 호출하는 부분 추가 -> 테스트 
+	
+	자신의 정보 및 상대의 정보를 보는 페이지를 만든다.
+	Navigation Drawer를 사용해서 자신의 정보와 상대 정보를 출력하는 페이지를 만들어서 온라인 시스템을 
+	넣으려고 한다. 
+
+	
+	(나중에)
+	언제 작성했는지 대략적으로 호출해주는 시스템이 필요함. 날짜가 아니라.
+	
+ 
+3. 커플이 끊어진 경우에 처리 (일단은 임의로 DB에서 없애는 경우만 확인한다)
+DB에서 커플 관련 데이터를 전부 날림 -> A, B의 listener에서 인식. -> 리스너 삭제 및 초기화.
+(누가 먼저 호출이 되든, 결국 데이터는 날라감. A->B라면 B는 호출되지 않을 것. B->A라면 그냥 셋팅하고 날림.
+-> 아마 이곳에서도 MainFragment를 재생성해야 할 것 같음.
+
+setting Fragment.
+온라인 처리
+
+커플이 아닌 사람이... 커플이 되는 경우
+
+커플이던 사람이 커플이 끊어지는 경우(일단 지원 안 함)
+
+1. 채팅 기능
+2. 이미지를 업로드 할 수 있는 기능을 추가한다.
+자신의 프로파일 이미지, 포스팅에서 이미지... 
+
