@@ -1,0 +1,429 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:bind="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <data class="com.coupleblog.fragment.ProfileInfoBinding">
+
+        <variable
+            name="fragment"
+            type="com.coupleblog.fragment.CB_ProfileFragment" />
+
+        <variable
+            name="viewModel"
+            type="com.coupleblog.singleton.CB_ViewModel.Companion" />
+
+    </data>
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <com.google.android.material.card.MaterialCardView
+            android:id="@+id/user_card_view"
+            style="@style/card_view_style"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:onClick="@{()->fragment.myProfile()}"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent">
+
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:layout_width="match_parent"
+                android:layout_height="1000dp"
+                android:background="?android:attr/selectableItemBackgroundBorderless">
+
+                <TextView
+                    android:id="@+id/user_name_text_view"
+                    style="@style/post_title_text_view"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="@dimen/margin_16dp"
+                    android:paddingStart="@dimen/margin_16dp"
+                    android:paddingEnd="@dimen/normal_margin"
+                    android:text="@{viewModel.curUser.strUserName}"
+                    app:layout_constraintBottom_toTopOf="@+id/user_email_text_view"
+                    app:layout_constraintStart_toEndOf="@+id/user_profile_image"
+                    app:layout_constraintTop_toTopOf="@+id/user_profile_image"
+                    tools:text="@string/str_profile_name_exam" />
+
+                <TextView
+                    android:id="@+id/user_email_text_view"
+                    style="@style/normal_text_style"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:paddingStart="@dimen/margin_16dp"
+                    android:paddingEnd="@dimen/margin_16dp"
+                    android:text="@{viewModel.curUser.strUserEmail}"
+                    android:textAlignment="viewStart"
+                    android:textColor="@color/grey"
+                    app:layout_constraintStart_toStartOf="@+id/user_name_text_view"
+                    app:layout_constraintTop_toBottomOf="@+id/user_name_text_view"
+                    tools:text="@string/str_profile_email_exam" />
+
+                <TextView
+                    android:id="@+id/couple_user_email_text_view"
+                    style="@style/normal_text_style"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:paddingStart="@dimen/margin_16dp"
+                    android:paddingEnd="@dimen/margin_16dp"
+                    android:text="@{viewModel.curUser.strUserEmail}"
+                    android:textAlignment="viewStart"
+                    android:textColor="@color/grey"
+                    app:layout_constraintStart_toStartOf="@+id/couple_with_text_view"
+                    app:layout_constraintTop_toBottomOf="@+id/couple_with_text_view"
+                    tools:text="@string/str_profile_email_exam" />
+
+                <TextView
+                    android:id="@+id/user_presence_text_view"
+                    style="@style/normal_text_style"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:paddingStart="@dimen/margin_16dp"
+                    android:paddingEnd="@dimen/margin_16dp"
+                    android:textAlignment="viewStart"
+                    android:textColor="@color/grey"
+                    app:layout_constraintBottom_toBottomOf="@+id/user_profile_image"
+                    app:layout_constraintStart_toStartOf="@+id/user_name_text_view"
+                    bind:user_presence="@{viewModel.curUser}"
+                    tools:text="@string/str_online"
+                    tools:textColor="@color/green" />
+
+                <ImageView
+                    android:id="@+id/user_profile_image"
+                    android:layout_width="@dimen/profile_image_size"
+                    android:layout_height="@dimen/profile_image_size"
+                    android:layout_marginStart="@dimen/margin_16dp"
+                    android:layout_marginTop="@dimen/margin_24dp"
+                    android:src="@drawable/haha_icon"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent"
+                    tools:src="@drawable/haha_icon" />
+
+                <TextView
+                    android:id="@+id/couple_with_text_view"
+                    style="@style/post_title_text_view"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/margin_24dp"
+                    android:paddingStart="@dimen/margin_16dp"
+                    android:paddingEnd="@dimen/normal_margin"
+                    android:textAlignment="viewStart"
+                    app:layout_constraintStart_toStartOf="@+id/user_name_text_view"
+                    app:layout_constraintTop_toBottomOf="@+id/user_profile_image"
+                    tools:text="@string/str_couple_with_exam" />
+
+                <ImageView
+                    android:id="@+id/couple_user_profile_image"
+                    android:layout_width="@dimen/profile_image_size_small"
+                    android:layout_height="@dimen/profile_image_size_small"
+                    android:src="@drawable/haha_icon"
+                    app:layout_constraintBottom_toBottomOf="@+id/couple_user_email_text_view"
+                    app:layout_constraintEnd_toEndOf="@+id/user_profile_image"
+                    app:layout_constraintStart_toStartOf="@+id/user_profile_image"
+                    app:layout_constraintTop_toTopOf="@+id/couple_with_text_view"
+                    tools:src="@drawable/heart_icon" />
+
+                <ImageView
+                    android:id="@+id/user_gender_image_view"
+                    android:layout_width="@dimen/gender_image_size"
+                    android:layout_height="@dimen/gender_image_size"
+                    app:layout_constraintBottom_toBottomOf="@+id/user_name_text_view"
+                    app:layout_constraintStart_toEndOf="@+id/user_name_text_view"
+                    app:layout_constraintTop_toTopOf="@+id/user_name_text_view"
+                    tools:src="@drawable/male" />
+
+                <TextView
+                    android:id="@+id/user_age_text_view"
+                    style="@style/post_title_text_view"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="4dp"
+                    android:textAlignment="viewStart"
+                    app:layout_constraintBottom_toBottomOf="@+id/user_name_text_view"
+                    app:layout_constraintStart_toEndOf="@+id/user_gender_image_view"
+                    app:layout_constraintTop_toTopOf="@+id/user_name_text_view"
+                    tools:textColor="@color/blue"
+                    tools:text="@string/str_user_age_exam" />
+
+                <ImageView
+                    android:id="@+id/couple_user_gender_image_view"
+                    android:layout_width="@dimen/gender_image_size"
+                    android:layout_height="@dimen/gender_image_size"
+                    app:layout_constraintBottom_toBottomOf="@+id/couple_with_text_view"
+                    app:layout_constraintStart_toEndOf="@+id/couple_with_text_view"
+                    app:layout_constraintTop_toTopOf="@+id/couple_with_text_view"
+                    tools:src="@drawable/female" />
+
+                <TextView
+                    android:id="@+id/couple_user_age_text_view"
+                    style="@style/post_title_text_view"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="4dp"
+                    android:textAlignment="viewStart"
+                    app:layout_constraintBottom_toBottomOf="@+id/couple_with_text_view"
+                    app:layout_constraintStart_toEndOf="@+id/couple_user_gender_image_view"
+                    app:layout_constraintTop_toTopOf="@+id/couple_with_text_view"
+                    tools:text="@string/str_user_age_exam"
+                    tools:textColor="@color/red" />
+
+                <View
+                    android:id="@+id/divider1"
+                    style="@style/divider"
+                    android:layout_marginTop="@dimen/margin_16dp"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/couple_user_profile_image" />
+
+                <TextView
+                    android:id="@+id/birth_text_view"
+                    style="@style/post_title_text_view"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="@dimen/margin_16dp"
+                    android:layout_marginTop="@dimen/margin_16dp"
+                    android:text="@string/str_date_of_birth"
+                    android:textAlignment="viewStart"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/divider1" />
+
+
+                <TextView
+                    android:id="@+id/birth_value_text_view"
+                    style="@style/normal_text_style"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="@dimen/margin_16dp"
+                    android:textAlignment="viewStart"
+                    android:textColor="@color/grey"
+                    app:layout_constraintBottom_toBottomOf="@+id/birth_text_view"
+                    app:layout_constraintStart_toEndOf="@+id/birth_text_view"
+                    app:layout_constraintTop_toTopOf="@+id/birth_text_view"
+                    tools:text="@string/str_date_of_birth_exam" />
+
+                <TextView
+                    android:id="@+id/region_text_view"
+                    style="@style/post_title_text_view"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="@dimen/margin_16dp"
+                    android:layout_marginTop="@dimen/margin_16dp"
+                    android:text="@string/str_region"
+                    android:textAlignment="viewStart"
+                    app:layout_constraintEnd_toEndOf="@+id/birth_text_view"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/birth_text_view" />
+
+                <TextView
+                    android:id="@+id/region_value_text_view"
+                    style="@style/normal_text_style"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="@dimen/margin_16dp"
+                    android:textAlignment="viewStart"
+                    android:textColor="@color/grey"
+                    app:layout_constraintBottom_toBottomOf="@+id/region_text_view"
+                    app:layout_constraintStart_toEndOf="@+id/region_text_view"
+                    app:layout_constraintTop_toTopOf="@+id/region_text_view"
+                    tools:text="@string/str_region_exam" />
+
+                <TextView
+                    android:id="@+id/use_days_text_view"
+                    style="@style/normal_text_style"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/normal_margin"
+                    android:textAlignment="center"
+                    android:textColor="@color/purple"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="@+id/region_text_view"
+                    app:layout_constraintTop_toBottomOf="@+id/region_text_view"
+                    tools:text="@string/str_joined_n_days_ago_exam" />
+
+                <View
+                    android:id="@+id/divider2"
+                    style="@style/divider"
+                    android:layout_marginTop="@dimen/normal_margin"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/use_days_text_view" />
+
+                <TextView
+                    android:id="@+id/introduction_text_view"
+                    style="@style/post_title_text_view"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="@dimen/margin_16dp"
+                    android:layout_marginTop="@dimen/margin_16dp"
+                    android:text="@string/str_introduction"
+                    android:textAlignment="viewStart"
+                    app:layout_constraintEnd_toEndOf="@+id/birth_text_view"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/divider2" />
+
+                <TextView
+                    android:id="@+id/introduction_value_text_view"
+                    style="@style/normal_text_style"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginEnd="@dimen/margin_16dp"
+                    android:textAlignment="viewStart"
+                    android:textColor="@color/grey"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="@+id/introduction_text_view"
+                    app:layout_constraintTop_toBottomOf="@+id/introduction_text_view"
+                    tools:text="@string/str_introduction" />
+
+                <View
+                    android:id="@+id/divider3"
+                    style="@style/divider"
+                    android:layout_marginTop="@dimen/margin_16dp"
+                    app:layout_constraintTop_toBottomOf="@+id/introduction_value_text_view"
+                    bind:layout_constraintEnd_toEndOf="parent"
+                    bind:layout_constraintStart_toStartOf="parent" />
+
+                <TextView
+                    android:id="@+id/education_text_view"
+                    style="@style/post_title_text_view"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="@dimen/margin_16dp"
+                    android:layout_marginTop="@dimen/margin_16dp"
+                    android:text="@string/str_education"
+                    android:textAlignment="viewStart"
+                    app:layout_constraintEnd_toEndOf="@+id/birth_text_view"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/divider3" />
+
+                <TextView
+                    android:id="@+id/education_value_text_view"
+                    style="@style/normal_text_style"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginEnd="@dimen/margin_16dp"
+                    android:textAlignment="viewStart"
+                    android:textColor="@color/grey"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="@+id/education_text_view"
+                    app:layout_constraintTop_toBottomOf="@+id/education_text_view"
+                    tools:text="@string/str_education" />
+
+                <TextView
+                    android:id="@+id/career_text_view"
+                    style="@style/post_title_text_view"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="@dimen/margin_16dp"
+                    android:layout_marginTop="@dimen/margin_16dp"
+                    android:text="@string/str_career"
+                    android:textAlignment="viewStart"
+                    app:layout_constraintEnd_toEndOf="@+id/birth_text_view"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/education_value_text_view" />
+
+                <TextView
+                    android:id="@+id/career_value_text_view"
+                    style="@style/normal_text_style"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginEnd="@dimen/margin_16dp"
+                    android:textAlignment="viewStart"
+                    android:textColor="@color/grey"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="@+id/career_text_view"
+                    app:layout_constraintTop_toBottomOf="@+id/career_text_view"
+                    tools:text="@string/str_career" />
+
+                <TextView
+                    android:id="@+id/phone_number_text_view"
+                    style="@style/post_title_text_view"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/margin_16dp"
+                    android:text="@string/str_phone_number"
+                    android:textAlignment="viewStart"
+                    app:layout_constraintEnd_toEndOf="@+id/career_value_text_view"
+                    app:layout_constraintStart_toStartOf="@+id/career_text_view"
+                    app:layout_constraintTop_toBottomOf="@+id/career_value_text_view" />
+
+                <TextView
+                    android:id="@+id/phone_number_value_text_view"
+                    style="@style/normal_text_style"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginEnd="@dimen/margin_16dp"
+                    android:textAlignment="viewStart"
+                    android:textColor="@color/grey"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="@+id/phone_number_text_view"
+                    app:layout_constraintTop_toBottomOf="@+id/phone_number_text_view"
+                    tools:text="@string/str_phone_number" />
+
+                <View
+                    android:id="@+id/divider4"
+                    style="@style/divider"
+                    android:layout_marginTop="@dimen/margin_16dp"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/phone_number_value_text_view" />
+
+                <TextView
+                    android:id="@+id/favorites_text_view"
+                    style="@style/post_title_text_view"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/margin_16dp"
+                    android:text="@string/str_favorites"
+                    android:textAlignment="viewStart"
+                    app:layout_constraintEnd_toEndOf="@+id/career_value_text_view"
+                    app:layout_constraintStart_toStartOf="@+id/career_text_view"
+                    app:layout_constraintTop_toBottomOf="@+id/divider4" />
+
+                <TextView
+                    android:id="@+id/favorites_value_text_view"
+                    style="@style/normal_text_style"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginEnd="@dimen/margin_16dp"
+                    android:textAlignment="viewStart"
+                    android:textColor="@color/grey"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="@+id/favorites_text_view"
+                    app:layout_constraintTop_toBottomOf="@+id/favorites_text_view"
+                    tools:text="@string/str_favorites" />
+
+                <TextView
+                    android:id="@+id/dislikes_text_view"
+                    style="@style/post_title_text_view"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/margin_16dp"
+                    android:text="@string/str_dislikes"
+                    android:textAlignment="viewStart"
+                    app:layout_constraintEnd_toEndOf="@+id/career_value_text_view"
+                    app:layout_constraintStart_toStartOf="@+id/career_text_view"
+                    app:layout_constraintTop_toBottomOf="@+id/favorites_value_text_view" />
+
+                <TextView
+                    android:id="@+id/dislikes_value_text_view"
+                    style="@style/normal_text_style"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginEnd="@dimen/margin_16dp"
+                    android:textAlignment="viewStart"
+                    android:textColor="@color/grey"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="@+id/dislikes_text_view"
+                    app:layout_constraintTop_toBottomOf="@+id/dislikes_text_view"
+                    tools:text="@string/str_dislikes" />
+
+            </androidx.constraintlayout.widget.ConstraintLayout>
+
+        </com.google.android.material.card.MaterialCardView>
+
+    </ScrollView>
+</layout>

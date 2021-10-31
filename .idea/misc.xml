@@ -12,6 +12,8 @@
         <entry key="..\:/Users/lmj33/CoupleBlog/app/src/main/res/drawable/ic_baseline_favorite_border_24.xml" value="0.1" />
         <entry key="..\:/Users/lmj33/CoupleBlog/app/src/main/res/drawable/ic_baseline_mail_24.xml" value="0.14473684210526316" />
         <entry key="..\:/Users/lmj33/CoupleBlog/app/src/main/res/drawable/ic_launcher_background.xml" value="0.38229166666666664" />
+        <entry key="..\:/Users/lmj33/CoupleBlog/app/src/main/res/drawable/ic_launcher_foreground.xml" value="0.1401315789473684" />
+        <entry key="..\:/Users/lmj33/CoupleBlog/app/src/main/res/drawable/rounded_border.xml" value="0.1401315789473684" />
         <entry key="..\:/Users/lmj33/CoupleBlog/app/src/main/res/drawable/toolbar_dropshadow.xml" value="0.24144736842105263" />
         <entry key="..\:/Users/lmj33/CoupleBlog/app/src/main/res/font-v26/font.xml" value="0.19537037037037036" />
         <entry key="..\:/Users/lmj33/CoupleBlog/app/src/main/res/font/font.xml" value="0.19537037037037036" />
@@ -34,6 +36,7 @@
         <entry key="..\:/Users/lmj33/CoupleBlog/app/src/main/res/layout/fragment_cb_new_post.xml" value="0.264" />
         <entry key="..\:/Users/lmj33/CoupleBlog/app/src/main/res/layout/fragment_cb_post_detail.xml" value="0.264" />
         <entry key="..\:/Users/lmj33/CoupleBlog/app/src/main/res/layout/fragment_cb_profile.xml" value="0.2888249794576828" />
+        <entry key="..\:/Users/lmj33/CoupleBlog/app/src/main/res/layout/fragment_cb_profile_info.xml" value="0.2" />
         <entry key="..\:/Users/lmj33/CoupleBlog/app/src/main/res/layout/fragment_cb_register.xml" value="0.2" />
         <entry key="..\:/Users/lmj33/CoupleBlog/app/src/main/res/layout/include_info_drawer.xml" value="0.23125" />
         <entry key="..\:/Users/lmj33/CoupleBlog/app/src/main/res/layout/list_dialog_item.xml" value="0.264" />
@@ -42,6 +45,7 @@
         <entry key="..\:/Users/lmj33/CoupleBlog/app/src/main/res/menu/menu_mail_box.xml" value="0.23125" />
         <entry key="..\:/Users/lmj33/CoupleBlog/app/src/main/res/menu/menu_main.xml" value="0.264" />
         <entry key="..\:/Users/lmj33/CoupleBlog/app/src/main/res/menu/menu_new_mail.xml" value="0.2" />
+        <entry key="..\:/Users/lmj33/CoupleBlog/app/src/main/res/mipmap-anydpi-v26/ic_launcher_round.xml" value="0.1401315789473684" />
       </map>
     </option>
   </component>

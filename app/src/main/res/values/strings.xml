@@ -234,23 +234,39 @@ Couple blog 은(는) 정보주체의 이용정보를 저장하고 수시로 불�
 ① 이 개인정보처리방침은 2021년 1월 1부터 적용됩니다.\n\n
     </string>
 
+    <string name="str_user_age_exam">19</string>
     <string name="str_profile_name_exam">Yumin Kim</string>
     <string name="str_profile_email_exam">yumingames@gmail.com</string>
     <string name="str_user_presence_exam">◆ 1h 30m ago</string>
+    <string name="str_region_exam">9:00 AM, Korea</string>
+    <string name="str_couple_with_exam">Couple with Jihae</string>
+    <string name="str_date_of_birth_exam">2002. 12. 03</string>
+    <string name="str_joined_n_days_ago_exam">Joined Couple blog 3 days ago</string>
+
     <!-- example texts -->
+
+    <string name="app_name">Couple Blog</string>
 
     <string name="str_year_ago">year ago</string>
     <string name="str_years_ago">years ago</string>
     <string name="str_month_ago">month ago</string>
     <string name="str_months_ago">months ago</string>
-    <string name="str_d">d </string>
-    <string name="str_h">h </string>
+    <string name="str_d">d</string>
+    <string name="str_h">h</string>
     <string name="str_h_ago">h ago</string>
     <string name="str_m_ago">m ago</string>
     <string name="str_ago">ago</string>
 
-    <string name="app_name">Couple Blog</string>
-
+    <string name="str_couple_with">Couple with %s</string>
+    <string name="str_introduction">Introduction</string>
+    <string name="str_region">Region</string>
+    <string name="str_education">Education</string>
+    <string name="str_career">Career</string>
+    <string name="str_favorites">Favorites</string>
+    <string name="str_dislikes">Dislikes</string>
+    <string name="str_phone_number">Phone Number</string>
+    <string name="str_date_of_birth">Date of birth</string>
+    <string name="str_joined_n_days_ago">Joined Couple blog %d days ago</string>
     <string name="str_online">◆ Online</string>
     <string name="str_mailbox">Mail Box</string>
     <string name="str_sign_in">Sign In</string>

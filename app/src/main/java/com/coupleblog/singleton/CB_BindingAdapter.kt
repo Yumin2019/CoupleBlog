@@ -62,10 +62,9 @@ fun setUserPresence(textView: TextView, userData: CB_User)
     }
     else if(iDay > 0) // 1 ~ 29 days
     {
-        CB_AppFunc.getString(R.string.str_h)
         // 2d ago, 1d 3h ago
         iHour %= 24
-        strPresence += "$iDay" + CB_AppFunc.getString(R.string.str_d)
+        strPresence += "$iDay" + CB_AppFunc.getString(R.string.str_d) + " "
         strPresence += if(iHour > 0)
                            "$iHour" + CB_AppFunc.getString(R.string.str_h_ago)
                        else
@@ -75,7 +74,7 @@ fun setUserPresence(textView: TextView, userData: CB_User)
     {
         // 1h ago, 1h 25m ago
         iMin %= 60
-        strPresence += "$iHour" + CB_AppFunc.getString(R.string.str_h)
+        strPresence += "$iHour" + CB_AppFunc.getString(R.string.str_h) + " "
         strPresence += if(iMin > 0)
                           "$iMin" + CB_AppFunc.getString(R.string.str_m_ago)
                        else
