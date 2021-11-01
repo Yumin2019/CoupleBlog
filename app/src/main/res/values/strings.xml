@@ -314,6 +314,12 @@ Couple blog 은(는) 정보주체의 이용정보를 저장하고 수시로 불�
     <string name="str_request_couple_msg">You want to allow this request from\n</string>
     <string name="str_couple_request_mail">This is a couple request mail.</string>
 
+    <string name="str_downloading">Downloading…</string>
+    <string name="str_uploading">Uploading…</string>
+    <string name="str_download_success">Download finished</string>
+    <string name="str_download_fail">Download failure</string>
+    <string name="str_upload_success">Upload finished</string>
+    <string name="str_upload_fail">Upload failure</string>
     <string name="str_ok">OK</string>
     <string name="str_register">Register</string>
     <string name="str_post">Post</string>

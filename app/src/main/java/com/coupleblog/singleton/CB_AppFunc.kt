@@ -39,6 +39,7 @@ import com.google.firebase.database.ValueEventListener
 import com.google.firebase.database.ktx.database
 import com.google.firebase.database.ktx.getValue
 import com.google.firebase.ktx.Firebase
+import com.google.firebase.storage.ktx.storage
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.delay
@@ -94,6 +95,7 @@ class CB_AppFunc
         var coupleUserInfoListener: ValueEventListener? = null
         var presenceListener: ValueEventListener? = null
 
+        // Firebase Realtime Database
         fun getUid() = FirebaseAuth.getInstance().currentUser!!.uid
         fun getAuth() = Firebase.auth
         fun getDataBase() = Firebase.database.reference
@@ -103,6 +105,10 @@ class CB_AppFunc
         fun getCouplesRoot() = getDataBase().child("couples")
         fun getPostCommentsRoot() = getDataBase().child("post-comments")
         fun getMailBoxRoot() = getDataBase().child("user-mails")
+
+        // Firebase Storage
+        fun getStorage() = Firebase.storage
+        fun getStroageRef = Firebase.storage.reference
 
         @SuppressLint("ConstantLocale")
         val isKorea = (Locale.getDefault().language == "ko")
