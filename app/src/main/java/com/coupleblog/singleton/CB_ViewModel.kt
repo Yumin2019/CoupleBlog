@@ -27,6 +27,13 @@ class CB_ViewModel
         var curUser = MutableLiveData<CB_User>()
         var coupleUser = MutableLiveData<CB_User>()
 
+        // ProfileInfoFragment
+        var isMyProfile = MutableLiveData(true)
+
+        // get user info with isMyProfile
+        fun getUser(): MutableLiveData<CB_User> = if(isMyProfile.value!!) curUser else coupleUser
+        fun getOtherUser(): MutableLiveData<CB_User> = if(isMyProfile.value!!) coupleUser else curUser
+
         // PostDetailFragment
         var tPost      = MutableLiveData(CB_Post())
         var isMyPost   = MutableLiveData(true)

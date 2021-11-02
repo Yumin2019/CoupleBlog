@@ -107,8 +107,6 @@ class CB_DownloadService: CB_BaseTaskService()
             // mark task ended
             taskEnded()
         }
-
-
     }
 
     /**

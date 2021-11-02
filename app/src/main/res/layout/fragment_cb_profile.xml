@@ -25,7 +25,7 @@
         <com.google.android.material.card.MaterialCardView
             android:id="@+id/user_card_view"
             style="@style/card_view_style"
-            android:onClick="@{()->fragment.myProfile()}"
+            android:onClick="@{()->fragment.profileButton(true)}"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             app:layout_constraintEnd_toEndOf="parent"
@@ -100,7 +100,7 @@
         <com.google.android.material.card.MaterialCardView
             android:id="@+id/couple_user_card_view"
             style="@style/card_view_style"
-            android:onClick="@{()->fragment.coupleProfile()}"
+            android:onClick="@{()->fragment.profileButton(false)}"
             bind:visibility="@{!viewModel.curUser.strCoupleUid.isEmpty()}"
             android:layout_width="0dp"
             android:layout_height="wrap_content"

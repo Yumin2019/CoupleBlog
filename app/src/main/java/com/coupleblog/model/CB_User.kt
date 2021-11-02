@@ -19,9 +19,9 @@ enum class GENDER
 
 @IgnoreExtraProperties
 data class CB_User(
-    var strUserName           : String? = ""  ,             // displayName
-    var strUserEmail         : String? = ""  ,              // 유저 이메일
-    var strSignUpDate        : String? = ""  ,
+    var strUserName          : String? = "",                // displayName
+    var strUserEmail         : String? = "",                // 유저 이메일
+    var strSignUpDate        : String? = "",
     /* var strUserImgUrl     : String? = ""*/               // 유저 프로필 이미지 Url
     var strCoupleUid         : String? = "",                // 커플 정보 Uid
     var isOnline             : Boolean? = false,            // 온라인 여부

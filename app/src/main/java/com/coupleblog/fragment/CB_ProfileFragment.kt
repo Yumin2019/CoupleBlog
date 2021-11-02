@@ -4,7 +4,9 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.core.os.bundleOf
 import androidx.navigation.fragment.findNavController
+import com.coupleblog.R
 import com.coupleblog.parent.CB_BaseFragment
 import com.coupleblog.singleton.CB_AppFunc
 import com.coupleblog.singleton.CB_ViewModel
@@ -19,19 +21,16 @@ class CB_ProfileFragment: CB_BaseFragment("Profilefragment")
         _binding = ProfileBinding.inflate(inflater, container, false)
         binding.apply {
             lifecycleOwner  = viewLifecycleOwner
+            fragment = this@CB_ProfileFragment
             viewModel = CB_ViewModel.Companion
         }
         return binding.root
     }
 
-    fun myProfile()
+    fun profileButton(isMyProfile: Boolean)
     {
-
-    }
-
-    fun coupleProfile()
-    {
-
+        CB_ViewModel.isMyProfile.value = isMyProfile
+        beginAction(R.id.action_CB_MainFragment_to_CB_ProfileInfoFragment, R.id.CB_ProfileInfoFragment)
     }
 
     override fun onDestroy()

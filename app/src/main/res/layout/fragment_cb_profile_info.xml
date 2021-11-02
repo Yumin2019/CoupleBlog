@@ -8,7 +8,7 @@
 
         <variable
             name="fragment"
-            type="com.coupleblog.fragment.CB_ProfileFragment" />
+            type="com.coupleblog.fragment.CB_ProfileInfoFragment" />
 
         <variable
             name="viewModel"
@@ -25,15 +25,27 @@
             style="@style/card_view_style"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:onClick="@{()->fragment.myProfile()}"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent">
 
             <androidx.constraintlayout.widget.ConstraintLayout
                 android:layout_width="match_parent"
-                android:layout_height="1000dp"
+                android:layout_height="wrap_content"
+                tools:layout_height="1000dp"
                 android:background="?android:attr/selectableItemBackgroundBorderless">
+
+                <ImageView
+                    android:id="@+id/menu_image_view"
+                    android:onClick="@{()->fragment.menuButton()}"
+                    android:layout_width="@dimen/icon_image_size"
+                    android:layout_height="@dimen/icon_image_size"
+                    android:layout_marginTop="@dimen/margin_16dp"
+                    android:layout_marginEnd="@dimen/margin_16dp"
+                    android:background="?android:attr/selectableItemBackground"
+                    android:src="@drawable/ic_baseline_list_24"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintTop_toTopOf="parent" />
 
                 <TextView
                     android:id="@+id/user_name_text_view"
@@ -43,7 +55,7 @@
                     android:layout_marginStart="@dimen/margin_16dp"
                     android:paddingStart="@dimen/margin_16dp"
                     android:paddingEnd="@dimen/normal_margin"
-                    android:text="@{viewModel.curUser.strUserName}"
+                    android:text="@{viewModel.getUser().strUserName}"
                     app:layout_constraintBottom_toTopOf="@+id/user_email_text_view"
                     app:layout_constraintStart_toEndOf="@+id/user_profile_image"
                     app:layout_constraintTop_toTopOf="@+id/user_profile_image"
@@ -56,7 +68,7 @@
                     android:layout_height="wrap_content"
                     android:paddingStart="@dimen/margin_16dp"
                     android:paddingEnd="@dimen/margin_16dp"
-                    android:text="@{viewModel.curUser.strUserEmail}"
+                    android:text="@{viewModel.getUser().strUserEmail}"
                     android:textAlignment="viewStart"
                     android:textColor="@color/grey"
                     app:layout_constraintStart_toStartOf="@+id/user_name_text_view"
@@ -70,7 +82,7 @@
                     android:layout_height="wrap_content"
                     android:paddingStart="@dimen/margin_16dp"
                     android:paddingEnd="@dimen/margin_16dp"
-                    android:text="@{viewModel.curUser.strUserEmail}"
+                    android:text="@{viewModel.getOtherUser().strUserEmail}"
                     android:textAlignment="viewStart"
                     android:textColor="@color/grey"
                     app:layout_constraintStart_toStartOf="@+id/couple_with_text_view"
@@ -88,7 +100,7 @@
                     android:textColor="@color/grey"
                     app:layout_constraintBottom_toBottomOf="@+id/user_profile_image"
                     app:layout_constraintStart_toStartOf="@+id/user_name_text_view"
-                    bind:user_presence="@{viewModel.curUser}"
+                    bind:user_presence="@{viewModel.getUser()}"
                     tools:text="@string/str_online"
                     tools:textColor="@color/green" />
 
@@ -114,6 +126,7 @@
                     android:textAlignment="viewStart"
                     app:layout_constraintStart_toStartOf="@+id/user_name_text_view"
                     app:layout_constraintTop_toBottomOf="@+id/user_profile_image"
+                    bind:couple_with="@{viewModel.getOtherUser()}"
                     tools:text="@string/str_couple_with_exam" />
 
                 <ImageView
@@ -134,6 +147,7 @@
                     app:layout_constraintBottom_toBottomOf="@+id/user_name_text_view"
                     app:layout_constraintStart_toEndOf="@+id/user_name_text_view"
                     app:layout_constraintTop_toTopOf="@+id/user_name_text_view"
+                    bind:gender_idx="@{viewModel.getUser()}"
                     tools:src="@drawable/male" />
 
                 <TextView
@@ -165,6 +179,7 @@
                     android:layout_height="wrap_content"
                     android:layout_marginStart="4dp"
                     android:textAlignment="viewStart"
+                    bind:gender_idx="@{viewModel.getCoupleUser()}"
                     app:layout_constraintBottom_toBottomOf="@+id/couple_with_text_view"
                     app:layout_constraintStart_toEndOf="@+id/couple_user_gender_image_view"
                     app:layout_constraintTop_toTopOf="@+id/couple_with_text_view"
@@ -203,6 +218,7 @@
                     app:layout_constraintBottom_toBottomOf="@+id/birth_text_view"
                     app:layout_constraintStart_toEndOf="@+id/birth_text_view"
                     app:layout_constraintTop_toTopOf="@+id/birth_text_view"
+                    bind:birth_date="@{viewModel.getUser()}"
                     tools:text="@string/str_date_of_birth_exam" />
 
                 <TextView
@@ -229,6 +245,7 @@
                     app:layout_constraintBottom_toBottomOf="@+id/region_text_view"
                     app:layout_constraintStart_toEndOf="@+id/region_text_view"
                     app:layout_constraintTop_toTopOf="@+id/region_text_view"
+                    bind:region="@{viewModel.getUser()}"
                     tools:text="@string/str_region_exam" />
 
                 <TextView
@@ -242,6 +259,7 @@
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="@+id/region_text_view"
                     app:layout_constraintTop_toBottomOf="@+id/region_text_view"
+                    bind:joined_date="@{viewModel.getUser()}"
                     tools:text="@string/str_joined_n_days_ago_exam" />
 
                 <View
@@ -276,6 +294,7 @@
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="@+id/introduction_text_view"
                     app:layout_constraintTop_toBottomOf="@+id/introduction_text_view"
+                    android:text="@{viewModel.getUser().strIntroduction}"
                     tools:text="@string/str_introduction" />
 
                 <View
@@ -307,6 +326,7 @@
                     android:layout_marginEnd="@dimen/margin_16dp"
                     android:textAlignment="viewStart"
                     android:textColor="@color/grey"
+                    android:text="@{viewModel.getUser().strEducation}"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="@+id/education_text_view"
                     app:layout_constraintTop_toBottomOf="@+id/education_text_view"
@@ -333,6 +353,7 @@
                     android:layout_marginEnd="@dimen/margin_16dp"
                     android:textAlignment="viewStart"
                     android:textColor="@color/grey"
+                    android:text="@{viewModel.getUser().strCareer}"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="@+id/career_text_view"
                     app:layout_constraintTop_toBottomOf="@+id/career_text_view"
@@ -358,6 +379,7 @@
                     android:layout_marginEnd="@dimen/margin_16dp"
                     android:textAlignment="viewStart"
                     android:textColor="@color/grey"
+                    android:text="@{viewModel.getUser().strPhoneNumber}"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="@+id/phone_number_text_view"
                     app:layout_constraintTop_toBottomOf="@+id/phone_number_text_view"
@@ -391,6 +413,7 @@
                     android:layout_marginEnd="@dimen/margin_16dp"
                     android:textAlignment="viewStart"
                     android:textColor="@color/grey"
+                    android:text="@{viewModel.getUser().strFavorites}"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="@+id/favorites_text_view"
                     app:layout_constraintTop_toBottomOf="@+id/favorites_text_view"
@@ -411,6 +434,7 @@
                 <TextView
                     android:id="@+id/dislikes_value_text_view"
                     style="@style/normal_text_style"
+                    android:text="@{viewModel.getUser().strDislikes}"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_marginEnd="@dimen/margin_16dp"

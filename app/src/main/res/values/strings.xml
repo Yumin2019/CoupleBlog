@@ -257,7 +257,7 @@ Couple blog 은(는) 정보주체의 이용정보를 저장하고 수시로 불�
     <string name="str_m_ago">m ago</string>
     <string name="str_ago">ago</string>
 
-    <string name="str_couple_with">Couple with %s</string>
+    <string name="str_couple_with">Couple with</string>
     <string name="str_introduction">Introduction</string>
     <string name="str_region">Region</string>
     <string name="str_education">Education</string>
@@ -266,7 +266,8 @@ Couple blog 은(는) 정보주체의 이용정보를 저장하고 수시로 불�
     <string name="str_dislikes">Dislikes</string>
     <string name="str_phone_number">Phone Number</string>
     <string name="str_date_of_birth">Date of birth</string>
-    <string name="str_joined_n_days_ago">Joined Couple blog %d days ago</string>
+    <string name="str_joined_n_days_ago">Joined Couple Blog %d days ago</string>
+    <string name="str_joined_one_day_ago">Joined Couple Blog 1 day ago</string>
     <string name="str_online">◆ Online</string>
     <string name="str_mailbox">Mail Box</string>
     <string name="str_sign_in">Sign In</string>

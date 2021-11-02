@@ -8,6 +8,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.coupleblog.R
 import com.coupleblog.fragment.PAGE_TYPE
 import com.coupleblog.model.CB_User
+import com.coupleblog.model.GENDER
 import com.coupleblog.model.MAIL_TYPE
 import com.coupleblog.model.REACTION_TYPE
 import com.google.android.material.floatingactionbutton.FloatingActionButton
@@ -15,6 +16,96 @@ import com.google.firebase.database.DataSnapshot
 import com.google.firebase.database.DatabaseError
 import com.google.firebase.database.ValueEventListener
 import com.google.firebase.database.ktx.getValue
+
+@BindingAdapter("bind:joined_date")
+fun setJoinDate(textView: TextView, userData: CB_User)
+{
+    if(userData.strSignUpDate.isNullOrEmpty())
+        return
+
+    // according to gmt time
+    val joinedDate = CB_AppFunc.stringToCalendar(userData.strSignUpDate).time
+    val curDate = CB_AppFunc.getCalendarForSave().time
+
+    // milliseconds to days
+    val days = (curDate.time - joinedDate.time).toInt() / (24 * 60 * 60 * 1000)
+
+    // if it's under 1 day, do not write
+    if(days < 0)
+        return
+
+    textView.text = if(days == 1)
+                        CB_AppFunc.getString(R.string.str_joined_one_day_ago)
+                    else
+                        CB_AppFunc.getString(R.string.str_joined_n_days_ago).format(days)
+}
+
+@BindingAdapter("bind:region")
+fun setRegion(textView: TextView, userData: CB_User)
+{
+    with(CB_AppFunc)
+    {
+        // local time to string 03:20 PM
+        var strText = strTimeOutputFormat.format(getCurCalendar().time)
+
+        // 치명적인 문제가 있는데 이게 자기 시간을 처리할 때는 맞는데.. 상대방을 처리하면 문제가 생긴다.
+        if(!userData.strRegion.isNullOrEmpty())
+            strText += ", ${userData.strRegion}" // 03:20 PM, Korea
+
+    /*    val locale: Locale
+        val tz: TimeZone = cal.getTimeZone()*/
+
+       textView.text = strText
+    }
+}
+
+@BindingAdapter("bind:age")
+fun setAge(textView: TextView, userData: CB_User)
+{
+    if(userData.strBirthDate.isNullOrEmpty())
+        return
+
+    // local time, you only live in your time
+    // if couple's... not much of difference
+    val birthDate = CB_AppFunc.convertUtcToLocale(userData.strBirthDate!!).time
+    val curDate = CB_AppFunc.getCurCalendar().time
+
+    // days to years
+    val days = (curDate.time - birthDate.time).toInt() / (24 * 60 * 60 * 1000)
+    textView.text = (days / (12 * 30)).toString()
+}
+
+@BindingAdapter("bind:birth_date")
+fun setBirthDate(textView: TextView, userData: CB_User)
+{
+    if(userData.strBirthDate.isNullOrEmpty())
+        return
+
+    // 20021203, without gmt offset
+    val calendar = CB_AppFunc.stringToCalendar(userData.strBirthDate)
+    textView.text = CB_AppFunc.getBirthDateString(calendar)
+}
+
+@BindingAdapter("bind:gender_idx")
+fun setGenderImg(imageView: ImageView, userData: CB_User)
+{
+    val iRes = when(userData.iGender)
+    {
+        GENDER.MALE.ordinal   -> R.drawable.male
+        GENDER.FEMALE.ordinal -> R.drawable.female
+        else -> { - 1 }
+    }
+
+    if(iRes != -1)
+        imageView.setImageResource(iRes)
+}
+
+@BindingAdapter("bind:couple_with")
+fun setCoupleWith(textView: TextView, userData: CB_User)
+{
+    val strText = CB_AppFunc.getString(R.string.str_couple_with) + " ${userData.strUserName}"
+    textView.text = strText
+}
 
 @BindingAdapter("bind:user_presence")
 fun setUserPresence(textView: TextView, userData: CB_User)

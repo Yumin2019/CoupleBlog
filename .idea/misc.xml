@@ -3,6 +3,15 @@
   <component name="DesignSurface">
     <option name="filePathToZoomLevelMap">
       <map>
+        <entry key="..\:/Users/kym/Documents/CoupleBlog/app/src/main/res/drawable/ic_baseline_list_24.xml" value="0.30925925925925923" />
+        <entry key="..\:/Users/kym/Documents/CoupleBlog/app/src/main/res/drawable/ic_baseline_mail_24.xml" value="0.30925925925925923" />
+        <entry key="..\:/Users/kym/Documents/CoupleBlog/app/src/main/res/drawable/ic_baseline_mark_email_read_24.xml" value="0.30925925925925923" />
+        <entry key="..\:/Users/kym/Documents/CoupleBlog/app/src/main/res/drawable/rounded_border.xml" value="0.30925925925925923" />
+        <entry key="..\:/Users/kym/Documents/CoupleBlog/app/src/main/res/layout/activity_cb_main.xml" value="0.36614583333333334" />
+        <entry key="..\:/Users/kym/Documents/CoupleBlog/app/src/main/res/layout/fragment_cb_mail_detail.xml" value="0.36614583333333334" />
+        <entry key="..\:/Users/kym/Documents/CoupleBlog/app/src/main/res/layout/fragment_cb_post_detail.xml" value="0.2" />
+        <entry key="..\:/Users/kym/Documents/CoupleBlog/app/src/main/res/layout/fragment_cb_profile.xml" value="0.33" />
+        <entry key="..\:/Users/kym/Documents/CoupleBlog/app/src/main/res/layout/fragment_cb_profile_info.xml" value="0.22" />
         <entry key="..\:/Users/lmj33/CoupleBlog/app/src/main/res/drawable-v24/ic_launcher_foreground.xml" value="0.1962962962962963" />
         <entry key="..\:/Users/lmj33/CoupleBlog/app/src/main/res/drawable-v24/rounded_border.xml" value="0.1962962962962963" />
         <entry key="..\:/Users/lmj33/CoupleBlog/app/src/main/res/drawable/ic_baseline_add_24.xml" value="0.38229166666666664" />

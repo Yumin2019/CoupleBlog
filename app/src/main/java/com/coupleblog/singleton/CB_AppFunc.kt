@@ -108,7 +108,7 @@ class CB_AppFunc
 
         // Firebase Storage
         fun getStorage() = Firebase.storage
-        fun getStroageRef = Firebase.storage.reference
+        fun getStroageRef() = Firebase.storage.reference
 
         @SuppressLint("ConstantLocale")
         val isKorea = (Locale.getDefault().language == "ko")
@@ -121,6 +121,9 @@ class CB_AppFunc
 
         @SuppressLint("SimpleDateFormat")
         val strOutputDateFormat = SimpleDateFormat("dd MMM yyyy, HH:mm") // 17 Oct 2020, 23:43
+
+        @SuppressLint("SimpleDateFormat")
+        val strTimeOutputFormat = SimpleDateFormat("hh:mm a") // 03:20 PM
 
         // Shared Preferences: Config
         fun getSharedPref(activity: CB_BaseActivity): SharedPreferences
@@ -572,7 +575,6 @@ class CB_AppFunc
         fun calendarToSaveString(calendar: Calendar) = DateFormat.format("yyyyMMddHHmm", calendar.time).toString()
         fun getCurCalendar(): Calendar = Calendar.getInstance()
 
-
         // 로컬 지역에 따라서 출력용 dateString 얻기
         fun getDateStringForOutput(calendar: Calendar): String
         {
@@ -585,6 +587,20 @@ class CB_AppFunc
             {
                 // 영국식 표기(나머지)
                 DateFormat.format("dd MMM yyyy, HH:mm", calendar.time).toString()
+            }
+        }
+
+        fun getBirthDateString(calendar: Calendar): String
+        {
+            return if(isKorea)
+            {
+                // 한국식 표기
+                DateFormat.format("yyyy. MM. dd", calendar.time).toString()
+            }
+            else
+            {
+                // 영국식 표기(나머지)
+                DateFormat.format("dd MMM yyyy", calendar.time).toString()
             }
         }
 
