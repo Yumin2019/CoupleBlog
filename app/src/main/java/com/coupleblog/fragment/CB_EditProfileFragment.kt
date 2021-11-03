@@ -8,36 +8,26 @@ import androidx.navigation.fragment.findNavController
 import com.coupleblog.parent.CB_BaseFragment
 import com.coupleblog.singleton.CB_ViewModel
 
-class CB_ProfileInfoFragment: CB_BaseFragment("ProfileInfo")
-{
-    private var _binding            : ProfileInfoBinding? = null
+class CB_EditProfileFragment : CB_BaseFragment("EditProfile") {
+
+    private var _binding            : EditProfileBinding? = null
     private val binding get() = _binding!!
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View
     {
-        _binding = ProfileInfoBinding.inflate(inflater, container, false)
+        _binding = EditProfileBinding.inflate(inflater, container, false)
         binding.apply {
             lifecycleOwner  = viewLifecycleOwner
-            fragment = this@CB_ProfileInfoFragment
-            viewModel = CB_ViewModel.Companion
+            fragment        = this@CB_EditProfileFragment
+            viewModel       = CB_ViewModel.Companion
         }
         return binding.root
-    }
-
-    override fun onCreate(savedInstanceState: Bundle?)
-    {
-        super.onCreate(savedInstanceState)
     }
 
     override fun onDestroy()
     {
         super.onDestroy()
         _binding = null
-    }
-
-    fun editButton()
-    {
-        // if it's not my profile, it'd be not visible
     }
 
     override fun backPressed()

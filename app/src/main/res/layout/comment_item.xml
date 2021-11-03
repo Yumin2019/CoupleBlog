@@ -85,7 +85,7 @@
             android:layout_height="@dimen/icon_image_size_small"
             android:layout_marginEnd="4dp"
             app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toStartOf="@+id/menu_image_view"
+            app:layout_constraintEnd_toStartOf="@+id/pencil_image_view"
             app:layout_constraintTop_toTopOf="parent"
             bind:icon_image="@{commentData.IIconType}"
             tools:src="@drawable/haha_icon" />
@@ -100,7 +100,7 @@
             app:layout_constraintTop_toBottomOf="parent" />
 
         <ImageView
-            android:id="@+id/menu_image_view"
+            android:id="@+id/pencil_image_view"
             android:layout_width="30dp"
             android:layout_height="30dp"
             android:background="?android:attr/selectableItemBackground"

@@ -120,7 +120,16 @@
         android:name="com.coupleblog.fragment.CB_ProfileInfoFragment"
         android:label="fragment_cb_profile"
         tools:layout="@layout/fragment_cb_profile_info" >
+        <action
+            android:id="@+id/action_CB_ProfileInfoFragment_to_CB_EditProfileFragment"
+            app:destination="@id/CB_EditProfileFragment" />
     </fragment>
 
+    <fragment
+        android:id="@+id/CB_EditProfileFragment"
+        android:name="com.coupleblog.fragment.CB_EditProfileFragment"
+        android:label="fragment_cb_edit_profile"
+        tools:layout="@layout/fragment_cb_edit_profile" >
+    </fragment>
 
 </navigation>

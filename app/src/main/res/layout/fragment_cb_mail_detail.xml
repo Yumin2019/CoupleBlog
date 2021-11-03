@@ -114,13 +114,13 @@
                     bind:heart_icon_tint="@{viewModel.TMail.BHeartIcon}"
                     android:src="@{viewModel.TMail.BHeartIcon ? @drawable/ic_baseline_favorite_24 : @drawable/ic_baseline_favorite_border_24}"
                     app:layout_constraintBottom_toTopOf="@+id/view"
-                    app:layout_constraintEnd_toStartOf="@+id/menu_image_view"
+                    app:layout_constraintEnd_toStartOf="@+id/pencil_image_view"
                     app:layout_constraintTop_toBottomOf="@+id/mail_title_text_view"
                     tools:src="@drawable/ic_baseline_favorite_border_24"
                     tools:visibility="visible" />
 
                 <ImageView
-                    android:id="@+id/menu_image_view"
+                    android:id="@+id/pencil_image_view"
                     android:layout_width="30dp"
                     android:layout_height="30dp"
                     android:layout_marginEnd="@dimen/normal_margin"

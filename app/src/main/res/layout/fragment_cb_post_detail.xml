@@ -114,14 +114,14 @@
                     android:layout_marginEnd="4dp"
                     android:visibility="gone"
                     app:layout_constraintBottom_toTopOf="@+id/view"
-                    app:layout_constraintEnd_toStartOf="@+id/menu_image_view"
+                    app:layout_constraintEnd_toStartOf="@+id/pencil_image_view"
                     app:layout_constraintTop_toBottomOf="@+id/user_name_text_view"
                     bind:icon_image="@{viewModel.TPost.IIconType}"
                     tools:src="@drawable/haha_icon"
                     tools:visibility="visible" />
 
                 <ImageView
-                    android:id="@+id/menu_image_view"
+                    android:id="@+id/pencil_image_view"
                     android:layout_width="30dp"
                     android:layout_height="30dp"
                     android:background="?android:attr/selectableItemBackground"

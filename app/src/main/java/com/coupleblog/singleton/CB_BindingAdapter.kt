@@ -16,6 +16,7 @@ import com.google.firebase.database.DataSnapshot
 import com.google.firebase.database.DatabaseError
 import com.google.firebase.database.ValueEventListener
 import com.google.firebase.database.ktx.getValue
+import java.util.*
 
 @BindingAdapter("bind:joined_date")
 fun setJoinDate(textView: TextView, userData: CB_User)
@@ -31,7 +32,7 @@ fun setJoinDate(textView: TextView, userData: CB_User)
     val days = (curDate.time - joinedDate.time).toInt() / (24 * 60 * 60 * 1000)
 
     // if it's under 1 day, do not write
-    if(days < 0)
+    if(days < 1)
         return
 
     textView.text = if(days == 1)
@@ -43,19 +44,23 @@ fun setJoinDate(textView: TextView, userData: CB_User)
 @BindingAdapter("bind:region")
 fun setRegion(textView: TextView, userData: CB_User)
 {
+    if(userData.iGmtOffset == null)
+        return
+
     with(CB_AppFunc)
     {
-        // local time to string 03:20 PM
-        var strText = strTimeOutputFormat.format(getCurCalendar().time)
+        var strText = ""
+        if(userData.iGmtOffset != null)
+        {
+            // get user's local time to string 03:20 PM
+            val date = convertUtcToLocale(userData.iGmtOffset!!).time
+            strText += strTimeOutputFormat.format(date)
 
-        // 치명적인 문제가 있는데 이게 자기 시간을 처리할 때는 맞는데.. 상대방을 처리하면 문제가 생긴다.
-        if(!userData.strRegion.isNullOrEmpty())
-            strText += ", ${userData.strRegion}" // 03:20 PM, Korea
+            if(!userData.strRegion.isNullOrEmpty())
+                strText += ", ${userData.strRegion}" // 03:20 PM, Korea
+        }
 
-    /*    val locale: Locale
-        val tz: TimeZone = cal.getTimeZone()*/
-
-       textView.text = strText
+        textView.text = strText
     }
 }
 
@@ -65,10 +70,13 @@ fun setAge(textView: TextView, userData: CB_User)
     if(userData.strBirthDate.isNullOrEmpty())
         return
 
+    if(userData.iGmtOffset == null)
+        return
+
     // local time, you only live in your time
     // if couple's... not much of difference
-    val birthDate = CB_AppFunc.convertUtcToLocale(userData.strBirthDate!!).time
-    val curDate = CB_AppFunc.getCurCalendar().time
+    val birthDate = CB_AppFunc.convertUtcToLocale(userData.strBirthDate!!, userData.iGmtOffset!!).time
+    val curDate = CB_AppFunc.convertUtcToLocale(userData.iGmtOffset!!).time
 
     // days to years
     val days = (curDate.time - birthDate.time).toInt() / (24 * 60 * 60 * 1000)

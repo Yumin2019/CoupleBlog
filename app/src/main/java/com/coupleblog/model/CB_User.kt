@@ -1,5 +1,6 @@
 package com.coupleblog.model
 
+import com.coupleblog.singleton.CB_AppFunc
 import com.google.firebase.database.IgnoreExtraProperties
 
 /*
@@ -21,14 +22,15 @@ enum class GENDER
 data class CB_User(
     var strUserName          : String? = "",                // displayName
     var strUserEmail         : String? = "",                // 유저 이메일
-    var strSignUpDate        : String? = "",
+    var strSignUpDate        : String? = "",                // 가입 시기
     /* var strUserImgUrl     : String? = ""*/               // 유저 프로필 이미지 Url
     var strCoupleUid         : String? = "",                // 커플 정보 Uid
     var isOnline             : Boolean? = false,            // 온라인 여부
     var strLogoutDate        : String? = "",                // 로그아웃 시기
     var iGender              : Int? = GENDER.NONE.ordinal,  // gender
-    var strBirthDate         : String? = "",                // 생년월일
+    var strBirthDate         : String? = "",                // 생년월일 (처리할 때 분, 초는 0)
     var strRegion            : String? = "",                // 국가 및 지역 (설정시 국가, 지역을 분리해서 처리)
+    var iGmtOffset           : Int? = CB_AppFunc.getGMTOffset(),                    // gmt offset
     var strIntroduction      : String? = "",                // 자기소개 1000자
     var strEducation         : String? = "",                // 교육사항
     var strCareer            : String? = "",                // 경력 관련
