@@ -16,7 +16,12 @@
 
     </data>
 
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent" >
+
     <ScrollView
+        android:id="@+id/scroll_view"
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 
@@ -56,7 +61,7 @@
                     android:layout_marginStart="@dimen/margin_16dp"
                     android:paddingStart="@dimen/margin_16dp"
                     android:paddingEnd="@dimen/normal_margin"
-                    android:text="@{viewModel.getUser().strUserName}"
+                    android:text="@{viewModel.profileUser.strUserName}"
                     app:layout_constraintBottom_toTopOf="@+id/user_email_text_view"
                     app:layout_constraintStart_toEndOf="@+id/user_profile_image"
                     app:layout_constraintTop_toTopOf="@+id/user_profile_image"
@@ -69,7 +74,7 @@
                     android:layout_height="wrap_content"
                     android:paddingStart="@dimen/margin_16dp"
                     android:paddingEnd="@dimen/margin_16dp"
-                    android:text="@{viewModel.getUser().strUserEmail}"
+                    android:text="@{viewModel.profileUser.strUserEmail}"
                     android:textAlignment="viewStart"
                     android:textColor="@color/grey"
                     app:layout_constraintStart_toStartOf="@+id/user_name_text_view"
@@ -83,7 +88,9 @@
                     android:layout_height="wrap_content"
                     android:paddingStart="@dimen/margin_16dp"
                     android:paddingEnd="@dimen/margin_16dp"
-                    android:text="@{viewModel.getOtherUser().strUserEmail}"
+                    tools:visibility="visible"
+                    bind:visibility="@{viewModel.hasCouple}"
+                    android:text="@{viewModel.profileCoupleUser.strUserEmail}"
                     android:textAlignment="viewStart"
                     android:textColor="@color/grey"
                     app:layout_constraintStart_toStartOf="@+id/couple_with_text_view"
@@ -101,7 +108,7 @@
                     android:textColor="@color/grey"
                     app:layout_constraintBottom_toBottomOf="@+id/user_profile_image"
                     app:layout_constraintStart_toStartOf="@+id/user_name_text_view"
-                    bind:user_presence="@{viewModel.getUser()}"
+                    bind:user_presence="@{viewModel.profileUser}"
                     tools:text="@string/str_online"
                     tools:textColor="@color/green" />
 
@@ -124,16 +131,20 @@
                     android:layout_marginTop="@dimen/margin_24dp"
                     android:paddingStart="@dimen/margin_16dp"
                     android:paddingEnd="@dimen/normal_margin"
+                    tools:visibility="visible"
+                    bind:visibility="@{viewModel.hasCouple}"
                     android:textAlignment="viewStart"
                     app:layout_constraintStart_toStartOf="@+id/user_name_text_view"
                     app:layout_constraintTop_toBottomOf="@+id/user_profile_image"
-                    bind:couple_with="@{viewModel.getOtherUser()}"
+                    bind:couple_with="@{viewModel.profileCoupleUser}"
                     tools:text="@string/str_couple_with_exam" />
 
                 <ImageView
                     android:id="@+id/couple_user_profile_image"
                     android:layout_width="@dimen/profile_image_size_small"
                     android:layout_height="@dimen/profile_image_size_small"
+                    tools:visibility="visible"
+                    bind:visibility="@{viewModel.hasCouple}"
                     android:src="@drawable/haha_icon"
                     app:layout_constraintBottom_toBottomOf="@+id/couple_user_email_text_view"
                     app:layout_constraintEnd_toEndOf="@+id/user_profile_image"
@@ -148,7 +159,7 @@
                     app:layout_constraintBottom_toBottomOf="@+id/user_name_text_view"
                     app:layout_constraintStart_toEndOf="@+id/user_name_text_view"
                     app:layout_constraintTop_toTopOf="@+id/user_name_text_view"
-                    bind:gender_idx="@{viewModel.getUser()}"
+                    bind:gender_idx="@{viewModel.profileUser}"
                     tools:src="@drawable/male" />
 
                 <TextView
@@ -157,7 +168,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginStart="4dp"
-                    bind:age="@{viewModel.getUser()}"
+                    bind:age="@{viewModel.profileUser}"
                     android:textAlignment="viewStart"
                     app:layout_constraintBottom_toBottomOf="@+id/user_name_text_view"
                     app:layout_constraintStart_toEndOf="@+id/user_gender_image_view"
@@ -167,9 +178,11 @@
 
                 <ImageView
                     android:id="@+id/couple_user_gender_image_view"
-                    bind:gender_idx="@{viewModel.getOtherUser()}"
+                    bind:gender_idx="@{viewModel.profileCoupleUser}"
                     android:layout_width="@dimen/gender_image_size"
                     android:layout_height="@dimen/gender_image_size"
+                    tools:visibility="visible"
+                    bind:visibility="@{viewModel.hasCouple}"
                     app:layout_constraintBottom_toBottomOf="@+id/couple_with_text_view"
                     app:layout_constraintStart_toEndOf="@+id/couple_with_text_view"
                     app:layout_constraintTop_toTopOf="@+id/couple_with_text_view"
@@ -182,7 +195,9 @@
                     android:layout_height="wrap_content"
                     android:layout_marginStart="4dp"
                     android:textAlignment="viewStart"
-                    bind:gender_idx="@{viewModel.getCoupleUser()}"
+                    tools:visibility="visible"
+                    bind:visibility="@{viewModel.hasCouple}"
+                    bind:age="@{viewModel.profileCoupleUser}"
                     app:layout_constraintBottom_toBottomOf="@+id/couple_with_text_view"
                     app:layout_constraintStart_toEndOf="@+id/couple_user_gender_image_view"
                     app:layout_constraintTop_toTopOf="@+id/couple_with_text_view"
@@ -221,7 +236,7 @@
                     app:layout_constraintBottom_toBottomOf="@+id/birth_text_view"
                     app:layout_constraintStart_toEndOf="@+id/birth_text_view"
                     app:layout_constraintTop_toTopOf="@+id/birth_text_view"
-                    bind:birth_date="@{viewModel.getUser()}"
+                    bind:birth_date="@{viewModel.profileUser}"
                     tools:text="@string/str_date_of_birth_exam" />
 
                 <TextView
@@ -248,7 +263,7 @@
                     app:layout_constraintBottom_toBottomOf="@+id/region_text_view"
                     app:layout_constraintStart_toEndOf="@+id/region_text_view"
                     app:layout_constraintTop_toTopOf="@+id/region_text_view"
-                    bind:region="@{viewModel.getUser()}"
+                    bind:region="@{viewModel.profileUser}"
                     tools:text="@string/str_region_exam" />
 
                 <TextView
@@ -262,7 +277,7 @@
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="@+id/region_text_view"
                     app:layout_constraintTop_toBottomOf="@+id/region_text_view"
-                    bind:joined_date="@{viewModel.getUser()}"
+                    bind:joined_date="@{viewModel.profileUser}"
                     tools:text="@string/str_joined_n_days_ago_exam" />
 
                 <View
@@ -297,7 +312,7 @@
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="@+id/introduction_text_view"
                     app:layout_constraintTop_toBottomOf="@+id/introduction_text_view"
-                    android:text="@{viewModel.getUser().strIntroduction}"
+                    android:text="@{viewModel.profileUser.strIntroduction}"
                     tools:text="@string/str_introduction" />
 
                 <View
@@ -329,7 +344,7 @@
                     android:layout_marginEnd="@dimen/margin_16dp"
                     android:textAlignment="viewStart"
                     android:textColor="@color/grey"
-                    android:text="@{viewModel.getUser().strEducation}"
+                    android:text="@{viewModel.profileUser.strEducation}"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="@+id/education_text_view"
                     app:layout_constraintTop_toBottomOf="@+id/education_text_view"
@@ -356,7 +371,7 @@
                     android:layout_marginEnd="@dimen/margin_16dp"
                     android:textAlignment="viewStart"
                     android:textColor="@color/grey"
-                    android:text="@{viewModel.getUser().strCareer}"
+                    android:text="@{viewModel.profileUser.strCareer}"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="@+id/career_text_view"
                     app:layout_constraintTop_toBottomOf="@+id/career_text_view"
@@ -382,7 +397,7 @@
                     android:layout_marginEnd="@dimen/margin_16dp"
                     android:textAlignment="viewStart"
                     android:textColor="@color/grey"
-                    android:text="@{viewModel.getUser().strPhoneNumber}"
+                    android:text="@{viewModel.profileUser.strPhoneNumber}"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="@+id/phone_number_text_view"
                     app:layout_constraintTop_toBottomOf="@+id/phone_number_text_view"
@@ -416,7 +431,7 @@
                     android:layout_marginEnd="@dimen/margin_16dp"
                     android:textAlignment="viewStart"
                     android:textColor="@color/grey"
-                    android:text="@{viewModel.getUser().strFavorites}"
+                    android:text="@{viewModel.profileUser.strFavorites}"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="@+id/favorites_text_view"
                     app:layout_constraintTop_toBottomOf="@+id/favorites_text_view"
@@ -437,7 +452,7 @@
                 <TextView
                     android:id="@+id/dislikes_value_text_view"
                     style="@style/normal_text_style"
-                    android:text="@{viewModel.getUser().strDislikes}"
+                    android:text="@{viewModel.profileUser.strDislikes}"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_marginEnd="@dimen/margin_16dp"
@@ -453,4 +468,6 @@
         </com.google.android.material.card.MaterialCardView>
 
     </ScrollView>
+
+    </LinearLayout>
 </layout>

@@ -1,11 +1,13 @@
 package com.coupleblog.singleton
 
 import android.view.View
+import android.widget.EditText
 import android.widget.ImageView
 import android.widget.TextView
 import androidx.databinding.BindingAdapter
 import androidx.recyclerview.widget.RecyclerView
 import com.coupleblog.R
+import com.coupleblog.dialog.EDIT_FIELD_TYPE
 import com.coupleblog.fragment.PAGE_TYPE
 import com.coupleblog.model.CB_User
 import com.coupleblog.model.GENDER
@@ -17,6 +19,50 @@ import com.google.firebase.database.DatabaseError
 import com.google.firebase.database.ValueEventListener
 import com.google.firebase.database.ktx.getValue
 import java.util.*
+
+@BindingAdapter("bind:field_type_hint")
+fun setFieldTypeHint(textView: TextView, iFieldType: Int)
+{
+    val strText = when(iFieldType)
+{
+    EDIT_FIELD_TYPE.NAME         .ordinal -> CB_AppFunc.getString(R.string.str_user_name)
+    EDIT_FIELD_TYPE.IMAGE        .ordinal -> CB_AppFunc.getString(R.string.str_user_image)
+    EDIT_FIELD_TYPE.EMAIL        .ordinal -> CB_AppFunc.getString(R.string.str_email)
+    EDIT_FIELD_TYPE.GENDER       .ordinal -> CB_AppFunc.getString(R.string.str_gender)
+    EDIT_FIELD_TYPE.DATE_OF_BIRTH.ordinal -> CB_AppFunc.getString(R.string.str_date_of_birth)
+    EDIT_FIELD_TYPE.REGION       .ordinal -> CB_AppFunc.getString(R.string.str_region)
+    EDIT_FIELD_TYPE.INTRODUCTION .ordinal -> CB_AppFunc.getString(R.string.str_introduction)
+    EDIT_FIELD_TYPE.EDUCATION    .ordinal -> CB_AppFunc.getString(R.string.str_education)
+    EDIT_FIELD_TYPE.CAREER       .ordinal -> CB_AppFunc.getString(R.string.str_career)
+    EDIT_FIELD_TYPE.PHONE_NUMBER .ordinal -> CB_AppFunc.getString(R.string.str_phone_number)
+    EDIT_FIELD_TYPE.FAVORITES    .ordinal -> CB_AppFunc.getString(R.string.str_favorites)
+    EDIT_FIELD_TYPE.DISLIKES     .ordinal -> CB_AppFunc.getString(R.string.str_dislikes)
+    else -> ""
+}
+    textView.hint = strText
+}
+
+@BindingAdapter("bind:field_type")
+fun setFieldType(textView: TextView, iFieldType: Int)
+{
+    val strText = when(iFieldType)
+    {
+        EDIT_FIELD_TYPE.NAME         .ordinal -> CB_AppFunc.getString(R.string.str_user_name)
+        EDIT_FIELD_TYPE.IMAGE        .ordinal -> CB_AppFunc.getString(R.string.str_user_image)
+        EDIT_FIELD_TYPE.EMAIL        .ordinal -> CB_AppFunc.getString(R.string.str_email)
+        EDIT_FIELD_TYPE.GENDER       .ordinal -> CB_AppFunc.getString(R.string.str_gender)
+        EDIT_FIELD_TYPE.DATE_OF_BIRTH.ordinal -> CB_AppFunc.getString(R.string.str_date_of_birth)
+        EDIT_FIELD_TYPE.REGION       .ordinal -> CB_AppFunc.getString(R.string.str_region)
+        EDIT_FIELD_TYPE.INTRODUCTION .ordinal -> CB_AppFunc.getString(R.string.str_introduction)
+        EDIT_FIELD_TYPE.EDUCATION    .ordinal -> CB_AppFunc.getString(R.string.str_education)
+        EDIT_FIELD_TYPE.CAREER       .ordinal -> CB_AppFunc.getString(R.string.str_career)
+        EDIT_FIELD_TYPE.PHONE_NUMBER .ordinal -> CB_AppFunc.getString(R.string.str_phone_number)
+        EDIT_FIELD_TYPE.FAVORITES    .ordinal -> CB_AppFunc.getString(R.string.str_favorites)
+        EDIT_FIELD_TYPE.DISLIKES     .ordinal -> CB_AppFunc.getString(R.string.str_dislikes)
+        else -> ""
+    }
+    textView.text = strText
+}
 
 @BindingAdapter("bind:joined_date")
 fun setJoinDate(textView: TextView, userData: CB_User)

@@ -13,20 +13,20 @@ import com.coupleblog.model.CB_Comment
 import com.coupleblog.singleton.CB_AppFunc
 import com.coupleblog.singleton.CB_SingleSystemMgr
 
-
 class CB_CommentEditDialog(context: Activity, fragment: CB_PostDetailFragment,
                            commentData: CB_Comment, commentKey: String, bCancelable: Boolean) : Dialog(context)
 {
     init
     {
         val binding: CommentEditItemBinding = DataBindingUtil.inflate(LayoutInflater.from(context),
-            R.layout.dialog_cb_comment_edit, null, false)
+            R.layout.dialog_cb_edit, null, false)
 
         setContentView(binding.root)
         binding.apply {
             this.commentData    = commentData
             this.commentKey     = commentKey
 
+            commentCancelButton.setOnClickListener { cancel() }
             commentPostButton.setOnClickListener {
 
                 // if it's empty dialog and return

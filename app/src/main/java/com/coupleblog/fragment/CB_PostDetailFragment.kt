@@ -178,7 +178,7 @@ class CB_PostDetailFragment: CB_BaseFragment("PostDetail")
                         return@DialogItem
 
                     CB_CommentEditDialog(requireActivity(), this@CB_PostDetailFragment,
-                    commentData, strCommentKey, true)
+                    commentData, strCommentKey, false)
 
                 }))
 

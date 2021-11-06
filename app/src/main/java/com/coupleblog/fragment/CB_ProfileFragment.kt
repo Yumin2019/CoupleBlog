@@ -29,8 +29,9 @@ class CB_ProfileFragment: CB_BaseFragment("Profilefragment")
 
     fun profileButton(isMyProfile: Boolean)
     {
-        CB_ViewModel.isMyProfile.value = isMyProfile
-        beginAction(R.id.action_CB_MainFragment_to_CB_ProfileInfoFragment, R.id.CB_ProfileInfoFragment)
+        val uid = if(isMyProfile) CB_AppFunc.getUid() else CB_AppFunc.curUser.strCoupleUid
+        beginAction(R.id.action_CB_MainFragment_to_CB_ProfileInfoFragment,
+            R.id.CB_MainFragment, bundleOf(CB_ProfileInfoFragment.ARGU_UID to uid))
     }
 
     override fun onDestroy()

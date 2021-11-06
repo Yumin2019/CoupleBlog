@@ -56,7 +56,11 @@
         </action>
         <action
             android:id="@+id/action_CB_MainFragment_to_CB_ProfileInfoFragment"
-            app:destination="@id/CB_ProfileInfoFragment" />
+            app:destination="@id/CB_ProfileInfoFragment" >
+
+            <argument android:name="strUid" app:nullable="false"
+                app:argType="string" android:defaultValue=""/>
+        </action>
 
     </fragment>
 
@@ -118,11 +122,13 @@
     <fragment
         android:id="@+id/CB_ProfileInfoFragment"
         android:name="com.coupleblog.fragment.CB_ProfileInfoFragment"
-        android:label="fragment_cb_profile"
+        android:label="fragment_cb_profile_info"
         tools:layout="@layout/fragment_cb_profile_info" >
+
         <action
             android:id="@+id/action_CB_ProfileInfoFragment_to_CB_EditProfileFragment"
             app:destination="@id/CB_EditProfileFragment" />
+
     </fragment>
 
     <fragment
