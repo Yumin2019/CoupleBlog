@@ -97,7 +97,8 @@ class CB_ProfileInfoFragment: CB_BaseFragment("ProfileInfo")
 
     fun editButton()
     {
-        // my profile only
+        // only my profile
+        beginAction(R.id.action_CB_ProfileInfoFragment_to_CB_EditProfileFragment, R.id.CB_ProfileInfoFragment)
     }
 
     override fun backPressed()

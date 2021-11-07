@@ -6,6 +6,7 @@ import android.graphics.Color
 import android.graphics.drawable.ColorDrawable
 import android.view.LayoutInflater
 import android.view.ViewGroup
+import android.view.inputmethod.EditorInfo
 import androidx.databinding.DataBindingUtil
 import com.coupleblog.R
 import com.coupleblog.singleton.CB_AppFunc
@@ -27,7 +28,7 @@ enum class EDIT_FIELD_TYPE
     DISLIKES
 }
 
-class CB_EditDialog(context: Activity, iType: Int, iLines: Int,
+class CB_EditDialog(context: Activity, iType: Int, iLines: Int, strInit: String,
                     editFunc: ()->Unit,  bCancelable: Boolean) : Dialog(context)
 {
     companion object
@@ -38,7 +39,7 @@ class CB_EditDialog(context: Activity, iType: Int, iLines: Int,
     init
     {
         val binding: EditDialogBinding = DataBindingUtil.inflate(LayoutInflater.from(context),
-            R.layout.dialog_cb_comment_edit, null, false)
+            R.layout.dialog_cb_edit, null, false)
         setContentView(binding.root)
         strText = ""
 
@@ -46,9 +47,22 @@ class CB_EditDialog(context: Activity, iType: Int, iLines: Int,
             iFieldType = iType
             iMaxLines = iLines
 
+            editText.apply {
+                setText(strInit)
+                if (iLines == 1)
+                    isSingleLine = true
+            }
+
             cancelButton.setOnClickListener { cancel() }
             editButton.setOnClickListener {
+
                 strText = editText.text.toString()
+                if(strText.isEmpty())
+                {
+                    CB_SingleSystemMgr.showToast(R.string.str_input_letter)
+                    return@setOnClickListener
+                }
+
                 editFunc.invoke()
                 cancel()
             }

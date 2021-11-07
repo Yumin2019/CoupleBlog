@@ -15,22 +15,22 @@
             type="com.coupleblog.singleton.CB_ViewModel.Companion" />
     </data>
 
-    <androidx.constraintlayout.widget.ConstraintLayout
+    <com.google.android.material.card.MaterialCardView
+        style="@style/card_view_style"
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_height="match_parent"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
 
-        <com.google.android.material.card.MaterialCardView
-            style="@style/card_view_style"
-            android:layout_width="0dp"
-            android:layout_height="0dp"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent">
+        <ScrollView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
 
             <androidx.constraintlayout.widget.ConstraintLayout
                 android:layout_width="match_parent"
-                android:layout_height="match_parent">
+                android:layout_height="wrap_content">
 
                 <TextView
                     android:id="@+id/mail_title_text_view"
@@ -111,11 +111,11 @@
                     android:layout_marginStart="@dimen/normal_margin"
                     android:layout_marginEnd="4dp"
                     android:onClick="@{()->fragment.heartButton()}"
-                    bind:heart_icon_tint="@{viewModel.TMail.BHeartIcon}"
                     android:src="@{viewModel.TMail.BHeartIcon ? @drawable/ic_baseline_favorite_24 : @drawable/ic_baseline_favorite_border_24}"
                     app:layout_constraintBottom_toTopOf="@+id/view"
                     app:layout_constraintEnd_toStartOf="@+id/pencil_image_view"
                     app:layout_constraintTop_toBottomOf="@+id/mail_title_text_view"
+                    bind:heart_icon_tint="@{viewModel.TMail.BHeartIcon}"
                     tools:src="@drawable/ic_baseline_favorite_border_24"
                     tools:visibility="visible" />
 
@@ -135,7 +135,7 @@
                     android:id="@+id/post_text_view"
                     style="@style/normal_text_style"
                     android:layout_width="0dp"
-                    android:layout_height="0dp"
+                    android:layout_height="wrap_content"
                     android:layout_marginStart="@dimen/normal_margin"
                     android:layout_marginTop="@dimen/margin_16dp"
                     android:layout_marginEnd="@dimen/normal_margin"
@@ -155,20 +155,17 @@
                     style="@style/subtitle_text_style"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    bind:mail_type="@{viewModel.TMail.IMailType}"
-                    android:onClick="@{()->fragment.coupleRequestButton()}"
                     android:layout_marginBottom="@dimen/margin_16dp"
                     android:background="?android:attr/selectableItemBackground"
+                    android:onClick="@{()->fragment.coupleRequestButton()}"
                     android:text="@string/str_couple_request_mail"
                     android:textColor="@color/blue"
                     app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintStart_toStartOf="parent" />
+                    app:layout_constraintStart_toStartOf="parent"
+                    bind:mail_type="@{viewModel.TMail.IMailType}" />
 
             </androidx.constraintlayout.widget.ConstraintLayout>
-
-        </com.google.android.material.card.MaterialCardView>
-
-    </androidx.constraintlayout.widget.ConstraintLayout>
-
+        </ScrollView>
+    </com.google.android.material.card.MaterialCardView>
 </layout>

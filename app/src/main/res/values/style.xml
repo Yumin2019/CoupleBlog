@@ -45,6 +45,7 @@
         <item name="cardBackgroundColor">@color/white</item>
         <item name="layout_constraintWidth_max">@dimen/button_max_length</item>
         <item name="android:layout_margin">@dimen/normal_margin</item>
+        <item name="android:clipToPadding">true</item>
     </style>
 
     <style name="divider">

@@ -7,13 +7,33 @@ import android.view.ViewGroup
 import androidx.navigation.fragment.findNavController
 import com.coupleblog.R
 import com.coupleblog.dialog.CB_EditDialog
+import com.coupleblog.dialog.CB_ItemListDialog
+import com.coupleblog.dialog.DialogItem
 import com.coupleblog.dialog.EDIT_FIELD_TYPE
+import com.coupleblog.model.GENDER
 import com.coupleblog.parent.CB_BaseFragment
 import com.coupleblog.singleton.CB_AppFunc
 import com.coupleblog.singleton.CB_SingleSystemMgr
 import com.coupleblog.singleton.CB_ViewModel
+import com.google.android.material.datepicker.CalendarConstraints
+import com.google.android.material.datepicker.DateValidatorPointBackward
+import com.google.android.material.datepicker.MaterialDatePicker
+import java.util.*
 
-class CB_EditProfileFragment : CB_BaseFragment("EditProfile") {
+class CB_EditProfileFragment : CB_BaseFragment("EditProfile")
+{
+    // EDIT FIELD
+    val NAME          = EDIT_FIELD_TYPE.NAME         .ordinal
+    val REGION        = EDIT_FIELD_TYPE.REGION       .ordinal
+    val INTRODUCTION  = EDIT_FIELD_TYPE.INTRODUCTION .ordinal
+    val EDUCATION     = EDIT_FIELD_TYPE.EDUCATION    .ordinal
+    val CAREER        = EDIT_FIELD_TYPE.CAREER       .ordinal
+    val PHONE_NUMBER  = EDIT_FIELD_TYPE.PHONE_NUMBER .ordinal
+    val FAVORITES     = EDIT_FIELD_TYPE.FAVORITES    .ordinal
+    val DISLIKES      = EDIT_FIELD_TYPE.DISLIKES     .ordinal
+
+    val IMAGE         = EDIT_FIELD_TYPE.IMAGE        .ordinal
+    val EMAIL         = EDIT_FIELD_TYPE.EMAIL        .ordinal
 
     private var _binding            : EditProfileBinding? = null
     private val binding get() = _binding!!
@@ -29,31 +49,87 @@ class CB_EditProfileFragment : CB_BaseFragment("EditProfile") {
         return binding.root
     }
 
-    fun showEditDialog(iType: Int, iLines: Int)
+    fun birthDateButton()
+    {
+        if(CB_SingleSystemMgr.isDialog(CB_SingleSystemMgr.DIALOG_TYPE.DATE_PICKER))
+            return
+
+        CB_SingleSystemMgr.registerDialog(CB_SingleSystemMgr.DIALOG_TYPE.DATE_PICKER)
+
+        MaterialDatePicker.Builder.datePicker().apply {
+            // set title text
+            setTitleText(R.string.str_date_of_birth)
+
+            // enables only dates before now
+            val constraints = CalendarConstraints.Builder().setValidator(DateValidatorPointBackward.now())
+            setCalendarConstraints(constraints.build())
+        }.
+
+        build().apply {
+            show(this@CB_EditProfileFragment.requireActivity().supportFragmentManager, "birthDateButton")
+            addOnPositiveButtonClickListener {
+                // get the past date and save it
+                val calendar = Calendar.getInstance(TimeZone.getTimeZone("UTC")).apply { timeInMillis = it }
+                val strDate = CB_AppFunc.calendarToSaveString(calendar)
+                strDate
+            }
+            addOnDismissListener { CB_SingleSystemMgr.releaseDialog(CB_SingleSystemMgr.DIALOG_TYPE.DATE_PICKER) }
+        }
+    }
+
+    fun genderButton()
+    {
+        if(CB_SingleSystemMgr.isDialog(CB_SingleSystemMgr.DIALOG_TYPE.ITEM_LIST_DIALOG))
+            return
+
+        val listItem = arrayListOf(
+            DialogItem(getString(R.string.str_unspecified), R.drawable.question,
+                callback =
+                {
+                    CB_AppFunc.curUser.iGender = GENDER.NONE.ordinal
+                    CB_AppFunc.getUsersRoot().child(CB_AppFunc.getUid()).setValue(CB_AppFunc.curUser)
+                }),
+
+            DialogItem(getString(R.string.str_male), R.drawable.male,
+                callback =
+                {
+                    CB_AppFunc.curUser.iGender = GENDER.MALE.ordinal
+                    CB_AppFunc.getUsersRoot().child(CB_AppFunc.getUid()).setValue(CB_AppFunc.curUser)
+                }),
+
+            DialogItem(getString(R.string.str_female), R.drawable.female,
+                callback =
+                {
+                    CB_AppFunc.curUser.iGender = GENDER.FEMALE.ordinal
+                    CB_AppFunc.getUsersRoot().child(CB_AppFunc.getUid()).setValue(CB_AppFunc.curUser)
+                })
+        )
+
+        CB_ItemListDialog(requireActivity(), getString(R.string.str_gender), listItem, true)
+    }
+
+    fun showEditDialog(iType: Int)
     {
         if(CB_SingleSystemMgr.isDialog(CB_SingleSystemMgr.DIALOG_TYPE.EDIT_DIALOG))
             return
 
-        val editFunc =
-        {
+        val userInfo = CB_AppFunc.curUser
+        val editFunc: ()->Unit = {
             // 각 필드마다 처리해야 하는 정보가 달라진다.
-            val userInfo = CB_AppFunc.curUser
             val strText = CB_EditDialog.strText
 
             when(iType)
             {
                 // 여기서 처리하는 값은 일반적인 String 처리.
                 // 생년월일에 대한 처리나 성별에 대한 처리는 따로 한다.
-                EDIT_FIELD_TYPE.NAME         .ordinal -> userInfo.strUserName = strText
-               /* EDIT_FIELD_TYPE.IMAGE        .ordinal -> userInfo.strImage = strText 준비중
-                EDIT_FIELD_TYPE.EMAIL        .ordinal -> userInfo.strUserName = strText*/
-                EDIT_FIELD_TYPE.REGION       .ordinal -> userInfo.strRegion = strText
-                EDIT_FIELD_TYPE.INTRODUCTION .ordinal -> userInfo.strIntroduction = strText
-                EDIT_FIELD_TYPE.EDUCATION    .ordinal -> userInfo.strEducation = strText
-                EDIT_FIELD_TYPE.CAREER       .ordinal -> userInfo.strCareer = strText
-                EDIT_FIELD_TYPE.PHONE_NUMBER .ordinal -> userInfo.strPhoneNumber = strText
-                EDIT_FIELD_TYPE.FAVORITES    .ordinal -> userInfo.strFavorites = strText
-                EDIT_FIELD_TYPE.DISLIKES     .ordinal -> userInfo.strDislikes = strText
+                NAME         -> userInfo.strUserName      = strText
+                REGION       -> userInfo.strRegion        = strText
+                INTRODUCTION -> userInfo.strIntroduction  = strText
+                EDUCATION    -> userInfo.strEducation     = strText
+                CAREER       -> userInfo.strCareer        = strText
+                PHONE_NUMBER -> userInfo.strPhoneNumber   = strText
+                FAVORITES    -> userInfo.strFavorites     = strText
+                DISLIKES     -> userInfo.strDislikes      = strText
                 else -> { assert(false) { "wrong cases" } }
             }
 
@@ -61,7 +137,54 @@ class CB_EditProfileFragment : CB_BaseFragment("EditProfile") {
             CB_AppFunc.getUsersRoot().child(CB_AppFunc.getUid()).setValue(userInfo)
         }
 
-        //CB_EditDialog(requireActivity(), iType, iLines, editFunc, false)
+        var iLines  = 1
+        var strInit = ""
+        when(iType)
+        {
+            NAME         ->
+            {
+                iLines = 1
+                strInit = userInfo.strUserName.toString()
+            }
+            REGION       ->
+            {
+                iLines = 1
+                strInit = userInfo.strRegion.toString()
+            }
+            INTRODUCTION ->
+            {
+                iLines = 15
+                strInit = userInfo.strIntroduction.toString()
+            }
+            EDUCATION    ->
+            {
+                iLines = 5
+                strInit = userInfo.strEducation.toString()
+            }
+            CAREER       ->
+            {
+                iLines = 5
+                strInit = userInfo.strCareer.toString()
+            }
+            PHONE_NUMBER ->
+            {
+                iLines = 1
+                strInit = userInfo.strPhoneNumber.toString()
+            }
+            FAVORITES    ->
+            {
+                iLines = 10
+                strInit = userInfo.strFavorites.toString()
+            }
+            DISLIKES     ->
+            {
+                iLines = 10
+                strInit = userInfo.strDislikes.toString()
+            }
+            else -> {}
+        }
+
+        CB_EditDialog(requireActivity(), iType, iLines, strInit, editFunc, false)
     }
 
     override fun onDestroy()

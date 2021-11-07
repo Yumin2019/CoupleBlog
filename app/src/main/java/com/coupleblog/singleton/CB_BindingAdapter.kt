@@ -1,7 +1,6 @@
 package com.coupleblog.singleton
 
 import android.view.View
-import android.widget.EditText
 import android.widget.ImageView
 import android.widget.TextView
 import androidx.databinding.BindingAdapter
@@ -18,7 +17,6 @@ import com.google.firebase.database.DataSnapshot
 import com.google.firebase.database.DatabaseError
 import com.google.firebase.database.ValueEventListener
 import com.google.firebase.database.ktx.getValue
-import java.util.*
 
 @BindingAdapter("bind:field_type_hint")
 fun setFieldTypeHint(textView: TextView, iFieldType: Int)
@@ -68,7 +66,10 @@ fun setFieldType(textView: TextView, iFieldType: Int)
 fun setJoinDate(textView: TextView, userData: CB_User)
 {
     if(userData.strSignUpDate.isNullOrEmpty())
+    {
+        textView.visibility = View.GONE
         return
+    }
 
     // according to gmt time
     val joinedDate = CB_AppFunc.stringToCalendar(userData.strSignUpDate).time
@@ -79,7 +80,10 @@ fun setJoinDate(textView: TextView, userData: CB_User)
 
     // if it's under 1 day, do not write
     if(days < 1)
+    {
+        textView.visibility = View.GONE
         return
+    }
 
     textView.text = if(days == 1)
                         CB_AppFunc.getString(R.string.str_joined_one_day_ago)
@@ -104,10 +108,21 @@ fun setRegion(textView: TextView, userData: CB_User)
 
             if(!userData.strRegion.isNullOrEmpty())
                 strText += ", ${userData.strRegion}" // 03:20 PM, Korea
+            else
+                strText += ", " + getString(R.string.str_not_set)
         }
 
         textView.text = strText
     }
+}
+
+@BindingAdapter("bind:default_text")
+fun setDefaultText(textView: TextView, strText: String?)
+{
+    if(!strText.isNullOrEmpty())
+        textView.text = strText
+    else
+        textView.text = CB_AppFunc.getString(R.string.str_not_set)
 }
 
 @BindingAdapter("bind:age")
@@ -127,13 +142,26 @@ fun setAge(textView: TextView, userData: CB_User)
     // days to years
     val days = (curDate.time - birthDate.time).toInt() / (24 * 60 * 60 * 1000)
     textView.text = (days / (12 * 30)).toString()
+
+    // textColor
+    val iColor = when(userData.iGender)
+    {
+        GENDER.MALE.ordinal   -> R.color.blue
+        GENDER.FEMALE.ordinal -> R.color.red
+        else                  -> R.color.grey
+    }
+
+    textView.setTextColor(CB_AppFunc.getColorStateList(iColor))
 }
 
 @BindingAdapter("bind:birth_date")
 fun setBirthDate(textView: TextView, userData: CB_User)
 {
     if(userData.strBirthDate.isNullOrEmpty())
+    {
+        textView.text = CB_AppFunc.getString(R.string.str_not_set)
         return
+    }
 
     // 20021203, without gmt offset
     val calendar = CB_AppFunc.stringToCalendar(userData.strBirthDate)
@@ -147,7 +175,7 @@ fun setGenderImg(imageView: ImageView, userData: CB_User)
     {
         GENDER.MALE.ordinal   -> R.drawable.male
         GENDER.FEMALE.ordinal -> R.drawable.female
-        else -> { - 1 }
+        else                  -> R.drawable.question
     }
 
     if(iRes != -1)

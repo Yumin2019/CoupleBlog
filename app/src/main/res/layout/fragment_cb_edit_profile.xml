@@ -16,363 +16,367 @@
 
     </data>
 
-    <LinearLayout
+    <com.google.android.material.card.MaterialCardView
+        android:id="@+id/user_card_view"
+        style="@style/card_view_style"
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_height="match_parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
 
         <ScrollView
             android:id="@+id/scroll_view"
             android:layout_width="match_parent"
             android:layout_height="match_parent">
 
-            <com.google.android.material.card.MaterialCardView
-                android:id="@+id/user_card_view"
-                style="@style/card_view_style"
+            <androidx.constraintlayout.widget.ConstraintLayout
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent">
+                android:layout_height="wrap_content">
 
-                <androidx.constraintlayout.widget.ConstraintLayout
-                    android:layout_width="match_parent"
+                <TextView
+                    android:id="@+id/user_name_text_view"
+                    style="@style/post_title_text_view"
+                    android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:background="?android:attr/selectableItemBackgroundBorderless">
+                    android:textColor="@color/purple"
+                    android:layout_marginStart="@dimen/margin_16dp"
+                    android:background="?android:attr/selectableItemBackground"
+                    android:onClick="@{()->fragment.showEditDialog(fragment.NAME)}"
+                    android:paddingStart="@dimen/margin_16dp"
+                    android:paddingEnd="@dimen/normal_margin"
+                    android:text="@{viewModel.curUser.strUserName}"
+                    app:layout_constraintBottom_toTopOf="@+id/user_email_text_view"
+                    app:layout_constraintStart_toEndOf="@+id/user_profile_image"
+                    app:layout_constraintTop_toTopOf="@+id/user_profile_image"
+                    tools:text="@string/str_profile_name_exam" />
 
-                    <TextView
-                        android:id="@+id/user_name_text_view"
-                        style="@style/post_title_text_view"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_marginStart="@dimen/margin_16dp"
-                        android:background="?android:attr/selectableItemBackground"
-                        android:paddingStart="@dimen/margin_16dp"
-                        android:paddingEnd="@dimen/normal_margin"
-                        android:text="@{viewModel.curUser.strUserName}"
-                        app:layout_constraintBottom_toTopOf="@+id/user_email_text_view"
-                        app:layout_constraintStart_toEndOf="@+id/user_profile_image"
-                        app:layout_constraintTop_toTopOf="@+id/user_profile_image"
-                        tools:text="@string/str_profile_name_exam" />
+                <!--이메일 변경 기능도 넣어야 겠지만 구글 코드를 봐야 하니까 일단은 그냥 지원 X-->
+                <TextView
+                    android:id="@+id/user_email_text_view"
+                    style="@style/normal_text_style"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:background="?android:attr/selectableItemBackground"
+                    android:paddingStart="@dimen/margin_16dp"
+                    android:paddingEnd="@dimen/margin_16dp"
+                    android:text="@{viewModel.curUser.strUserEmail}"
+                    android:textAlignment="viewStart"
+                    android:textColor="@color/grey"
+                    app:layout_constraintBottom_toBottomOf="@+id/user_profile_image"
+                    app:layout_constraintStart_toStartOf="@+id/user_name_text_view"
+                    app:layout_constraintTop_toBottomOf="@+id/user_name_text_view"
+                    tools:text="@string/str_profile_email_exam" />
 
-                    <!--이메일 변경 기능도 넣어야 겠지만 구글 코드를 봐야 하니까 일단은 그냥 지원 X-->
-                    <TextView
-                        android:id="@+id/user_email_text_view"
-                        style="@style/normal_text_style"
-                        android:layout_width="0dp"
-                        android:layout_height="wrap_content"
-                        android:background="?android:attr/selectableItemBackground"
-                        android:paddingStart="@dimen/margin_16dp"
-                        android:paddingEnd="@dimen/margin_16dp"
-                        android:text="@{viewModel.curUser.strUserEmail}"
-                        android:textAlignment="viewStart"
-                        android:textColor="@color/grey"
-                        app:layout_constraintBottom_toBottomOf="@+id/user_profile_image"
-                        app:layout_constraintStart_toStartOf="@+id/user_name_text_view"
-                        app:layout_constraintTop_toBottomOf="@+id/user_name_text_view"
-                        tools:text="@string/str_profile_email_exam" />
+                <ImageView
+                    android:id="@+id/user_profile_image"
+                    android:layout_width="@dimen/profile_image_size"
+                    android:layout_height="@dimen/profile_image_size"
+                    android:layout_marginStart="@dimen/margin_16dp"
+                    android:layout_marginTop="@dimen/margin_16dp"
+                    android:background="?android:attr/selectableItemBackground"
+                    android:src="@drawable/haha_icon"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent"
+                    tools:src="@drawable/haha_icon" />
 
-                    <ImageView
-                        android:id="@+id/user_profile_image"
-                        android:layout_width="@dimen/profile_image_size"
-                        android:layout_height="@dimen/profile_image_size"
-                        android:layout_marginStart="@dimen/margin_16dp"
-                        android:layout_marginTop="@dimen/margin_16dp"
-                        android:background="?android:attr/selectableItemBackground"
-                        android:src="@drawable/haha_icon"
-                        app:layout_constraintStart_toStartOf="parent"
-                        app:layout_constraintTop_toTopOf="parent"
-                        tools:src="@drawable/haha_icon" />
+                <ImageView
+                    android:id="@+id/user_gender_image_view"
+                    android:onClick="@{()->fragment.genderButton()}"
+                    android:layout_width="@dimen/icon_image_size"
+                    android:layout_height="@dimen/icon_image_size"
+                    android:background="?android:attr/selectableItemBackgroundBorderless"
+                    app:layout_constraintBottom_toBottomOf="@+id/user_name_text_view"
+                    app:layout_constraintStart_toEndOf="@+id/user_name_text_view"
+                    app:layout_constraintTop_toTopOf="@+id/user_name_text_view"
+                    bind:gender_idx="@{viewModel.curUser}"
+                    tools:src="@drawable/male" />
 
-                    <ImageView
-                        android:id="@+id/user_gender_image_view"
-                        android:layout_width="@dimen/gender_image_size"
-                        android:layout_height="@dimen/gender_image_size"
-                        android:background="?android:attr/selectableItemBackground"
-                        app:layout_constraintBottom_toBottomOf="@+id/user_name_text_view"
-                        app:layout_constraintStart_toEndOf="@+id/user_name_text_view"
-                        app:layout_constraintTop_toTopOf="@+id/user_name_text_view"
-                        bind:gender_idx="@{viewModel.curUser}"
-                        tools:src="@drawable/male" />
+                <TextView
+                    android:id="@+id/user_age_text_view"
+                    style="@style/post_title_text_view"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="4dp"
+                    android:textAlignment="viewStart"
+                    app:layout_constraintBottom_toBottomOf="@+id/user_name_text_view"
+                    app:layout_constraintStart_toEndOf="@+id/user_gender_image_view"
+                    app:layout_constraintTop_toTopOf="@+id/user_name_text_view"
+                    bind:age="@{viewModel.curUser}"
+                    android:textSize="@dimen/subtitle_text_size"
+                    tools:text="@string/str_user_age_exam"
+                    tools:textColor="@color/blue" />
 
-                    <TextView
-                        android:id="@+id/user_age_text_view"
-                        style="@style/post_title_text_view"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_marginStart="4dp"
-                        android:textAlignment="viewStart"
-                        app:layout_constraintBottom_toBottomOf="@+id/user_name_text_view"
-                        app:layout_constraintStart_toEndOf="@+id/user_gender_image_view"
-                        app:layout_constraintTop_toTopOf="@+id/user_name_text_view"
-                        bind:age="@{viewModel.curUser}"
-                        tools:text="@string/str_user_age_exam"
-                        tools:textColor="@color/blue" />
+                <View
+                    android:id="@+id/divider1"
+                    style="@style/divider"
+                    android:layout_marginTop="@dimen/margin_16dp"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/user_profile_image" />
 
-                    <View
-                        android:id="@+id/divider1"
-                        style="@style/divider"
-                        android:layout_marginTop="@dimen/margin_16dp"
-                        app:layout_constraintEnd_toEndOf="parent"
-                        app:layout_constraintStart_toStartOf="parent"
-                        app:layout_constraintTop_toBottomOf="@+id/user_profile_image" />
+                <TextView
+                    android:id="@+id/birth_text_view"
+                    style="@style/post_title_text_view"
+                    android:onClick="@{()->fragment.birthDateButton()}"
+                    android:textColor="@color/purple"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="@dimen/margin_16dp"
+                    android:layout_marginTop="@dimen/margin_16dp"
+                    android:background="?android:attr/selectableItemBackground"
+                    android:text="@string/str_date_of_birth"
+                    android:textAlignment="viewStart"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/divider1" />
 
-                    <TextView
-                        android:id="@+id/birth_text_view"
-                        style="@style/post_title_text_view"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_marginStart="@dimen/margin_16dp"
-                        android:layout_marginTop="@dimen/margin_16dp"
-                        android:background="?android:attr/selectableItemBackground"
-                        android:text="@string/str_date_of_birth"
-                        android:textAlignment="viewStart"
-                        app:layout_constraintStart_toStartOf="parent"
-                        app:layout_constraintTop_toBottomOf="@+id/divider1" />
+                <TextView
+                    android:id="@+id/birth_value_text_view"
+                    style="@style/normal_text_style"
+                    android:onClick="@{()->fragment.birthDateButton()}"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="@dimen/margin_16dp"
+                    android:textAlignment="viewStart"
+                    android:textColor="@color/grey"
+                    app:layout_constraintBottom_toBottomOf="@+id/birth_text_view"
+                    app:layout_constraintStart_toEndOf="@+id/birth_text_view"
+                    app:layout_constraintTop_toTopOf="@+id/birth_text_view"
+                    bind:birth_date="@{viewModel.curUser}"
+                    tools:text="@string/str_date_of_birth_exam" />
 
-                    <TextView
-                        android:id="@+id/birth_value_text_view"
-                        style="@style/normal_text_style"
-                        android:layout_width="0dp"
-                        android:layout_height="wrap_content"
-                        android:layout_marginStart="@dimen/margin_16dp"
-                        android:textAlignment="viewStart"
-                        android:textColor="@color/grey"
-                        app:layout_constraintBottom_toBottomOf="@+id/birth_text_view"
-                        app:layout_constraintStart_toEndOf="@+id/birth_text_view"
-                        app:layout_constraintTop_toTopOf="@+id/birth_text_view"
-                        bind:birth_date="@{viewModel.curUser}"
-                        tools:text="@string/str_date_of_birth_exam" />
+                <TextView
+                    android:id="@+id/region_text_view"
+                    style="@style/post_title_text_view"
+                    android:layout_width="0dp"
+                    android:textColor="@color/purple"
+                    android:onClick="@{()->fragment.showEditDialog(fragment.REGION)}"
+                    android:background="?android:attr/selectableItemBackground"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="@dimen/margin_16dp"
+                    android:layout_marginTop="@dimen/margin_16dp"
+                    android:text="@string/str_region"
+                    android:textAlignment="viewStart"
+                    app:layout_constraintEnd_toEndOf="@+id/birth_text_view"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/birth_text_view" />
 
-                    <TextView
-                        android:id="@+id/region_text_view"
-                        style="@style/post_title_text_view"
-                        android:layout_width="0dp"
-                        android:layout_height="wrap_content"
-                        android:layout_marginStart="@dimen/margin_16dp"
-                        android:layout_marginTop="@dimen/margin_16dp"
-                        android:background="?android:attr/selectableItemBackground"
-                        android:text="@string/str_region"
-                        android:textAlignment="viewStart"
-                        app:layout_constraintEnd_toEndOf="@+id/birth_text_view"
-                        app:layout_constraintStart_toStartOf="parent"
-                        app:layout_constraintTop_toBottomOf="@+id/birth_text_view" />
+                <TextView
+                    android:id="@+id/region_value_text_view"
+                    style="@style/normal_text_style"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="@dimen/margin_16dp"
+                    android:textAlignment="viewStart"
+                    android:textColor="@color/grey"
+                    app:layout_constraintBottom_toBottomOf="@+id/region_text_view"
+                    app:layout_constraintStart_toEndOf="@+id/region_text_view"
+                    app:layout_constraintTop_toTopOf="@+id/region_text_view"
+                    bind:region="@{viewModel.curUser}"
+                    tools:text="@string/str_region_exam" />
 
-                    <TextView
-                        android:id="@+id/region_value_text_view"
-                        style="@style/normal_text_style"
-                        android:layout_width="0dp"
-                        android:layout_height="wrap_content"
-                        android:layout_marginStart="@dimen/margin_16dp"
-                        android:textAlignment="viewStart"
-                        android:textColor="@color/grey"
-                        app:layout_constraintBottom_toBottomOf="@+id/region_text_view"
-                        app:layout_constraintStart_toEndOf="@+id/region_text_view"
-                        app:layout_constraintTop_toTopOf="@+id/region_text_view"
-                        bind:region="@{viewModel.curUser}"
-                        tools:text="@string/str_region_exam" />
+                <View
+                    android:id="@+id/divider2"
+                    style="@style/divider"
+                    android:layout_marginTop="@dimen/margin_16dp"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/region_text_view" />
 
-                    <View
-                        android:id="@+id/divider2"
-                        style="@style/divider"
-                        android:layout_marginTop="@dimen/margin_16dp"
-                        app:layout_constraintEnd_toEndOf="parent"
-                        app:layout_constraintStart_toStartOf="parent"
-                        app:layout_constraintTop_toBottomOf="@+id/region_text_view" />
+                <TextView
+                    android:id="@+id/introduction_text_view"
+                    style="@style/post_title_text_view"
+                    android:textColor="@color/purple"
+                    android:background="?android:attr/selectableItemBackground"
+                    android:onClick="@{()->fragment.showEditDialog(fragment.INTRODUCTION)}"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="@dimen/margin_16dp"
+                    android:layout_marginTop="@dimen/margin_16dp"
+                    android:text="@string/str_introduction"
+                    android:textAlignment="viewStart"
+                    app:layout_constraintEnd_toEndOf="@+id/birth_text_view"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/divider2" />
 
-                    <TextView
-                        android:id="@+id/introduction_text_view"
-                        style="@style/post_title_text_view"
-                        android:layout_width="0dp"
-                        android:layout_height="wrap_content"
-                        android:layout_marginStart="@dimen/margin_16dp"
-                        android:layout_marginTop="@dimen/margin_16dp"
-                        android:background="?android:attr/selectableItemBackground"
-                        android:text="@string/str_introduction"
-                        android:textAlignment="viewStart"
-                        app:layout_constraintEnd_toEndOf="@+id/birth_text_view"
-                        app:layout_constraintStart_toStartOf="parent"
-                        app:layout_constraintTop_toBottomOf="@+id/divider2" />
+                <TextView
+                    android:id="@+id/introduction_value_text_view"
+                    style="@style/normal_text_style"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginEnd="@dimen/margin_16dp"
+                    bind:default_text="@{viewModel.curUser.strIntroduction}"
+                    android:textAlignment="viewStart"
+                    android:textColor="@color/grey"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="@+id/introduction_text_view"
+                    app:layout_constraintTop_toBottomOf="@+id/introduction_text_view"
+                    tools:text="@string/str_introduction" />
 
-                    <TextView
-                        android:id="@+id/introduction_value_text_view"
-                        style="@style/normal_text_style"
-                        android:layout_width="0dp"
-                        android:layout_height="wrap_content"
-                        android:layout_marginEnd="@dimen/margin_16dp"
-                        android:text="@{viewModel.curUser.strIntroduction}"
-                        android:textAlignment="viewStart"
-                        android:textColor="@color/grey"
-                        app:layout_constraintEnd_toEndOf="parent"
-                        app:layout_constraintStart_toStartOf="@+id/introduction_text_view"
-                        app:layout_constraintTop_toBottomOf="@+id/introduction_text_view"
-                        tools:text="@string/str_introduction" />
+                <View
+                    android:id="@+id/divider3"
+                    style="@style/divider"
+                    android:layout_marginTop="@dimen/margin_16dp"
+                    app:layout_constraintTop_toBottomOf="@+id/introduction_value_text_view"
+                    bind:layout_constraintEnd_toEndOf="parent"
+                    bind:layout_constraintStart_toStartOf="parent" />
 
-                    <View
-                        android:id="@+id/divider3"
-                        style="@style/divider"
-                        android:layout_marginTop="@dimen/margin_16dp"
-                        app:layout_constraintTop_toBottomOf="@+id/introduction_value_text_view"
-                        bind:layout_constraintEnd_toEndOf="parent"
-                        bind:layout_constraintStart_toStartOf="parent" />
+                <TextView
+                    android:id="@+id/education_text_view"
+                    style="@style/post_title_text_view"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="@dimen/margin_16dp"
+                    android:layout_marginTop="@dimen/margin_16dp"
+                    android:onClick="@{()->fragment.showEditDialog(fragment.EDUCATION)}"
+                    android:background="?android:attr/selectableItemBackground"
+                    android:text="@string/str_education"
+                    android:textAlignment="viewStart"
+                    android:textColor="@color/purple"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/divider3" />
 
-                    <TextView
-                        android:id="@+id/education_text_view"
-                        style="@style/post_title_text_view"
-                        android:layout_width="0dp"
-                        android:layout_height="wrap_content"
-                        android:layout_marginStart="@dimen/margin_16dp"
-                        android:layout_marginTop="@dimen/margin_16dp"
-                        android:background="?android:attr/selectableItemBackground"
-                        android:text="@string/str_education"
-                        android:textAlignment="viewStart"
-                        app:layout_constraintEnd_toEndOf="@+id/birth_text_view"
-                        app:layout_constraintStart_toStartOf="parent"
-                        app:layout_constraintTop_toBottomOf="@+id/divider3" />
+                <TextView
+                    android:id="@+id/education_value_text_view"
+                    style="@style/normal_text_style"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginEnd="@dimen/margin_16dp"
+                    bind:default_text="@{viewModel.curUser.strEducation}"
+                    android:textAlignment="viewStart"
+                    android:textColor="@color/grey"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="@+id/education_text_view"
+                    app:layout_constraintTop_toBottomOf="@+id/education_text_view"
+                    tools:text="@string/str_education" />
 
-                    <TextView
-                        android:id="@+id/education_value_text_view"
-                        style="@style/normal_text_style"
-                        android:layout_width="0dp"
-                        android:layout_height="wrap_content"
-                        android:layout_marginEnd="@dimen/margin_16dp"
-                        android:text="@{viewModel.curUser.strEducation}"
-                        android:textAlignment="viewStart"
-                        android:textColor="@color/grey"
-                        app:layout_constraintEnd_toEndOf="parent"
-                        app:layout_constraintStart_toStartOf="@+id/education_text_view"
-                        app:layout_constraintTop_toBottomOf="@+id/education_text_view"
-                        tools:text="@string/str_education" />
+                <TextView
+                    android:id="@+id/career_text_view"
+                    style="@style/post_title_text_view"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="@dimen/margin_16dp"
+                    android:layout_marginTop="@dimen/margin_16dp"
+                    android:onClick="@{()->fragment.showEditDialog(fragment.CAREER)}"
+                    android:background="?android:attr/selectableItemBackground"
+                    android:text="@string/str_career"
+                    android:textColor="@color/purple"
+                    android:textAlignment="viewStart"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/education_value_text_view" />
 
-                    <TextView
-                        android:id="@+id/career_text_view"
-                        style="@style/post_title_text_view"
-                        android:layout_width="0dp"
-                        android:layout_height="wrap_content"
-                        android:layout_marginStart="@dimen/margin_16dp"
-                        android:layout_marginTop="@dimen/margin_16dp"
-                        android:background="?android:attr/selectableItemBackground"
-                        android:text="@string/str_career"
-                        android:textAlignment="viewStart"
-                        app:layout_constraintEnd_toEndOf="@+id/birth_text_view"
-                        app:layout_constraintStart_toStartOf="parent"
-                        app:layout_constraintTop_toBottomOf="@+id/education_value_text_view" />
+                <TextView
+                    android:id="@+id/career_value_text_view"
+                    style="@style/normal_text_style"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginEnd="@dimen/margin_16dp"
+                    bind:default_text="@{viewModel.curUser.strCareer}"
+                    android:textAlignment="viewStart"
+                    android:textColor="@color/grey"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="@+id/career_text_view"
+                    app:layout_constraintTop_toBottomOf="@+id/career_text_view"
+                    tools:text="@string/str_career" />
 
-                    <TextView
-                        android:id="@+id/career_value_text_view"
-                        style="@style/normal_text_style"
-                        android:layout_width="0dp"
-                        android:layout_height="wrap_content"
-                        android:layout_marginEnd="@dimen/margin_16dp"
-                        android:text="@{viewModel.curUser.strCareer}"
-                        android:textAlignment="viewStart"
-                        android:textColor="@color/grey"
-                        app:layout_constraintEnd_toEndOf="parent"
-                        app:layout_constraintStart_toStartOf="@+id/career_text_view"
-                        app:layout_constraintTop_toBottomOf="@+id/career_text_view"
-                        tools:text="@string/str_career" />
+                <TextView
+                    android:id="@+id/phone_number_text_view"
+                    style="@style/post_title_text_view"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/margin_16dp"
+                    android:onClick="@{()->fragment.showEditDialog(fragment.PHONE_NUMBER)}"
+                    android:background="?android:attr/selectableItemBackground"
+                    android:text="@string/str_phone_number"
+                    android:textAlignment="viewStart"
+                    android:textColor="@color/purple"
+                    app:layout_constraintStart_toStartOf="@+id/career_text_view"
+                    app:layout_constraintTop_toBottomOf="@+id/career_value_text_view" />
 
-                    <TextView
-                        android:id="@+id/phone_number_text_view"
-                        style="@style/post_title_text_view"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_marginTop="@dimen/margin_16dp"
-                        android:background="?android:attr/selectableItemBackground"
-                        android:text="@string/str_phone_number"
-                        android:textAlignment="viewStart"
-                        app:layout_constraintStart_toStartOf="@+id/career_text_view"
-                        app:layout_constraintTop_toBottomOf="@+id/career_value_text_view" />
+                <TextView
+                    android:id="@+id/phone_number_value_text_view"
+                    style="@style/normal_text_style"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginEnd="@dimen/margin_16dp"
+                    bind:default_text="@{viewModel.curUser.strPhoneNumber}"
+                    android:textAlignment="viewStart"
+                    android:textColor="@color/grey"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="@+id/phone_number_text_view"
+                    app:layout_constraintTop_toBottomOf="@+id/phone_number_text_view"
+                    tools:text="@string/str_phone_number" />
 
-                    <TextView
-                        android:id="@+id/phone_number_value_text_view"
-                        style="@style/normal_text_style"
-                        android:layout_width="0dp"
-                        android:layout_height="wrap_content"
-                        android:layout_marginEnd="@dimen/margin_16dp"
-                        android:text="@{viewModel.curUser.strPhoneNumber}"
-                        android:textAlignment="viewStart"
-                        android:textColor="@color/grey"
-                        app:layout_constraintEnd_toEndOf="parent"
-                        app:layout_constraintStart_toStartOf="@+id/phone_number_text_view"
-                        app:layout_constraintTop_toBottomOf="@+id/phone_number_text_view"
-                        tools:text="@string/str_phone_number" />
+                <View
+                    android:id="@+id/divider4"
+                    style="@style/divider"
+                    android:layout_marginTop="@dimen/margin_16dp"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/phone_number_value_text_view" />
 
-                    <View
-                        android:id="@+id/divider4"
-                        style="@style/divider"
-                        android:layout_marginTop="@dimen/margin_16dp"
-                        app:layout_constraintEnd_toEndOf="parent"
-                        app:layout_constraintStart_toStartOf="parent"
-                        app:layout_constraintTop_toBottomOf="@+id/phone_number_value_text_view" />
+                <TextView
+                    android:id="@+id/favorites_text_view"
+                    style="@style/post_title_text_view"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/margin_16dp"
+                    android:onClick="@{()->fragment.showEditDialog(fragment.FAVORITES)}"
+                    android:background="?android:attr/selectableItemBackground"
+                    android:text="@string/str_favorites"
+                    android:textAlignment="viewStart"
+                    android:textColor="@color/purple"
+                    app:layout_constraintStart_toStartOf="@+id/career_text_view"
+                    app:layout_constraintTop_toBottomOf="@+id/divider4" />
 
-                    <TextView
-                        android:id="@+id/favorites_text_view"
-                        style="@style/post_title_text_view"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_marginTop="@dimen/margin_16dp"
-                        android:background="?android:attr/selectableItemBackground"
-                        android:text="@string/str_favorites"
-                        android:textAlignment="viewStart"
-                        app:layout_constraintStart_toStartOf="@+id/career_text_view"
-                        app:layout_constraintTop_toBottomOf="@+id/divider4" />
+                <TextView
+                    android:id="@+id/favorites_value_text_view"
+                    style="@style/normal_text_style"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginEnd="@dimen/margin_16dp"
+                    bind:default_text="@{viewModel.curUser.strFavorites}"
+                    android:textAlignment="viewStart"
+                    android:textColor="@color/grey"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="@+id/favorites_text_view"
+                    app:layout_constraintTop_toBottomOf="@+id/favorites_text_view"
+                    tools:text="@string/str_favorites" />
 
-                    <TextView
-                        android:id="@+id/favorites_value_text_view"
-                        style="@style/normal_text_style"
-                        android:layout_width="0dp"
-                        android:layout_height="wrap_content"
-                        android:layout_marginEnd="@dimen/margin_16dp"
-                        android:text="@{viewModel.curUser.strFavorites}"
-                        android:textAlignment="viewStart"
-                        android:textColor="@color/grey"
-                        app:layout_constraintEnd_toEndOf="parent"
-                        app:layout_constraintStart_toStartOf="@+id/favorites_text_view"
-                        app:layout_constraintTop_toBottomOf="@+id/favorites_text_view"
-                        tools:text="@string/str_favorites" />
+                <TextView
+                    android:id="@+id/dislikes_text_view"
+                    style="@style/post_title_text_view"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/margin_16dp"
+                    android:text="@string/str_dislikes"
+                    android:textColor="@color/purple"
+                    android:background="?android:attr/selectableItemBackground"
+                    android:onClick="@{()->fragment.showEditDialog(fragment.DISLIKES)}"
+                    android:textAlignment="viewStart"
+                    app:layout_constraintStart_toStartOf="@+id/career_text_view"
+                    app:layout_constraintTop_toBottomOf="@+id/favorites_value_text_view" />
 
-                    <TextView
-                        android:id="@+id/dislikes_text_view"
-                        style="@style/post_title_text_view"
-                        android:layout_width="0dp"
-                        android:layout_height="wrap_content"
-                        android:layout_marginTop="@dimen/margin_16dp"
-                        android:background="?android:attr/selectableItemBackground"
-                        android:text="@string/str_dislikes"
-                        android:textAlignment="viewStart"
-                        app:layout_constraintStart_toStartOf="@+id/career_text_view"
-                        app:layout_constraintTop_toBottomOf="@+id/favorites_value_text_view" />
+                <TextView
+                    android:id="@+id/dislikes_value_text_view"
+                    style="@style/normal_text_style"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginEnd="@dimen/margin_16dp"
+                    android:layout_marginBottom="@dimen/margin_16dp"
+                    bind:default_text="@{viewModel.curUser.strDislikes}"
+                    android:textAlignment="viewStart"
+                    android:textColor="@color/grey"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="@+id/dislikes_text_view"
+                    app:layout_constraintTop_toBottomOf="@+id/dislikes_text_view"
+                    app:layout_constraintVertical_bias="0.0"
+                    tools:text="@string/str_dislikes" />
 
-                    <TextView
-                        android:id="@+id/dislikes_value_text_view"
-                        style="@style/normal_text_style"
-                        android:layout_width="0dp"
-                        android:layout_height="wrap_content"
-                        android:layout_marginEnd="@dimen/margin_16dp"
-                        android:layout_marginBottom="@dimen/margin_16dp"
-                        android:text="@{viewModel.curUser.strDislikes}"
-                        android:textAlignment="viewStart"
-                        android:textColor="@color/grey"
-                        app:layout_constraintBottom_toBottomOf="parent"
-                        app:layout_constraintEnd_toEndOf="parent"
-                        app:layout_constraintStart_toStartOf="@+id/dislikes_text_view"
-                        app:layout_constraintTop_toBottomOf="@+id/dislikes_text_view"
-                        app:layout_constraintVertical_bias="0.0"
-                        tools:text="@string/str_dislikes" />
-
-                    <View
-                        android:id="@+id/divider5"
-                        style="@style/divider"
-                        android:layout_marginTop="@dimen/margin_16dp"
-                        app:layout_constraintEnd_toEndOf="parent"
-                        app:layout_constraintStart_toStartOf="parent"
-                        app:layout_constraintTop_toBottomOf="@+id/dislikes_value_text_view" />
-
-                </androidx.constraintlayout.widget.ConstraintLayout>
-
-            </com.google.android.material.card.MaterialCardView>
+            </androidx.constraintlayout.widget.ConstraintLayout>
 
         </ScrollView>
 
-    </LinearLayout>
+    </com.google.android.material.card.MaterialCardView>
 </layout>

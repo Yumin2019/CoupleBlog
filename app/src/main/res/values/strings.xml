@@ -267,6 +267,7 @@ Couple blog 은(는) 정보주체의 이용정보를 저장하고 수시로 불�
     <string name="str_phone_number">Phone Number</string>
     <string name="str_date_of_birth">Date of birth</string>
     <string name="str_gender">Gender</string>
+    <string name="str_not_set">Not set</string>
     <string name="str_joined_n_days_ago">Joined Couple Blog %d days ago</string>
     <string name="str_joined_one_day_ago">Joined Couple Blog 1 day ago</string>
     <string name="str_online">◆ Online</string>
@@ -327,6 +328,9 @@ Couple blog 은(는) 정보주체의 이용정보를 저장하고 수시로 불�
     <string name="str_register">Register</string>
     <string name="str_post">Post</string>
     <string name="str_send">Send</string>
+    <string name="str_unspecified">Unspecified</string>
+    <string name="str_male">Male</string>
+    <string name="str_female">Female</string>
     <string name="str_register_msg">if you don\'t have an account</string>
     <string name="str_personal_information_policy_msg">if you want to see</string>
     <string name="str_personal_information_policy">Personal information processing policy</string>
@@ -335,6 +339,7 @@ Couple blog 은(는) 정보주체의 이용정보를 저장하고 수시로 불�
     <string name="str_input_password_again">Please input your password again</string>
     <string name="str_input_comment">Please input your comment</string>
     <string name="str_input_title">Please input your title</string>
+    <string name="str_input_letter">Please input at least one letter</string>
     <string name="str_input_recipient">Please specify at least one recipient.</string>
     <string name="str_check_mail">Please specify at least one mail.</string>
     <string name="str_post_confirm">Do you really want to post?</string>

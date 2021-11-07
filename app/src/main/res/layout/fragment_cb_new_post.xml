@@ -105,7 +105,6 @@
                         android:gravity="start"
                         android:hint="@string/str_text"
                         android:inputType="textMultiLine"
-                        android:maxLines="10"
                         android:maxLength="1000"
                         android:text="@={viewModel.strBody}"
                         android:textAlignment="viewStart"
