@@ -284,7 +284,7 @@ class CB_AppFunc
                 override fun onDataChange(snapshot: DataSnapshot)
                 {
                     _curUser = snapshot.getValue<CB_User>()!!
-                    CB_ViewModel.curUser.value = curUser
+                    CB_ViewModel.curUser.postValue(curUser)
 
                     // 커플이 된 경우를 확인하여 추가한다.
                     addEventListenerToCoupleUserInfo()
@@ -317,7 +317,7 @@ class CB_AppFunc
                 override fun onDataChange(snapshot: DataSnapshot)
                 {
                     _coupleUser = snapshot.getValue<CB_User>()!!
-                    CB_ViewModel.coupleUser.value = coupleUser
+                    CB_ViewModel.coupleUser.postValue(coupleUser)
                 }
 
                 override fun onCancelled(error: DatabaseError)
@@ -520,6 +520,7 @@ class CB_AppFunc
         fun stringToCalendar(strDate: String?): Calendar
         = let {
 
+            // 아마 여기서 empty가 나온 것 같다.
             if (strDate == null || strDate.isEmpty())
             {
                 Log.e(strTag, "strDate can't be parsed")
@@ -596,6 +597,7 @@ class CB_AppFunc
 
         // gmt offset을 고려한다.
         fun calendarToSaveString(calendar: Calendar) = DateFormat.format("yyyyMMddHHmm", calendar.time).toString()
+        fun calendarToBirthdayString(calendar: Calendar) = DateFormat.format("yyyyMMdd", calendar.time).toString() + "0000"
         fun getCurCalendar(): Calendar = Calendar.getInstance()
 
         // 로컬 지역에 따라서 출력용 dateString 얻기

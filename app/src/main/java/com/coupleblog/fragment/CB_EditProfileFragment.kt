@@ -66,14 +66,20 @@ class CB_EditProfileFragment : CB_BaseFragment("EditProfile")
         }.
 
         build().apply {
-            show(this@CB_EditProfileFragment.requireActivity().supportFragmentManager, "birthDateButton")
             addOnPositiveButtonClickListener {
                 // get the past date and save it
                 val calendar = Calendar.getInstance(TimeZone.getTimeZone("UTC")).apply { timeInMillis = it }
-                val strDate = CB_AppFunc.calendarToSaveString(calendar)
-                strDate
+                val strBirthDate = CB_AppFunc.calendarToBirthdayString(calendar)
+
+                with(CB_AppFunc)
+                {
+                    // update user's birthdate
+                    curUser.strBirthDate = strBirthDate
+                    getUsersRoot().child(getUid()).setValue(curUser)
+                }
             }
             addOnDismissListener { CB_SingleSystemMgr.releaseDialog(CB_SingleSystemMgr.DIALOG_TYPE.DATE_PICKER) }
+            show(this@CB_EditProfileFragment.requireActivity().supportFragmentManager, "birthDateButton")
         }
     }
 
