@@ -49,6 +49,12 @@ class CB_MailBoxFragment: CB_BaseFragment("MailBoxFragment")
         return binding.root
     }
 
+    override fun onResume()
+    {
+        super.onResume()
+        CB_ViewModel.bAddButton.postValue(true)
+    }
+
     override fun onCreate(savedInstanceState: Bundle?)
     {
         super.onCreate(savedInstanceState)
@@ -70,11 +76,10 @@ class CB_MailBoxFragment: CB_BaseFragment("MailBoxFragment")
             R.id.action_logout ->
             {
                 // 로그아웃을 진행한다.
-                CB_AppFunc.cleanUpListener()
-                CB_AppFunc.getAuth().signOut()
-
-                // 프레그먼트를 종료시킨다.
-                findNavController().popBackStack()
+                CB_AppFunc.logout {
+                    // 프레그먼트를 종료시킨다.
+                    findNavController().popBackStack()
+                }
             }
 
             R.id.action_delete_mail ->

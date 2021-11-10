@@ -79,6 +79,8 @@
 
                 <ImageView
                     android:id="@+id/author_image_view"
+                    android:background="?android:attr/selectableItemBackgroundBorderless"
+                    android:onClick="@{()->fragment.profileButton(viewModel.TPost.strAuthorUid)}"
                     android:layout_width="@dimen/icon_image_size"
                     android:layout_height="@dimen/icon_image_size"
                     android:layout_marginStart="@dimen/normal_margin"

@@ -19,13 +19,9 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 
-        <ScrollView
-            android:layout_width="match_parent"
-            android:layout_height="match_parent">
-
             <androidx.constraintlayout.widget.ConstraintLayout
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content">
+                android:layout_height="match_parent">
 
                 <ImageView
                     android:id="@+id/post_image_view"
@@ -119,11 +115,11 @@
                 <com.google.android.material.textfield.TextInputLayout
                     android:id="@+id/text_input_layout"
                     android:layout_width="0dp"
-                    android:layout_height="wrap_content"
+                    android:layout_height="0dp"
                     app:boxStrokeWidth="0dp"
                     app:boxStrokeWidthFocused="0dp"
                     app:counterEnabled="true"
-                    app:counterMaxLength="250"
+                    app:counterMaxLength="1000"
                     app:endIconMode="none"
                     app:errorEnabled="false"
                     app:hintEnabled="true"
@@ -138,6 +134,7 @@
                         style="@style/normal_text_style"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
+                        android:minHeight="475dp"
                         android:layout_marginStart="@dimen/margin_16dp"
                         android:layout_marginTop="@dimen/margin_16dp"
                         android:layout_marginEnd="@dimen/margin_16dp"
@@ -147,12 +144,7 @@
                         android:imeOptions="actionNext"
                         android:inputType="textMultiLine"
                         android:maxLength="1000"
-                        android:minHeight="350dp"
                         android:textAlignment="viewStart"
-                        app:layout_constraintBottom_toTopOf="@+id/view2"
-                        app:layout_constraintEnd_toEndOf="parent"
-                        app:layout_constraintStart_toStartOf="parent"
-                        app:layout_constraintTop_toBottomOf="@+id/post_image_view"
                         tools:text="This is example text" />
 
                 </com.google.android.material.textfield.TextInputLayout>
@@ -182,7 +174,6 @@
                     app:rippleColor="@color/ripple_purple" />
 
             </androidx.constraintlayout.widget.ConstraintLayout>
-        </ScrollView>
 
     </com.google.android.material.card.MaterialCardView>
 </layout>

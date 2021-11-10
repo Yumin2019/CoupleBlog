@@ -1,9 +1,7 @@
 package com.coupleblog.fragment
 
 import android.os.Bundle
-import android.view.LayoutInflater
-import android.view.View
-import android.view.ViewGroup
+import android.view.*
 import androidx.core.os.bundleOf
 import androidx.navigation.fragment.findNavController
 import com.coupleblog.R
@@ -25,6 +23,37 @@ class CB_ProfileFragment: CB_BaseFragment("Profilefragment")
             viewModel = CB_ViewModel.Companion
         }
         return binding.root
+    }
+
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?)
+    {
+        super.onViewCreated(view, savedInstanceState)
+        setHasOptionsMenu(true)
+    }
+
+    override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater)
+    {
+        inflater.inflate(R.menu.menu_main, menu)
+    }
+
+    override fun onOptionsItemSelected(item: MenuItem): Boolean
+    {
+        when(item.itemId)
+        {
+            R.id.action_logout ->
+            {
+                // 로그아웃을 진행한다.
+                CB_AppFunc.logout {
+                    // 프레그먼트를 종료시킨다.
+                    findNavController().popBackStack()
+                }
+
+            }
+
+            else -> {super.onOptionsItemSelected(item)}
+        }
+
+        return true
     }
 
     fun profileButton(isMyProfile: Boolean)

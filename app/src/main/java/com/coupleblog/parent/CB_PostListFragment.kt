@@ -72,11 +72,10 @@ abstract class CB_PostListFragment : CB_BaseFragment("PostList")
             R.id.action_logout ->
             {
                 // 로그아웃을 진행한다.
-                CB_AppFunc.cleanUpListener()
-                CB_AppFunc.getAuth().signOut()
-
-                // 프레그먼트를 종료시킨다.
-                findNavController().popBackStack()
+                CB_AppFunc.logout {
+                    // 프레그먼트를 종료시킨다.
+                    findNavController().popBackStack()
+                }
             }
 
             else -> {super.onOptionsItemSelected(item)}

@@ -53,8 +53,6 @@ class CB_PostDetailFragment: CB_BaseFragment("PostDetail")
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View
     {
-        CB_ViewModel.bAddButton.postValue(false)
-
         _binding = PostDetailBinding.inflate(inflater, container, false)
         binding.apply {
             lifecycleOwner  = viewLifecycleOwner
@@ -63,6 +61,12 @@ class CB_PostDetailFragment: CB_BaseFragment("PostDetail")
             viewModel       = CB_ViewModel.Companion
         }
         return binding.root
+    }
+
+    override fun onResume()
+    {
+        super.onResume()
+        CB_ViewModel.bAddButton.postValue(false)
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?)
@@ -478,6 +482,12 @@ class CB_PostDetailFragment: CB_BaseFragment("PostDetail")
                 }
 
             }, R.string.str_cancel, null)
+    }
+
+    fun profileButton(strUid: String)
+    {
+        beginAction(R.id.action_CB_PostDetailFragment_to_CB_ProfileInfoFragment,
+            R.id.CB_PostDetailFragment, bundleOf(CB_ProfileInfoFragment.ARGU_UID to strUid))
     }
 
     fun postButton()

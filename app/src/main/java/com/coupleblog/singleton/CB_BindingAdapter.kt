@@ -22,21 +22,21 @@ import com.google.firebase.database.ktx.getValue
 fun setFieldTypeHint(textView: TextView, iFieldType: Int)
 {
     val strText = when(iFieldType)
-{
-    EDIT_FIELD_TYPE.NAME         .ordinal -> CB_AppFunc.getString(R.string.str_user_name)
-    EDIT_FIELD_TYPE.IMAGE        .ordinal -> CB_AppFunc.getString(R.string.str_user_image)
-    EDIT_FIELD_TYPE.EMAIL        .ordinal -> CB_AppFunc.getString(R.string.str_email)
-    EDIT_FIELD_TYPE.GENDER       .ordinal -> CB_AppFunc.getString(R.string.str_gender)
-    EDIT_FIELD_TYPE.DATE_OF_BIRTH.ordinal -> CB_AppFunc.getString(R.string.str_date_of_birth)
-    EDIT_FIELD_TYPE.REGION       .ordinal -> CB_AppFunc.getString(R.string.str_region)
-    EDIT_FIELD_TYPE.INTRODUCTION .ordinal -> CB_AppFunc.getString(R.string.str_introduction)
-    EDIT_FIELD_TYPE.EDUCATION    .ordinal -> CB_AppFunc.getString(R.string.str_education)
-    EDIT_FIELD_TYPE.CAREER       .ordinal -> CB_AppFunc.getString(R.string.str_career)
-    EDIT_FIELD_TYPE.PHONE_NUMBER .ordinal -> CB_AppFunc.getString(R.string.str_phone_number)
-    EDIT_FIELD_TYPE.FAVORITES    .ordinal -> CB_AppFunc.getString(R.string.str_favorites)
-    EDIT_FIELD_TYPE.DISLIKES     .ordinal -> CB_AppFunc.getString(R.string.str_dislikes)
-    else -> ""
-}
+    {
+        EDIT_FIELD_TYPE.NAME         .ordinal -> CB_AppFunc.getString(R.string.str_user_name)
+        EDIT_FIELD_TYPE.IMAGE        .ordinal -> CB_AppFunc.getString(R.string.str_user_image)
+        EDIT_FIELD_TYPE.EMAIL        .ordinal -> CB_AppFunc.getString(R.string.str_email)
+        EDIT_FIELD_TYPE.GENDER       .ordinal -> CB_AppFunc.getString(R.string.str_gender)
+        EDIT_FIELD_TYPE.DATE_OF_BIRTH.ordinal -> CB_AppFunc.getString(R.string.str_date_of_birth)
+        EDIT_FIELD_TYPE.REGION       .ordinal -> CB_AppFunc.getString(R.string.str_region)
+        EDIT_FIELD_TYPE.INTRODUCTION .ordinal -> CB_AppFunc.getString(R.string.str_introduction)
+        EDIT_FIELD_TYPE.EDUCATION    .ordinal -> CB_AppFunc.getString(R.string.str_education)
+        EDIT_FIELD_TYPE.CAREER       .ordinal -> CB_AppFunc.getString(R.string.str_career)
+        EDIT_FIELD_TYPE.PHONE_NUMBER .ordinal -> CB_AppFunc.getString(R.string.str_phone_number)
+        EDIT_FIELD_TYPE.FAVORITES    .ordinal -> CB_AppFunc.getString(R.string.str_favorites)
+        EDIT_FIELD_TYPE.DISLIKES     .ordinal -> CB_AppFunc.getString(R.string.str_dislikes)
+        else -> ""
+    }
     textView.hint = strText
 }
 
@@ -65,26 +65,22 @@ fun setFieldType(textView: TextView, iFieldType: Int)
 @BindingAdapter("bind:joined_date")
 fun setJoinDate(textView: TextView, userData: CB_User)
 {
+    textView.visibility = View.GONE
     if(userData.strSignUpDate.isNullOrEmpty())
-    {
-        textView.visibility = View.GONE
         return
-    }
 
     // according to gmt time
     val joinedDate = CB_AppFunc.stringToCalendar(userData.strSignUpDate).time
     val curDate = CB_AppFunc.getCalendarForSave().time
 
     // milliseconds to days
-    val days = (curDate.time - joinedDate.time).toInt() / (24 * 60 * 60 * 1000)
+    val days = ((curDate.time - joinedDate.time) / (24 * 60 * 60 * 1000)).toInt()
 
     // if it's under 1 day, do not write
     if(days < 1)
-    {
-        textView.visibility = View.GONE
         return
-    }
 
+    textView.visibility = View.VISIBLE
     textView.text = if(days == 1)
                         CB_AppFunc.getString(R.string.str_joined_one_day_ago)
                     else
@@ -94,9 +90,6 @@ fun setJoinDate(textView: TextView, userData: CB_User)
 @BindingAdapter("bind:region")
 fun setRegion(textView: TextView, userData: CB_User)
 {
-    if(userData.iGmtOffset == null)
-        return
-
     with(CB_AppFunc)
     {
         var strText = ""
@@ -128,20 +121,20 @@ fun setDefaultText(textView: TextView, strText: String?)
 @BindingAdapter("bind:age")
 fun setAge(textView: TextView, userData: CB_User)
 {
+    textView.text = ""
     if(userData.strBirthDate.isNullOrEmpty())
         return
 
     if(userData.iGmtOffset == null)
         return
 
-    // local time, you only live in your time
-    // if couple's... not much of difference
-    val birthDate = CB_AppFunc.convertUtcToLocale(userData.strBirthDate!!, userData.iGmtOffset!!).time
-    val curDate = CB_AppFunc.convertUtcToLocale(userData.iGmtOffset!!).time
+    // UTC Time
+    val birthDate = CB_AppFunc.stringToCalendar(userData.strBirthDate).time
+    val curDate = CB_AppFunc.getCalendarForSave().time
 
     // days to years
-    val days = (curDate.time - birthDate.time).toInt() / (24 * 60 * 60 * 1000)
-    textView.text = (days / (12 * 30)).toString()
+    val hours = (curDate.time - birthDate.time) / (60 * 60 * 1000)
+    textView.text = (hours / (12 * 30 * 24)).toInt().toString()
 
     // textColor
     val iColor = when(userData.iGender)
@@ -212,7 +205,7 @@ fun setUserPresence(textView: TextView, userData: CB_User)
     // 현재 시간 - 로그아웃 시간(영국 기준)
     val logoutDate = CB_AppFunc.stringToCalendar(userData.strLogoutDate).time
     val curDate = CB_AppFunc.getCalendarForSave().time
-    var iMin = (curDate.time - logoutDate.time).toInt() / (60 * 1000) // millisecond to minute
+    var iMin = ((curDate.time - logoutDate.time) / (60 * 1000)).toInt() // millisecond to minute
     var iHour = iMin / 60
     val iDay = iHour / 24
     val iMonth = iDay / 30
@@ -265,7 +258,10 @@ fun setUserPresence(textView: TextView, userData: CB_User)
 fun setTextByUid(textView: TextView, strUid: String?)
 {
     if(strUid.isNullOrEmpty())
+    {
+        textView.text = ""
         return
+    }
 
     // current User's uid or couple's uid
     when(strUid)
@@ -384,7 +380,10 @@ fun setVisibility(view: View, strAuthorUid: String?)
 fun setDateText(textView: TextView, strDate: String?)
 {
     if(strDate == null)
+    {
+        textView.text = ""
         return
+    }
 
     // UTC to Local
     val calendar = CB_AppFunc.convertUtcToLocale(strDate)

@@ -95,7 +95,12 @@
             app:argType="string" android:defaultValue=""/>
 
         </action>
-
+        <action
+            android:id="@+id/action_CB_PostDetailFragment_to_CB_ProfileInfoFragment"
+            app:destination="@id/CB_ProfileInfoFragment">
+            <argument android:name="strUid" app:nullable="false"
+                app:argType="string" android:defaultValue=""/>
+        </action>
     </fragment>
 
     <fragment
@@ -117,6 +122,12 @@
         android:name="com.coupleblog.fragment.CB_MailDetailFragment"
         android:label="fragment_cb_mail_detail"
         tools:layout="@layout/fragment_cb_mail_detail" >
+        <action
+            android:id="@+id/action_CB_MailDetailFragment_to_CB_ProfileInfoFragment"
+            app:destination="@id/CB_ProfileInfoFragment">
+            <argument android:name="strUid" app:nullable="false"
+                app:argType="string" android:defaultValue=""/>
+        </action>
     </fragment>
 
     <fragment

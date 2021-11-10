@@ -95,6 +95,8 @@
                 <TextView
                     android:id="@+id/user_age_text_view"
                     style="@style/post_title_text_view"
+                    android:background="?android:attr/selectableItemBackgroundBorderless"
+                    android:onClick="@{()->fragment.birthDateButton()}"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginStart="4dp"
@@ -133,7 +135,6 @@
                 <TextView
                     android:id="@+id/birth_value_text_view"
                     style="@style/normal_text_style"
-                    android:onClick="@{()->fragment.birthDateButton()}"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_marginStart="@dimen/margin_16dp"

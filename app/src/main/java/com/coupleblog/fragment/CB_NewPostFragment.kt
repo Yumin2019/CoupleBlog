@@ -45,8 +45,6 @@ class CB_NewPostFragment: CB_BaseFragment("NewPostFragment")
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View
     {
-        CB_ViewModel.bAddButton.postValue(false)
-
         _binding = NewPostBinding.inflate(inflater, container, false)
         binding.apply {
             lifecycleOwner  = viewLifecycleOwner
@@ -54,6 +52,12 @@ class CB_NewPostFragment: CB_BaseFragment("NewPostFragment")
             viewModel       = CB_ViewModel.Companion
         }
         return binding.root
+    }
+
+    override fun onResume()
+    {
+        super.onResume()
+        CB_ViewModel.bAddButton.postValue(false)
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?)

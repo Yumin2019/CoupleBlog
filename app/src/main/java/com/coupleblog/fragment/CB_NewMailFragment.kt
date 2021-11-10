@@ -24,8 +24,6 @@ class CB_NewMailFragment: CB_BaseFragment("NewMailFragment")
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View
     {
-        CB_ViewModel.bAddButton.postValue(false)
-
         _binding = NewMailBinding.inflate(inflater, container, false)
         binding.apply {
             lifecycleOwner  = viewLifecycleOwner
@@ -35,6 +33,11 @@ class CB_NewMailFragment: CB_BaseFragment("NewMailFragment")
         return binding.root
     }
 
+    override fun onResume()
+    {
+        super.onResume()
+        CB_ViewModel.bAddButton.postValue(false)
+    }
      override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater)
     {
         inflater.inflate(R.menu.menu_new_mail, menu)

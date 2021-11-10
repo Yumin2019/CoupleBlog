@@ -6,6 +6,7 @@ import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.core.os.bundleOf
 import androidx.navigation.fragment.findNavController
 import com.coupleblog.R
 import com.coupleblog.dialog.CB_ItemListDialog
@@ -43,8 +44,6 @@ class CB_MailDetailFragment : CB_BaseFragment("MailDetail")
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View
     {
-        CB_ViewModel.bAddButton.value = false
-
         _binding = MailDetailBinding.inflate(inflater, container, false)
         binding.apply {
             lifecycleOwner  = viewLifecycleOwner
@@ -52,6 +51,12 @@ class CB_MailDetailFragment : CB_BaseFragment("MailDetail")
             viewModel       = CB_ViewModel.Companion
         }
         return binding.root
+    }
+
+    override fun onResume()
+    {
+        super.onResume()
+        CB_ViewModel.bAddButton.postValue(false)
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?)
@@ -200,6 +205,12 @@ class CB_MailDetailFragment : CB_BaseFragment("MailDetail")
         )
 
         CB_ItemListDialog(requireActivity(), getString(R.string.str_mail_menu), listItem, true)
+    }
+
+    fun profileButton(strUid: String)
+    {
+        beginAction(R.id.action_CB_MailDetailFragment_to_CB_ProfileInfoFragment,
+            R.id.CB_MailDetailFragment, bundleOf(CB_ProfileInfoFragment.ARGU_UID to strUid))
     }
 
     fun coupleRequestButton()

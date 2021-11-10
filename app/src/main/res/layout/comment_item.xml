@@ -24,6 +24,8 @@
 
         <ImageView
             android:id="@+id/author_image_view"
+            android:background="?android:attr/selectableItemBackgroundBorderless"
+            android:onClick="@{()->fragment.profileButton(commentData.strAuthorUid)}"
             android:layout_width="@dimen/icon_image_size"
             android:layout_height="@dimen/icon_image_size"
             android:layout_marginTop="@dimen/normal_margin"

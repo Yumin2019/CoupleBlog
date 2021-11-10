@@ -269,9 +269,15 @@ class CB_AppFunc
             })
         }
 
+        fun logout(funcSecond: (() -> Unit)?)
+        {
+            // 간헐적으로 로그아웃 처리랑 UI 처리가 맞물려서 문제가 생기는 경우가 있어서 0.5초 딜레이
+            postDelayedUI(500, funcFirst = { cleanUpListener()
+                getAuth().signOut() }, funcSecond)
+        }
+
         /* 리스너의 장점
            1. 커플이 아닌 경우든 커플인 경우든, 항상 최신의 정보를 보장한다.
-
          */
         fun addEventListenerToUserInfo()
         {
@@ -520,7 +526,6 @@ class CB_AppFunc
         fun stringToCalendar(strDate: String?): Calendar
         = let {
 
-            // 아마 여기서 empty가 나온 것 같다.
             if (strDate == null || strDate.isEmpty())
             {
                 Log.e(strTag, "strDate can't be parsed")

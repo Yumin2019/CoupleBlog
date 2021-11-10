@@ -19,7 +19,7 @@ class CB_CommentEditDialog(context: Activity, fragment: CB_PostDetailFragment,
     init
     {
         val binding: CommentEditItemBinding = DataBindingUtil.inflate(LayoutInflater.from(context),
-            R.layout.dialog_cb_edit, null, false)
+            R.layout.dialog_cb_comment_edit, null, false)
 
         setContentView(binding.root)
         binding.apply {
