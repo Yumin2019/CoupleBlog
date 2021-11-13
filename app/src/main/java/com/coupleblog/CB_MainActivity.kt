@@ -1,6 +1,11 @@
 package com.coupleblog
 
+import android.content.BroadcastReceiver
+import android.content.Context
+import android.content.Intent
 import android.os.Bundle
+import android.os.IBinder
+import android.util.Log
 import androidx.core.os.bundleOf
 import androidx.core.view.isGone
 import androidx.core.view.isVisible
@@ -14,11 +19,14 @@ import com.coupleblog.parent.CB_BaseActivity
 import com.coupleblog.singleton.CB_AppFunc
 import com.coupleblog.singleton.CB_SingleSystemMgr
 import com.coupleblog.singleton.CB_ViewModel
+import com.coupleblog.storage.CB_DownloadService
+import com.coupleblog.storage.CB_UploadService
 import com.google.android.material.snackbar.Snackbar
 
 class CB_MainActivity : CB_BaseActivity("MainActivity", CB_SingleSystemMgr.ACTIVITY_TYPE.MAIN)
 {
-    lateinit var binding    : MainActivityBinding
+    private lateinit var binding    : MainActivityBinding
+    private lateinit var broadcastReceiver: BroadcastReceiver
 
     override fun onCreate(savedInstanceState: Bundle?)
     {
@@ -33,6 +41,34 @@ class CB_MainActivity : CB_BaseActivity("MainActivity", CB_SingleSystemMgr.ACTIV
             setSupportActionBar(toolbar)
         }
 
+        broadcastReceiver = object: BroadcastReceiver() {
+            override fun onReceive(context: Context, intent: Intent)
+            {
+                Log.d(strTag, "onReceive:$intent")
+                when(intent.action)
+                {
+                    CB_DownloadService.DOWNLOAD_COMPLETE ->
+                    {
+                        CB_SingleSystemMgr.showToast(R.string.str_download_success)
+                    }
+
+                    CB_DownloadService.DOWNLOAD_ERROR ->
+                    {
+                        CB_SingleSystemMgr.showToast(R.string.str_download_fail)
+                    }
+
+                    CB_UploadService.UPLOAD_COMPLETE ->
+                    {
+                        CB_SingleSystemMgr.showToast(R.string.str_upload_success)
+                    }
+
+                    CB_UploadService.UPLOAD_ERROR ->
+                    {
+                        CB_SingleSystemMgr.showToast(R.string.str_upload_fail)
+                    }
+                }
+            }
+        }
 
         // Init
         CB_AppFunc.application = application

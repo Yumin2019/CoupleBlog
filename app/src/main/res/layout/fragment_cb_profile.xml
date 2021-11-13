@@ -80,7 +80,7 @@
                     tools:text="@string/str_online"
                     tools:textColor="@color/green" />
 
-                <ImageView
+                <com.google.android.material.imageview.ShapeableImageView
                     android:id="@+id/user_profile_image"
                     android:layout_width="@dimen/profile_image_size"
                     android:layout_height="@dimen/profile_image_size"
@@ -156,7 +156,7 @@
                     tools:text="@string/str_user_presence_exam"
                     tools:textColor="@color/grey" />
 
-                <ImageView
+                <com.google.android.material.imageview.ShapeableImageView
                     android:id="@+id/couple_user_profile_image"
                     android:layout_width="@dimen/profile_image_size"
                     android:layout_height="@dimen/profile_image_size"

@@ -17,6 +17,12 @@ import com.google.firebase.database.DataSnapshot
 import com.google.firebase.database.DatabaseError
 import com.google.firebase.database.ValueEventListener
 import com.google.firebase.database.ktx.getValue
+/*
+@BindingAdapter("bind:image_url")
+fun setImage(imageView)
+{
+
+}*/
 
 @BindingAdapter("bind:field_type_hint")
 fun setFieldTypeHint(textView: TextView, iFieldType: Int)

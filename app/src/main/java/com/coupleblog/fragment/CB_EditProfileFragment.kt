@@ -1,7 +1,19 @@
 package com.coupleblog.fragment
 
+import android.content.ContentResolver
+import android.content.Intent
+import android.graphics.Bitmap
+import android.graphics.ImageDecoder
+import android.media.ExifInterface
+import android.net.Uri
+import android.os.Build
 import android.os.Bundle
+import android.os.Environment
+import android.provider.MediaStore
+import android.util.Log
 import android.view.*
+import androidx.activity.result.ActivityResultLauncher
+import androidx.activity.result.contract.ActivityResultContracts
 import androidx.navigation.fragment.findNavController
 import com.coupleblog.R
 import com.coupleblog.dialog.CB_EditDialog
@@ -13,9 +25,12 @@ import com.coupleblog.parent.CB_BaseFragment
 import com.coupleblog.singleton.CB_AppFunc
 import com.coupleblog.singleton.CB_SingleSystemMgr
 import com.coupleblog.singleton.CB_ViewModel
+import com.coupleblog.storage.CB_UploadService
+import com.coupleblog.storage.UPLOAD_TYPE
 import com.google.android.material.datepicker.CalendarConstraints
 import com.google.android.material.datepicker.DateValidatorPointBackward
 import com.google.android.material.datepicker.MaterialDatePicker
+import java.io.File
 import java.util.*
 
 class CB_EditProfileFragment : CB_BaseFragment("EditProfile")
@@ -36,6 +51,14 @@ class CB_EditProfileFragment : CB_BaseFragment("EditProfile")
     private var _binding            : EditProfileBinding? = null
     private val binding get() = _binding!!
 
+    // registerForActivityResult
+    private lateinit var cameraLauncher: ActivityResultLauncher<Uri>
+    private lateinit var galleryLauncher: ActivityResultLauncher<String>
+
+    var imageUri: Uri? = null
+    var strFilePath: String? = null
+    var imageBitmap: Bitmap? = null
+
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View
     {
         _binding = EditProfileBinding.inflate(inflater, container, false)
@@ -45,6 +68,113 @@ class CB_EditProfileFragment : CB_BaseFragment("EditProfile")
             viewModel       = CB_ViewModel.Companion
         }
         return binding.root
+    }
+
+    private fun createTempFile()
+    {
+        val strTime = CB_AppFunc.getDateStringForSave()
+        val storageDir = requireActivity().getExternalFilesDir(Environment.DIRECTORY_PICTURES)
+        val imageFile = File.createTempFile(
+            strTime,      // prefix
+            ".jpg",  // suffix
+            storageDir    // directory
+        ).apply { deleteOnExit() }
+
+        imageBitmap = null
+        strFilePath = imageFile.absolutePath
+        imageUri = Uri.fromFile(imageFile)
+    }
+
+    private fun uploadFailed()
+    {
+        if(CB_SingleSystemMgr.isDialog(CB_SingleSystemMgr.DIALOG_TYPE.OK_DIALOG))
+            return
+
+        CB_AppFunc.okDialog(requireActivity(), R.string.str_error,
+            R.string.str_failed_to_upload_image, R.drawable.error_icon, true)
+    }
+
+    override fun onActivityCreated(savedInstanceState: Bundle?)
+    {
+        super.onActivityCreated(savedInstanceState)
+        // after fragment, activity created
+        createTempFile()
+
+        // camera launcher
+        cameraLauncher = registerForActivityResult(ActivityResultContracts.TakePicture())
+        { isSaved ->
+
+            if(!isSaved)
+            {
+                Log.e(strTag, "failed to save image to uri")
+                uploadFailed()
+                return@registerForActivityResult
+            }
+
+            // image save was successful
+            // getBitmap from uri
+            imageBitmap = CB_AppFunc.getBitmapFromUri(requireActivity().applicationContext.contentResolver, imageUri!!)
+            if(imageBitmap == null)
+            {
+                Log.e(strTag, "failed to convert uri to bitmap")
+                uploadFailed()
+                return@registerForActivityResult
+            }
+
+            // bitmap was successful
+            imageBitmap = CB_AppFunc.changeImageOrientation(imageBitmap!!, strFilePath!!)
+            if(imageBitmap == null)
+            {
+                Log.e(strTag, "failed to change orientation on image")
+                uploadFailed()
+                return@registerForActivityResult
+            }
+
+            // save image as jpg format
+            CB_AppFunc.saveBitmapToFileCache(imageBitmap!!, strFilePath!!)
+            // upload image file
+            requireActivity().startService(Intent(requireContext(), CB_UploadService::class.java)
+                .putExtra(CB_UploadService.FILE_URI, imageUri)
+                .putExtra(CB_UploadService.UPLOAD_TYPE_KEY, UPLOAD_TYPE.PROFILE_IMAGE.ordinal)
+                .setAction(CB_UploadService.ACTION_UPLOAD))
+        }
+
+        galleryLauncher = registerForActivityResult(ActivityResultContracts.GetContent())
+        { uri ->
+            if(uri == null)
+            {
+                uploadFailed()
+                return@registerForActivityResult
+            }
+
+            val strPath = CB_AppFunc.getPathFromURI(requireActivity(), uri)!!
+            imageBitmap = CB_AppFunc.getBitmapFromUri(requireActivity().applicationContext.contentResolver, uri)
+            if(imageBitmap == null)
+            {
+                Log.e(strTag, "failed to convert uri to bitmap")
+                uploadFailed()
+                return@registerForActivityResult
+            }
+
+            // bitmap was successful
+            imageBitmap = CB_AppFunc.changeImageOrientation(imageBitmap!!, strPath)
+            if(imageBitmap == null)
+            {
+                Log.e(strTag, "failed to change orientation on image")
+                uploadFailed()
+                return@registerForActivityResult
+            }
+
+            // save image as jpg format
+            CB_AppFunc.saveBitmapToFileCache(imageBitmap!!, strFilePath!!)
+
+            // upload image file
+            imageUri = Uri.fromFile(File(strFilePath!!))
+            requireActivity().startService(Intent(requireContext(), CB_UploadService::class.java)
+                .putExtra(CB_UploadService.FILE_URI, imageUri)
+                .putExtra(CB_UploadService.UPLOAD_TYPE_KEY, UPLOAD_TYPE.PROFILE_IMAGE.ordinal)
+                .setAction(CB_UploadService.ACTION_UPLOAD))
+        }
     }
 
     fun birthDateButton()
@@ -79,6 +209,19 @@ class CB_EditProfileFragment : CB_BaseFragment("EditProfile")
             addOnDismissListener { CB_SingleSystemMgr.releaseDialog(CB_SingleSystemMgr.DIALOG_TYPE.DATE_PICKER) }
             show(this@CB_EditProfileFragment.requireActivity().supportFragmentManager, "birthDateButton")
         }
+    }
+
+    fun cameraButton()
+    {
+        if(CB_SingleSystemMgr.isDialog(CB_SingleSystemMgr.DIALOG_TYPE.ITEM_LIST_DIALOG))
+            return
+
+        val listItem = arrayListOf(
+            DialogItem(getString(R.string.str_camera), R.drawable.camera, callback = { cameraLauncher.launch(imageUri)        }),
+            DialogItem(getString(R.string.str_gallery), R.drawable.image, callback = { galleryLauncher.launch("image/*") })
+        )
+
+        CB_ItemListDialog(requireActivity(), getString(R.string.str_change_profile_image), listItem, true)
     }
 
     fun genderButton()

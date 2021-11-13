@@ -58,6 +58,16 @@ class CB_MainFragment : CB_BaseFragment("MainFragment")
             override fun getItemCount() = fragments.size
         }
 
+       // 만약 유저의 gmtOffset 값이 다르면 갱신한다.
+       with(CB_AppFunc)
+       {
+           val gmtOffset = getGMTOffset()
+           if(gmtOffset != curUser.iGmtOffset)
+           {
+               curUser.iGmtOffset = gmtOffset
+               getUsersRoot().child(getUid()).setValue(curUser)
+           }
+       }
 
        // ViewPager 설정
        with(binding)

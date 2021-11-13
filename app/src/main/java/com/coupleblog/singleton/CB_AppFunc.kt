@@ -3,14 +3,15 @@ package com.coupleblog.singleton
 import android.annotation.SuppressLint
 import android.app.Activity
 import android.app.Application
-import android.content.Context
-import android.content.DialogInterface
-import android.content.Intent
-import android.content.SharedPreferences
+import android.content.*
 import android.content.pm.ActivityInfo
 import android.content.res.ColorStateList
+import android.database.Cursor
 import android.graphics.*
+import android.media.ExifInterface
+import android.net.Uri
 import android.os.Build
+import android.provider.MediaStore
 import android.text.Editable
 import android.text.Editable.Factory.getInstance
 import android.text.format.DateFormat
@@ -44,6 +45,9 @@ import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
+import java.io.File
+import java.io.FileOutputStream
+import java.lang.Exception
 import java.text.SimpleDateFormat
 import java.util.*
 
@@ -352,6 +356,83 @@ class CB_AppFunc
             coupleUserInfoListener?.let {  getUsersRoot().child(curUser.strCoupleUid!!).removeEventListener(it) }
             coupleUserInfoListener = null
             _coupleUser = CB_User() // default value
+        }
+
+        fun getBitmapFromUri(cr: ContentResolver, imageUri: Uri): Bitmap?
+        {
+            return if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.P)
+            {
+                ImageDecoder.decodeBitmap(ImageDecoder.createSource(cr, imageUri))
+            }
+            else
+            {
+                MediaStore.Images.Media.getBitmap(cr, imageUri)
+            }
+        }
+
+        fun getPathFromURI(context: Context, ContentUri: Uri): String?
+        {
+            var res: String? = null
+            val cursor: Cursor? = context.contentResolver.query(ContentUri, null, null, null, null)
+            if (cursor != null)
+            {
+                cursor.moveToFirst()
+                res = cursor.getString(cursor.getColumnIndexOrThrow("_data"))
+                cursor.close()
+            }
+            return res
+        }
+
+        fun saveBitmapToFileCache(bitmap: Bitmap, strFilePath: String)
+        {
+            try
+            {
+                val outputStream = FileOutputStream(File(strFilePath))
+                bitmap.compress(Bitmap.CompressFormat.JPEG, 40, outputStream)
+                outputStream.close()
+            }
+            catch (e: Exception)
+            {
+                e.printStackTrace()
+            }
+        }
+
+        private fun rotateBitmap(bitmap: Bitmap, fAngle: Float): Bitmap
+        = Matrix().let { matrix ->
+            matrix.postRotate(fAngle)
+            Bitmap.createBitmap(bitmap, 0, 0, bitmap.width, bitmap.height, matrix, true)
+        }
+
+        fun changeImageOrientation(imageBitmap: Bitmap, strFilePath: String): Bitmap?
+        {
+            try
+            {
+                var bitmap = imageBitmap
+                // temp 파일 경로를 가지고 ExifInterface를 생성한다.
+                val exifInterface = ExifInterface(strFilePath)
+
+                // 회전이 되어 있는 경우를 처리한다.
+                val iOrientation = exifInterface
+                    .getAttributeInt(ExifInterface.TAG_ORIENTATION, ExifInterface.ORIENTATION_UNDEFINED)
+
+                when (iOrientation)
+                {
+                    ExifInterface.ORIENTATION_ROTATE_90 ->
+                        bitmap = rotateBitmap(imageBitmap, 90f)
+                    ExifInterface.ORIENTATION_ROTATE_180 ->
+                        bitmap = rotateBitmap(imageBitmap, 180f)
+                    ExifInterface.ORIENTATION_ROTATE_270 ->
+                        bitmap = rotateBitmap(imageBitmap, 270f)
+                    else -> {}
+                }
+
+                return bitmap
+            }
+            catch (e: Exception)
+            {
+                e.printStackTrace()
+                return null
+            }
         }
 
         fun requestPermission(activity: Activity, arrPermission: Array<String>)

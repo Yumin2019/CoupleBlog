@@ -27,7 +27,6 @@ class CB_DownloadService: CB_BaseTaskService()
         const val DOWNLOAD_ERROR = "download_error"
 
         const val DOWNLOAD_PATH = "download_path"
-        //const val BYTES_DOWNLOADED = "bytes_downloaded"
 
         val intentFilter: IntentFilter get()
         = IntentFilter().apply {

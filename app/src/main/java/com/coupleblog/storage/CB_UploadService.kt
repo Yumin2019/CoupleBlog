@@ -9,8 +9,18 @@ import com.coupleblog.CB_MainActivity
 import com.coupleblog.R
 import com.coupleblog.parent.CB_BaseTaskService
 import com.coupleblog.singleton.CB_AppFunc
+import com.google.firebase.storage.StorageReference
 import com.google.firebase.storage.ktx.component1
 import com.google.firebase.storage.ktx.component2
+
+enum class UPLOAD_TYPE
+{
+    NONE,
+    PROFILE_IMAGE,
+    POST_IMAGE,
+    EMAIL_IMAGE,
+
+}
 
 class CB_UploadService: CB_BaseTaskService()
 {
@@ -24,6 +34,8 @@ class CB_UploadService: CB_BaseTaskService()
         const val UPLOAD_ERROR = "upload_error"
 
         const val FILE_URI = "file_uri"
+        const val UPLOAD_TYPE_KEY = "upload_type"
+        const val DATABASE_KEY = "database_key"
 
         val intentFilter: IntentFilter get()
         = IntentFilter().apply {
@@ -38,44 +50,92 @@ class CB_UploadService: CB_BaseTaskService()
         if(intent.action == ACTION_UPLOAD)
         {
             val fileUri = intent.getParcelableExtra<Uri>(FILE_URI)!!
+            val uploadType = intent.getIntExtra(UPLOAD_TYPE_KEY, UPLOAD_TYPE.NONE.ordinal)
+            val databaseKey = intent.getStringExtra(DATABASE_KEY).toString()
 
             // make sure we have permission to read the data
             contentResolver.takePersistableUriPermission(fileUri, Intent.FLAG_GRANT_READ_URI_PERMISSION)
-            uploadFromUri(fileUri)
+            uploadFromUri(fileUri, uploadType, databaseKey)
         }
 
         return START_REDELIVER_INTENT
     }
 
-    // 테스트
-    private fun uploadFromUri(fileUri: Uri)
+    private fun uploadFromUri(fileUri: Uri, uploadType: Int, databaseKey: String)
     {
         Log.d(TAG, "uploadFromUri:src:$fileUri")
+
+        val storageRef: StorageReference
+        val successFunc: ()->Unit
+        when(uploadType)
+        {
+            UPLOAD_TYPE.PROFILE_IMAGE.ordinal ->
+            {
+                // profileImage : users - uid - user-info - profile.jpg
+                val strUid = CB_AppFunc.getUid()
+                val strPath = "users/$strUid/user-info/profile.jpg"
+                storageRef = CB_AppFunc.getStorage().getReference(strPath)
+                successFunc =
+                {
+                    with(CB_AppFunc)
+                    {
+                        curUser.strImgPath = strPath
+                        getUsersRoot().child(strUid).setValue(curUser)
+                    }
+                }
+            }
+
+            UPLOAD_TYPE.POST_IMAGE.ordinal ->
+            {
+                // profileImage : users - uid - user-posts - postKey1 - image.jpg
+                val strUid = CB_AppFunc.getUid()
+                val strPath = "users/$strUid/user-posts/$databaseKey/image.jpg"
+                storageRef = CB_AppFunc.getStorage().getReference(strPath)
+                successFunc =
+                    {
+                        with(CB_AppFunc)
+                        {
+                            // 여기 작업중이었음.
+                            //curUser.strImgPath = strPath
+                            ///getUsersRoot().child(strUid).setValue(curUser)
+                        }
+                    }
+            }
+
+            UPLOAD_TYPE.EMAIL_IMAGE.ordinal ->
+            {
+                // profileImage : users - uid - user-mails - mailKey1 - image.jpg
+                storageRef = CB_AppFunc.getStorage().getReference(
+                    "users/${CB_AppFunc.getUid()}/user-mails/$databaseKey/image.jpg")
+            }
+
+            else ->
+            {
+                // if it's invalid value, stop and exit
+                stopSelf()
+                return
+            }
+        }
 
         // mark task started
         taskStarted()
         showProgressNotification(R.string.str_uploading, 0, 0)
 
-        // profileImage : users - uid - user-info - profile.png
-        val imageRef = CB_AppFunc.getStorage().getReference("users/${CB_AppFunc.getUid()}/user-info/profile.png")
-        imageRef.putFile(fileUri).addOnProgressListener { (bytesTransferred, totalByteCount) ->
+        storageRef.putFile(fileUri).addOnProgressListener { (bytesTransferred, totalByteCount) ->
             showProgressNotification(R.string.str_uploading, bytesTransferred, totalByteCount)
         }.
 
         continueWith { task ->
-
             if(!task.isSuccessful)
-                throw task.exception!!
-
-            Log.d(TAG, "uploadFromUri: upload success")
+                task.exception!!.printStackTrace()
 
             // Request the public download url
-            return@continueWith imageRef.downloadUrl
+            return@continueWith storageRef.downloadUrl
         }.
 
         addOnSuccessListener {
             Log.d(TAG, "uploadFromUri: getDownloadUri success")
-
+            successFunc.invoke()
             broadcastUploadFinished(true)
             showUploadFinishedNotification(true)
             taskEnded()

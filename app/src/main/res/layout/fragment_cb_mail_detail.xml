@@ -72,7 +72,7 @@
                     bind:user_uid="@{viewModel.TMail.strSenderUid}"
                     tools:text="Yumin Kim" />
 
-                <ImageView
+                <com.google.android.material.imageview.ShapeableImageView
                     android:id="@+id/author_image_view"
                     android:layout_width="@dimen/icon_image_size"
                     android:layout_height="@dimen/icon_image_size"

@@ -77,7 +77,7 @@
                     bind:user_uid="@{viewModel.TPost.strAuthorUid}"
                     tools:text="Yumin Kim" />
 
-                <ImageView
+                <com.google.android.material.imageview.ShapeableImageView
                     android:id="@+id/author_image_view"
                     android:background="?android:attr/selectableItemBackgroundBorderless"
                     android:onClick="@{()->fragment.profileButton(viewModel.TPost.strAuthorUid)}"
