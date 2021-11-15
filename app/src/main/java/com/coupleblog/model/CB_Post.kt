@@ -25,7 +25,7 @@ data class CB_Post(
     var iIconType           : Int?    = REACTION_TYPE.NONE.ordinal,
     var strPostDate         : String? = "",
     var strRecentEditDate   : String? = "",
-    /*var strImgUrl       : String? = ""*/
+    var strImgPath          : String? = ""
 ){
     @Exclude
     fun toMap(): Map<String, Any?>

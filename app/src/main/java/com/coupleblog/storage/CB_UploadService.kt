@@ -76,13 +76,15 @@ class CB_UploadService: CB_BaseTaskService()
                 val strPath = "users/$strUid/user-info/profile.jpg"
                 storageRef = CB_AppFunc.getStorage().getReference(strPath)
                 successFunc =
-                {
-                    with(CB_AppFunc)
                     {
-                        curUser.strImgPath = strPath
-                        getUsersRoot().child(strUid).setValue(curUser)
+                        with(CB_AppFunc)
+                        {
+                            // update user's strImgPath
+                            val childUpdates = hashMapOf<String, Any>("/user/" +
+                                    "$strUid/strImgPath" to strPath)
+                            getDataBase().updateChildren(childUpdates)
+                        }
                     }
-                }
             }
 
             UPLOAD_TYPE.POST_IMAGE.ordinal ->
@@ -95,9 +97,10 @@ class CB_UploadService: CB_BaseTaskService()
                     {
                         with(CB_AppFunc)
                         {
-                            // 여기 작업중이었음.
-                            //curUser.strImgPath = strPath
-                            ///getUsersRoot().child(strUid).setValue(curUser)
+                            // update post's strImgPath
+                            val childUpdates = hashMapOf<String, Any>("/user-posts/" +
+                                    "$strUid/$databaseKey/strImgPath" to strPath)
+                            getDataBase().updateChildren(childUpdates)
                         }
                     }
             }
@@ -105,8 +108,20 @@ class CB_UploadService: CB_BaseTaskService()
             UPLOAD_TYPE.EMAIL_IMAGE.ordinal ->
             {
                 // profileImage : users - uid - user-mails - mailKey1 - image.jpg
-                storageRef = CB_AppFunc.getStorage().getReference(
-                    "users/${CB_AppFunc.getUid()}/user-mails/$databaseKey/image.jpg")
+                val strUid = CB_AppFunc.getUid()
+                val strPath = "users/$strUid/user-mails/$databaseKey/image.jpg"
+                storageRef = CB_AppFunc.getStorage().getReference(strPath)
+                successFunc =
+                {
+                    with(CB_AppFunc)
+                    {
+                        // update mail's strImgPath
+                        val childUpdates = hashMapOf<String, Any>("/user-mails/" +
+                                "$strUid/$databaseKey/strImgPath" to strPath)
+                        getDataBase().updateChildren(childUpdates)
+                    }
+                }
+
             }
 
             else ->

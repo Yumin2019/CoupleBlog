@@ -79,7 +79,8 @@
                     android:background="?android:attr/selectableItemBackgroundBorderless"
                     android:layout_marginStart="@dimen/normal_margin"
                     android:onClick="@{()->fragment.profileButton(viewModel.TMail.strSenderUid)}"
-                    android:src="@drawable/ic_baseline_account_circle_24"
+                    tools:src="@drawable/ic_baseline_account_circle_24"
+                    bind:image_uid="@{viewModel.TMail.strSenderUid}"
                     app:layout_constraintBottom_toBottomOf="@+id/view"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toBottomOf="@+id/mail_title_text_view" />
@@ -98,7 +99,7 @@
                     android:layout_height="130dp"
                     android:layout_marginTop="@dimen/margin_16dp"
                     android:background="@color/grey"
-                    android:visibility="gone"
+                    bind:image_path="@{viewModel.TMail.strImgPath}"
                     app:layout_constraintEnd_toEndOf="@+id/post_text_view"
                     app:layout_constraintStart_toStartOf="@+id/post_text_view"
                     app:layout_constraintTop_toBottomOf="@+id/view"

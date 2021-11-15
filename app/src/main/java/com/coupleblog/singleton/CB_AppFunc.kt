@@ -22,9 +22,11 @@ import android.view.Window
 import android.view.WindowManager
 import android.view.inputmethod.InputMethodManager
 import android.widget.EditText
+import android.widget.ImageView
 import androidx.annotation.RequiresApi
 import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
+import com.bumptech.glide.Glide
 import com.coupleblog.MainActivityBinding
 import com.coupleblog.R
 import com.coupleblog.model.CB_User
@@ -433,6 +435,28 @@ class CB_AppFunc
                 e.printStackTrace()
                 return null
             }
+        }
+
+        // if default value is null, View.GONE
+        fun setImageWithGlide(strStoragePath: String?, imageView: ImageView, iDefaultRes: Int?)
+        {
+            // load image from storage
+            Log.d("bind:image_path", "strPath : $strStoragePath")
+            imageView.visibility = View.VISIBLE
+
+            if(strStoragePath.isNullOrEmpty())
+            {
+                if(iDefaultRes != null)
+                    imageView.setImageResource(iDefaultRes)
+                else
+                    imageView.visibility = View.GONE
+                return
+            }
+
+            val storageRef = getStorage().reference.child(strStoragePath)
+            Glide.with(application)
+                .load(storageRef)
+                .into(imageView)
         }
 
         fun requestPermission(activity: Activity, arrPermission: Array<String>)

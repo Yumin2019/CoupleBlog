@@ -42,10 +42,15 @@ class CB_ViewModel
         // get profile user
         var profileUser = MutableLiveData(CB_User())
         var profileCoupleUser = MutableLiveData(CB_User())
+        var profileUserUid = MutableLiveData(String())
+
+        fun getUid() = CB_AppFunc.getUid()
+        fun getCoupleUid() = CB_AppFunc.curUser.strCoupleUid
 
         // set all of profile live data
         fun setProfileInfo(strUid: String)
         {
+            profileUserUid.value = strUid
             isMyProfile.value = (CB_AppFunc.getUid() == strUid)
             CB_AppFunc.getUsersRoot().child(strUid).addListenerForSingleValueEvent(object: ValueEventListener{
 

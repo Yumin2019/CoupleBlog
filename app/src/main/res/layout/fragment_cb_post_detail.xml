@@ -81,6 +81,7 @@
                     android:id="@+id/author_image_view"
                     android:background="?android:attr/selectableItemBackgroundBorderless"
                     android:onClick="@{()->fragment.profileButton(viewModel.TPost.strAuthorUid)}"
+                    bind:image_uid="@{viewModel.TPost.strAuthorUid}"
                     android:layout_width="@dimen/icon_image_size"
                     android:layout_height="@dimen/icon_image_size"
                     android:layout_marginStart="@dimen/normal_margin"
@@ -103,12 +104,11 @@
                     android:layout_height="130dp"
                     android:layout_marginTop="@dimen/margin_16dp"
                     android:background="@color/grey"
-                    android:visibility="gone"
+                    bind:image_path="@{viewModel.TPost.strImgPath}"
                     app:layout_constraintEnd_toEndOf="@+id/post_text_view"
                     app:layout_constraintStart_toStartOf="@+id/post_text_view"
                     app:layout_constraintTop_toBottomOf="@+id/view"
-                    tools:layout_height="130dp"
-                    tools:visibility="visible" />
+                    tools:layout_height="130dp" />
 
                 <ImageView
                     android:id="@+id/reaction_image_view"

@@ -1,10 +1,12 @@
 package com.coupleblog.singleton
 
+import android.util.Log
 import android.view.View
 import android.widget.ImageView
 import android.widget.TextView
 import androidx.databinding.BindingAdapter
 import androidx.recyclerview.widget.RecyclerView
+import com.bumptech.glide.Glide
 import com.coupleblog.R
 import com.coupleblog.dialog.EDIT_FIELD_TYPE
 import com.coupleblog.fragment.PAGE_TYPE
@@ -17,12 +19,58 @@ import com.google.firebase.database.DataSnapshot
 import com.google.firebase.database.DatabaseError
 import com.google.firebase.database.ValueEventListener
 import com.google.firebase.database.ktx.getValue
-/*
-@BindingAdapter("bind:image_url")
-fun setImage(imageView)
-{
 
-}*/
+@BindingAdapter("bind:image_path")
+fun setImagePath(imageView: ImageView, strPath: String?)
+{
+    CB_AppFunc.setImageWithGlide(strPath, imageView, null)
+}
+
+@BindingAdapter("bind:image_uid")
+fun setImageUid(imageView: ImageView, strUid: String?)
+{
+    if(strUid.isNullOrEmpty())
+    {
+        imageView.setImageResource(R.drawable.ic_baseline_account_circle_24)
+        return
+    }
+
+    when(strUid)
+    {
+        CB_AppFunc.getUid() ->
+        {
+            CB_AppFunc.setImageWithGlide(CB_AppFunc.curUser.strImgPath.toString(),
+                imageView, R.drawable.ic_baseline_account_circle_24)
+        }
+
+        CB_AppFunc.curUser.strCoupleUid ->
+        {
+            CB_AppFunc.setImageWithGlide(CB_AppFunc.coupleUser.strImgPath.toString(),
+                imageView, R.drawable.ic_baseline_account_circle_24)
+        }
+        else ->
+        {
+            // if it's unknowns uid, find user info
+            CB_AppFunc.getUsersRoot().child(strUid).addListenerForSingleValueEvent(object: ValueEventListener{
+
+                override fun onDataChange(snapshot: DataSnapshot)
+                {
+                    val userInfo = snapshot.getValue<CB_User>()
+                    if(userInfo == null)
+                        imageView.setImageResource(R.drawable.ic_baseline_account_circle_24)
+                    else
+                        CB_AppFunc.setImageWithGlide(userInfo.strImgPath.toString(),
+                            imageView, R.drawable.ic_baseline_account_circle_24)
+                }
+
+                override fun onCancelled(error: DatabaseError)
+                {
+                    imageView.setImageResource(R.drawable.ic_baseline_account_circle_24)
+                }
+            })
+        }
+    }
+}
 
 @BindingAdapter("bind:field_type_hint")
 fun setFieldTypeHint(textView: TextView, iFieldType: Int)

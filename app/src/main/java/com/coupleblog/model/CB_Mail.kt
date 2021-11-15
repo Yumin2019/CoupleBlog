@@ -13,9 +13,9 @@ enum class MAIL_TYPE
 
 @IgnoreExtraProperties
 data class CB_Mail(
-    var strSenderUid: String? = "",      // 보낸 사람의 Uid
-    var strSendDate: String? = "",      // 보낸 시점
-    //var strImageUrl          : String? = ""  ,
+    var strSenderUid: String? = "",              // 보낸 사람의 Uid
+    var strSendDate: String? = "",               // 보낸 시점
+    var strImgPath          : String? = "",      // ImagePath
     var iMailType: Int? = MAIL_TYPE.NORMAL.ordinal, // 이메일 타입
     var strTitle: String? = "",         // 제목
     var strMessage: String? = "",      // 메세지

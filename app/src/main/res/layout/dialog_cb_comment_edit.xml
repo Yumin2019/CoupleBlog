@@ -34,10 +34,11 @@
 
             <ImageView
                 android:id="@+id/author_image_view"
+                bind:image_uid="@{commentData.strAuthorUid}"
                 android:layout_width="@dimen/icon_image_size"
                 android:layout_height="@dimen/icon_image_size"
                 android:layout_marginBottom="@dimen/normal_margin"
-                android:src="@drawable/ic_baseline_account_circle_24"
+                tools:src="@drawable/ic_baseline_account_circle_24"
                 app:layout_constraintBottom_toBottomOf="@+id/comment_edit_text"
                 app:layout_constraintStart_toStartOf="@+id/comment_post_button"
                 app:layout_constraintTop_toTopOf="@+id/author_text_view" />

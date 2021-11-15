@@ -82,6 +82,7 @@
 
                 <com.google.android.material.imageview.ShapeableImageView
                     android:id="@+id/user_profile_image"
+                    bind:image_uid="@{viewModel.getUid()}"
                     android:layout_width="@dimen/profile_image_size"
                     android:layout_height="@dimen/profile_image_size"
                     android:layout_marginStart="@dimen/margin_16dp"
@@ -90,7 +91,6 @@
                     app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toTopOf="parent"
-                    android:src="@drawable/haha_icon"
                     tools:src="@drawable/haha_icon" />
 
             </androidx.constraintlayout.widget.ConstraintLayout>
@@ -160,6 +160,7 @@
                     android:id="@+id/couple_user_profile_image"
                     android:layout_width="@dimen/profile_image_size"
                     android:layout_height="@dimen/profile_image_size"
+                    bind:image_uid="@{viewModel.curUser.strCoupleUid}"
                     android:layout_marginStart="@dimen/margin_16dp"
                     android:layout_marginTop="@dimen/margin_24dp"
                     android:layout_marginBottom="@dimen/margin_24dp"

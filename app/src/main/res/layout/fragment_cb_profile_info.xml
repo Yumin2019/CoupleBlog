@@ -109,6 +109,7 @@
 
                 <com.google.android.material.imageview.ShapeableImageView
                     android:id="@+id/user_profile_image"
+                    bind:image_uid="@{viewModel.profileUserUid}"
                     android:layout_width="@dimen/profile_image_size"
                     android:layout_height="@dimen/profile_image_size"
                     android:layout_marginStart="@dimen/margin_16dp"
@@ -138,6 +139,7 @@
                     android:id="@+id/couple_user_profile_image"
                     android:layout_width="@dimen/profile_image_size_small"
                     android:layout_height="@dimen/profile_image_size_small"
+                    bind:image_uid="@{viewModel.profileUser.strCoupleUid}"
                     android:src="@drawable/haha_icon"
                     app:layout_constraintBottom_toBottomOf="@+id/couple_user_email_text_view"
                     app:layout_constraintEnd_toEndOf="@+id/user_profile_image"
