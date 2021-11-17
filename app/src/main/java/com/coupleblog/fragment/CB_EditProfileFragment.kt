@@ -14,6 +14,7 @@ import android.util.Log
 import android.view.*
 import androidx.activity.result.ActivityResultLauncher
 import androidx.activity.result.contract.ActivityResultContracts
+import androidx.core.content.FileProvider
 import androidx.navigation.fragment.findNavController
 import com.coupleblog.R
 import com.coupleblog.dialog.CB_EditDialog
@@ -70,33 +71,10 @@ class CB_EditProfileFragment : CB_BaseFragment("EditProfile")
         return binding.root
     }
 
-    private fun createTempFile()
+    override fun onCreate(savedInstanceState: Bundle?)
     {
-        val strTime = CB_AppFunc.getDateStringForSave()
-        val storageDir = requireActivity().getExternalFilesDir(Environment.DIRECTORY_PICTURES)
-        val imageFile = File.createTempFile(
-            strTime,      // prefix
-            ".jpg",  // suffix
-            storageDir    // directory
-        ).apply { deleteOnExit() }
+        super.onCreate(savedInstanceState)
 
-        imageBitmap = null
-        strFilePath = imageFile.absolutePath
-        imageUri = Uri.fromFile(imageFile)
-    }
-
-    private fun uploadFailed()
-    {
-        if(CB_SingleSystemMgr.isDialog(CB_SingleSystemMgr.DIALOG_TYPE.OK_DIALOG))
-            return
-
-        CB_AppFunc.okDialog(requireActivity(), R.string.str_error,
-            R.string.str_failed_to_upload_image, R.drawable.error_icon, true)
-    }
-
-    override fun onActivityCreated(savedInstanceState: Bundle?)
-    {
-        super.onActivityCreated(savedInstanceState)
         // after fragment, activity created
         createTempFile()
 
@@ -169,12 +147,36 @@ class CB_EditProfileFragment : CB_BaseFragment("EditProfile")
             CB_AppFunc.saveBitmapToFileCache(imageBitmap!!, strFilePath!!)
 
             // upload image file
-            imageUri = Uri.fromFile(File(strFilePath!!))
+            imageUri = FileProvider.getUriForFile(requireContext(), getString(R.string.file_provider), File(strFilePath!!))
             requireActivity().startService(Intent(requireContext(), CB_UploadService::class.java)
                 .putExtra(CB_UploadService.FILE_URI, imageUri)
                 .putExtra(CB_UploadService.UPLOAD_TYPE_KEY, UPLOAD_TYPE.PROFILE_IMAGE.ordinal)
                 .setAction(CB_UploadService.ACTION_UPLOAD))
         }
+    }
+
+    private fun createTempFile()
+    {
+        val strTime = CB_AppFunc.getDateStringForSave()
+        val storageDir = requireActivity().getExternalFilesDir(Environment.DIRECTORY_PICTURES)
+        val imageFile = File.createTempFile(
+            strTime,      // prefix
+            ".jpg",  // suffix
+            storageDir    // directory
+        ).apply { deleteOnExit() }
+
+        imageBitmap = null
+        strFilePath = imageFile.absolutePath
+        imageUri = FileProvider.getUriForFile(requireContext(), getString(R.string.file_provider), imageFile)
+    }
+
+    private fun uploadFailed()
+    {
+        if(CB_SingleSystemMgr.isDialog(CB_SingleSystemMgr.DIALOG_TYPE.OK_DIALOG))
+            return
+
+        CB_AppFunc.okDialog(requireActivity(), R.string.str_error,
+            R.string.str_failed_to_upload_image, R.drawable.error_icon, true)
     }
 
     fun birthDateButton()

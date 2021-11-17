@@ -240,7 +240,7 @@ class CB_NewMailFragment: CB_BaseFragment("NewMailFragment")
                     }
 
                     // make Mail to send
-                    val mail = CB_Mail(myUid, CB_AppFunc.getDateStringForSave(), eType.ordinal, strTitle, strText)
+                    val mail = CB_Mail(myUid, CB_AppFunc.getDateStringForSave(), "", eType.ordinal, strTitle, strText)
 
                     // save mail data at user-mails/uid/mailKey/mail data
                     CB_AppFunc.getMailBoxRoot().child(strRecipientUid).push().setValue(mail)

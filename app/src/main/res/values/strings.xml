@@ -246,6 +246,7 @@ Couple blog 은(는) 정보주체의 이용정보를 저장하고 수시로 불�
     <!-- example texts -->
 
     <string name="app_name">Couple Blog</string>
+    <string name="file_provider">com.coupleblog.fileprovider</string>
 
     <string name="str_year_ago">year ago</string>
     <string name="str_years_ago">years ago</string>
