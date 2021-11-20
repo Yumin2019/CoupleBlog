@@ -70,6 +70,7 @@
 
                 <com.google.android.material.imageview.ShapeableImageView
                     android:id="@+id/user_profile_image"
+                    style="@style/circle_shape_image_view"
                     android:layout_width="@dimen/profile_image_size"
                     android:layout_height="@dimen/profile_image_size"
                     android:layout_marginStart="@dimen/margin_16dp"
@@ -77,7 +78,7 @@
                     android:src="@drawable/haha_icon"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toTopOf="parent"
-                    bind:image_uid="@{viewModel.getUid()}"
+                    bind:user_image_path="@{viewModel.curUser.strImgPath}"
                     tools:src="@drawable/haha_icon" />
 
                 <ImageView

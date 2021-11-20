@@ -175,7 +175,7 @@ class CB_PostDetailFragment: CB_BaseFragment("PostDetail")
         {
             listItem.apply {
 
-                add(DialogItem(getString(R.string.str_edit_comment), R.drawable.ic_baseline_edit_24,
+                add(DialogItem(getString(R.string.str_edit_comment), R.drawable.pencil,
                 callback = {
 
                     if(CB_SingleSystemMgr.isDialog(CB_SingleSystemMgr.DIALOG_TYPE.COMMENT_EDIT_DIALOG))
@@ -186,7 +186,7 @@ class CB_PostDetailFragment: CB_BaseFragment("PostDetail")
 
                 }))
 
-                add(DialogItem(getString(R.string.str_delete_comment), R.drawable.ic_baseline_delete_forever_24,
+                add(DialogItem(getString(R.string.str_delete_comment), R.drawable.trash_can,
                 callback = { deleteComment(strCommentKey) }))
             }
         }
@@ -210,10 +210,10 @@ class CB_PostDetailFragment: CB_BaseFragment("PostDetail")
         {
             // if it's my post, we can edit or delete this post
             val listItem = arrayListOf(
-                DialogItem(getString(R.string.str_edit_post), R.drawable.ic_baseline_edit_24,
+                DialogItem(getString(R.string.str_edit_post), R.drawable.pencil,
                 callback = { editPost() }),
 
-                DialogItem(getString(R.string.str_delete_post), R.drawable.ic_baseline_delete_forever_24,
+                DialogItem(getString(R.string.str_delete_post), R.drawable.trash_can,
                 callback = { deletePost() })
             )
 

@@ -1,5 +1,6 @@
 package com.coupleblog.fragment
 
+import android.Manifest
 import android.content.ContentResolver
 import android.content.Intent
 import android.graphics.Bitmap
@@ -10,10 +11,12 @@ import android.os.Build
 import android.os.Bundle
 import android.os.Environment
 import android.provider.MediaStore
+import android.provider.Settings
 import android.util.Log
 import android.view.*
 import androidx.activity.result.ActivityResultLauncher
 import androidx.activity.result.contract.ActivityResultContracts
+import androidx.core.content.ContextCompat
 import androidx.core.content.FileProvider
 import androidx.navigation.fragment.findNavController
 import com.coupleblog.R
@@ -55,6 +58,7 @@ class CB_EditProfileFragment : CB_BaseFragment("EditProfile")
     // registerForActivityResult
     private lateinit var cameraLauncher: ActivityResultLauncher<Uri>
     private lateinit var galleryLauncher: ActivityResultLauncher<String>
+    private lateinit var permissionLauncher: ActivityResultLauncher<Array<String>>
 
     var imageUri: Uri? = null
     var strFilePath: String? = null
@@ -84,8 +88,7 @@ class CB_EditProfileFragment : CB_BaseFragment("EditProfile")
 
             if(!isSaved)
             {
-                Log.e(strTag, "failed to save image to uri")
-                uploadFailed()
+                Log.e(strTag, "user canceled camera")
                 return@registerForActivityResult
             }
 
@@ -121,7 +124,7 @@ class CB_EditProfileFragment : CB_BaseFragment("EditProfile")
         { uri ->
             if(uri == null)
             {
-                uploadFailed()
+                Log.e(strTag, "user canceled gallery")
                 return@registerForActivityResult
             }
 
@@ -153,6 +156,38 @@ class CB_EditProfileFragment : CB_BaseFragment("EditProfile")
                 .putExtra(CB_UploadService.UPLOAD_TYPE_KEY, UPLOAD_TYPE.PROFILE_IMAGE.ordinal)
                 .setAction(CB_UploadService.ACTION_UPLOAD))
         }
+
+        // permission launcher
+        permissionLauncher = registerForActivityResult(ActivityResultContracts.RequestMultiplePermissions())
+        {
+            // permission denied
+            if(!CB_AppFunc.checkPermission(Manifest.permission.CAMERA))
+            {
+                // Camera
+                CB_AppFunc.confirmDialog(requireActivity(), R.string.str_camera,
+                    R.string.str_normal_permission_message, R.drawable.camera, false,
+                    R.string.str_setting,
+                    { _, _ ->
+                        val intent = Intent(Settings.ACTION_APPLICATION_DETAILS_SETTINGS)
+                        intent.data = Uri.parse("package:${requireActivity().packageName}")
+                        startActivity(intent)
+
+                    }, R.string.str_cancel, null)
+            }
+            else if(!CB_AppFunc.checkPermission(Manifest.permission.WRITE_EXTERNAL_STORAGE))
+            {
+                // Storage
+                CB_AppFunc.confirmDialog(requireActivity(), R.string.str_storage,
+                    R.string.str_normal_permission_message, R.drawable.folder, false,
+                    R.string.str_setting,
+                    { _, _ ->
+                        val intent = Intent(Settings.ACTION_APPLICATION_DETAILS_SETTINGS)
+                        intent.data = Uri.parse("package:${requireActivity().packageName}")
+                        startActivity(intent)
+
+                    }, R.string.str_cancel, null)
+            }
+        }
     }
 
     private fun createTempFile()
@@ -167,7 +202,7 @@ class CB_EditProfileFragment : CB_BaseFragment("EditProfile")
 
         imageBitmap = null
         strFilePath = imageFile.absolutePath
-        imageUri = FileProvider.getUriForFile(requireContext(), getString(R.string.file_provider), imageFile)
+        imageUri =  FileProvider.getUriForFile(requireContext(), getString(R.string.file_provider), imageFile)
     }
 
     private fun uploadFailed()
@@ -218,9 +253,36 @@ class CB_EditProfileFragment : CB_BaseFragment("EditProfile")
         if(CB_SingleSystemMgr.isDialog(CB_SingleSystemMgr.DIALOG_TYPE.ITEM_LIST_DIALOG))
             return
 
+        val permissions = arrayOf(Manifest.permission.CAMERA, Manifest.permission.WRITE_EXTERNAL_STORAGE)
         val listItem = arrayListOf(
-            DialogItem(getString(R.string.str_camera), R.drawable.camera, callback = { cameraLauncher.launch(imageUri)        }),
-            DialogItem(getString(R.string.str_gallery), R.drawable.image, callback = { galleryLauncher.launch("image/*") })
+            DialogItem(getString(R.string.str_camera), R.drawable.camera,
+                callback =
+                {
+                    if(CB_AppFunc.checkPermission(permissions))
+                    {
+                        Log.i(strTag, "camera")
+                        cameraLauncher.launch(imageUri)
+                    }
+                    else
+                    {
+                        Log.i(strTag, "no permissions")
+                        permissionLauncher.launch(permissions)
+                    }
+                }),
+            DialogItem(getString(R.string.str_gallery), R.drawable.image,
+                callback =
+                {
+                    if(CB_AppFunc.checkPermission(permissions))
+                    {
+                        Log.i(strTag, "gallery")
+                        galleryLauncher.launch("image/*")
+                    }
+                    else
+                    {
+                        Log.i(strTag, "no permissions")
+                        permissionLauncher.launch(permissions)
+                    }
+                })
         )
 
         CB_ItemListDialog(requireActivity(), getString(R.string.str_change_profile_image), listItem, true)

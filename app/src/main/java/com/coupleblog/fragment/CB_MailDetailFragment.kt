@@ -191,7 +191,7 @@ class CB_MailDetailFragment : CB_BaseFragment("MailDetail")
             return
 
         val listItem = arrayListOf(
-            DialogItem(getString(R.string.str_delete_post), R.drawable.ic_baseline_delete_forever_24,
+            DialogItem(getString(R.string.str_delete_post), R.drawable.trash_can,
                 callback = { deleteMail() }),
 
           /*  답장(나중에 구현)

@@ -5,6 +5,7 @@ import android.app.Activity
 import android.app.Application
 import android.content.*
 import android.content.pm.ActivityInfo
+import android.content.pm.PackageManager
 import android.content.res.ColorStateList
 import android.database.Cursor
 import android.graphics.*
@@ -27,6 +28,8 @@ import androidx.annotation.RequiresApi
 import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
 import com.bumptech.glide.Glide
+import com.bumptech.glide.Glide.with
+import com.bumptech.glide.annotation.GlideModule
 import com.coupleblog.MainActivityBinding
 import com.coupleblog.R
 import com.coupleblog.model.CB_User
@@ -324,6 +327,7 @@ class CB_AppFunc
                 return
             }
 
+            cleanUpCoupleUserListener()
             coupleUserInfoListener = object : ValueEventListener {
 
                 override fun onDataChange(snapshot: DataSnapshot)
@@ -446,15 +450,13 @@ class CB_AppFunc
 
             if(strStoragePath.isNullOrEmpty())
             {
-                if(iDefaultRes != null)
-                    imageView.setImageResource(iDefaultRes)
-                else
-                    imageView.visibility = View.GONE
+                if(iDefaultRes != null) imageView.setImageResource(iDefaultRes)
+                else imageView.visibility = View.GONE
                 return
             }
 
-            val storageRef = getStorage().reference.child(strStoragePath)
-            Glide.with(application)
+            val storageRef = getStorage().getReference(strStoragePath)
+            GlideApp.with(application)
                 .load(storageRef)
                 .into(imageView)
         }
@@ -508,6 +510,28 @@ class CB_AppFunc
             }
         }
 
+        fun checkPermission(strPermission: String): Boolean
+        {
+            return (ContextCompat.checkSelfPermission(application, strPermission)
+                    == PackageManager.PERMISSION_GRANTED)
+        }
+
+        fun checkPermission(permissions: Array<String>): Boolean
+        {
+            for (i in permissions.indices)
+            {
+                if (ContextCompat.checkSelfPermission(application, permissions[i])
+                    != PackageManager.PERMISSION_GRANTED)
+                    return false
+            }
+            return true
+        }
+
+        fun requestPermission(activity: Activity, strPermission: String)
+        {
+            ActivityCompat.requestPermissions(activity, arrayOf(strPermission), PERMISSION_REQUEST)
+        }
+
      /*   fun requestPermissionAll(activity: Activity)
         {
             ActivityCompat.requestPermissions(activity, arrayOf(
@@ -532,23 +556,9 @@ class CB_AppFunc
             )
         }
 
-        fun checkPermission(context: Context, strPermission: String): Boolean
-        {
-            return (ContextCompat.checkSelfPermission(context, strPermission)
-                    == PackageManager.PERMISSION_GRANTED)
-        }
 
-        fun checkPermission(context: Context, arrPerString: Array<String>): Boolean
-        {
-            for (i in arrPerString.indices)
-            {
-                if (ContextCompat.checkSelfPermission(context, arrPerString[i])
-                    != PackageManager.PERMISSION_GRANTED)
-                    return false
-            }
 
-            return true
-        }
+
 
         fun checkEssentialPermission(context: Context): Boolean
         {
@@ -697,6 +707,7 @@ class CB_AppFunc
         }
 
         // 저장을 위한 dateString 얻기
+        fun getUniqueSuffix(): String = calendarToUniqueSuffix(getCalendarForSave())
         fun getDateStringForSave(): String = calendarToSaveString(getCalendarForSave())
         fun getCalendarForSave(): Calendar
         = getCurCalendar().apply {
@@ -706,6 +717,7 @@ class CB_AppFunc
             }
 
         // gmt offset을 고려한다.
+        fun calendarToUniqueSuffix(calendar: Calendar) = DateFormat.format("yyyyMMddHHmmss", calendar.time).toString()
         fun calendarToSaveString(calendar: Calendar) = DateFormat.format("yyyyMMddHHmm", calendar.time).toString()
         fun calendarToBirthdayString(calendar: Calendar) = DateFormat.format("yyyyMMdd", calendar.time).toString() + "0000"
         fun getCurCalendar(): Calendar = Calendar.getInstance()

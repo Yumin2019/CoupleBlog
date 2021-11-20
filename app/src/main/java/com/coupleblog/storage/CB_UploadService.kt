@@ -9,6 +9,9 @@ import com.coupleblog.CB_MainActivity
 import com.coupleblog.R
 import com.coupleblog.parent.CB_BaseTaskService
 import com.coupleblog.singleton.CB_AppFunc
+import com.coupleblog.singleton.CB_ViewModel
+import com.google.firebase.database.ktx.database
+import com.google.firebase.ktx.Firebase
 import com.google.firebase.storage.StorageReference
 import com.google.firebase.storage.ktx.component1
 import com.google.firebase.storage.ktx.component2
@@ -54,7 +57,7 @@ class CB_UploadService: CB_BaseTaskService()
             val databaseKey = intent.getStringExtra(DATABASE_KEY).toString()
 
             // make sure we have permission to read the data
-            contentResolver.takePersistableUriPermission(fileUri, Intent.FLAG_GRANT_READ_URI_PERMISSION)
+            //contentResolver.takePersistableUriPermission(fileUri, Intent.FLAG_GRANT_READ_URI_PERMISSION)
             uploadFromUri(fileUri, uploadType, databaseKey)
         }
 
@@ -69,19 +72,21 @@ class CB_UploadService: CB_BaseTaskService()
         val successFunc: ()->Unit
         when(uploadType)
         {
+            // images are going to be stacked in the storage folder.
+            // we just support only one picture for it but later we'll change it with horizontal scrollView
             UPLOAD_TYPE.PROFILE_IMAGE.ordinal ->
             {
+
                 // profileImage : users - uid - user-info - profile.jpg
                 val strUid = CB_AppFunc.getUid()
-                val strPath = "users/$strUid/user-info/profile.jpg"
+                val strPath = "users/$strUid/user-info/profile_${CB_AppFunc.getUniqueSuffix()}.jpg"
                 storageRef = CB_AppFunc.getStorage().getReference(strPath)
                 successFunc =
                     {
                         with(CB_AppFunc)
                         {
                             // update user's strImgPath
-                            val childUpdates = hashMapOf<String, Any>("/user/" +
-                                    "$strUid/strImgPath" to strPath)
+                            val childUpdates = hashMapOf<String, Any>("users/$strUid/strImgPath" to strPath)
                             getDataBase().updateChildren(childUpdates)
                         }
                     }
@@ -91,7 +96,7 @@ class CB_UploadService: CB_BaseTaskService()
             {
                 // profileImage : users - uid - user-posts - postKey1 - image.jpg
                 val strUid = CB_AppFunc.getUid()
-                val strPath = "users/$strUid/user-posts/$databaseKey/image.jpg"
+                val strPath = "users/$strUid/user-posts/$databaseKey/image_${CB_AppFunc.getUniqueSuffix()}.jpg"
                 storageRef = CB_AppFunc.getStorage().getReference(strPath)
                 successFunc =
                     {
@@ -109,7 +114,7 @@ class CB_UploadService: CB_BaseTaskService()
             {
                 // profileImage : users - uid - user-mails - mailKey1 - image.jpg
                 val strUid = CB_AppFunc.getUid()
-                val strPath = "users/$strUid/user-mails/$databaseKey/image.jpg"
+                val strPath = "users/$strUid/user-mails/$databaseKey/image_${CB_AppFunc.getUniqueSuffix()}.jpg"
                 storageRef = CB_AppFunc.getStorage().getReference(strPath)
                 successFunc =
                 {

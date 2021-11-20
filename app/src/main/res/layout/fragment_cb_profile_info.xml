@@ -43,7 +43,7 @@
                     android:layout_marginEnd="@dimen/margin_16dp"
                     android:background="?android:attr/selectableItemBackgroundBorderless"
                     android:onClick="@{()->fragment.editButton()}"
-                    android:src="@drawable/ic_baseline_edit_24"
+                    android:src="@drawable/pencil"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintTop_toTopOf="parent"
                     bind:visibility="@{viewModel.isMyProfile}" />
@@ -109,6 +109,7 @@
 
                 <com.google.android.material.imageview.ShapeableImageView
                     android:id="@+id/user_profile_image"
+                    style="@style/circle_shape_image_view"
                     bind:image_uid="@{viewModel.profileUserUid}"
                     android:layout_width="@dimen/profile_image_size"
                     android:layout_height="@dimen/profile_image_size"
@@ -141,6 +142,7 @@
                     android:layout_height="@dimen/profile_image_size_small"
                     bind:image_uid="@{viewModel.profileUser.strCoupleUid}"
                     android:src="@drawable/haha_icon"
+                    style="@style/circle_shape_image_view"
                     app:layout_constraintBottom_toBottomOf="@+id/couple_user_email_text_view"
                     app:layout_constraintEnd_toEndOf="@+id/user_profile_image"
                     app:layout_constraintStart_toStartOf="@+id/user_profile_image"

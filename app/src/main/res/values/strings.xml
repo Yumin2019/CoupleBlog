@@ -246,7 +246,7 @@ Couple blog 은(는) 정보주체의 이용정보를 저장하고 수시로 불�
     <!-- example texts -->
 
     <string name="app_name">Couple Blog</string>
-    <string name="file_provider">com.coupleblog.fileprovider</string>
+    <string name="file_provider">"com.coupleblog.fileprovider"</string>
 
     <string name="str_year_ago">year ago</string>
     <string name="str_years_ago">years ago</string>
@@ -288,6 +288,7 @@ Couple blog 은(는) 정보주체의 이용정보를 저장하고 수시로 불�
     <string name="str_delete">Delete</string>
     <string name="str_loading">Loading …</string>
     <string name="str_camera">Camera</string>
+    <string name="str_storage">Storage</string>
     <string name="str_gallery">Gallery</string>
     <string name="str_change_profile_image">Change profile image</string>
     <string name="str_read_mark">Read mark</string>
@@ -312,6 +313,7 @@ Couple blog 은(는) 정보주체의 이용정보를 저장하고 수시로 불�
     <string name="str_my_post_menu">Post menu</string>
     <string name="str_comment_menu">Comment menu</string>
     <string name="str_mail_menu">Mail menu</string>
+    <string name="str_setting">Setting</string>
 
     <string name="str_choose_mail_type">Choose mail type</string>
     <string name="str_mail_type_normal">Mail</string>
@@ -319,7 +321,7 @@ Couple blog 은(는) 정보주체의 이용정보를 저장하고 수시로 불�
     <string name="str_request_couple">Request couple</string>
     <string name="str_request_couple_msg">You want to allow this request from\n</string>
     <string name="str_couple_request_mail">This is a couple request mail.</string>
-
+    <string name="str_normal_permission_message">You have to allow this message for use.</string>
     <string name="str_downloading">Downloading…</string>
     <string name="str_uploading">Uploading…</string>
     <string name="str_download_success">Download finished</string>

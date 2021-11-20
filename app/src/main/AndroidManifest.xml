@@ -35,6 +35,15 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+
+        <service
+            android:name=".storage.CB_UploadService"
+            android:exported="false" />
+
+        <service
+            android:name=".storage.CB_DownloadService"
+            android:exported="false" />
+
     </application>
 
 </manifest>

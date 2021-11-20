@@ -1,6 +1,7 @@
 package com.coupleblog.model
 
 import com.coupleblog.singleton.CB_AppFunc
+import com.google.firebase.database.Exclude
 import com.google.firebase.database.IgnoreExtraProperties
 
 /*
@@ -37,4 +38,27 @@ data class CB_User(
     var strPhoneNumber       : String? = "",                // 핸드폰 번호
     var strFavorites         : String? = "",                // 좋아하는 것
     var strDislikes          : String? = "",                // 싫어하는 것
-)
+) {
+    @Exclude
+    fun toMap(): Map<String, Any?> {
+        return mapOf(
+            "strUserName" to strUserName,
+            "strUserEmail" to strUserEmail,
+            "strSignUpDate" to strSignUpDate,
+            "strImgPath" to strImgPath,
+            "strCoupleUid" to strCoupleUid,
+            "isOnline" to isOnline,
+            "strLogoutDate" to strLogoutDate,
+            "iGender" to iGender,
+            "strBirthDate" to strBirthDate,
+            "strRegion" to strRegion,
+            "iGmtOffset" to iGmtOffset,
+            "strIntroduction" to strIntroduction,
+            "strEducation" to strEducation,
+            "strCareer" to strCareer,
+            "strPhoneNumber" to strPhoneNumber,
+            "strFavorites" to strFavorites,
+            "strDislikes" to strDislikes,
+        )
+    }
+}

@@ -24,6 +24,7 @@
 
         <com.google.android.material.imageview.ShapeableImageView
             android:id="@+id/author_image_view"
+            style="@style/circle_shape_image_view"
             android:background="?android:attr/selectableItemBackgroundBorderless"
             android:onClick="@{()->fragment.profileButton(commentData.strAuthorUid)}"
             android:layout_width="@dimen/icon_image_size"

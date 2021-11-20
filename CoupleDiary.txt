@@ -749,12 +749,82 @@ isMyProfile flag를 두는 것은 좋은데 항상 내 것 아니면 커플 정�
 포스트 프로필 이미지
 이메일 포스트 이미지 등을 눌러서 처리하는 기능을 제공한다.
 
-ConstraintLayout 
- CardView
-  ConstraintLayout
-  
-1. scrollView 추가
- - clipToPadding 일괄 적용
+== 프로필 접근 방식 추가 ==
+1. 프로필에 직접 접근하는 방법
+
+2. 블로그 포스트를 통해서 접근하는 방법 
+ - 댓글 작성자 (댓글 편집 중에 이미지를 클릭하는 경우는 처리하지 않는다.)
+ - 포스트 작성자 
  
-2. Error, Info, Warning Icon 변경(Gradient style)
-여기 EditDialog부분 하는 중인데 지금 터진다. 아.. 
+3. 메일을 통해서 접근하는 방법 
+ - 메일 작성자 (메일 박스에서는 프로필 이미지가 없다. 처리 X)
+====================
+
+1. 버튼 배치 안 맞는 부분 수정 
+ - new mail, new post xml을 scrollView를 사용하지 않는 형태로 변경
+
+2. AddButton 사라지는 오류 수정 
+
+3. 로그인 오류 예외처리 추가(추측에 따라)
+로그아웃할 때 exception발생함. 유저 데이터가 변경이 되는데 auth가 없는 상태에서
+DB에 접근하는 것으로 추정된다. 로그아웃하고 getUserInfo를 호출한 것 같은데.. 가능한 동작인가..?
+혹시 처리하는데 비동기 처리가 되서 다른 쪽에서 처리하고 있고 UI는 밖으로 나와서 문제가 생기는 듯 하다.
+
+Storage 기능 적용을 통해 이미지 파일을 유저마다 업로드할 수 있는 기능을 만든다.
+일단은 이미지 파일만 처리한다. 
+
+업로드 시나리오: Document or 이미지, 갤러리 등.. 호출 이후에 uri를 가지고 와서
+   startService(Intent(this, MyUploadService::class.java)
+                .putExtra(MyUploadService.EXTRA_FILE_URI, uploadUri)
+                .setAction(MyUploadService.ACTION_UPLOAD))
+				
+startCommand -> uploadFromUri를 거쳐서 progressNotification.
+성공 시 처리, 실패시 처리로 분기.
+
+.. progressbarNoti를 보여주다가 finished에 대한 처리.
+
+다운 로드의 경우에는 (아직 사용하지 않을 예정)
+클릭 -> startService -> startCommand -> downloadFromPath ...
+broadCast로 처리해주고.. noti처리.. 끝 이런 식이다.
+
+편집하려는 것이 내 프로필인 경우에는.. 편집 페이지에서 클릭을 통해서 itemListDialog를 출력하고..
+카메라, 갤러리 둘 중에서 하나를 클릭할 수 있도록 한다.
+
+이후에 얻어온 URI를 바탕으로 UploadService를 이용해서 파일을 올리는 것까지 적용해본다.
+
+temp 파일을 만들어서 URI를 구해서 넘겨주면 카메라에서 이용할 수 있다.
+설정하고 아마 데이터가 동일해서 처리가 안 될 거니까.. (경로가 항상 같음...)
+강제로 notify 호출해서 갱신.
+
+1. 유저 정보(프로필 이미지)  users -  uid -  user-info - profile.png 
+2. 포스트 사진		  	 users -  uid -  user-posts - postKey1 - image.png 
+3. 이메일 사진 		 	 users -  uid -  user-mails - mailKey1 - image.png
+
+4. 커플 관련(추가 예정) couples - coupleKey - .... 
+
+1. Storage 처리 부분
+ - 각 upload 항목별 타입 추가
+ - 프로필 이미지 버튼 추가 및 이후 처리(사진 회전시 복구, 용량 조절 등)
+ - 카메라 / 갤러리 분기 처리 항목 추가
+ - storage, Database 연동 처리(작업중)
+ - 프로필 관련 ImageView -> ShapeableImageView로 변경
+
+2. GMToffset 값이 설정되어 있지 않는 경우에 설정
+
+===============
+1. firebase ui / glide api 추가
+ - uid를 넣어서 유저 정보에 접근하여... image를 설정하는 함수
+ - strPath를 넣어서 storage에 있는 이미지를 긁어오는 함수
+ - xml에서 이미지를 사용하는 곳에 모두 적용
+ 
+2. DB의 원하는 요소에만 접근하여 업데이트 처리 
+ - storage upload -> db 데이터 변경 -> LiveData에서 인식
+ 
+3. strImgPath(mail, post... user) 변수 추가
+
+직접 사진을 찍어서 넣거나 갤러리에서 클릭에서 받아오는 처리를 추가해본다.
+너무 걱정이 많고 말이 많은 것 같다. 그냥 하면 되는 것을 알겠지 유민아 그냥. 하면 된다.
+너 충분히 코드 잘 짜고 있어. 좋은 프로그래머가 되기 위해서 오늘도 코드를 작성하고 있잖아.
+그러니까 너가 잘 짜고 있을 것이라고 믿고 앞으로 나아가면 된다. okay? OK.
+ 
+android:scaleType="centerCrop" 하고 app:shapeAppearanceOverlay 묶어서 스타일 처리하면 좋을 것 같다.

@@ -20,10 +20,16 @@ import com.google.firebase.database.DatabaseError
 import com.google.firebase.database.ValueEventListener
 import com.google.firebase.database.ktx.getValue
 
-@BindingAdapter("bind:image_path")
-fun setImagePath(imageView: ImageView, strPath: String?)
+@BindingAdapter("bind:picture_image_path")
+fun setPictureImagePath(imageView: ImageView, strPath: String?)
 {
     CB_AppFunc.setImageWithGlide(strPath, imageView, null)
+}
+
+@BindingAdapter("bind:user_image_path")
+fun setUserImagePath(imageView: ImageView, strPath: String?)
+{
+    CB_AppFunc.setImageWithGlide(strPath, imageView, R.drawable.ic_baseline_account_circle_24)
 }
 
 @BindingAdapter("bind:image_uid")

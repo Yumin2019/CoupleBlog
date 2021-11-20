@@ -1,6 +1,15 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
 
+    <style name="circle_shape_image_view">
+        <item name="shapeAppearanceOverlay">@style/circle_shape</item>
+        <item name="android:scaleType">centerCrop</item>
+    </style>
+
+    <style name="circle_shape">
+        <item name="cornerSize">50%</item>
+    </style>
+
     <style name="title_text_style">
         <item name="fontFamily">@font/lora_regular</item>
         <item name="android:textSize">@dimen/title_text_size</item>
