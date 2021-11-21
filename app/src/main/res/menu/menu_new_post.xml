@@ -3,17 +3,9 @@
     xmlns:app="http://schemas.android.com/apk/res-auto">
 
     <item
-        android:id="@+id/action_recipients"
-        android:title="@string/str_recipients"
-        android:visible="true"
-        app:showAsAction="never"
-        />
-
-    <item
         android:id="@+id/action_add_image"
         android:title="@string/str_add_image"
         android:visible="true"
         app:showAsAction="never"
         />
-
 </menu>

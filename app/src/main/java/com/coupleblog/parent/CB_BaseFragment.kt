@@ -20,6 +20,7 @@ abstract class CB_BaseFragment(val strTag: String) : Fragment()
 {
     fun infoLog(strMsg: String) = Log.i(strTag, strMsg)
     fun errorLog(strMsg: String) = Log.e(strTag, strMsg)
+    fun debugLog(strMsg: String) = Log.d(strTag, strMsg)
 
     abstract fun backPressed()
 

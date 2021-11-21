@@ -796,9 +796,9 @@ temp 파일을 만들어서 URI를 구해서 넘겨주면 카메라에서 이용
 설정하고 아마 데이터가 동일해서 처리가 안 될 거니까.. (경로가 항상 같음...)
 강제로 notify 호출해서 갱신.
 
-1. 유저 정보(프로필 이미지)  users -  uid -  user-info - profile.png 
-2. 포스트 사진		  	 users -  uid -  user-posts - postKey1 - image.png 
-3. 이메일 사진 		 	 users -  uid -  user-mails - mailKey1 - image.png
+1. 유저 정보(프로필 이미지)  users -  uid -  user-info - profile_$date.﻿jpeg 
+2. 포스트 사진		  	 users -  uid -  user-posts - postKey1 - image_$date.﻿jpeg 
+3. 이메일 사진 		 	 users -  uid -  user-mails - mailKey1 - image_$date.﻿jpeg
 
 4. 커플 관련(추가 예정) couples - coupleKey - .... 
 
@@ -826,5 +826,49 @@ temp 파일을 만들어서 URI를 구해서 넘겨주면 카메라에서 이용
 너무 걱정이 많고 말이 많은 것 같다. 그냥 하면 되는 것을 알겠지 유민아 그냥. 하면 된다.
 너 충분히 코드 잘 짜고 있어. 좋은 프로그래머가 되기 위해서 오늘도 코드를 작성하고 있잖아.
 그러니까 너가 잘 짜고 있을 것이라고 믿고 앞으로 나아가면 된다. okay? OK.
+
+1. Added ShapeableImageView Style(circle)
+
+2. Icon Changed(gredient style)
+ - trash_can
+ - pencil
+ - file
  
-android:scaleType="centerCrop" 하고 app:shapeAppearanceOverlay 묶어서 스타일 처리하면 좋을 것 같다.
+3. profile image change with Glide 
+ - one picture -> pictures
+*I'll change it with horizontal ScrollView later.
+
+자 어제는 프로필 이미지를 변경하는 부분을 작성했는데.. 오늘은 프로필 이미지
+
+프로필 이미지가 기존에 있었다면 삭제하는 로직을 추가.
+유저가 로그아웃되는 상황에서 이전 데이터를 덮어 씌우는 오류가 있어서 수정.
+다른 부분에 이미지를 추가할 수 있는 기능을 넣는다.
+
+permssionFragment 추가
+CameraBaseFragment(parent)추가하여 카메라 기능을 여러 Framgent에서 처리할 수 있도록 한다.
+
+
+==== 
+1. 카메라에 대한 처리 / 갤러리에 대한 처리를 해야 하는 Fragment가 여럿 있는 관계로
+카메라에 대한 처리를 하는 부모 클래스를 만들어서 일괄적으로 처리할 수 있도록 추가해야 한다.
+
+2. 예를 들어서, 해당 기능이 어느 한 부분만 이용하는 것이라면 그 기능을 이용할 때 권한을
+확인하고 이용하면 되는데... 카메라나 갤러리 같은 기능들은.. 포스트, 프로필, 메일 보내기 
+여러 곳에 사용이 된다. 따라서 각 이들의 권한 처리를 위해 fragment마다 권한을 체크하는 식이 아니라
+초기에 권한을 확인하고 어플을 시작할 수 있도록 PermissionPage를 만들 필요성이 부각된다.
+
+편집하는 상황이면 내부 path에 따라서 있으면 로드하고 셋팅/ 없으면 null
+추가하는 상황이면 그냥 null
+
+1. PermissionFragment 추가
+ - 권한이 있으면 그냥 넘어간다.
+ - 권한이 없으면 요청하고 반드시 모든 권한을 허용해야 넘어가도록 처리
+ 
+2. 유저가 로그아웃되었을 때 이전 데이터를 덮어 씌우는 오류 수정
+
+3. 프로필 이미지를 추가하는 경우, 이전 데이터를 삭제하는 로직 추가
+
+4. CameraBaseFragment(카메라 처리용 부모 클래스) 추가
+
+*newPostFragment 작업중... 초기 이미지 설정/이미지 변경 및 삭제까지 작성.
+PostButton에 대한 처리에서 고민중...

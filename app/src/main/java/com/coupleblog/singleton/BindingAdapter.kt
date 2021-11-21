@@ -1,5 +1,6 @@
 package com.coupleblog.singleton
 
+import android.graphics.Bitmap
 import android.util.Log
 import android.view.View
 import android.widget.ImageView
@@ -19,6 +20,13 @@ import com.google.firebase.database.DataSnapshot
 import com.google.firebase.database.DatabaseError
 import com.google.firebase.database.ValueEventListener
 import com.google.firebase.database.ktx.getValue
+
+@BindingAdapter("bind:bitmap")
+fun setBitmapImg(imageView: ImageView, bitmap: Bitmap?)
+{
+    imageView.visibility = if(bitmap == null) View.GONE else View.VISIBLE
+    imageView.setImageBitmap(bitmap)
+}
 
 @BindingAdapter("bind:picture_image_path")
 fun setPictureImagePath(imageView: ImageView, strPath: String?)

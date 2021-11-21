@@ -15,8 +15,8 @@ import com.google.firebase.auth.FirebaseUser
 import kotlinx.coroutines.launch
 
 
-class CB_LoginFragment : CB_BaseFragment("LoginFragment") {
-
+class CB_LoginFragment : CB_BaseFragment("LoginFragment")
+{
     private var _binding            : LoginBinding? = null
     private val binding get() = _binding!!
 

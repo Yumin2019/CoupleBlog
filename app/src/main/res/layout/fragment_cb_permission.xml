@@ -1,0 +1,176 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <data class="com.coupleblog.fragment.PermissionBinding">
+        <variable
+            name="fragment"
+            type="com.coupleblog.fragment.CB_PermissionFragment" />
+    </data>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+
+        <ImageView
+            android:id="@+id/launcher_image_view"
+            android:layout_width="@dimen/profile_image_size_small"
+            android:layout_height="@dimen/profile_image_size_small"
+            android:layout_marginTop="@dimen/margin_24dp"
+            app:layout_constraintEnd_toStartOf="@+id/right_margin_line"
+            app:layout_constraintStart_toStartOf="@+id/left_margin_line"
+            app:layout_constraintTop_toTopOf="parent"
+            tools:src="@mipmap/ic_launcher" />
+
+        <TextView
+            android:id="@+id/title_text_view"
+            style="@style/title_text_style"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="-15dp"
+            android:text="@string/app_name"
+            app:layout_constraintEnd_toStartOf="@+id/right_margin_line"
+            app:layout_constraintHorizontal_bias="0.5"
+            app:layout_constraintStart_toStartOf="@+id/left_margin_line"
+            app:layout_constraintTop_toBottomOf="@+id/launcher_image_view" />
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/camera_container_layout"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/margin_16dp"
+            android:layout_marginTop="@dimen/margin_32dp"
+            app:layout_constraintEnd_toStartOf="@+id/right_margin_line"
+            app:layout_constraintStart_toStartOf="@+id/left_margin_line"
+            app:layout_constraintTop_toBottomOf="@+id/view3">
+
+            <ImageView
+                android:id="@+id/camera_image_view"
+                android:layout_width="@dimen/icon_image_size"
+                android:layout_height="@dimen/icon_image_size"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                tools:src="@drawable/camera" />
+
+            <TextView
+                android:id="@+id/camera_text_view"
+                style="@style/post_title_text_view"
+                android:layout_width="@dimen/normal_field_size"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="@dimen/margin_16dp"
+                android:text="@string/str_camera"
+                android:textAlignment="viewStart"
+                android:textColor="@color/purple"
+                app:layout_constraintStart_toEndOf="@+id/camera_image_view"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <TextView
+                android:id="@+id/camera_desc_text_view"
+                style="@style/normal_text_style"
+                android:layout_width="@dimen/normal_field_size"
+                android:layout_height="wrap_content"
+                android:text="@string/str_permission_camera_desc"
+                android:textAlignment="viewStart"
+                app:layout_constraintStart_toStartOf="@+id/camera_text_view"
+                app:layout_constraintTop_toBottomOf="@+id/camera_text_view" />
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/storage_container_layout"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/margin_16dp"
+            android:layout_marginTop="@dimen/margin_24dp"
+            app:layout_constraintEnd_toStartOf="@+id/right_margin_line"
+            app:layout_constraintStart_toStartOf="@+id/left_margin_line"
+            app:layout_constraintTop_toBottomOf="@+id/camera_container_layout">
+
+            <ImageView
+                android:id="@+id/storage_image_view"
+                android:layout_width="@dimen/icon_image_size"
+                android:layout_height="@dimen/icon_image_size"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                tools:src="@drawable/folder" />
+
+            <TextView
+                android:id="@+id/storage_text_view"
+                style="@style/post_title_text_view"
+                android:layout_width="@dimen/normal_field_size"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="@dimen/margin_16dp"
+                android:text="@string/str_storage"
+                android:textAlignment="viewStart"
+                android:textColor="@color/purple"
+                app:layout_constraintStart_toEndOf="@+id/storage_image_view"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <TextView
+                android:id="@+id/storage_desc_text_view"
+                style="@style/normal_text_style"
+                android:layout_width="@dimen/normal_field_size"
+                android:layout_height="wrap_content"
+                android:text="@string/str_permission_storage_desc"
+                android:textAlignment="viewStart"
+                app:layout_constraintStart_toStartOf="@+id/storage_text_view"
+                app:layout_constraintTop_toBottomOf="@+id/storage_text_view" />
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+        <TextView
+            android:id="@+id/desc_text_view"
+            style="@style/subtitle_text_style"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/margin_24dp"
+            android:text="@string/str_permission_desc"
+            app:layout_constraintEnd_toStartOf="@+id/right_margin_line"
+            app:layout_constraintStart_toStartOf="@+id/left_margin_line"
+            app:layout_constraintTop_toBottomOf="@+id/title_text_view" />
+
+        <View
+            android:id="@+id/view3"
+            style="@style/divider"
+            android:layout_width="wrap_content"
+            android:layout_height="1dp"
+            android:layout_marginTop="@dimen/normal_margin"
+            app:layout_constraintEnd_toStartOf="@+id/right_margin_line"
+            app:layout_constraintStart_toStartOf="@+id/left_margin_line"
+            app:layout_constraintTop_toBottomOf="@+id/desc_text_view" />
+
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/ok_button"
+            style="@style/mtrl_button_style"
+            android:layout_width="0dp"
+            android:layout_height="@dimen/button_height"
+            android:layout_marginBottom="@dimen/margin_16dp"
+            android:backgroundTint="@color/purple"
+            android:text="@string/str_ok"
+            android:onClick="@{()->fragment.okButton()}"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toStartOf="@+id/right_margin_line"
+            app:layout_constraintStart_toStartOf="@+id/left_margin_line"
+            app:rippleColor="@color/ripple_purple" />
+
+        <androidx.constraintlayout.widget.Guideline
+            android:id="@+id/left_margin_line"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            app:layout_constraintGuide_begin="@dimen/margin_16dp" />
+
+        <androidx.constraintlayout.widget.Guideline
+            android:id="@+id/right_margin_line"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            app:layout_constraintGuide_end="@dimen/margin_16dp" />
+
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</layout>

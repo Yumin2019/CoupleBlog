@@ -1,20 +1,29 @@
 package com.coupleblog.fragment
 
+import android.graphics.Bitmap
+import android.graphics.drawable.Drawable
 import android.os.Bundle
 import android.util.Log
-import android.view.LayoutInflater
-import android.view.View
-import android.view.ViewGroup
+import android.view.*
 import androidx.core.widget.doAfterTextChanged
 import androidx.navigation.fragment.findNavController
+import com.bumptech.glide.request.RequestListener
+import com.bumptech.glide.request.target.CustomTarget
+import com.bumptech.glide.request.target.SimpleTarget
+import com.bumptech.glide.request.transition.Transition
 import com.coupleblog.R
+import com.coupleblog.dialog.CB_ItemListDialog
 import com.coupleblog.dialog.CB_LoadingDialog
+import com.coupleblog.dialog.DialogItem
 import com.coupleblog.model.CB_Post
 import com.coupleblog.model.REACTION_TYPE
 import com.coupleblog.parent.CB_BaseFragment
+import com.coupleblog.parent.CB_CameraBaseFragment
 import com.coupleblog.singleton.CB_AppFunc
 import com.coupleblog.singleton.CB_SingleSystemMgr
 import com.coupleblog.singleton.CB_ViewModel
+import com.coupleblog.singleton.GlideApp
+import com.coupleblog.storage.UPLOAD_TYPE
 import com.google.firebase.FirebaseException
 import com.google.firebase.database.DataSnapshot
 import com.google.firebase.database.DatabaseError
@@ -24,24 +33,15 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.tasks.await
 
-/*  여러 위치에 업데이트
-       val post = Post(userId, username, title, body)
-       val postValues = post.toMap()
-
-       val childUpdates = hashMapOf<String, Any?>(
-               "/posts/$key" to postValues,             // null is deletion of data
-               "/user-posts/$userId/$key" to postValues
-       )
-
-       database.updateChildren(childUpdates)
- */
-
-class CB_NewPostFragment: CB_BaseFragment("NewPostFragment")
+class CB_NewPostFragment: CB_CameraBaseFragment("NewPostFragment", UPLOAD_TYPE.POST_IMAGE, bDeferred = true)
 {
     private var _binding            : NewPostBinding? = null
     private val binding get() = _binding!!
     var editPostKey = ""
+
+    // used for editing
     var postData: CB_Post? = null
+    var bImageChanged = false
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View
     {
@@ -54,6 +54,18 @@ class CB_NewPostFragment: CB_BaseFragment("NewPostFragment")
         return binding.root
     }
 
+    override fun onCreate(savedInstanceState: Bundle?)
+    {
+        super.onCreate(savedInstanceState)
+
+        // before upload, invoke this
+
+        funDeferred = {
+            CB_ViewModel.postImage.postValue(imageBitmap)
+            bImageChanged = true
+        }
+    }
+
     override fun onResume()
     {
         super.onResume()
@@ -63,6 +75,7 @@ class CB_NewPostFragment: CB_BaseFragment("NewPostFragment")
     override fun onViewCreated(view: View, savedInstanceState: Bundle?)
     {
         super.onViewCreated(view, savedInstanceState)
+        setHasOptionsMenu(true)
 
         editPostKey = requireArguments().getString(CB_PostDetailFragment.ARGU_POST_KEY)!!
         if(editPostKey.isNotEmpty())
@@ -91,6 +104,27 @@ class CB_NewPostFragment: CB_BaseFragment("NewPostFragment")
                     CB_ViewModel.apply {
                         strTitle.postValue(postData!!.strTitle)
                         strBody.postValue(postData!!.strBody)
+
+                        val strImgPath = postData!!.strImgPath
+                        if(!strImgPath.isNullOrEmpty())
+                        {
+                            // this post has an image, load from storage
+                            val imageRef = CB_AppFunc.getStorageRef(strImgPath)
+                            GlideApp.with(requireActivity())
+                                .asBitmap()
+                                .load(imageRef)
+                                .into(object: CustomTarget<Bitmap>(){
+                                    override fun onResourceReady(resource: Bitmap, transition: Transition<in Bitmap>?)
+                                    {
+                                        postImage.postValue(resource)
+                                    }
+                                    override fun onLoadCleared(placeholder: Drawable?){}
+                                })
+                        }
+                        else
+                        {
+                            postImage.postValue(null)
+                        }
                     }
                 }
 
@@ -131,6 +165,48 @@ class CB_NewPostFragment: CB_BaseFragment("NewPostFragment")
         }
     }
 
+    override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater)
+    {
+        inflater.inflate(R.menu.menu_new_post, menu)
+    }
+
+    override fun onOptionsItemSelected(item: MenuItem): Boolean
+    {
+        when(item.itemId)
+        {
+            R.id.action_add_image  ->
+            {
+                val listItem = arrayListOf(
+                    DialogItem(getString(R.string.str_no_image), R.drawable.trash_can,
+                        callback =
+                        {
+                            Log.i(strTag, "no image")
+                            CB_ViewModel.postImage.postValue(null)
+                            bImageChanged = true
+                        }),
+                    DialogItem(getString(R.string.str_camera), R.drawable.camera,
+                        callback =
+                        {
+                            Log.i(strTag, "camera")
+                            cameraLauncher.launch(imageUri)
+                        }),
+                    DialogItem(getString(R.string.str_gallery), R.drawable.image,
+                        callback =
+                        {
+                            Log.i(strTag, "gallery")
+                            galleryLauncher.launch("image/*")
+                        })
+                )
+
+                CB_ItemListDialog(requireActivity(), getString(R.string.str_add_image), listItem, true)
+            }
+
+            else -> {super.onOptionsItemSelected(item)}
+        }
+
+        return true
+    }
+
     fun postButton()
     {
         if(CB_SingleSystemMgr.isDialog(CB_SingleSystemMgr.DIALOG_TYPE.LOADING_DIALOG))
@@ -141,7 +217,6 @@ class CB_NewPostFragment: CB_BaseFragment("NewPostFragment")
 
         val strTitle = CB_ViewModel.strTitle.value!!
         val strText = CB_ViewModel.strBody.value!!
-        // val imageView = binding.postImageView
 
         if(strTitle.isEmpty())
         {
@@ -254,7 +329,7 @@ class CB_NewPostFragment: CB_BaseFragment("NewPostFragment")
         if(editPostKey.isNotEmpty())
         {
             // when editing, no changes
-            if(strTitle == postData!!.strTitle && strText == postData!!.strBody)
+            if(strTitle == postData!!.strTitle && strText == postData!!.strBody && !bImageChanged)
             {
                 findNavController().popBackStack()
                 return
@@ -263,7 +338,7 @@ class CB_NewPostFragment: CB_BaseFragment("NewPostFragment")
         else
         {
             // when addition, no changes
-            if (strTitle.isEmpty() && strText.isEmpty())
+            if (strTitle.isEmpty() && strText.isEmpty() && (CB_ViewModel.postImage.value == null))
             {
                 findNavController().popBackStack()
                 return

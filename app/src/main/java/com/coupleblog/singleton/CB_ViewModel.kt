@@ -1,6 +1,7 @@
 package com.coupleblog.singleton
 
 import android.annotation.SuppressLint
+import android.graphics.Bitmap
 import android.util.Log
 import androidx.lifecycle.MutableLiveData
 import androidx.recyclerview.widget.RecyclerView
@@ -120,11 +121,13 @@ class CB_ViewModel
         // NewPostFragment
         var strTitle   = MutableLiveData("")
         var strBody    = MutableLiveData("")
+        var postImage  : MutableLiveData<Bitmap?> = MutableLiveData(null)
 
         fun resetNewPostFragmentLiveData()
         {
             strTitle.postValue("")
             strBody.postValue("")
+            postImage.postValue(null)
         }
 
         // MailDetailFragment

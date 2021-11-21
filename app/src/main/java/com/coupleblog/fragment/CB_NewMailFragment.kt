@@ -72,6 +72,30 @@ class CB_NewMailFragment: CB_BaseFragment("NewMailFragment")
 
                 CB_ItemListDialog(requireActivity(), CB_AppFunc.getString(R.string.str_recipients), itemList, true)
             }
+
+            R.id.action_add_image ->
+            {
+                val itemList = ArrayList<DialogItem>()
+                itemList.add(DialogItem(CB_AppFunc.curUser.strUserName!!, R.drawable.haha_icon,
+                    callback = {
+
+                        binding.recipientEditText.text =
+                            CB_AppFunc.stringToEditable(CB_AppFunc.curUser.strUserEmail!!)
+                    }))
+
+                // if a couple
+                if(!CB_AppFunc.curUser.strCoupleUid.isNullOrEmpty())
+                {
+                    itemList.add(DialogItem(CB_AppFunc.coupleUser.strUserName!!, R.drawable.ic_baseline_favorite_24,
+                        callback = {
+
+                            binding.recipientEditText.text =
+                                CB_AppFunc.stringToEditable(CB_AppFunc.coupleUser.strUserEmail!!)
+                        }, R.color.red))
+                }
+
+                CB_ItemListDialog(requireActivity(), CB_AppFunc.getString(R.string.str_recipients), itemList, true)
+            }
             else -> { super.onOptionsItemSelected(item) }
         }
 

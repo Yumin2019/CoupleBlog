@@ -4,6 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools">
 
     <data class="com.coupleblog.fragment.LoginBinding">
+
         <variable
             name="fragment"
             type="com.coupleblog.fragment.CB_LoginFragment" />
@@ -66,20 +67,21 @@
                 android:id="@+id/password_edit_text"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:maxLines="1"
+                android:hint="@string/str_password"
                 android:imeOptions="actionDone"
                 android:inputType="textPassword"
-                android:hint="@string/str_password" />
+                android:maxLines="1" />
         </com.google.android.material.textfield.TextInputLayout>
 
         <com.google.android.material.button.MaterialButton
             android:id="@+id/login_button"
-            android:onClick="@{()->fragment.signInButton()}"
             style="@style/mtrl_button_style"
             android:layout_width="0dp"
             android:layout_height="@dimen/button_height"
             android:layout_marginTop="@dimen/margin_24dp"
             android:backgroundTint="@color/purple"
+            android:onClick="@{()->fragment.signInButton()}"
+            android:text="@string/str_sign_in"
             app:layout_constraintEnd_toStartOf="@+id/right_margin_line"
             app:layout_constraintStart_toStartOf="@+id/left_margin_line"
             app:layout_constraintTop_toBottomOf="@+id/password_text_input_layout"
@@ -127,11 +129,11 @@
             <TextView
                 android:id="@+id/register_text_view"
                 style="@style/normal_text_style"
-                android:onClick="@{()->fragment.registerButton()}"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginEnd="8dp"
                 android:background="?android:attr/selectableItemBackground"
+                android:onClick="@{()->fragment.registerButton()}"
                 android:text="@string/str_register"
                 android:textColor="@color/blue"
                 app:layout_constraintBottom_toBottomOf="parent"

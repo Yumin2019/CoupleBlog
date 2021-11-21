@@ -15,6 +15,7 @@ import com.google.firebase.ktx.Firebase
 import com.google.firebase.storage.StorageReference
 import com.google.firebase.storage.ktx.component1
 import com.google.firebase.storage.ktx.component2
+import kotlinx.coroutines.launch
 
 enum class UPLOAD_TYPE
 {
@@ -22,7 +23,6 @@ enum class UPLOAD_TYPE
     PROFILE_IMAGE,
     POST_IMAGE,
     EMAIL_IMAGE,
-
 }
 
 class CB_UploadService: CB_BaseTaskService()
@@ -76,18 +76,30 @@ class CB_UploadService: CB_BaseTaskService()
             // we just support only one picture for it but later we'll change it with horizontal scrollView
             UPLOAD_TYPE.PROFILE_IMAGE.ordinal ->
             {
-
                 // profileImage : users - uid - user-info - profile.jpg
                 val strUid = CB_AppFunc.getUid()
                 val strPath = "users/$strUid/user-info/profile_${CB_AppFunc.getUniqueSuffix()}.jpg"
+                val strPrevImgPath = CB_AppFunc.curUser.strImgPath
                 storageRef = CB_AppFunc.getStorage().getReference(strPath)
                 successFunc =
                     {
-                        with(CB_AppFunc)
-                        {
-                            // update user's strImgPath
-                            val childUpdates = hashMapOf<String, Any>("users/$strUid/strImgPath" to strPath)
-                            getDataBase().updateChildren(childUpdates)
+                        CB_AppFunc.networkScope.launch {
+                            with(CB_AppFunc)
+                            {
+                                // if user had profileImg before, delete it.
+                                if(!strPrevImgPath.isNullOrEmpty())
+                                {
+                                    getStorageRef(strPrevImgPath).delete().
+                                    addOnSuccessListener { Log.d(strTag, "deleted previous profile img") }.
+                                    addOnFailureListener { e -> e.printStackTrace()
+                                        Log.e(strTag, "delete previous profile img Failed")
+                                    }
+                                }
+
+                                // update user's strImgPath
+                                val childUpdates = hashMapOf<String, Any>("users/$strUid/strImgPath" to strPath)
+                                getDataBase().updateChildren(childUpdates)
+                            }
                         }
                     }
             }
@@ -100,12 +112,14 @@ class CB_UploadService: CB_BaseTaskService()
                 storageRef = CB_AppFunc.getStorage().getReference(strPath)
                 successFunc =
                     {
-                        with(CB_AppFunc)
-                        {
-                            // update post's strImgPath
-                            val childUpdates = hashMapOf<String, Any>("/user-posts/" +
-                                    "$strUid/$databaseKey/strImgPath" to strPath)
-                            getDataBase().updateChildren(childUpdates)
+                        CB_AppFunc.networkScope.launch {
+                            with(CB_AppFunc)
+                            {
+                                // update post's strImgPath
+                                val childUpdates = hashMapOf<String, Any>("/user-posts/" +
+                                        "$strUid/$databaseKey/strImgPath" to strPath)
+                                getDataBase().updateChildren(childUpdates)
+                            }
                         }
                     }
             }
@@ -118,15 +132,16 @@ class CB_UploadService: CB_BaseTaskService()
                 storageRef = CB_AppFunc.getStorage().getReference(strPath)
                 successFunc =
                 {
-                    with(CB_AppFunc)
-                    {
-                        // update mail's strImgPath
-                        val childUpdates = hashMapOf<String, Any>("/user-mails/" +
-                                "$strUid/$databaseKey/strImgPath" to strPath)
-                        getDataBase().updateChildren(childUpdates)
+                    CB_AppFunc.networkScope.launch {
+                        with(CB_AppFunc)
+                        {
+                            // update mail's strImgPath
+                            val childUpdates = hashMapOf<String, Any>("/user-mails/" +
+                                    "$strUid/$databaseKey/strImgPath" to strPath)
+                            getDataBase().updateChildren(childUpdates)
+                        }
                     }
                 }
-
             }
 
             else ->
@@ -164,7 +179,6 @@ class CB_UploadService: CB_BaseTaskService()
         addOnFailureListener { exception ->
             exception.printStackTrace()
             Log.d(TAG, "uploadFromUri:onFailure")
-
             broadcastUploadFinished(false)
             showUploadFinishedNotification(false)
             taskEnded()
@@ -192,7 +206,7 @@ class CB_UploadService: CB_BaseTaskService()
             addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP or Intent.FLAG_ACTIVITY_SINGLE_TOP)
         }
 
-        val iCaptionStr = if(bSuccess) R.string.str_download_success else R.string.str_download_fail
+        val iCaptionStr = if(bSuccess) R.string.str_upload_success else R.string.str_upload_fail
         showFinishedNotification(iCaptionStr, intent, bSuccess)
     }
 

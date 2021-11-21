@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <layout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:bind="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools">
 
     <data class="com.coupleblog.fragment.NewPostBinding">
@@ -67,6 +68,7 @@
                     android:layout_height="130dp"
                     android:layout_marginStart="@dimen/margin_16dp"
                     android:layout_marginEnd="@dimen/margin_16dp"
+                    bind:bitmap="@{viewModel.postImage}"
                     android:background="@color/grey"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"

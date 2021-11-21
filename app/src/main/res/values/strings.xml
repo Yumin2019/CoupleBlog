@@ -277,6 +277,8 @@ Couple blog 은(는) 정보주체의 이용정보를 저장하고 수시로 불�
     <string name="str_sign_out">Sign Out</string>
     <string name="str_sign_up">Sign Up</string>
     <string name="str_recipients">Recipients</string>
+    <string name="str_add_image">Add image</string>
+    <string name="str_no_image">No image</string>
     <string name="str_email">Email</string>
     <string name="str_password">Password</string>
     <string name="str_password_again">Password again</string>
@@ -319,9 +321,12 @@ Couple blog 은(는) 정보주체의 이용정보를 저장하고 수시로 불�
     <string name="str_mail_type_normal">Mail</string>
     <string name="str_mail_type_release_note">Release Note</string>
     <string name="str_request_couple">Request couple</string>
+    <string name="str_permission_desc">You have to allow these\npermissions for use</string>
+    <string name="str_permission_camera_desc">Used for profile image</string>
+    <string name="str_permission_storage_desc">Used for profile image</string>
     <string name="str_request_couple_msg">You want to allow this request from\n</string>
     <string name="str_couple_request_mail">This is a couple request mail.</string>
-    <string name="str_normal_permission_message">You have to allow this message for use.</string>
+    <string name="str_normal_permission_message">You have to allow this permission for use.</string>
     <string name="str_downloading">Downloading…</string>
     <string name="str_uploading">Uploading…</string>
     <string name="str_download_success">Download finished</string>

@@ -118,6 +118,7 @@ class CB_AppFunc
         // Firebase Storage
         fun getStorage() = Firebase.storage
         fun getStroageRef() = Firebase.storage.reference
+        fun getStorageRef(strPath: String) = Firebase.storage.getReference(strPath)
 
         @SuppressLint("ConstantLocale")
         val isKorea = (Locale.getDefault().language == "ko")
@@ -171,6 +172,8 @@ class CB_AppFunc
         {
             // firebase provides online connection system in .info/connected ref
             val connectedRef = getDBInstance().getReference(".info/connected")
+            val isOnlineRef = getUsersRoot().child(getUid()).child("online")
+            val strLogoutDateRef = getUsersRoot().child(getUid()).child("strLogoutDate")
             presenceListener = object: ValueEventListener{
 
                 override fun onDataChange(snapshot: DataSnapshot)
@@ -178,28 +181,17 @@ class CB_AppFunc
                     val connected = snapshot.getValue(Boolean::class.java)!!
                     if (connected)
                     {
-                        curUser.apply {
-                            isOnline = true
-                            strLogoutDate = ""
-                            getUsersRoot().child(getUid()).setValue(curUser)
-                        }
-
                         // set trigger func when it's unconnected
-                        val copy = curUser.copy()
-                        copy.apply {
-                            isOnline = false
-                            strLogoutDate = getDateStringForSave()
-                            getUsersRoot().child(getUid()).onDisconnect().setValue(copy)
-                        }
+                        isOnlineRef.onDisconnect().setValue(false)
+                        strLogoutDateRef.onDisconnect().setValue(getDateStringForSave())
+
+                        isOnlineRef.setValue(true)
+                        strLogoutDateRef.setValue("")
                     }
                     else
                     {
-                        val copy = curUser.copy()
-                        copy.apply {
-                            isOnline = false
-                            strLogoutDate = getDateStringForSave()
-                            getUsersRoot().child(getUid()).onDisconnect().setValue(copy)
-                        }
+                        isOnlineRef.setValue(false)
+                        strLogoutDateRef.setValue(getDateStringForSave())
                     }
                 }
 
