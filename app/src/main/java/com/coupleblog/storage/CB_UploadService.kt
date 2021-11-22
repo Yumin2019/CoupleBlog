@@ -7,6 +7,7 @@ import android.util.Log
 import androidx.localbroadcastmanager.content.LocalBroadcastManager
 import com.coupleblog.CB_MainActivity
 import com.coupleblog.R
+import com.coupleblog.fragment.CB_NewPostFragment
 import com.coupleblog.parent.CB_BaseTaskService
 import com.coupleblog.singleton.CB_AppFunc
 import com.coupleblog.singleton.CB_ViewModel
@@ -45,6 +46,16 @@ class CB_UploadService: CB_BaseTaskService()
                 addAction(UPLOAD_COMPLETE)
                 addAction(UPLOAD_ERROR)
             }
+
+        var strPath = ""
+        var funSuccess: (()->Unit)? = null
+        var funFailure: (()->Unit)? = null
+    }
+
+    fun cleanUpLambda()
+    {
+        funSuccess = null
+        funFailure = null
     }
 
     override fun onStartCommand(intent: Intent, flags: Int, startId: Int): Int
@@ -67,6 +78,7 @@ class CB_UploadService: CB_BaseTaskService()
     private fun uploadFromUri(fileUri: Uri, uploadType: Int, databaseKey: String)
     {
         Log.d(TAG, "uploadFromUri:src:$fileUri")
+        strPath = ""
 
         val storageRef: StorageReference
         val successFunc: ()->Unit
@@ -78,7 +90,7 @@ class CB_UploadService: CB_BaseTaskService()
             {
                 // profileImage : users - uid - user-info - profile.jpg
                 val strUid = CB_AppFunc.getUid()
-                val strPath = "users/$strUid/user-info/profile_${CB_AppFunc.getUniqueSuffix()}.jpg"
+                strPath = "users/$strUid/user-info/profile_${CB_AppFunc.getUniqueSuffix()}.jpg"
                 val strPrevImgPath = CB_AppFunc.curUser.strImgPath
                 storageRef = CB_AppFunc.getStorage().getReference(strPath)
                 successFunc =
@@ -108,17 +120,24 @@ class CB_UploadService: CB_BaseTaskService()
             {
                 // profileImage : users - uid - user-posts - postKey1 - image.jpg
                 val strUid = CB_AppFunc.getUid()
-                val strPath = "users/$strUid/user-posts/$databaseKey/image_${CB_AppFunc.getUniqueSuffix()}.jpg"
+                strPath = "users/$strUid/user-posts/$databaseKey/image_${CB_AppFunc.getUniqueSuffix()}.jpg"
+                var strPrevImgPath = CB_NewPostFragment.prevImgPath
                 storageRef = CB_AppFunc.getStorage().getReference(strPath)
                 successFunc =
                     {
                         CB_AppFunc.networkScope.launch {
                             with(CB_AppFunc)
                             {
-                                // update post's strImgPath
-                                val childUpdates = hashMapOf<String, Any>("/user-posts/" +
-                                        "$strUid/$databaseKey/strImgPath" to strPath)
-                                getDataBase().updateChildren(childUpdates)
+                                // if post had an image, delete it
+                                if(!strPrevImgPath.isNullOrEmpty())
+                                {
+                                    getStorageRef(strPrevImgPath!!).delete().
+                                    addOnSuccessListener { strPrevImgPath = null
+                                        Log.d(strTag, "deleted previous post img") }.
+                                    addOnFailureListener { e -> e.printStackTrace()
+                                        Log.e(strTag, "delete previous post img Failed")
+                                    }
+                                }
                             }
                         }
                     }
@@ -171,6 +190,7 @@ class CB_UploadService: CB_BaseTaskService()
         addOnSuccessListener {
             Log.d(TAG, "uploadFromUri: getDownloadUri success")
             successFunc.invoke()
+            funSuccess?.invoke()
             broadcastUploadFinished(true)
             showUploadFinishedNotification(true)
             taskEnded()
@@ -179,9 +199,14 @@ class CB_UploadService: CB_BaseTaskService()
         addOnFailureListener { exception ->
             exception.printStackTrace()
             Log.d(TAG, "uploadFromUri:onFailure")
+            funFailure?.invoke()
             broadcastUploadFinished(false)
             showUploadFinishedNotification(false)
             taskEnded()
+        }.
+
+        addOnCompleteListener {
+            cleanUpLambda()
         }
     }
 

@@ -23,6 +23,7 @@ import com.coupleblog.singleton.CB_AppFunc
 import com.coupleblog.singleton.CB_SingleSystemMgr
 import com.coupleblog.singleton.CB_ViewModel
 import com.coupleblog.singleton.GlideApp
+import com.coupleblog.storage.CB_UploadService
 import com.coupleblog.storage.UPLOAD_TYPE
 import com.google.firebase.FirebaseException
 import com.google.firebase.database.DataSnapshot
@@ -35,6 +36,11 @@ import kotlinx.coroutines.tasks.await
 
 class CB_NewPostFragment: CB_CameraBaseFragment("NewPostFragment", UPLOAD_TYPE.POST_IMAGE, bDeferred = true)
 {
+    companion object
+    {
+        var prevImgPath: String? = null
+    }
+
     private var _binding            : NewPostBinding? = null
     private val binding get() = _binding!!
     var editPostKey = ""
@@ -59,11 +65,11 @@ class CB_NewPostFragment: CB_CameraBaseFragment("NewPostFragment", UPLOAD_TYPE.P
         super.onCreate(savedInstanceState)
 
         // before upload, invoke this
-
         funDeferred = {
             CB_ViewModel.postImage.postValue(imageBitmap)
             bImageChanged = true
         }
+
     }
 
     override fun onResume()
@@ -77,6 +83,7 @@ class CB_NewPostFragment: CB_CameraBaseFragment("NewPostFragment", UPLOAD_TYPE.P
         super.onViewCreated(view, savedInstanceState)
         setHasOptionsMenu(true)
 
+        prevImgPath = null
         editPostKey = requireArguments().getString(CB_PostDetailFragment.ARGU_POST_KEY)!!
         if(editPostKey.isNotEmpty())
         {
@@ -105,21 +112,24 @@ class CB_NewPostFragment: CB_CameraBaseFragment("NewPostFragment", UPLOAD_TYPE.P
                         strTitle.postValue(postData!!.strTitle)
                         strBody.postValue(postData!!.strBody)
 
-                        val strImgPath = postData!!.strImgPath
-                        if(!strImgPath.isNullOrEmpty())
+                        prevImgPath = postData!!.strImgPath
+                        if(!prevImgPath.isNullOrEmpty())
                         {
                             // this post has an image, load from storage
-                            val imageRef = CB_AppFunc.getStorageRef(strImgPath)
-                            GlideApp.with(requireActivity())
-                                .asBitmap()
-                                .load(imageRef)
-                                .into(object: CustomTarget<Bitmap>(){
-                                    override fun onResourceReady(resource: Bitmap, transition: Transition<in Bitmap>?)
+                            CB_AppFunc.networkScope.launch {
+                                val imageRef = CB_AppFunc.getStorageRef(prevImgPath!!)
+                                GlideApp.with(requireActivity())
+                                    .asBitmap()
+                                    .load(imageRef)
+                                    .into(object: CustomTarget<Bitmap>()
                                     {
-                                        postImage.postValue(resource)
-                                    }
-                                    override fun onLoadCleared(placeholder: Drawable?){}
-                                })
+                                        override fun onResourceReady(resource: Bitmap, transition: Transition<in Bitmap>?)
+                                        {
+                                            postImage.postValue(resource)
+                                        }
+                                        override fun onLoadCleared(placeholder: Drawable?){}
+                                    })
+                            }
                         }
                         else
                         {
@@ -245,22 +255,78 @@ class CB_NewPostFragment: CB_CameraBaseFragment("NewPostFragment", UPLOAD_TYPE.P
                 {
                     if(editPostKey.isNotEmpty())
                     {
-                        // if edit state, modify post and save
-                        postData!!.apply {
-                            this.strTitle       = strTitle
-                            strBody             = strText
-                            strRecentEditDate   = CB_AppFunc.getDateStringForSave()
-                        }
-
-                        CB_AppFunc.getUserPostsRoot().child(CB_AppFunc.getUid())
-                            .child(editPostKey).setValue(postData).await()
-
-                        launch(Dispatchers.Main)
+                        // it has no image
+                        if(CB_ViewModel.postImage.value == null)
                         {
-                            // 저장을 완료한 이후에 다시 PostDetailFragment 로 이동한다.
-                            dialog.cancel()
-                            CB_SingleSystemMgr.showToast(R.string.str_post_edited)
-                            findNavController().popBackStack()
+                            // if edit state, modify post and save
+                            postData!!.apply {
+                                this.strTitle       = strTitle
+                                strBody             = strText
+                                strImgPath          = ""
+                                strRecentEditDate   = CB_AppFunc.getDateStringForSave()
+                            }
+
+                            // delete previous post image
+                            if(!prevImgPath.isNullOrEmpty())
+                            {
+                                CB_AppFunc.getStorageRef(prevImgPath!!).delete().
+                                addOnSuccessListener { prevImgPath = null
+                                    Log.d(CB_AppFunc.strTag, "deleted previous post img") }.
+                                addOnFailureListener { e -> e.printStackTrace()
+                                    Log.e(CB_AppFunc.strTag, "delete previous post img Failed")
+                                }
+                            }
+
+                            CB_AppFunc.getUserPostsRoot().child(CB_AppFunc.getUid())
+                                .child(editPostKey).setValue(postData).await()
+
+                            launch(Dispatchers.Main)
+                            {
+                                // 저장을 완료한 이후에 다시 PostDetailFragment 로 이동한다.
+                                dialog.cancel()
+                                CB_SingleSystemMgr.showToast(R.string.str_post_edited)
+                                findNavController().popBackStack()
+                            }
+                        }
+                        else
+                        {
+                            // it has an image
+                            saveBitmapAndUpload(editPostKey)
+
+                            // it's called after upload
+                            CB_UploadService.funSuccess =
+                                {
+                                    CB_AppFunc.networkScope.launch {
+
+                                        postData!!.apply {
+                                            this.strTitle = strTitle
+                                            strBody = strText
+                                            strImgPath = CB_UploadService.strPath
+                                            strRecentEditDate = CB_AppFunc.getDateStringForSave()
+                                        }
+
+                                        CB_AppFunc.getUserPostsRoot().child(CB_AppFunc.getUid())
+                                            .child(editPostKey).setValue(postData).await()
+
+                                        launch(Dispatchers.Main)
+                                        {
+                                            // 저장을 완료한 이후에 다시 PostDetailFragment 로 이동한다.
+                                            dialog.cancel()
+                                            CB_SingleSystemMgr.showToast(R.string.str_post_edited)
+                                            findNavController().popBackStack()
+                                        }
+                                    }
+                                }
+
+                            CB_UploadService.funFailure =
+                                {
+                                    launch(Dispatchers.Main)
+                                    {
+                                        dialog.cancel()
+                                        CB_AppFunc.okDialog(activity, R.string.str_error,
+                                            R.string.str_post_failed, R.drawable.error_icon, true)
+                                    }
+                                }
                         }
                     }
                     else
@@ -282,17 +348,56 @@ class CB_NewPostFragment: CB_CameraBaseFragment("NewPostFragment", UPLOAD_TYPE.P
                             return@launch
                         }
 
-                        // 해당 경로에 Post 데이터를 저장한다.
-                        val strDate = CB_AppFunc.getDateStringForSave()
-                        val tPost = CB_Post(CB_AppFunc.getUid(), strTitle, strText, REACTION_TYPE.NONE.ordinal, strDate, strDate)
-                        uidRootRef.child(postKey).setValue(tPost).await()
-
-                        launch(Dispatchers.Main)
+                        if(CB_ViewModel.postImage.value == null)
                         {
-                            // 저장을 완료한 이후에 다시 mainFragment 로 이동한다.
-                            dialog.cancel()
-                            CB_SingleSystemMgr.showToast(R.string.str_post_posted)
-                            findNavController().popBackStack()
+                            // 해당 경로에 Post 데이터를 저장한다.
+                            val strDate = CB_AppFunc.getDateStringForSave()
+                            val tPost = CB_Post(CB_AppFunc.getUid(), strTitle, strText,
+                                REACTION_TYPE.NONE.ordinal, strDate, strDate)
+                            uidRootRef.child(postKey).setValue(tPost).await()
+
+                            launch(Dispatchers.Main)
+                            {
+                                // 저장을 완료한 이후에 다시 mainFragment 로 이동한다.
+                                dialog.cancel()
+                                CB_SingleSystemMgr.showToast(R.string.str_post_posted)
+                                findNavController().popBackStack()
+                            }
+                        }
+                        else
+                        {
+                            // it has an image
+                            saveBitmapAndUpload(postKey)
+
+                            // it's called after upload
+                            CB_UploadService.funSuccess =
+                                {
+                                    CB_AppFunc.networkScope.launch {
+
+                                        val strDate = CB_AppFunc.getDateStringForSave()
+                                        val tPost = CB_Post(CB_AppFunc.getUid(), strTitle, strText,
+                                            REACTION_TYPE.NONE.ordinal, strDate, strDate, CB_UploadService.strPath)
+                                        uidRootRef.child(postKey).setValue(tPost).await()
+
+                                        launch(Dispatchers.Main)
+                                        {
+                                            // 저장을 완료한 이후에 다시 mainFragment 로 이동한다.
+                                            dialog.cancel()
+                                            CB_SingleSystemMgr.showToast(R.string.str_post_posted)
+                                            findNavController().popBackStack()
+                                        }
+                                    }
+                                }
+
+                            CB_UploadService.funFailure =
+                                {
+                                    launch(Dispatchers.Main)
+                                    {
+                                        dialog.cancel()
+                                        CB_AppFunc.okDialog(activity, R.string.str_error,
+                                            R.string.str_post_failed, R.drawable.error_icon, true)
+                                    }
+                                }
                         }
                     }
                 }
@@ -324,7 +429,6 @@ class CB_NewPostFragment: CB_CameraBaseFragment("NewPostFragment", UPLOAD_TYPE.P
 
         val strTitle = CB_ViewModel.strTitle.value!!
         val strText = CB_ViewModel.strBody.value!!
-        // val image = setIconImage()
 
         if(editPostKey.isNotEmpty())
         {

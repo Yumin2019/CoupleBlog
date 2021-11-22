@@ -121,18 +121,28 @@ abstract class CB_CameraBaseFragment(strTag: String,
         }
     }
 
-    protected fun saveBitmapAndUpload()
+    protected fun saveBitmapAndUpload(strDatabaseKey: String? = null)
     {
+        if(imageBitmap == null || strFilePath.isNullOrEmpty())
+        {
+            errorLog("imageBitmap == null || strFilePath.isNullOrEmpty()")
+            return
+        }
+
         // save image as jpg format
         CB_AppFunc.saveBitmapToFileCache(imageBitmap!!, strFilePath!!)
 
         // upload image file
         imageUri = FileProvider.getUriForFile(requireContext(), getString(R.string.file_provider), File(strFilePath!!))
-        requireActivity().startService(
-            Intent(requireContext(), CB_UploadService::class.java)
-                .putExtra(CB_UploadService.FILE_URI, imageUri)
-                .putExtra(CB_UploadService.UPLOAD_TYPE_KEY, uploadType.ordinal)
-                .setAction(CB_UploadService.ACTION_UPLOAD))
+        val intent = Intent(requireContext(), CB_UploadService::class.java)
+            .putExtra(CB_UploadService.FILE_URI, imageUri)
+            .putExtra(CB_UploadService.UPLOAD_TYPE_KEY, uploadType.ordinal)
+            .setAction(CB_UploadService.ACTION_UPLOAD)
+
+        if(!strDatabaseKey.isNullOrEmpty())
+            intent.putExtra(CB_UploadService.DATABASE_KEY, strDatabaseKey)
+
+        requireActivity().startService(intent)
     }
 
     private fun createTempFile()
