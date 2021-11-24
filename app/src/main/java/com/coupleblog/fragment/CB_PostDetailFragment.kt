@@ -457,6 +457,14 @@ class CB_PostDetailFragment: CB_BaseFragment("PostDetail")
                     try
                     {
                         // delete post, post comments
+                        val imgPath = CB_ViewModel.tPost.value!!.strImgPath
+                        if(!imgPath.isNullOrEmpty())
+                        {
+                            CB_AppFunc.deleteImageFromStorage(imgPath, strTag,
+                                "post image deleted path:$imgPath",
+                                "post image delete failed path:$imgPath")
+                        }
+
                         postRef.setValue(null).await()
                         commentRef.setValue(null).await()
 

@@ -102,14 +102,15 @@
                 <ImageView
                     android:id="@+id/post_image_view"
                     android:layout_width="0dp"
-                    android:layout_height="130dp"
+                    android:layout_height="@dimen/bitmap_image_height"
                     android:layout_marginTop="@dimen/margin_16dp"
                     android:background="@color/grey"
                     bind:picture_image_path="@{viewModel.TPost.strImgPath}"
                     app:layout_constraintEnd_toEndOf="@+id/post_text_view"
                     app:layout_constraintStart_toStartOf="@+id/post_text_view"
                     app:layout_constraintTop_toBottomOf="@+id/view"
-                    tools:layout_height="130dp" />
+                    android:scaleType="centerCrop"
+                    tools:src="@mipmap/ic_launcher"/>
 
                 <ImageView
                     android:id="@+id/reaction_image_view"

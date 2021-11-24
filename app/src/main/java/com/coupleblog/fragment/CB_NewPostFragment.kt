@@ -269,12 +269,10 @@ class CB_NewPostFragment: CB_CameraBaseFragment("NewPostFragment", UPLOAD_TYPE.P
                             // delete previous post image
                             if(!prevImgPath.isNullOrEmpty())
                             {
-                                CB_AppFunc.getStorageRef(prevImgPath!!).delete().
-                                addOnSuccessListener { prevImgPath = null
-                                    Log.d(CB_AppFunc.strTag, "deleted previous post img") }.
-                                addOnFailureListener { e -> e.printStackTrace()
-                                    Log.e(CB_AppFunc.strTag, "delete previous post img Failed")
-                                }
+                                CB_AppFunc.deleteImageFromStorage(prevImgPath!!, strTag,
+                                    "deleted previous post img path:$prevImgPath",
+                                    "delete previous post img Failed path:$prevImgPath")
+                                prevImgPath = null
                             }
 
                             CB_AppFunc.getUserPostsRoot().child(CB_AppFunc.getUid())

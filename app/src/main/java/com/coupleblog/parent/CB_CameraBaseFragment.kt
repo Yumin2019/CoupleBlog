@@ -89,7 +89,14 @@ abstract class CB_CameraBaseFragment(strTag: String,
                     return@launch
                 }
 
-                val strPath = CB_AppFunc.getPathFromURI(requireActivity(), uri)!!
+                val strPath = CB_AppFunc.getPathFromURI(requireActivity(), uri)
+                if(strPath == null)
+                {
+                    Log.e(strTag, "getPathFromUri error uri:$uri")
+                    uploadFailed(R.string.str_select_image_from_gallery)
+                    return@launch
+                }
+
                 imageBitmap = CB_AppFunc.getBitmapFromUri(requireActivity().applicationContext.contentResolver, uri)
                 if(imageBitmap == null)
                 {
@@ -160,14 +167,14 @@ abstract class CB_CameraBaseFragment(strTag: String,
         imageUri =  FileProvider.getUriForFile(requireContext(), getString(R.string.file_provider), imageFile)
     }
 
-    private fun uploadFailed()
+    private fun uploadFailed(iRes: Int = R.string.str_failed_to_upload_image)
     {
         CB_AppFunc.mainScope.launch {
             if(CB_SingleSystemMgr.isDialog(CB_SingleSystemMgr.DIALOG_TYPE.OK_DIALOG))
                 return@launch
 
             CB_AppFunc.okDialog(requireActivity(), R.string.str_error,
-                R.string.str_failed_to_upload_image, R.drawable.error_icon, true)
+                iRes, R.drawable.error_icon, true)
         }
     }
 }

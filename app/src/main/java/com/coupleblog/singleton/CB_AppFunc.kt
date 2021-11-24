@@ -120,6 +120,13 @@ class CB_AppFunc
         fun getStroageRef() = Firebase.storage.reference
         fun getStorageRef(strPath: String) = Firebase.storage.getReference(strPath)
 
+        fun deleteImageFromStorage(strPath: String, strTag: String, strSuccessMsg: String, strFailMsg: String)
+        {
+            getStorageRef(strPath).delete()
+                .addOnSuccessListener { Log.d(strTag, strSuccessMsg) }
+                .addOnFailureListener { e -> Log.e(strTag, strFailMsg + "e: $e") }
+        }
+
         @SuppressLint("ConstantLocale")
         val isKorea = (Locale.getDefault().language == "ko")
 
@@ -375,7 +382,8 @@ class CB_AppFunc
             if (cursor != null)
             {
                 cursor.moveToFirst()
-                res = cursor.getString(cursor.getColumnIndexOrThrow("_data"))
+                try {  res = cursor.getString(cursor.getColumnIndexOrThrow("_data")) }
+                catch (e: Exception) { e.printStackTrace() }
                 cursor.close()
             }
             return res

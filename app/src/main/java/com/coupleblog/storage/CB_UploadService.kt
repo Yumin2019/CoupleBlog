@@ -101,11 +101,8 @@ class CB_UploadService: CB_BaseTaskService()
                                 // if user had profileImg before, delete it.
                                 if(!strPrevImgPath.isNullOrEmpty())
                                 {
-                                    getStorageRef(strPrevImgPath).delete().
-                                    addOnSuccessListener { Log.d(strTag, "deleted previous profile img") }.
-                                    addOnFailureListener { e -> e.printStackTrace()
-                                        Log.e(strTag, "delete previous profile img Failed")
-                                    }
+                                    deleteImageFromStorage(strPrevImgPath, strTag,
+                                        "deleted previous profile img", "delete previous profile img Failed")
                                 }
 
                                 // update user's strImgPath
@@ -131,12 +128,9 @@ class CB_UploadService: CB_BaseTaskService()
                                 // if post had an image, delete it
                                 if(!strPrevImgPath.isNullOrEmpty())
                                 {
-                                    getStorageRef(strPrevImgPath!!).delete().
-                                    addOnSuccessListener { strPrevImgPath = null
-                                        Log.d(strTag, "deleted previous post img") }.
-                                    addOnFailureListener { e -> e.printStackTrace()
-                                        Log.e(strTag, "delete previous post img Failed")
-                                    }
+                                    deleteImageFromStorage(strPrevImgPath!!, strTag,
+                                        "deleted previous post img", "delete previous post img Failed")
+                                    strPrevImgPath = null
                                 }
                             }
                         }
@@ -148,6 +142,7 @@ class CB_UploadService: CB_BaseTaskService()
                 // profileImage : users - uid - user-mails - mailKey1 - image.jpg
                 val strUid = CB_AppFunc.getUid()
                 val strPath = "users/$strUid/user-mails/$databaseKey/image_${CB_AppFunc.getUniqueSuffix()}.jpg"
+                Log.d(, "")
                 storageRef = CB_AppFunc.getStorage().getReference(strPath)
                 successFunc =
                 {
