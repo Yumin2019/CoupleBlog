@@ -7,9 +7,7 @@ import android.util.Log
 import android.view.*
 import androidx.core.widget.doAfterTextChanged
 import androidx.navigation.fragment.findNavController
-import com.bumptech.glide.request.RequestListener
 import com.bumptech.glide.request.target.CustomTarget
-import com.bumptech.glide.request.target.SimpleTarget
 import com.bumptech.glide.request.transition.Transition
 import com.coupleblog.R
 import com.coupleblog.dialog.CB_ItemListDialog
@@ -17,7 +15,6 @@ import com.coupleblog.dialog.CB_LoadingDialog
 import com.coupleblog.dialog.DialogItem
 import com.coupleblog.model.CB_Post
 import com.coupleblog.model.REACTION_TYPE
-import com.coupleblog.parent.CB_BaseFragment
 import com.coupleblog.parent.CB_CameraBaseFragment
 import com.coupleblog.singleton.CB_AppFunc
 import com.coupleblog.singleton.CB_SingleSystemMgr
@@ -109,8 +106,8 @@ class CB_NewPostFragment: CB_CameraBaseFragment("NewPostFragment", UPLOAD_TYPE.P
                     }
 
                     CB_ViewModel.apply {
-                        strTitle.postValue(postData!!.strTitle)
-                        strBody.postValue(postData!!.strBody)
+                        strPostTitle.postValue(postData!!.strTitle)
+                        strPostBody.postValue(postData!!.strBody)
 
                         prevImgPath = postData!!.strImgPath
                         if(!prevImgPath.isNullOrEmpty())
@@ -225,8 +222,8 @@ class CB_NewPostFragment: CB_CameraBaseFragment("NewPostFragment", UPLOAD_TYPE.P
         infoLog("postButton")
         val activity = requireActivity()
 
-        val strTitle = CB_ViewModel.strTitle.value!!
-        val strText = CB_ViewModel.strBody.value!!
+        val strTitle = CB_ViewModel.strPostTitle.value!!
+        val strText = CB_ViewModel.strPostBody.value!!
 
         if(strTitle.isEmpty())
         {
@@ -277,6 +274,8 @@ class CB_NewPostFragment: CB_CameraBaseFragment("NewPostFragment", UPLOAD_TYPE.P
 
                             CB_AppFunc.getUserPostsRoot().child(CB_AppFunc.getUid())
                                 .child(editPostKey).setValue(postData).await()
+                            Log.d(strTag, "post updated $editPostKey")
+
 
                             launch(Dispatchers.Main)
                             {
@@ -305,6 +304,7 @@ class CB_NewPostFragment: CB_CameraBaseFragment("NewPostFragment", UPLOAD_TYPE.P
 
                                         CB_AppFunc.getUserPostsRoot().child(CB_AppFunc.getUid())
                                             .child(editPostKey).setValue(postData).await()
+                                        Log.d(strTag, "post updated $editPostKey")
 
                                         launch(Dispatchers.Main)
                                         {
@@ -351,8 +351,9 @@ class CB_NewPostFragment: CB_CameraBaseFragment("NewPostFragment", UPLOAD_TYPE.P
                             // 해당 경로에 Post 데이터를 저장한다.
                             val strDate = CB_AppFunc.getDateStringForSave()
                             val tPost = CB_Post(CB_AppFunc.getUid(), strTitle, strText,
-                                REACTION_TYPE.NONE.ordinal, strDate, strDate)
+                                REACTION_TYPE.NONE.ordinal, strDate, strDate, "")
                             uidRootRef.child(postKey).setValue(tPost).await()
+                            Log.d(strTag, "postKey:$postKey setValue")
 
                             launch(Dispatchers.Main)
                             {
@@ -376,6 +377,7 @@ class CB_NewPostFragment: CB_CameraBaseFragment("NewPostFragment", UPLOAD_TYPE.P
                                         val tPost = CB_Post(CB_AppFunc.getUid(), strTitle, strText,
                                             REACTION_TYPE.NONE.ordinal, strDate, strDate, CB_UploadService.strPath)
                                         uidRootRef.child(postKey).setValue(tPost).await()
+                                        Log.d(strTag, "postKey:$postKey setValue")
 
                                         launch(Dispatchers.Main)
                                         {
@@ -425,8 +427,8 @@ class CB_NewPostFragment: CB_CameraBaseFragment("NewPostFragment", UPLOAD_TYPE.P
         if(CB_SingleSystemMgr.isDialog(CB_SingleSystemMgr.DIALOG_TYPE.LOADING_DIALOG))
             return
 
-        val strTitle = CB_ViewModel.strTitle.value!!
-        val strText = CB_ViewModel.strBody.value!!
+        val strTitle = CB_ViewModel.strPostTitle.value!!
+        val strText = CB_ViewModel.strPostBody.value!!
 
         if(editPostKey.isNotEmpty())
         {

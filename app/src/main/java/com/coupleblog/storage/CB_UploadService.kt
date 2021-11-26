@@ -66,6 +66,7 @@ class CB_UploadService: CB_BaseTaskService()
             val fileUri = intent.getParcelableExtra<Uri>(FILE_URI)!!
             val uploadType = intent.getIntExtra(UPLOAD_TYPE_KEY, UPLOAD_TYPE.NONE.ordinal)
             val databaseKey = intent.getStringExtra(DATABASE_KEY).toString()
+            Log.d(TAG, "fileUri:$fileUri uploadType:$uploadType databaseKey:$databaseKey")
 
             // make sure we have permission to read the data
             //contentResolver.takePersistableUriPermission(fileUri, Intent.FLAG_GRANT_READ_URI_PERMISSION)
@@ -91,7 +92,10 @@ class CB_UploadService: CB_BaseTaskService()
                 // profileImage : users - uid - user-info - profile.jpg
                 val strUid = CB_AppFunc.getUid()
                 strPath = "users/$strUid/user-info/profile_${CB_AppFunc.getUniqueSuffix()}.jpg"
+                Log.d(TAG, "strPath:$strPath")
+
                 val strPrevImgPath = CB_AppFunc.curUser.strImgPath
+                Log.d(TAG, "prevImgPath:$strPrevImgPath")
                 storageRef = CB_AppFunc.getStorage().getReference(strPath)
                 successFunc =
                     {
@@ -106,6 +110,7 @@ class CB_UploadService: CB_BaseTaskService()
                                 }
 
                                 // update user's strImgPath
+                                Log.d(TAG, "update img to users/$strUid/strImgPath")
                                 val childUpdates = hashMapOf<String, Any>("users/$strUid/strImgPath" to strPath)
                                 getDataBase().updateChildren(childUpdates)
                             }
@@ -118,7 +123,10 @@ class CB_UploadService: CB_BaseTaskService()
                 // profileImage : users - uid - user-posts - postKey1 - image.jpg
                 val strUid = CB_AppFunc.getUid()
                 strPath = "users/$strUid/user-posts/$databaseKey/image_${CB_AppFunc.getUniqueSuffix()}.jpg"
+                Log.d(TAG, "strPath:$strPath")
+
                 var strPrevImgPath = CB_NewPostFragment.prevImgPath
+                Log.d(TAG, "prevImgPath:$strPrevImgPath")
                 storageRef = CB_AppFunc.getStorage().getReference(strPath)
                 successFunc =
                     {
@@ -142,7 +150,7 @@ class CB_UploadService: CB_BaseTaskService()
                 // profileImage : users - uid - user-mails - mailKey1 - image.jpg
                 val strUid = CB_AppFunc.getUid()
                 val strPath = "users/$strUid/user-mails/$databaseKey/image_${CB_AppFunc.getUniqueSuffix()}.jpg"
-                Log.d(, "")
+                Log.d(TAG, "strPath:$strPath")
                 storageRef = CB_AppFunc.getStorage().getReference(strPath)
                 successFunc =
                 {
@@ -150,6 +158,7 @@ class CB_UploadService: CB_BaseTaskService()
                         with(CB_AppFunc)
                         {
                             // update mail's strImgPath
+                            Log.d(TAG, "update img to /user-mails/$strUid/$databaseKey/strImgPath")
                             val childUpdates = hashMapOf<String, Any>("/user-mails/" +
                                     "$strUid/$databaseKey/strImgPath" to strPath)
                             getDataBase().updateChildren(childUpdates)
@@ -184,8 +193,12 @@ class CB_UploadService: CB_BaseTaskService()
 
         addOnSuccessListener {
             Log.d(TAG, "uploadFromUri: getDownloadUri success")
+            Log.d(TAG, "successFunc")
             successFunc.invoke()
-            funSuccess?.invoke()
+            funSuccess?.let {
+                Log.d(TAG, "funSuccess")
+                it.invoke()
+            }
             broadcastUploadFinished(true)
             showUploadFinishedNotification(true)
             taskEnded()
@@ -194,7 +207,10 @@ class CB_UploadService: CB_BaseTaskService()
         addOnFailureListener { exception ->
             exception.printStackTrace()
             Log.d(TAG, "uploadFromUri:onFailure")
-            funFailure?.invoke()
+            funFailure?.let {
+                Log.d(TAG, "funFailure")
+                it.invoke()
+            }
             broadcastUploadFinished(false)
             showUploadFinishedNotification(false)
             taskEnded()

@@ -87,10 +87,12 @@ class CB_PostDetailFragment: CB_BaseFragment("PostDetail")
             val isMyPost = (CB_AppFunc.getUid() == strAuthorUid)
             postRef = if(isMyPost)
             {
+                Log.d(strTag,"My Post")
                 CB_AppFunc.getUserPostsRoot().child(strAuthorUid).child(postKey)
             }
             else
             {
+                Log.d(strTag,"Not My Post")
                 CB_AppFunc.getUserPostsRoot().child(CB_AppFunc.curUser.strCoupleUid!!).child(postKey)
             }
 
@@ -375,6 +377,7 @@ class CB_PostDetailFragment: CB_BaseFragment("PostDetail")
                 // previous data and modify
                 commentData.iIconType = iReactionType.ordinal
                 commentRef.child(strCommentKey).setValue(commentData).await()
+                Log.d(strTag, "commentRef updated")
 
                 launch(Dispatchers.Main)
                 {
@@ -412,6 +415,7 @@ class CB_PostDetailFragment: CB_BaseFragment("PostDetail")
                 // previous data and modify
                 postData.iIconType = iReactionType.ordinal
                 postRef.setValue(postData).await()
+                Log.d(strTag, "postRef updated")
 
                 launch(Dispatchers.Main)
                 {
@@ -458,8 +462,10 @@ class CB_PostDetailFragment: CB_BaseFragment("PostDetail")
                     {
                         // delete post, post comments
                         val imgPath = CB_ViewModel.tPost.value!!.strImgPath
+                        Log.d(strTag, "strImgPath:$imgPath")
                         if(!imgPath.isNullOrEmpty())
                         {
+                            // find upper folder for post
                             CB_AppFunc.deleteImageFromStorage(imgPath, strTag,
                                 "post image deleted path:$imgPath",
                                 "post image delete failed path:$imgPath")
@@ -467,6 +473,7 @@ class CB_PostDetailFragment: CB_BaseFragment("PostDetail")
 
                         postRef.setValue(null).await()
                         commentRef.setValue(null).await()
+                        Log.d(strTag, "postRef, commentRef deleted")
 
                         launch(Dispatchers.Main)
                         {

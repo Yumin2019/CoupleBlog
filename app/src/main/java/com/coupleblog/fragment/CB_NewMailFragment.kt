@@ -1,6 +1,7 @@
 package com.coupleblog.fragment
 
 import android.os.Bundle
+import android.util.Log
 import android.view.*
 import androidx.core.widget.doAfterTextChanged
 import androidx.navigation.fragment.findNavController
@@ -9,15 +10,19 @@ import com.coupleblog.dialog.CB_ItemListDialog
 import com.coupleblog.dialog.DialogItem
 import com.coupleblog.model.CB_Mail
 import com.coupleblog.model.MAIL_TYPE
-import com.coupleblog.parent.CB_BaseFragment
+import com.coupleblog.parent.CB_CameraBaseFragment
 import com.coupleblog.singleton.CB_AppFunc
 import com.coupleblog.singleton.CB_SingleSystemMgr
 import com.coupleblog.singleton.CB_ViewModel
+import com.coupleblog.storage.CB_UploadService
+import com.coupleblog.storage.UPLOAD_TYPE
 import com.google.firebase.database.DataSnapshot
 import com.google.firebase.database.DatabaseError
 import com.google.firebase.database.ValueEventListener
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.launch
 
-class CB_NewMailFragment: CB_BaseFragment("NewMailFragment")
+class CB_NewMailFragment: CB_CameraBaseFragment("NewMailFragment", UPLOAD_TYPE.EMAIL_IMAGE, bDeferred = true)
 {
     private var _binding            : NewMailBinding? = null
     private val binding get() = _binding!!
@@ -33,11 +38,23 @@ class CB_NewMailFragment: CB_BaseFragment("NewMailFragment")
         return binding.root
     }
 
+    override fun onCreate(savedInstanceState: Bundle?)
+    {
+        super.onCreate(savedInstanceState)
+        // before upload, invoke this
+        funDeferred = {
+            CB_ViewModel.mailImage.postValue(imageBitmap)
+        }
+
+        CB_ViewModel.resetNewPostFragmentLiveData()
+    }
+
     override fun onResume()
     {
         super.onResume()
         CB_ViewModel.bAddButton.postValue(false)
     }
+
      override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater)
     {
         inflater.inflate(R.menu.menu_new_mail, menu)
@@ -52,49 +69,43 @@ class CB_NewMailFragment: CB_BaseFragment("NewMailFragment")
                 // 수신인 지정 기능이다.
                 // 자신과 커플(있는 경우)의 이메일을 설정할 수 있는 dialog를 제공한다.
                 val itemList = ArrayList<DialogItem>()
-                itemList.add(DialogItem(CB_AppFunc.curUser.strUserName!!, R.drawable.haha_icon,
-                callback = {
-
-                    binding.recipientEditText.text =
-                        CB_AppFunc.stringToEditable(CB_AppFunc.curUser.strUserEmail!!)
-                }))
+                itemList.add(DialogItem(CB_AppFunc.curUser.strUserName!! + getString(R.string.str_me), R.drawable.haha_icon,
+                callback = {   CB_ViewModel.strRecipient.postValue(CB_AppFunc.curUser.strUserEmail!!) }))
 
                 // if a couple
                 if(!CB_AppFunc.curUser.strCoupleUid.isNullOrEmpty())
                 {
                     itemList.add(DialogItem(CB_AppFunc.coupleUser.strUserName!!, R.drawable.ic_baseline_favorite_24,
-                        callback = {
-
-                            binding.recipientEditText.text =
-                                CB_AppFunc.stringToEditable(CB_AppFunc.coupleUser.strUserEmail!!)
-                        }, R.color.red))
+                        callback = { CB_ViewModel.strRecipient.postValue(CB_AppFunc.coupleUser.strUserEmail!!) }, R.color.red))
                 }
 
                 CB_ItemListDialog(requireActivity(), CB_AppFunc.getString(R.string.str_recipients), itemList, true)
             }
 
-            R.id.action_add_image ->
+            R.id.action_add_image  ->
             {
-                val itemList = ArrayList<DialogItem>()
-                itemList.add(DialogItem(CB_AppFunc.curUser.strUserName!!, R.drawable.haha_icon,
-                    callback = {
+                val listItem = arrayListOf(
+                    DialogItem(getString(R.string.str_no_image), R.drawable.trash_can,
+                        callback =
+                        {
+                            Log.i(strTag, "no image")
+                            CB_ViewModel.mailImage.postValue(null)
+                        }),
+                    DialogItem(getString(R.string.str_camera), R.drawable.camera,
+                        callback =
+                        {
+                            Log.i(strTag, "camera")
+                            cameraLauncher.launch(imageUri)
+                        }),
+                    DialogItem(getString(R.string.str_gallery), R.drawable.image,
+                        callback =
+                        {
+                            Log.i(strTag, "gallery")
+                            galleryLauncher.launch("image/*")
+                        })
+                )
 
-                        binding.recipientEditText.text =
-                            CB_AppFunc.stringToEditable(CB_AppFunc.curUser.strUserEmail!!)
-                    }))
-
-                // if a couple
-                if(!CB_AppFunc.curUser.strCoupleUid.isNullOrEmpty())
-                {
-                    itemList.add(DialogItem(CB_AppFunc.coupleUser.strUserName!!, R.drawable.ic_baseline_favorite_24,
-                        callback = {
-
-                            binding.recipientEditText.text =
-                                CB_AppFunc.stringToEditable(CB_AppFunc.coupleUser.strUserEmail!!)
-                        }, R.color.red))
-                }
-
-                CB_ItemListDialog(requireActivity(), CB_AppFunc.getString(R.string.str_recipients), itemList, true)
+                CB_ItemListDialog(requireActivity(), getString(R.string.str_add_image), listItem, true)
             }
             else -> { super.onOptionsItemSelected(item) }
         }
@@ -152,9 +163,9 @@ class CB_NewMailFragment: CB_BaseFragment("NewMailFragment")
         if(CB_SingleSystemMgr.isDialog(CB_SingleSystemMgr.DIALOG_TYPE.ITEM_LIST_DIALOG))
             return
 
-        val strRecipient = binding.recipientEditText.text.toString()
-        val strTitle = binding.titleEditText.text.toString()
-        val strText  = binding.textEditText.text.toString()
+        val strRecipient = CB_ViewModel.strRecipient.value.toString()
+        val strTitle = CB_ViewModel.strMailTitle.value.toString()
+        val strText  = CB_ViewModel.strMailBody.value.toString()
 
         if(strTitle.isEmpty())
         {
@@ -265,11 +276,55 @@ class CB_NewMailFragment: CB_BaseFragment("NewMailFragment")
 
                     // make Mail to send
                     val mail = CB_Mail(myUid, CB_AppFunc.getDateStringForSave(), "", eType.ordinal, strTitle, strText)
+                    if(CB_ViewModel.mailImage.value == null)
+                    {
+                        // save mail data at user-mails/uid/mailKey/mail data
+                        CB_AppFunc.getMailBoxRoot().child(strRecipientUid).push().setValue(mail)
+                        backPressed()
+                        CB_SingleSystemMgr.showToast(R.string.str_send_mail_success)
+                    }
+                    else
+                    {
+                        // it has an image
+                        saveBitmapAndUpload(strRecipientUid)
 
-                    // save mail data at user-mails/uid/mailKey/mail data
-                    CB_AppFunc.getMailBoxRoot().child(strRecipientUid).push().setValue(mail)
-                    backPressed()
-                    CB_SingleSystemMgr.showToast(R.string.str_send_mail_success)
+                        // it's called after upload
+                        // Mail쪽 이미지 작업중이었음 여기부터...
+                        /*  CB_UploadService.funSuccess =
+                            {
+                              CB_AppFunc.networkScope.launch {
+
+                                    CB_AppFunc.getMailBoxRoot().child(strRecipientUid).push().setValue(mail)
+                                    backPressed()
+                                    CB_SingleSystemMgr.showToast(R.string.str_send_mail_success)
+
+                                    val strDate = CB_AppFunc.getDateStringForSave()
+                                    val tPost = CB_Post(CB_AppFunc.getUid(), strTitle, strText,
+                                        REACTION_TYPE.NONE.ordinal, strDate, strDate, CB_UploadService.strPath)
+                                    uidRootRef.child(postKey).setValue(tPost).await()
+                                    Log.d(strTag, "postKey:$postKey setValue")
+
+                                    launch(Dispatchers.Main)
+                                    {
+                                        // 저장을 완료한 이후에 다시 mainFragment 로 이동한다.
+                                        dialog.cancel()
+                                        CB_SingleSystemMgr.showToast(R.string.str_post_posted)
+                                        findNavController().popBackStack()
+                                    }
+                                }
+                            }
+
+                        CB_UploadService.funFailure =
+                            {
+                                launch(Dispatchers.Main)
+                                {
+                                    dialog.cancel()
+                                    CB_AppFunc.okDialog(activity, R.string.str_error,
+                                        R.string.str_post_failed, R.drawable.error_icon, true)
+                                }
+                            }*/
+                    }
+
                 }
 
                 override fun onCancelled(error: DatabaseError)
@@ -288,6 +343,31 @@ class CB_NewMailFragment: CB_BaseFragment("NewMailFragment")
 
     override fun backPressed()
     {
-        findNavController().popBackStack()
+        // 메일 작성 중에 backPressed 이벤트가 들어오면 다시 확인해본다.
+        if(CB_SingleSystemMgr.isDialog(CB_SingleSystemMgr.DIALOG_TYPE.CONFIRM_DIALOG))
+            return
+
+        // 서버와 통신 중에 들어오는 경우 무시
+        if(CB_SingleSystemMgr.isDialog(CB_SingleSystemMgr.DIALOG_TYPE.LOADING_DIALOG))
+            return
+
+        val strRecipient = CB_ViewModel.strRecipient.value!!
+        val strTitle = CB_ViewModel.strMailTitle.value!!
+        val strText = CB_ViewModel.strMailBody.value!!
+
+        // when addition, no changes
+        if (strRecipient.isEmpty() && strTitle.isEmpty() && strText.isEmpty() && (CB_ViewModel.postImage.value == null))
+        {
+            findNavController().popBackStack()
+            return
+        }
+
+        // 변경사항이 있으면 여부를 묻는다.
+        CB_AppFunc.confirmDialog(requireActivity(), R.string.str_warning,
+            R.string.str_discard_msg, R.drawable.warning_icon, true,
+            R.string.str_discard,
+            yesListener = { _, _ ->
+                findNavController().popBackStack()
+            }, R.string.str_cancel, null)
     }
 }

@@ -1,13 +1,10 @@
 package com.coupleblog.singleton
 
-import android.annotation.SuppressLint
 import android.graphics.Bitmap
 import android.util.Log
 import androidx.lifecycle.MutableLiveData
 import androidx.recyclerview.widget.RecyclerView
-import com.coupleblog.ListLiveData
 import com.coupleblog.R
-import com.coupleblog.adapter.CB_CommentAdapter
 import com.coupleblog.adapter.CB_EmailAdapter
 import com.coupleblog.fragment.PAGE_TYPE
 import com.coupleblog.model.CB_Mail
@@ -17,8 +14,6 @@ import com.google.firebase.database.DataSnapshot
 import com.google.firebase.database.DatabaseError
 import com.google.firebase.database.ValueEventListener
 import com.google.firebase.database.ktx.getValue
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.launch
 
 // we'll use LiveData with SingleTon because it's simple
 class CB_ViewModel
@@ -119,19 +114,33 @@ class CB_ViewModel
         var isMyPost   = MutableLiveData(true)
 
         // NewPostFragment
-        var strTitle   = MutableLiveData("")
-        var strBody    = MutableLiveData("")
+        var strPostTitle   = MutableLiveData("")
+        var strPostBody    = MutableLiveData("")
         var postImage  : MutableLiveData<Bitmap?> = MutableLiveData(null)
 
         fun resetNewPostFragmentLiveData()
         {
-            strTitle.postValue("")
-            strBody.postValue("")
+            strPostTitle.postValue("")
+            strPostBody.postValue("")
             postImage.postValue(null)
         }
 
         // MailDetailFragment
         var tMail = MutableLiveData(CB_Mail())
+
+        // NewMailFragment
+        var strRecipient   = MutableLiveData("")
+        var strMailTitle   = MutableLiveData("")
+        var strMailBody    = MutableLiveData("")
+        var mailImage  : MutableLiveData<Bitmap?> = MutableLiveData(null)
+
+        fun resetNewMailFragmentLiveData()
+        {
+            strRecipient.postValue("")
+            strMailTitle.postValue("")
+            strMailBody.postValue("")
+            mailImage.postValue(null)
+        }
 
         // MailBoxFragment
         val checkList = ArrayList<Boolean>() // checkList for checking mails

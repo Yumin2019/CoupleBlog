@@ -339,6 +339,7 @@ Couple blog 은(는) 정보주체의 이용정보를 저장하고 수시로 불�
     <string name="str_post">Post</string>
     <string name="str_send">Send</string>
     <string name="str_unspecified">Unspecified</string>
+    <string name="str_me">(Me)</string>
     <string name="str_male">Male</string>
     <string name="str_female">Female</string>
     <string name="str_register_msg">if you don\'t have an account</string>
