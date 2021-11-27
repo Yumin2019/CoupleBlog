@@ -7,6 +7,7 @@
     <dimen name="margin_32dp">32dp</dimen>
     <dimen name="margin_64dp">64dp</dimen>
 
+    <dimen name="bitmap_image_height_short">170dp</dimen>
     <dimen name="bitmap_image_height">250dp</dimen>
     <dimen name="normal_text_size">14sp</dimen>
     <dimen name="subtitle_text_size">24sp</dimen>

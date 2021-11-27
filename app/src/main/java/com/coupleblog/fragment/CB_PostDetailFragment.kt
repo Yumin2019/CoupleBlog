@@ -122,7 +122,7 @@ class CB_PostDetailFragment: CB_BaseFragment("PostDetail")
 
             override fun onCancelled(error: DatabaseError)
             {
-                Log.e(CB_CommentAdapter.strTag, "onCancelled:post load")
+                Log.e(strTag, "onCancelled:post load failed")
                 CB_AppFunc.okDialog(requireActivity(), R.string.str_error,
                     R.string.str_post_data_load_failed, R.drawable.error_icon, true)
             }
@@ -466,7 +466,7 @@ class CB_PostDetailFragment: CB_BaseFragment("PostDetail")
                         if(!imgPath.isNullOrEmpty())
                         {
                             // find upper folder for post
-                            CB_AppFunc.deleteImageFromStorage(imgPath, strTag,
+                            CB_AppFunc.deleteFileFromStorage(imgPath, strTag,
                                 "post image deleted path:$imgPath",
                                 "post image delete failed path:$imgPath")
                         }
@@ -507,6 +507,8 @@ class CB_PostDetailFragment: CB_BaseFragment("PostDetail")
 
     fun postButton()
     {
+        CB_AppFunc.clearFocusing(requireActivity())
+
         // 포스트 내용을 알아온다.
         val strComment = binding.commentEditText.text.toString()
         if(strComment.isEmpty())
@@ -532,6 +534,9 @@ class CB_PostDetailFragment: CB_BaseFragment("PostDetail")
                 {
                     dialog.cancel()
                     CB_SingleSystemMgr.showToast(R.string.str_comment_posted)
+
+                    // scroll to bottom
+                    binding.scrollView.fullScroll(View.FOCUS_DOWN)
                 }
             }
             catch(e: FirebaseException)

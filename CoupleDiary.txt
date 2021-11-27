@@ -902,17 +902,8 @@ PostButton에 대한 처리 순서에서 고민중...
  - 메일을 편집하는 개념은 존재하지 않는다.
  - 항상 추가하는 개념만 있다. 
 	 1. 올린다.
-	 2. 데이터베이스 포스트 정보를 처리한다. 
+	 2. 데이터베이스 메일 정보를 처리한다. 
 	 
-3. 로그 추가
- 
-1. 유저 정보(프로필 이미지)  users -  uid -  user-info - profile_$date.﻿jpeg 
-2. 포스트 사진		  	 users -  uid -  user-posts - postKey1 - image_$date.﻿jpeg 
-3. 이메일 사진 		 	 users -  uid -  user-mails - mailKey1 - image_$date.﻿jpeg
-
- 
- 
- 
 포스트 삭제 처리의 경우... 이미지가 있으면 이미지 + 포스트 삭제 V 
 이미지가 없으면 그냥 포스트만 삭제.
 
@@ -930,3 +921,30 @@ PostButton에 대한 처리 순서에서 고민중...
 
 *로그가 너무 빈약해서 수정해야 한다. (Service쪽)
 *나머지 부분 테스트 예정.
+ 
+	 
+1. 메일 테스트 
+ 추가할 이미지가 없는 경우
+	1. 기존의 로직대로 처리한다. 
+  
+ 추가할 이미지가 있는 경우
+	1. 이미지를 storage에 올린다. 
+	2. 데이터베이스에 메일 정보를 처리한다.
+	
+ 삭제하는 경우  
+	1. 데이터베이스에서 이미지 정보를 삭제한다. 
+	2. 이미지 여부에 따라서 이미지를 삭제한다.  
+	
+2. ScrollView 적용(예전에 처리를 안 했었음, 길게 안 쓸 것 같아서)
+ - NewMailFragment
+ - NewPostFragment
+
+3. fitsWindowSystems 속성 추가
+ - editText를 사용하는 페이지
+ 
+1. 유저 정보(프로필 이미지)  users -  uid -  user-info - profile_$date.﻿jpeg 
+2. 포스트 사진		  	 users -  uid -  user-posts - postKey1 - image_$date.﻿jpeg 
+3. 이메일 사진 		 	 users -  uid -  user-mails - mailKey1 - image_$date.﻿jpeg
+
+ 
+ 

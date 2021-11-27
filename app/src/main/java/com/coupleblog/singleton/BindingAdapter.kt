@@ -21,6 +21,8 @@ import com.google.firebase.database.DatabaseError
 import com.google.firebase.database.ValueEventListener
 import com.google.firebase.database.ktx.getValue
 
+
+
 @BindingAdapter("bind:bitmap")
 fun setBitmapImg(imageView: ImageView, bitmap: Bitmap?)
 {
@@ -128,6 +130,15 @@ fun setFieldType(textView: TextView, iFieldType: Int)
         else -> ""
     }
     textView.text = strText
+}
+
+@BindingAdapter("bind:profile_user_name")
+fun setProfileUserName(textView: TextView, userData: CB_User)
+{
+    var strName = userData.strUserName
+    if(CB_ViewModel.isMyProfile.value == true)
+        strName += CB_AppFunc.getString(R.string.str_me)
+    textView.text = strName
 }
 
 @BindingAdapter("bind:joined_date")

@@ -25,28 +25,25 @@
         <com.google.android.material.imageview.ShapeableImageView
             android:id="@+id/author_image_view"
             style="@style/circle_shape_image_view"
-            android:background="?android:attr/selectableItemBackgroundBorderless"
-            android:onClick="@{()->fragment.profileButton(commentData.strAuthorUid)}"
             android:layout_width="@dimen/icon_image_size"
             android:layout_height="@dimen/icon_image_size"
-            android:layout_marginTop="@dimen/normal_margin"
-            android:layout_marginBottom="@dimen/normal_margin"
+            android:background="?android:attr/selectableItemBackgroundBorderless"
+            android:onClick="@{()->fragment.profileButton(commentData.strAuthorUid)}"
             android:src="@drawable/ic_baseline_account_circle_24"
-            app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
+            app:layout_constraintTop_toTopOf="@+id/author_text_view" />
 
         <TextView
             android:id="@+id/author_text_view"
             style="@style/normal_text_style"
             android:layout_width="@dimen/normal_field_size"
             android:layout_height="wrap_content"
-            android:textAlignment="viewStart"
-            bind:user_uid="@{commentData.strAuthorUid}"
             android:layout_marginStart="@dimen/normal_margin"
             android:layout_marginTop="@dimen/normal_margin"
+            android:textAlignment="viewStart"
             app:layout_constraintStart_toEndOf="@+id/author_image_view"
             app:layout_constraintTop_toTopOf="parent"
+            bind:user_uid="@{commentData.strAuthorUid}"
             tools:text="Yumin Kim" />
 
         <TextView
@@ -63,7 +60,7 @@
             app:layout_constraintEnd_toEndOf="@+id/comment_date_text_view"
             app:layout_constraintStart_toStartOf="@+id/author_text_view"
             app:layout_constraintTop_toBottomOf="@+id/author_text_view"
-            tools:text="This is comment" />
+            tools:text="This is comment\n\n\nI love you" />
 
         <TextView
             android:id="@+id/comment_date_text_view"

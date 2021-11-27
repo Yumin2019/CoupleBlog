@@ -7,12 +7,10 @@ import android.util.Log
 import androidx.localbroadcastmanager.content.LocalBroadcastManager
 import com.coupleblog.CB_MainActivity
 import com.coupleblog.R
+import com.coupleblog.fragment.CB_NewMailFragment
 import com.coupleblog.fragment.CB_NewPostFragment
 import com.coupleblog.parent.CB_BaseTaskService
 import com.coupleblog.singleton.CB_AppFunc
-import com.coupleblog.singleton.CB_ViewModel
-import com.google.firebase.database.ktx.database
-import com.google.firebase.ktx.Firebase
 import com.google.firebase.storage.StorageReference
 import com.google.firebase.storage.ktx.component1
 import com.google.firebase.storage.ktx.component2
@@ -105,7 +103,7 @@ class CB_UploadService: CB_BaseTaskService()
                                 // if user had profileImg before, delete it.
                                 if(!strPrevImgPath.isNullOrEmpty())
                                 {
-                                    deleteImageFromStorage(strPrevImgPath, strTag,
+                                    deleteFileFromStorage(strPrevImgPath, strTag,
                                         "deleted previous profile img", "delete previous profile img Failed")
                                 }
 
@@ -136,7 +134,7 @@ class CB_UploadService: CB_BaseTaskService()
                                 // if post had an image, delete it
                                 if(!strPrevImgPath.isNullOrEmpty())
                                 {
-                                    deleteImageFromStorage(strPrevImgPath!!, strTag,
+                                    deleteFileFromStorage(strPrevImgPath!!, strTag,
                                         "deleted previous post img", "delete previous post img Failed")
                                     strPrevImgPath = null
                                 }
@@ -148,23 +146,11 @@ class CB_UploadService: CB_BaseTaskService()
             UPLOAD_TYPE.EMAIL_IMAGE.ordinal ->
             {
                 // profileImage : users - uid - user-mails - mailKey1 - image.jpg
-                val strUid = CB_AppFunc.getUid()
-                val strPath = "users/$strUid/user-mails/$databaseKey/image_${CB_AppFunc.getUniqueSuffix()}.jpg"
+                val strUid = CB_NewMailFragment.strRecipientUid
+                strPath = "users/$strUid/user-mails/$databaseKey/image_${CB_AppFunc.getUniqueSuffix()}.jpg"
                 Log.d(TAG, "strPath:$strPath")
                 storageRef = CB_AppFunc.getStorage().getReference(strPath)
-                successFunc =
-                {
-                    CB_AppFunc.networkScope.launch {
-                        with(CB_AppFunc)
-                        {
-                            // update mail's strImgPath
-                            Log.d(TAG, "update img to /user-mails/$strUid/$databaseKey/strImgPath")
-                            val childUpdates = hashMapOf<String, Any>("/user-mails/" +
-                                    "$strUid/$databaseKey/strImgPath" to strPath)
-                            getDataBase().updateChildren(childUpdates)
-                        }
-                    }
-                }
+                successFunc = {}
             }
 
             else ->

@@ -66,7 +66,6 @@ class CB_NewPostFragment: CB_CameraBaseFragment("NewPostFragment", UPLOAD_TYPE.P
             CB_ViewModel.postImage.postValue(imageBitmap)
             bImageChanged = true
         }
-
     }
 
     override fun onResume()
@@ -266,7 +265,7 @@ class CB_NewPostFragment: CB_CameraBaseFragment("NewPostFragment", UPLOAD_TYPE.P
                             // delete previous post image
                             if(!prevImgPath.isNullOrEmpty())
                             {
-                                CB_AppFunc.deleteImageFromStorage(prevImgPath!!, strTag,
+                                CB_AppFunc.deleteFileFromStorage(prevImgPath!!, strTag,
                                     "deleted previous post img path:$prevImgPath",
                                     "delete previous post img Failed path:$prevImgPath")
                                 prevImgPath = null
@@ -346,12 +345,12 @@ class CB_NewPostFragment: CB_CameraBaseFragment("NewPostFragment", UPLOAD_TYPE.P
                             return@launch
                         }
 
+                        val strDate = CB_AppFunc.getDateStringForSave()
+                        val tPost = CB_Post(CB_AppFunc.getUid(), strTitle, strText,
+                            REACTION_TYPE.NONE.ordinal, strDate, strDate, "")
                         if(CB_ViewModel.postImage.value == null)
                         {
                             // 해당 경로에 Post 데이터를 저장한다.
-                            val strDate = CB_AppFunc.getDateStringForSave()
-                            val tPost = CB_Post(CB_AppFunc.getUid(), strTitle, strText,
-                                REACTION_TYPE.NONE.ordinal, strDate, strDate, "")
                             uidRootRef.child(postKey).setValue(tPost).await()
                             Log.d(strTag, "postKey:$postKey setValue")
 
@@ -372,10 +371,7 @@ class CB_NewPostFragment: CB_CameraBaseFragment("NewPostFragment", UPLOAD_TYPE.P
                             CB_UploadService.funSuccess =
                                 {
                                     CB_AppFunc.networkScope.launch {
-
-                                        val strDate = CB_AppFunc.getDateStringForSave()
-                                        val tPost = CB_Post(CB_AppFunc.getUid(), strTitle, strText,
-                                            REACTION_TYPE.NONE.ordinal, strDate, strDate, CB_UploadService.strPath)
+                                        tPost.strImgPath = CB_UploadService.strPath
                                         uidRootRef.child(postKey).setValue(tPost).await()
                                         Log.d(strTag, "postKey:$postKey setValue")
 

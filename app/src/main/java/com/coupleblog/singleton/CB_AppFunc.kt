@@ -50,6 +50,7 @@ import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
+import kotlinx.coroutines.tasks.await
 import java.io.File
 import java.io.FileOutputStream
 import java.lang.Exception
@@ -120,11 +121,11 @@ class CB_AppFunc
         fun getStroageRef() = Firebase.storage.reference
         fun getStorageRef(strPath: String) = Firebase.storage.getReference(strPath)
 
-        fun deleteImageFromStorage(strPath: String, strTag: String, strSuccessMsg: String, strFailMsg: String)
+        suspend fun deleteFileFromStorage(strPath: String, strTag: String, strSuccessMsg: String, strFailMsg: String)
         {
             getStorageRef(strPath).delete()
                 .addOnSuccessListener { Log.d(strTag, strSuccessMsg) }
-                .addOnFailureListener { e -> Log.e(strTag, strFailMsg + "e: $e") }
+                .addOnFailureListener { e -> Log.e(strTag, strFailMsg + "e: $e") }.await()
         }
 
         @SuppressLint("ConstantLocale")

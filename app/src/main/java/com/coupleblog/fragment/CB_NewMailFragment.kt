@@ -7,6 +7,7 @@ import androidx.core.widget.doAfterTextChanged
 import androidx.navigation.fragment.findNavController
 import com.coupleblog.R
 import com.coupleblog.dialog.CB_ItemListDialog
+import com.coupleblog.dialog.CB_LoadingDialog
 import com.coupleblog.dialog.DialogItem
 import com.coupleblog.model.CB_Mail
 import com.coupleblog.model.MAIL_TYPE
@@ -16,14 +17,21 @@ import com.coupleblog.singleton.CB_SingleSystemMgr
 import com.coupleblog.singleton.CB_ViewModel
 import com.coupleblog.storage.CB_UploadService
 import com.coupleblog.storage.UPLOAD_TYPE
+import com.google.firebase.FirebaseException
 import com.google.firebase.database.DataSnapshot
 import com.google.firebase.database.DatabaseError
 import com.google.firebase.database.ValueEventListener
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
+import kotlinx.coroutines.tasks.await
 
 class CB_NewMailFragment: CB_CameraBaseFragment("NewMailFragment", UPLOAD_TYPE.EMAIL_IMAGE, bDeferred = true)
 {
+    companion object
+    {
+        var strRecipientUid = ""
+    }
+
     private var _binding            : NewMailBinding? = null
     private val binding get() = _binding!!
 
@@ -46,7 +54,7 @@ class CB_NewMailFragment: CB_CameraBaseFragment("NewMailFragment", UPLOAD_TYPE.E
             CB_ViewModel.mailImage.postValue(imageBitmap)
         }
 
-        CB_ViewModel.resetNewPostFragmentLiveData()
+        strRecipientUid = ""
     }
 
     override fun onResume()
@@ -117,6 +125,7 @@ class CB_NewMailFragment: CB_CameraBaseFragment("NewMailFragment", UPLOAD_TYPE.E
     {
         super.onViewCreated(view, savedInstanceState)
         setHasOptionsMenu(true)
+        CB_ViewModel.resetNewMailFragmentLiveData()
 
         binding.recipientEditText.apply {
 
@@ -234,101 +243,149 @@ class CB_NewMailFragment: CB_CameraBaseFragment("NewMailFragment", UPLOAD_TYPE.E
 
     fun sendMail(eType: MAIL_TYPE, strRecipientEmail: String, strTitle: String, strText: String)
     {
+        if(CB_SingleSystemMgr.isDialog(CB_SingleSystemMgr.DIALOG_TYPE.LOADING_DIALOG))
+            return
+
+        val dialog = CB_LoadingDialog(requireActivity()).apply { show() }
+
         CB_AppFunc.getUsersRoot().orderByChild("strUserEmail").equalTo(strRecipientEmail).addListenerForSingleValueEvent(
             object: ValueEventListener {
 
                 override fun onDataChange(snapshot: DataSnapshot)
                 {
-                    // check if strRecipient is valid
-                    if(!snapshot.exists())
-                    {
-                        // if not found
-                        CB_AppFunc.okDialog(requireActivity(), R.string.str_error, R.string.str_failed_to_find_user,
-                            R.drawable.error_icon, true)
-                        return
-                    }
+                    CB_AppFunc.networkScope.launch {
 
-                    // if valid Recipient
-                    val list = (snapshot.value as HashMap<*, *>).toList()
-                    val strRecipientUid = list[0].first as String
-                    val strRecipientCoupleUid = (list[0].second as HashMap<*, *>)["strCoupleUid"] as String?
-                    val myUid = CB_AppFunc.getUid()
-
-                    if(eType == MAIL_TYPE.REQUEST_COUPLE)
-                    {
-                        if(strRecipientUid == myUid)
+                        try
                         {
-                            // normal mail, release mail are okay
-                            // but if you try to send request couple mail to you, it's an error
-                            CB_AppFunc.okDialog(requireActivity(), R.string.str_error, R.string.str_tried_to_request_to_yourself,
-                                R.drawable.error_icon, true)
-                            return
-                        }
-                        else if(!strRecipientCoupleUid.isNullOrEmpty())
-                        {
-                            // this user is not a couple definitely
-                            // but recipient can already be a couple
-                            CB_AppFunc.okDialog(requireActivity(), R.string.str_error, R.string.str_user_is_couple_already,
-                                R.drawable.error_icon, true)
-                            return
-                        }
-                    }
-
-                    // make Mail to send
-                    val mail = CB_Mail(myUid, CB_AppFunc.getDateStringForSave(), "", eType.ordinal, strTitle, strText)
-                    if(CB_ViewModel.mailImage.value == null)
-                    {
-                        // save mail data at user-mails/uid/mailKey/mail data
-                        CB_AppFunc.getMailBoxRoot().child(strRecipientUid).push().setValue(mail)
-                        backPressed()
-                        CB_SingleSystemMgr.showToast(R.string.str_send_mail_success)
-                    }
-                    else
-                    {
-                        // it has an image
-                        saveBitmapAndUpload(strRecipientUid)
-
-                        // it's called after upload
-                        // Mail쪽 이미지 작업중이었음 여기부터...
-                        /*  CB_UploadService.funSuccess =
-                            {
-                              CB_AppFunc.networkScope.launch {
-
-                                    CB_AppFunc.getMailBoxRoot().child(strRecipientUid).push().setValue(mail)
-                                    backPressed()
-                                    CB_SingleSystemMgr.showToast(R.string.str_send_mail_success)
-
-                                    val strDate = CB_AppFunc.getDateStringForSave()
-                                    val tPost = CB_Post(CB_AppFunc.getUid(), strTitle, strText,
-                                        REACTION_TYPE.NONE.ordinal, strDate, strDate, CB_UploadService.strPath)
-                                    uidRootRef.child(postKey).setValue(tPost).await()
-                                    Log.d(strTag, "postKey:$postKey setValue")
-
-                                    launch(Dispatchers.Main)
-                                    {
-                                        // 저장을 완료한 이후에 다시 mainFragment 로 이동한다.
-                                        dialog.cancel()
-                                        CB_SingleSystemMgr.showToast(R.string.str_post_posted)
-                                        findNavController().popBackStack()
-                                    }
-                                }
-                            }
-
-                        CB_UploadService.funFailure =
+                            // check if strRecipient is valid
+                            if(!snapshot.exists())
                             {
                                 launch(Dispatchers.Main)
                                 {
+                                    // if not found
                                     dialog.cancel()
-                                    CB_AppFunc.okDialog(activity, R.string.str_error,
-                                        R.string.str_post_failed, R.drawable.error_icon, true)
+                                    CB_AppFunc.okDialog(requireActivity(), R.string.str_error, R.string.str_failed_to_find_user,
+                                        R.drawable.error_icon, true)
                                 }
-                            }*/
-                    }
+                                return@launch
+                            }
 
+                            // if valid Recipient
+                            val list = (snapshot.value as HashMap<*, *>).toList()
+                            strRecipientUid = list[0].first as String
+                            val strRecipientCoupleUid = (list[0].second as HashMap<*, *>)["strCoupleUid"] as String?
+                            val myUid = CB_AppFunc.getUid()
+
+                            if(eType == MAIL_TYPE.REQUEST_COUPLE)
+                            {
+                                if(strRecipientUid == myUid)
+                                {
+                                    launch(Dispatchers.Main)
+                                    {
+                                        // normal mail, release mail are okay
+                                        // but if you try to send request couple mail to you, it's an error
+                                        dialog.cancel()
+                                        CB_AppFunc.okDialog(requireActivity(), R.string.str_error, R.string.str_tried_to_request_to_yourself,
+                                            R.drawable.error_icon, true)
+                                    }
+                                    return@launch
+                                }
+                                else if(!strRecipientCoupleUid.isNullOrEmpty())
+                                {
+                                    launch(Dispatchers.Main)
+                                    {
+                                        // this user is not a couple definitely
+                                        // but recipient's already a couple
+                                        dialog.cancel()
+                                        CB_AppFunc.okDialog(requireActivity(), R.string.str_error, R.string.str_user_is_couple_already,
+                                            R.drawable.error_icon, true)
+                                    }
+                                    return@launch
+                                }
+                            }
+
+                            // make Mail to send
+                            val uriRoot = CB_AppFunc.getMailBoxRoot().child(strRecipientUid)
+                            val mailKey = uriRoot.push().key
+                            if(mailKey == null)
+                            {
+                                // if key is null
+                                launch(Dispatchers.Main)
+                                {
+                                    dialog.cancel()
+                                    CB_AppFunc.okDialog(requireActivity(), R.string.str_error,
+                                        R.string.str_mail_send_failed, R.drawable.error_icon, true)
+                                }
+                                return@launch
+                            }
+                            // 사전 예외 처리 END
+
+                            val mail = CB_Mail(myUid, CB_AppFunc.getDateStringForSave(), "", eType.ordinal, strTitle, strText)
+                            if(CB_ViewModel.mailImage.value == null)
+                            {
+                                // save mail data at user-mails/uid/mailKey/mail data
+                                uriRoot.child(mailKey).setValue(mail).await()
+                                Log.d(strTag, "sent a mail to recipient uid:$strRecipientUid")
+
+                                launch(Dispatchers.Main)
+                                {
+                                    dialog.cancel()
+                                    findNavController().popBackStack()
+                                    CB_SingleSystemMgr.showToast(R.string.str_send_mail_success)
+                                }
+                            }
+                            else
+                            {
+                                // it has an image
+                                saveBitmapAndUpload(mailKey)
+
+                                // it's called after upload
+                                CB_UploadService.funSuccess =
+                                    {
+                                        CB_AppFunc.networkScope.launch {
+                                            mail.strImgPath = CB_UploadService.strPath
+                                            uriRoot.child(mailKey).setValue(mail).await()
+                                            Log.d(strTag, "sent a mail to recipient uid:$strRecipientUid")
+                                            Log.d(CB_AppFunc.strTag, "update img to users/$strRecipientUid/" +
+                                                    "user-mails/$mailKey/strImgPath")
+
+                                            launch(Dispatchers.Main)
+                                            {
+                                                dialog.cancel()
+                                                findNavController().popBackStack()
+                                                CB_SingleSystemMgr.showToast(R.string.str_send_mail_success)
+                                            }
+                                        }
+                                    }
+
+                                CB_UploadService.funFailure =
+                                    {
+                                        launch(Dispatchers.Main)
+                                        {
+                                            Log.d(strTag, getString(R.string.str_mail_send_failed) + " uid:$strRecipientUid")
+                                            CB_AppFunc.okDialog(requireActivity(), R.string.str_error,
+                                                R.string.str_mail_send_failed, R.drawable.error_icon, true)
+                                        }
+                                    }
+                            }
+                        }
+                        catch (e: FirebaseException)
+                        {
+                            e.printStackTrace()
+                            launch(Dispatchers.Main)
+                            {
+                                dialog.cancel()
+                                CB_AppFunc.okDialog(requireActivity(), R.string.str_error, R.string.str_mail_send_failed,
+                                    R.drawable.error_icon, true)
+                            }
+                            return@launch
+                        }
+                    }
                 }
 
                 override fun onCancelled(error: DatabaseError)
                 {
+                    dialog.cancel()
                     CB_AppFunc.okDialog(requireActivity(), R.string.str_error, R.string.str_failed_to_find_user,
                         R.drawable.error_icon, true)
                 }

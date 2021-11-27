@@ -28,9 +28,14 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent">
 
-            <androidx.constraintlayout.widget.ConstraintLayout
+            <ScrollView
+                android:id="@+id/scroll_view"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent">
+
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
 
                 <com.google.android.material.textfield.TextInputLayout
                     android:id="@+id/title_text_input_layout"
@@ -79,7 +84,7 @@
                 <com.google.android.material.textfield.TextInputLayout
                     android:id="@+id/text_input_layout"
                     android:layout_width="0dp"
-                    android:layout_height="0dp"
+                    android:layout_height="wrap_content"
                     app:counterEnabled="true"
                     app:endIconMode="none"
                     app:boxStrokeWidth="0dp"
@@ -139,6 +144,7 @@
 
             </androidx.constraintlayout.widget.ConstraintLayout>
 
+            </ScrollView>
         </com.google.android.material.card.MaterialCardView>
 
     </androidx.constraintlayout.widget.ConstraintLayout>

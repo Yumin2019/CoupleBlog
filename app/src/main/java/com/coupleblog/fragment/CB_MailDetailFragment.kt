@@ -36,6 +36,8 @@ class CB_MailDetailFragment : CB_BaseFragment("MailDetail")
         const val ARGU_MAIL_KEY = "strMailKey"
     }
 
+    private var mailListener: ValueEventListener? = null
+
     private lateinit var mailKey: String
     private lateinit var mailRef: DatabaseReference
 
@@ -66,23 +68,28 @@ class CB_MailDetailFragment : CB_BaseFragment("MailDetail")
         // get postKey from arguments
         with(requireArguments())
         {
-            // mailKey
+            // mailKey, mailRef
             mailKey = getString(ARGU_MAIL_KEY) ?: throw IllegalArgumentException("must pass mailKey")
+            mailRef = CB_AppFunc.getMailBoxRoot().child(CB_AppFunc.getUid()).child(mailKey)
         }
+    }
 
-        // load mail data
-        mailRef = CB_AppFunc.getMailBoxRoot().child(CB_AppFunc.getUid()).child(mailKey)
-        mailRef.addListenerForSingleValueEvent(object: ValueEventListener{
+    override fun onStart()
+    {
+        super.onStart()
+
+        // add value event listener to the mailRef
+        val mailListener = object : ValueEventListener
+        {
             override fun onDataChange(snapshot: DataSnapshot)
             {
                 val mail = snapshot.getValue<CB_Mail>()
                 mail?.let {
-                    // update mail data
                     CB_ViewModel.tMail.value = mail
 
                     if(!mail.bRead!!)
                     {
-                        // if it's an unread mail
+                        // if it's an unread mail, read mark
                         mail.bRead = true
                         mailRef.setValue(mail)
                     }
@@ -95,7 +102,19 @@ class CB_MailDetailFragment : CB_BaseFragment("MailDetail")
                 CB_AppFunc.okDialog(requireActivity(), R.string.str_error,
                     R.string.str_mail_load_failed, R.drawable.error_icon, true)
             }
-        })
+        }
+
+        // if changes happen at this location, call this listener
+        mailRef.addValueEventListener(mailListener)
+
+        // keep it so it can be removed on app stop
+        this.mailListener = mailListener
+    }
+
+    override fun onStop()
+    {
+        super.onStop()
+        mailListener?.let { mailRef.removeEventListener(it) }
     }
 
     override fun onDestroy()
@@ -128,6 +147,15 @@ class CB_MailDetailFragment : CB_BaseFragment("MailDetail")
 
                     try
                     {
+                        val strImgPath = CB_ViewModel.tMail.value!!.strImgPath
+                        Log.d(strTag, "strImgPath:$strImgPath")
+                        if(!strImgPath.isNullOrEmpty())
+                        {
+                            CB_AppFunc.deleteFileFromStorage(strImgPath, strTag,
+                                "delete mail img path:$strImgPath",
+                                "Failed to delete mail img path:$strImgPath\"")
+                        }
+
                         mailRef.setValue(null)
                         launch(Dispatchers.Main)
                         {
@@ -161,14 +189,10 @@ class CB_MailDetailFragment : CB_BaseFragment("MailDetail")
 
             try
             {
-                val prevMail = CB_ViewModel.tMail.value!!
                 launch(Dispatchers.Main)
                 {
-                    // local data
-                    prevMail.bHeartIcon = !(prevMail.bHeartIcon!!)
-                    CB_ViewModel.tMail.value = prevMail
-
-                    // server data
+                    val prevMail = CB_ViewModel.tMail.value!!
+                    prevMail.bHeartIcon = !prevMail.bHeartIcon!!
                     mailRef.setValue(prevMail)
                 }
             }

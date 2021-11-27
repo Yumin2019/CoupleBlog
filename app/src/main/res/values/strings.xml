@@ -371,6 +371,7 @@ Couple blog 은(는) 정보주체의 이용정보를 저장하고 수시로 불�
     <string name="str_user_is_couple_already">This user is already a couple</string>
     <string name="str_value_update_failed">Value update failed</string>
     <string name="str_post_failed">Post failed</string>
+    <string name="str_mail_send_failed">Failed to send mail</string>
     <string name="str_user_info_load_failed">User information load failed</string>
     <string name="str_comment_list_load_failed">Comment list load failed</string>
     <string name="str_mail_load_failed">Mail load failed</string>

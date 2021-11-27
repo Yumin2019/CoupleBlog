@@ -56,7 +56,7 @@
                     android:layout_marginStart="@dimen/margin_16dp"
                     android:paddingStart="@dimen/margin_16dp"
                     android:paddingEnd="@dimen/normal_margin"
-                    android:text="@{viewModel.profileUser.strUserName}"
+                    bind:profile_user_name="@{viewModel.profileUser}"
                     app:layout_constraintBottom_toTopOf="@+id/user_email_text_view"
                     app:layout_constraintStart_toEndOf="@+id/user_profile_image"
                     app:layout_constraintTop_toTopOf="@+id/user_profile_image"
