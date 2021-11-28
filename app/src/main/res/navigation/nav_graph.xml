@@ -6,6 +6,12 @@
     app:startDestination="@id/CB_PermissionFragment">
 
     <fragment
+        android:id="@+id/CB_PhotoEditorFragment"
+        android:name="com.coupleblog.fragment.CB_PhotoEditorFragment"
+        android:label="fragment_cb_photo_editor"
+        tools:layout="@layout/fragment_cb_photo_editor"/>
+
+    <fragment
         android:id="@+id/CB_PermissionFragment"
         android:name="com.coupleblog.fragment.CB_PermissionFragment"
         android:label="fragment_cb_permission"
@@ -157,6 +163,9 @@
         android:name="com.coupleblog.fragment.CB_EditProfileFragment"
         android:label="fragment_cb_edit_profile"
         tools:layout="@layout/fragment_cb_edit_profile" >
+        <action
+            android:id="@+id/action_CB_EditProfileFragment_to_CB_PhotoEditorFragment"
+            app:destination="@id/CB_PhotoEditorFragment" />
     </fragment>
 
 </navigation>

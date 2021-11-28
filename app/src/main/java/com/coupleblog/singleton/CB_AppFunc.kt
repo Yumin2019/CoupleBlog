@@ -395,7 +395,7 @@ class CB_AppFunc
             try
             {
                 val outputStream = FileOutputStream(File(strFilePath))
-                bitmap.compress(Bitmap.CompressFormat.JPEG, 40, outputStream)
+                bitmap.compress(Bitmap.CompressFormat.JPEG, 100, outputStream)
                 outputStream.close()
             }
             catch (e: Exception)

@@ -21,6 +21,7 @@ class CB_ViewModel
     companion object
     {
         const val strTag = "ViewModel"
+        var editorBitmap: Bitmap? = null
 
         // when you go out of MainFragment
         // when you click view pages

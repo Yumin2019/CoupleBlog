@@ -6,14 +6,17 @@ import android.net.Uri
 import android.os.Bundle
 import android.os.Environment
 import android.util.Log
+import android.view.ScaleGestureDetector
 import androidx.activity.result.ActivityResultLauncher
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.core.content.FileProvider
+import androidx.navigation.fragment.findNavController
 import com.coupleblog.R
 import com.coupleblog.singleton.CB_AppFunc
 import com.coupleblog.singleton.CB_SingleSystemMgr
 import com.coupleblog.storage.CB_UploadService
 import com.coupleblog.storage.UPLOAD_TYPE
+import ja.burhanrashid52.photoeditor.PhotoEditor
 import kotlinx.coroutines.launch
 import java.io.File
 
@@ -40,13 +43,13 @@ abstract class CB_CameraBaseFragment(strTag: String,
         cameraLauncher = registerForActivityResult(ActivityResultContracts.TakePicture())
         { isSaved ->
 
-            CB_AppFunc.networkScope.launch {
+            if(!isSaved)
+            {
+                Log.e(strTag, "user canceled camera")
+                return@registerForActivityResult
+            }
 
-                if(!isSaved)
-                {
-                    Log.e(strTag, "user canceled camera")
-                    return@launch
-                }
+            CB_AppFunc.networkScope.launch {
 
                 // image save was successful
                 // getBitmap from uri
@@ -82,20 +85,22 @@ abstract class CB_CameraBaseFragment(strTag: String,
 
         galleryLauncher = registerForActivityResult(ActivityResultContracts.GetContent())
         { uri ->
-            CB_AppFunc.networkScope.launch {
-                if(uri == null)
-                {
-                    Log.e(strTag, "user canceled gallery")
-                    return@launch
-                }
 
-                val strPath = CB_AppFunc.getPathFromURI(requireActivity(), uri)
-                if(strPath == null)
-                {
-                    Log.e(strTag, "getPathFromUri error uri:$uri")
-                    uploadFailed(R.string.str_select_image_from_gallery)
-                    return@launch
-                }
+            if(uri == null)
+            {
+                Log.e(strTag, "user canceled gallery")
+                return@registerForActivityResult
+            }
+
+            val strPath = CB_AppFunc.getPathFromURI(requireActivity(), uri)
+            if(strPath == null)
+            {
+                Log.e(strTag, "getPathFromUri error uri:$uri")
+                uploadFailed(R.string.str_select_image_from_gallery)
+                return@registerForActivityResult
+            }
+
+            CB_AppFunc.networkScope.launch {
 
                 imageBitmap = CB_AppFunc.getBitmapFromUri(requireActivity().applicationContext.contentResolver, uri)
                 if(imageBitmap == null)
