@@ -20,10 +20,7 @@ import androidx.core.content.ContextCompat
 import androidx.core.content.FileProvider
 import androidx.navigation.fragment.findNavController
 import com.coupleblog.R
-import com.coupleblog.dialog.CB_EditDialog
-import com.coupleblog.dialog.CB_ItemListDialog
-import com.coupleblog.dialog.DialogItem
-import com.coupleblog.dialog.EDIT_FIELD_TYPE
+import com.coupleblog.dialog.*
 import com.coupleblog.model.GENDER
 import com.coupleblog.parent.CB_BaseFragment
 import com.coupleblog.parent.CB_CameraBaseFragment
@@ -124,6 +121,15 @@ class CB_EditProfileFragment : CB_CameraBaseFragment("EditProfile", UPLOAD_TYPE.
         )
 
         CB_ItemListDialog(requireActivity(), getString(R.string.str_change_profile_image), listItem, true)
+    }
+
+    fun imageButton(strImagePath: String)
+    {
+        if(CB_SingleSystemMgr.isDialog(CB_SingleSystemMgr.DIALOG_TYPE.IMAGE))
+            return
+
+        CB_ViewModel.strImagePath.postValue(strImagePath)
+        CB_ImageDialog(requireActivity())
     }
 
     fun genderButton()

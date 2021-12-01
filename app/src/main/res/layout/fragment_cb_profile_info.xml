@@ -111,6 +111,7 @@
                     android:id="@+id/user_profile_image"
                     style="@style/circle_shape_image_view"
                     bind:image_uid="@{viewModel.profileUserUid}"
+                    android:onClick="@{()->fragment.imageButton(viewModel.profileUser.strImgPath)}"
                     android:layout_width="@dimen/profile_image_size"
                     android:layout_height="@dimen/profile_image_size"
                     android:layout_marginStart="@dimen/margin_16dp"
@@ -148,6 +149,7 @@
                     app:layout_constraintStart_toStartOf="@+id/user_profile_image"
                     app:layout_constraintTop_toTopOf="@+id/couple_with_text_view"
                     bind:visibility="@{viewModel.hasCouple}"
+                    android:onClick="@{()->fragment.imageButton(viewModel.profileCoupleUser.strImgPath)}"
                     tools:src="@drawable/heart_icon"
                     tools:visibility="visible" />
 

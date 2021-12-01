@@ -9,10 +9,12 @@ import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.navigation.fragment.findNavController
 import com.coupleblog.R
 import com.coupleblog.adapter.CB_CommentAdapter
+import com.coupleblog.dialog.CB_ImageDialog
 import com.coupleblog.model.CB_Post
 import com.coupleblog.model.CB_User
 import com.coupleblog.parent.CB_BaseFragment
 import com.coupleblog.singleton.CB_AppFunc
+import com.coupleblog.singleton.CB_SingleSystemMgr
 import com.coupleblog.singleton.CB_ViewModel
 import com.google.firebase.database.DataSnapshot
 import com.google.firebase.database.DatabaseError
@@ -93,6 +95,15 @@ class CB_ProfileInfoFragment: CB_BaseFragment("ProfileInfo")
     {
         super.onDestroy()
         _binding = null
+    }
+
+    fun imageButton(strImagePath: String)
+    {
+        if(CB_SingleSystemMgr.isDialog(CB_SingleSystemMgr.DIALOG_TYPE.IMAGE))
+            return
+
+        CB_ViewModel.strImagePath.postValue(strImagePath)
+        CB_ImageDialog(requireActivity())
     }
 
     fun editButton()

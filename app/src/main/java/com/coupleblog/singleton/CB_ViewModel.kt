@@ -126,6 +126,9 @@ class CB_ViewModel
             postImage.postValue(null)
         }
 
+        // ImageDialog
+        var strImagePath   = MutableLiveData("")
+
         // MailDetailFragment
         var tMail = MutableLiveData(CB_Mail())
 

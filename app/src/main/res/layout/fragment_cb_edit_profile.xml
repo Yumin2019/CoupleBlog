@@ -78,6 +78,7 @@
                     android:src="@drawable/haha_icon"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toTopOf="parent"
+                    android:onClick="@{()->fragment.imageButton(viewModel.curUser.strImgPath)}"
                     bind:user_image_path="@{viewModel.curUser.strImgPath}"
                     tools:src="@drawable/haha_icon" />
 

@@ -7,6 +7,7 @@
     <color name="white">#FFFFFFFF</color>
     <color name="darker_white">#CCCCCC</color>
     <color name="grey">#AAAAAA</color>
+    <color name="brighter_grey">#D5D5D5</color>
     <color name="darker_grey">#3E3E3E</color>
     <color name="ripple_grey">#C8C8C8</color>
 

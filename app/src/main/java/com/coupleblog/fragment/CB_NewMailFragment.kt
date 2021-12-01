@@ -362,6 +362,7 @@ class CB_NewMailFragment: CB_CameraBaseFragment("NewMailFragment", UPLOAD_TYPE.E
                                     {
                                         launch(Dispatchers.Main)
                                         {
+                                            dialog.cancel()
                                             Log.d(strTag, getString(R.string.str_mail_send_failed) + " uid:$strRecipientUid")
                                             CB_AppFunc.okDialog(requireActivity(), R.string.str_error,
                                                 R.string.str_mail_send_failed, R.drawable.error_icon, true)

@@ -70,11 +70,11 @@
                 <ImageView
                     android:id="@+id/post_image_view"
                     android:layout_width="0dp"
-                    android:layout_height="@dimen/bitmap_image_height"
                     android:layout_marginStart="@dimen/margin_16dp"
                     android:layout_marginEnd="@dimen/margin_16dp"
                     bind:bitmap="@{viewModel.postImage}"
-                    android:scaleType="centerCrop"
+                    android:layout_height="wrap_content"
+                    android:adjustViewBounds="true"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toBottomOf="@+id/title_text_input_layout"

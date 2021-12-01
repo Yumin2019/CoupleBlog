@@ -34,17 +34,19 @@
             app:layout_constraintTop_toTopOf="parent">
 
             <androidx.constraintlayout.widget.ConstraintLayout
+                android:background="?android:attr/selectableItemBackgroundBorderless"
                 android:onClick="@{()->fragment.clickedPostItem(postKey, postData.strAuthorUid)}"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:background="?android:attr/selectableItemBackground">
+                android:layout_height="wrap_content">
 
                 <ImageView
                     android:id="@+id/post_image_view"
                     android:layout_width="0dp"
+                    android:adjustViewBounds="true"
                     android:layout_height="@dimen/bitmap_image_height_short"
-                    android:scaleType="centerCrop"
-                    tools:src="@mipmap/ic_launcher"
+                    tools:src="@drawable/pencil"
+                    android:background="@color/brighter_grey"
+                    android:scaleType="fitCenter"
                     bind:picture_image_path="@{postData.strImgPath}"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"

@@ -32,8 +32,9 @@
             app:layout_constraintTop_toTopOf="parent"
             app:layout_constraintWidth_max="@dimen/button_max_length">
 
-            <ImageView
+            <com.google.android.material.imageview.ShapeableImageView
                 android:id="@+id/author_image_view"
+                style="@style/circle_shape_image_view"
                 android:layout_width="@dimen/icon_image_size"
                 android:layout_height="@dimen/icon_image_size"
                 app:layout_constraintStart_toStartOf="@+id/comment_post_button"

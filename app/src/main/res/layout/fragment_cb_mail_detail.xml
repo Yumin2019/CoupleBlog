@@ -97,17 +97,16 @@
                 <ImageView
                     android:id="@+id/mail_image_view"
                     android:layout_width="0dp"
-                    android:layout_height="@dimen/bitmap_image_height"
+                    android:layout_height="wrap_content"
+                    android:adjustViewBounds="true"
                     android:layout_marginTop="@dimen/margin_16dp"
                     android:background="@color/grey"
                     bind:picture_image_path="@{viewModel.TMail.strImgPath}"
                     app:layout_constraintEnd_toEndOf="@+id/post_text_view"
                     app:layout_constraintStart_toStartOf="@+id/post_text_view"
                     app:layout_constraintTop_toBottomOf="@+id/view"
-                    android:scaleType="centerCrop"
                     tools:src="@mipmap/ic_launcher"
                     tools:visibility="visible" />
-
 
                 <ImageView
                     android:id="@+id/heart_image_view"

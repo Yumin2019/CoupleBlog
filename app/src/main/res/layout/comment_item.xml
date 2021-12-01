@@ -29,7 +29,8 @@
             android:layout_height="@dimen/icon_image_size"
             android:background="?android:attr/selectableItemBackgroundBorderless"
             android:onClick="@{()->fragment.profileButton(commentData.strAuthorUid)}"
-            android:src="@drawable/ic_baseline_account_circle_24"
+            bind:image_uid="@{commentData.strAuthorUid}"
+            tools:src="@drawable/ic_baseline_account_circle_24"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="@+id/author_text_view" />
 
