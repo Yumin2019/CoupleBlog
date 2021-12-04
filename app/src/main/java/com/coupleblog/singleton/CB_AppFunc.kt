@@ -792,9 +792,9 @@ class CB_AppFunc
             activity.overridePendingTransition(R.anim.anim_stop, R.anim.anim_stop)
         }
 
-        fun convertDpToPixel(dp: Float, context: Context): Float
+        fun convertDpToPixel(dp: Float): Float
         {
-            return dp * (context.resources.displayMetrics.densityDpi.toFloat()
+            return dp * (application.resources.displayMetrics.densityDpi.toFloat()
                     / DisplayMetrics.DENSITY_DEFAULT.toFloat())
         }
 

@@ -102,7 +102,7 @@ class CB_ProfileInfoFragment: CB_BaseFragment("ProfileInfo")
         if(CB_SingleSystemMgr.isDialog(CB_SingleSystemMgr.DIALOG_TYPE.IMAGE))
             return
 
-        CB_ViewModel.strImagePath.postValue(strImagePath)
+        CB_ViewModel.strImagePath.value = strImagePath
         CB_ImageDialog(requireActivity())
     }
 
