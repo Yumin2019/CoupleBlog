@@ -22,7 +22,7 @@ class CB_PermissionFragment : CB_BaseFragment("PermissionFragment")
 
     // permissions
     private lateinit var permissionLauncher: ActivityResultLauncher<Array<String>>
-    val permissions = arrayOf(Manifest.permission.CAMERA, Manifest.permission.WRITE_EXTERNAL_STORAGE)
+    val permissions = arrayOf(Manifest.permission.CAMERA)
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View
     {
@@ -55,7 +55,7 @@ class CB_PermissionFragment : CB_BaseFragment("PermissionFragment")
 
                     }, R.string.str_cancel, null)
             }
-            else if(!CB_AppFunc.checkPermission(Manifest.permission.WRITE_EXTERNAL_STORAGE))
+          /*  else if(!CB_AppFunc.checkPermission(Manifest.permission.WRITE_EXTERNAL_STORAGE))
             {
                 // Storage
                 CB_AppFunc.confirmDialog(requireActivity(), R.string.str_storage,
@@ -67,7 +67,7 @@ class CB_PermissionFragment : CB_BaseFragment("PermissionFragment")
                         startActivity(intent)
 
                     }, R.string.str_cancel, null)
-            }
+            }*/
         }
     }
 

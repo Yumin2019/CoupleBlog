@@ -69,7 +69,6 @@ class CB_AppFunc
         CAMERA,
         RECORD_AUDIO,
         MODIFY_AUDIO_SETTINGS,
-        WRITE_EXTERNAL_STORAGE,
         READ_EXTERNAL_STORAGE,
         VIBRATE,
         END
@@ -410,15 +409,11 @@ class CB_AppFunc
             Bitmap.createBitmap(bitmap, 0, 0, bitmap.width, bitmap.height, matrix, true)
         }
 
-        fun changeImageOrientation(imageBitmap: Bitmap, strFilePath: String): Bitmap?
+        fun changeImageOrientation(imageBitmap: Bitmap, exifInterface: ExifInterface): Bitmap?
         {
             try
             {
                 var bitmap = imageBitmap
-                // temp 파일 경로를 가지고 ExifInterface를 생성한다.
-                val exifInterface = ExifInterface(strFilePath)
-
-                // 회전이 되어 있는 경우를 처리한다.
                 val iOrientation = exifInterface
                     .getAttributeInt(ExifInterface.TAG_ORIENTATION, ExifInterface.ORIENTATION_UNDEFINED)
 

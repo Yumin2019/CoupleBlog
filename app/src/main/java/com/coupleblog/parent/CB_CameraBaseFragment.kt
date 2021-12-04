@@ -2,7 +2,9 @@ package com.coupleblog.parent
 
 import android.content.Intent
 import android.graphics.Bitmap
+import android.media.ExifInterface
 import android.net.Uri
+import android.os.Build
 import android.os.Bundle
 import android.os.Environment
 import android.util.Log
@@ -19,6 +21,8 @@ import com.coupleblog.storage.UPLOAD_TYPE
 import ja.burhanrashid52.photoeditor.PhotoEditor
 import kotlinx.coroutines.launch
 import java.io.File
+import java.io.IOException
+import java.lang.Exception
 
 // all of fragments want to use camera function, extend this fragment
 abstract class CB_CameraBaseFragment(strTag: String,
@@ -61,8 +65,17 @@ abstract class CB_CameraBaseFragment(strTag: String,
                     return@launch
                 }
 
-                // bitmap was successful
-                imageBitmap = CB_AppFunc.changeImageOrientation(imageBitmap!!, strFilePath!!)
+                try
+                {
+                    val exitIfInterface = ExifInterface(strFilePath!!)
+                    imageBitmap = CB_AppFunc.changeImageOrientation(imageBitmap!!, exitIfInterface)
+                }
+                catch (e: IOException)
+                {
+                    e.printStackTrace()
+                    imageBitmap = null
+                }
+
                 if(imageBitmap == null)
                 {
                     Log.e(strTag, "failed to change orientation on image")
@@ -92,14 +105,6 @@ abstract class CB_CameraBaseFragment(strTag: String,
                 return@registerForActivityResult
             }
 
-            val strPath = CB_AppFunc.getPathFromURI(requireActivity(), uri)
-            if(strPath == null)
-            {
-                Log.e(strTag, "getPathFromUri error uri:$uri")
-                uploadFailed(R.string.str_select_image_from_gallery)
-                return@registerForActivityResult
-            }
-
             CB_AppFunc.networkScope.launch {
 
                 imageBitmap = CB_AppFunc.getBitmapFromUri(requireActivity().applicationContext.contentResolver, uri)
@@ -110,13 +115,27 @@ abstract class CB_CameraBaseFragment(strTag: String,
                     return@launch
                 }
 
-                // bitmap was successful
-                imageBitmap = CB_AppFunc.changeImageOrientation(imageBitmap!!, strPath)
-                if(imageBitmap == null)
+                // N 버전 이상만 화면 회전을 시도한다. (외부 저장소 권한 제거)
+                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N)
                 {
-                    Log.e(strTag, "failed to change orientation on image")
-                    uploadFailed()
-                    return@launch
+                    try
+                    {
+                        val inputStream = CB_AppFunc.application.contentResolver.openInputStream(uri)!!
+                        val exifInterface = ExifInterface(inputStream)
+                        imageBitmap = CB_AppFunc.changeImageOrientation(imageBitmap!!, exifInterface)
+                    }
+                    catch (e: IOException)
+                    {
+                        e.printStackTrace()
+                        imageBitmap = null
+                    }
+
+                    if(imageBitmap == null)
+                    {
+                        Log.e(strTag, "failed to change orientation on image")
+                        uploadFailed()
+                        return@launch
+                    }
                 }
 
                 if(!bDeferred)
