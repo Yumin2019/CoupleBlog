@@ -68,6 +68,11 @@ class CB_NewPostFragment: CB_CameraBaseFragment("NewPostFragment", UPLOAD_TYPE.P
         }
     }
 
+    override fun beginActionToEdtior()
+    {
+        beginAction(R.id.action_CB_NewPostFragment_to_CB_PhotoEditorFragment, R.id.CB_NewPostFragment)
+    }
+
     override fun onResume()
     {
         super.onResume()

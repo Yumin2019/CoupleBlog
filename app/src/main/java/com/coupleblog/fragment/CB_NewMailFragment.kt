@@ -57,6 +57,11 @@ class CB_NewMailFragment: CB_CameraBaseFragment("NewMailFragment", UPLOAD_TYPE.E
         strRecipientUid = ""
     }
 
+    override fun beginActionToEdtior()
+    {
+        beginAction(R.id.action_CB_NewMailFragment_to_CB_PhotoEditorFragment, R.id.CB_NewMailFragment)
+    }
+
     override fun onResume()
     {
         super.onResume()

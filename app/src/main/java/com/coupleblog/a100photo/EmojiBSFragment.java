@@ -56,7 +56,7 @@ public class EmojiBSFragment extends BottomSheetDialogFragment {
         CoordinatorLayout.Behavior behavior = params.getBehavior();
 
         if (behavior != null && behavior instanceof BottomSheetBehavior) {
-            ((BottomSheetBehavior) behavior).setBottomSheetCallback(mBottomSheetBehaviorCallback);
+            ((BottomSheetBehavior) behavior).addBottomSheetCallback(mBottomSheetBehaviorCallback);
         }
         ((View) contentView.getParent()).setBackgroundColor(getResources().getColor(android.R.color.transparent));
         RecyclerView rvEmoji = contentView.findViewById(R.id.rvEmoji);

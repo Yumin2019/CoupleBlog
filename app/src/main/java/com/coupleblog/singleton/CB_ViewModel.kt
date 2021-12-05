@@ -21,7 +21,12 @@ class CB_ViewModel
     companion object
     {
         const val strTag = "ViewModel"
+
+        // photoEditor Fragment
         var editorBitmap: Bitmap? = null
+        var strCurTool = MutableLiveData("")
+
+
 
         // when you go out of MainFragment
         // when you click view pages

@@ -55,19 +55,6 @@ class CB_PermissionFragment : CB_BaseFragment("PermissionFragment")
 
                     }, R.string.str_cancel, null)
             }
-          /*  else if(!CB_AppFunc.checkPermission(Manifest.permission.WRITE_EXTERNAL_STORAGE))
-            {
-                // Storage
-                CB_AppFunc.confirmDialog(requireActivity(), R.string.str_storage,
-                    R.string.str_normal_permission_message, R.drawable.folder, false,
-                    R.string.str_setting,
-                    { _, _ ->
-                        val intent = Intent(Settings.ACTION_APPLICATION_DETAILS_SETTINGS)
-                        intent.data = Uri.parse("package:${requireActivity().packageName}")
-                        startActivity(intent)
-
-                    }, R.string.str_cancel, null)
-            }*/
         }
     }
 

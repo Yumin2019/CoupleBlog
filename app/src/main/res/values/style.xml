@@ -1,6 +1,14 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
 
+    <style name="ripple_borderless">
+        <item name="android:background">?android:attr/selectableItemBackgroundBorderless</item>
+    </style>
+
+    <style name="ripple_circle">
+        <item name="android:background">?android:attr/selectableItemBackground</item>
+    </style>
+
     <style name="circle_shape_image_view">
         <item name="shapeAppearanceOverlay">@style/circle_shape</item>
         <item name="android:scaleType">centerCrop</item>

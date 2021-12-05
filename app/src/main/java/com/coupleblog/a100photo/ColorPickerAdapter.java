@@ -24,17 +24,13 @@ import java.util.List;
  * Created by Ahmed Adel on 5/8/17.
  */
 
-// 여기부터...
-
 public class ColorPickerAdapter extends RecyclerView.Adapter<ColorPickerAdapter.ViewHolder> {
 
-    private Context context;
     private LayoutInflater inflater;
     private List<Integer> colorPickerColors;
     private OnColorPickerClickListener onColorPickerClickListener;
 
     ColorPickerAdapter(@NonNull Context context, @NonNull List<Integer> colorPickerColors) {
-        this.context = context;
         this.inflater = LayoutInflater.from(context);
         this.colorPickerColors = colorPickerColors;
     }

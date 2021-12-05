@@ -17,6 +17,7 @@
     <string name="app_intent_name">PhotoEditor</string>
     <string name="msg_save_image_to_share">Please save image to share</string>
     <string name="msg_share_image">Share Image</string>
+    <string name="str_clear_all_views_msg">Do you really want to discard all changes?</string>
 
     <string-array name="photo_editor_emoji">
 
@@ -816,6 +817,7 @@ Couple blog 은(는) 정보주체의 이용정보를 저장하고 수시로 불�
     <string name="str_error">Error</string>
     <string name="str_warning">Warning</string>
     <string name="str_information">Information</string>
+    <string name="str_done">Done</string>
 
     <string name="str_auto_login_success">Auto login was successful.</string>
     <string name="str_send_mail_success">Sending mail was successful.</string>

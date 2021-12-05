@@ -14,8 +14,10 @@ import androidx.activity.result.contract.ActivityResultContracts
 import androidx.core.content.FileProvider
 import androidx.navigation.fragment.findNavController
 import com.coupleblog.R
+import com.coupleblog.fragment.CB_PhotoEditorFragment
 import com.coupleblog.singleton.CB_AppFunc
 import com.coupleblog.singleton.CB_SingleSystemMgr
+import com.coupleblog.singleton.CB_ViewModel
 import com.coupleblog.storage.CB_UploadService
 import com.coupleblog.storage.UPLOAD_TYPE
 import ja.burhanrashid52.photoeditor.PhotoEditor
@@ -27,7 +29,8 @@ import java.lang.Exception
 // all of fragments want to use camera function, extend this fragment
 abstract class CB_CameraBaseFragment(strTag: String,
                                      protected val uploadType: UPLOAD_TYPE,
-                                     protected val bDeferred: Boolean = false) : CB_BaseFragment(strTag)
+                                     protected val bDeferred: Boolean = false)
+    : CB_BaseFragment(strTag), CB_PhotoEditorFragment.CameraListener
 {
     // registerForActivityResult
     protected lateinit var cameraLauncher: ActivityResultLauncher<Uri>
@@ -37,6 +40,29 @@ abstract class CB_CameraBaseFragment(strTag: String,
     protected var imageUri: Uri? = null
     protected var strFilePath: String? = null
     protected var imageBitmap: Bitmap? = null
+
+    // CameraListener
+    override fun onProcess()
+    {
+        debugLog("cameraListener: onProcess")
+        if(!bDeferred)
+        {
+            debugLog("upload start")
+            saveBitmapAndUpload()
+        }
+        else
+        {
+            debugLog("deferred upload")
+            funDeferred?.invoke()
+        }
+    }
+
+    override fun onCancel()
+    {
+        debugLog("cameraListener: onCancel")
+    }
+
+    abstract fun beginActionToEdtior()
 
     override fun onCreate(savedInstanceState: Bundle?)
     {
@@ -53,22 +79,43 @@ abstract class CB_CameraBaseFragment(strTag: String,
                 return@registerForActivityResult
             }
 
-            CB_AppFunc.networkScope.launch {
+            imageProcess()
+        }
 
-                // image save was successful
-                // getBitmap from uri
-                imageBitmap = CB_AppFunc.getBitmapFromUri(requireActivity().applicationContext.contentResolver, imageUri!!)
-                if(imageBitmap == null)
-                {
-                    Log.e(strTag, "failed to convert uri to bitmap")
-                    uploadFailed()
-                    return@launch
-                }
+        galleryLauncher = registerForActivityResult(ActivityResultContracts.GetContent())
+        { uri ->
 
+            if(uri == null)
+            {
+                Log.e(strTag, "user canceled gallery")
+                return@registerForActivityResult
+            }
+
+            imageUri = uri
+            imageProcess()
+        }
+    }
+
+    protected fun imageProcess()
+    {
+        CB_AppFunc.networkScope.launch {
+
+            imageBitmap = CB_AppFunc.getBitmapFromUri(requireActivity().applicationContext.contentResolver, imageUri!!)
+            if(imageBitmap == null)
+            {
+                Log.e(strTag, "failed to convert uri to bitmap")
+                uploadFailed()
+                return@launch
+            }
+
+            // N 버전 이상만 화면 회전을 시도한다. (외부 저장소 권한 제거)
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N)
+            {
                 try
                 {
-                    val exitIfInterface = ExifInterface(strFilePath!!)
-                    imageBitmap = CB_AppFunc.changeImageOrientation(imageBitmap!!, exitIfInterface)
+                    val inputStream = CB_AppFunc.application.contentResolver.openInputStream(imageUri!!)!!
+                    val exifInterface = ExifInterface(inputStream)
+                    imageBitmap = CB_AppFunc.changeImageOrientation(imageBitmap!!, exifInterface)
                 }
                 catch (e: IOException)
                 {
@@ -82,72 +129,13 @@ abstract class CB_CameraBaseFragment(strTag: String,
                     uploadFailed()
                     return@launch
                 }
-
-                if(!bDeferred)
-                {
-                    debugLog("upload start")
-                    saveBitmapAndUpload()
-                }
-                else
-                {
-                    debugLog("deferred upload")
-                    funDeferred?.invoke()
-                }
-            }
-        }
-
-        galleryLauncher = registerForActivityResult(ActivityResultContracts.GetContent())
-        { uri ->
-
-            if(uri == null)
-            {
-                Log.e(strTag, "user canceled gallery")
-                return@registerForActivityResult
             }
 
-            CB_AppFunc.networkScope.launch {
-
-                imageBitmap = CB_AppFunc.getBitmapFromUri(requireActivity().applicationContext.contentResolver, uri)
-                if(imageBitmap == null)
-                {
-                    Log.e(strTag, "failed to convert uri to bitmap")
-                    uploadFailed()
-                    return@launch
-                }
-
-                // N 버전 이상만 화면 회전을 시도한다. (외부 저장소 권한 제거)
-                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N)
-                {
-                    try
-                    {
-                        val inputStream = CB_AppFunc.application.contentResolver.openInputStream(uri)!!
-                        val exifInterface = ExifInterface(inputStream)
-                        imageBitmap = CB_AppFunc.changeImageOrientation(imageBitmap!!, exifInterface)
-                    }
-                    catch (e: IOException)
-                    {
-                        e.printStackTrace()
-                        imageBitmap = null
-                    }
-
-                    if(imageBitmap == null)
-                    {
-                        Log.e(strTag, "failed to change orientation on image")
-                        uploadFailed()
-                        return@launch
-                    }
-                }
-
-                if(!bDeferred)
-                {
-                    debugLog("upload start")
-                    saveBitmapAndUpload()
-                }
-                else
-                {
-                    debugLog("deferred upload")
-                    funDeferred?.invoke()
-                }
+            // image is not null, go to PhotoEditorFragment
+            CB_AppFunc.mainScope.launch {
+                CB_ViewModel.editorBitmap = imageBitmap
+                CB_PhotoEditorFragment.cameraListener = this@CB_CameraBaseFragment
+                beginActionToEdtior()
             }
         }
     }

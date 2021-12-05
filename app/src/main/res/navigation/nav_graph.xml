@@ -56,7 +56,7 @@
             app:destination="@id/CB_NewPostFragment">
 
             <argument android:name="strPostKey" app:nullable="false"
-                app:argType="string" android:defaultValue=""/>
+                app:argType="String" android:defaultValue=""/>
         </action>
         <action
             android:id="@+id/action_CB_MainFragment_to_CB_NewMailFragment"
@@ -123,7 +123,11 @@
         android:id="@+id/CB_NewPostFragment"
         android:name="com.coupleblog.fragment.CB_NewPostFragment"
         android:label="fragment_cb_new_post"
-        tools:layout="@layout/fragment_cb_new_post" />
+        tools:layout="@layout/fragment_cb_new_post" >
+        <action
+            android:id="@+id/action_CB_NewPostFragment_to_CB_PhotoEditorFragment"
+            app:destination="@id/CB_PhotoEditorFragment" />
+    </fragment>
 
     <fragment
         android:id="@+id/CB_NewMailFragment"
@@ -131,6 +135,10 @@
         android:label="fragment_cb_new_mail"
         tools:layout="@layout/fragment_cb_new_mail" >
 
+        <action
+            android:id="@+id/action_CB_NewMailFragment_to_CB_PhotoEditorFragment"
+            app:destination="@id/CB_PhotoEditorFragment">
+        </action>
     </fragment>
 
     <fragment

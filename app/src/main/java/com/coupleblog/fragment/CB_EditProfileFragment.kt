@@ -248,6 +248,11 @@ class CB_EditProfileFragment : CB_CameraBaseFragment("EditProfile", UPLOAD_TYPE.
         _binding = null
     }
 
+    override fun beginActionToEdtior()
+    {
+        beginAction(R.id.action_CB_EditProfileFragment_to_CB_PhotoEditorFragment, R.id.CB_EditProfileFragment)
+    }
+
     override fun backPressed()
     {
         findNavController().popBackStack()
