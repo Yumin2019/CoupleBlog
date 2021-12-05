@@ -213,7 +213,7 @@
                     app:layout_constraintStart_toStartOf="@+id/comment_text_input_layout"
                     app:layout_constraintTop_toBottomOf="@+id/comment_text_input_layout"
                     bind:layout_manager="@{layoutManager}"
-                    tools:listitem="@layout/comment_item" />
+                    tools:listitem="@layout/cb_comment_item" />
 
             </androidx.constraintlayout.widget.ConstraintLayout>
 

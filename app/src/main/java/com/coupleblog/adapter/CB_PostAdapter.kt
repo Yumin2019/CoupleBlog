@@ -33,7 +33,7 @@ class CB_PostAdapter(val fragment: CB_PostListFragment, options: FirebaseRecycle
     override fun onCreateViewHolder(viewGroup: ViewGroup, viewType: Int): ViewHolder =
         DataBindingUtil.inflate<PostItemBinding>(
             LayoutInflater.from(viewGroup.context),
-            R.layout.post_item, viewGroup, false
+            R.layout.cb_post_item, viewGroup, false
         ).let { ViewHolder(it) }
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int, model: CB_Post)

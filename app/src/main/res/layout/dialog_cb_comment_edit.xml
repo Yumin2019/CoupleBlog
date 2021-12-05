@@ -88,8 +88,8 @@
 
             <ImageView
                 android:id="@+id/reaction_image_view"
-                android:layout_width="@dimen/icon_image_size_small"
-                android:layout_height="@dimen/icon_image_size_small"
+                android:layout_width="@dimen/icon_image_size_25dp"
+                android:layout_height="@dimen/icon_image_size_25dp"
                 app:layout_constraintBottom_toBottomOf="@+id/comment_edit_text"
                 app:layout_constraintEnd_toEndOf="@+id/comment_cancel_button"
                 app:layout_constraintTop_toTopOf="parent"

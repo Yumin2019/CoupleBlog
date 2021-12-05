@@ -20,22 +20,15 @@ class CB_ImageDialog(context: Context) : Dialog(context)
     {
         val binding: ImageBinding = DataBindingUtil.inflate(LayoutInflater.from(context),
             R.layout.dialog_cb_image, null, false)
-        binding.viewModel = CB_ViewModel.Companion
         setContentView(binding.root)
-        setCanceledOnTouchOutside(true)
+        binding.viewModel = CB_ViewModel.Companion
 
         window!!.apply{
             setBackgroundDrawable(ColorDrawable(Color.TRANSPARENT))
-            setLayout(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT)
+            setLayout(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT)
         }
 
-        // margin 적용이 안 되어서 프로그래밍으로 처리
-        val layoutParams: FrameLayout.LayoutParams = binding.floatingLayout.layoutParams as FrameLayout.LayoutParams
-        layoutParams.apply {
-            marginEnd = CB_AppFunc.convertDpToPixel(8.0f).toInt()
-            marginStart = CB_AppFunc.convertDpToPixel(8.0f).toInt()
-        }
-
+        setCanceledOnTouchOutside(false)
         CB_SingleSystemMgr.registerDialog(CB_SingleSystemMgr.DIALOG_TYPE.IMAGE)
         show()
     }

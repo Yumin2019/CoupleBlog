@@ -121,7 +121,7 @@ class CB_CommentAdapter(private val fragment: CB_PostDetailFragment,
     override fun onCreateViewHolder(viewGroup: ViewGroup, viewType: Int): ViewHolder =
         DataBindingUtil.inflate<CommentItemBinding>(
             LayoutInflater.from(viewGroup.context),
-            R.layout.comment_item, viewGroup, false
+            R.layout.cb_comment_item, viewGroup, false
         ).let { ViewHolder(it) }
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) =

@@ -33,7 +33,7 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
             bind:layout_manager="@{layoutManager}"
-            tools:listitem="@layout/mail_item" />
+            tools:listitem="@layout/cb_mail_item" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 

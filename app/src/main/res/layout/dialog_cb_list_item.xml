@@ -15,8 +15,10 @@
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout
-        android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        tools:layout_width="match_parent"
+        tools:layout_height="match_parent">
 
         <androidx.constraintlayout.widget.ConstraintLayout
             android:id="@+id/floating_layout"
@@ -57,7 +59,7 @@
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/title_text_view"
                 bind:adapter="@{adapter}"
-                tools:listitem="@layout/list_dialog_item" />
+                tools:listitem="@layout/cb_list_dialog_item" />
 
         </androidx.constraintlayout.widget.ConstraintLayout>
 

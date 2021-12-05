@@ -10,8 +10,6 @@ import androidx.databinding.DataBindingUtil
 import androidx.recyclerview.widget.RecyclerView
 import com.coupleblog.singleton.CB_SingleSystemMgr
 import com.coupleblog.R
-import com.coupleblog.parent.CB_BaseActivity
-import com.coupleblog.singleton.CB_AppFunc
 
 /*** DialogItem처리를 하기 위한 data클래스
  *
@@ -39,7 +37,6 @@ class CB_ItemListDialog(context: Activity, strTitle: String,
     {
         val binding: ItemListBinding = DataBindingUtil.inflate(LayoutInflater.from(context),
             R.layout.dialog_cb_list_item, null, false)
-
         setContentView(binding.root)
         binding.apply {
             this.strTitle   = strTitle
@@ -49,7 +46,7 @@ class CB_ItemListDialog(context: Activity, strTitle: String,
 
         window!!.apply {
             setBackgroundDrawable(ColorDrawable(Color.TRANSPARENT))
-            setLayout(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT)
+            setLayout(ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT)
         }
 
         setCanceledOnTouchOutside(bCancelable)
@@ -89,7 +86,7 @@ class ItemListAdapter(private val dialog: Dialog, private val itemList: ArrayLis
     override fun onCreateViewHolder(viewGroup: ViewGroup, viewType: Int): ViewHolder =
         DataBindingUtil.inflate<DialogItemBinding>(
             LayoutInflater.from(viewGroup.context),
-            R.layout.list_dialog_item, viewGroup, false
+            R.layout.cb_list_dialog_item, viewGroup, false
         ).let { ViewHolder(it) }
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) =

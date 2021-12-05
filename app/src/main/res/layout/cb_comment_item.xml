@@ -82,8 +82,8 @@
 
         <ImageView
             android:id="@+id/reaction_image_view"
-            android:layout_width="@dimen/icon_image_size_small"
-            android:layout_height="@dimen/icon_image_size_small"
+            android:layout_width="@dimen/icon_image_size_25dp"
+            android:layout_height="@dimen/icon_image_size_25dp"
             android:layout_marginEnd="4dp"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toStartOf="@+id/pencil_image_view"

@@ -29,7 +29,7 @@
             bind:adapter="@{adapter}"
             android:overScrollMode="never"
             bind:layout_manager="@{layoutManager}"
-            tools:listitem="@layout/post_item"
+            tools:listitem="@layout/cb_post_item"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"

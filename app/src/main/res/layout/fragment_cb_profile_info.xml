@@ -56,10 +56,10 @@
                     android:layout_marginStart="@dimen/margin_16dp"
                     android:paddingStart="@dimen/margin_16dp"
                     android:paddingEnd="@dimen/normal_margin"
-                    bind:profile_user_name="@{viewModel.profileUser}"
                     app:layout_constraintBottom_toTopOf="@+id/user_email_text_view"
                     app:layout_constraintStart_toEndOf="@+id/user_profile_image"
                     app:layout_constraintTop_toTopOf="@+id/user_profile_image"
+                    bind:profile_user_name="@{viewModel.profileUser}"
                     tools:text="@string/str_profile_name_exam" />
 
                 <TextView
@@ -110,15 +110,15 @@
                 <com.google.android.material.imageview.ShapeableImageView
                     android:id="@+id/user_profile_image"
                     style="@style/circle_shape_image_view"
-                    bind:image_uid="@{viewModel.profileUserUid}"
-                    android:onClick="@{()->fragment.imageButton(viewModel.profileUser.strImgPath)}"
                     android:layout_width="@dimen/profile_image_size"
                     android:layout_height="@dimen/profile_image_size"
                     android:layout_marginStart="@dimen/margin_16dp"
                     android:layout_marginTop="@dimen/margin_24dp"
+                    android:onClick="@{()->fragment.imageButton(viewModel.profileUser.strImgPath)}"
                     android:src="@drawable/haha_icon"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toTopOf="parent"
+                    bind:image_uid="@{viewModel.profileUserUid}"
                     tools:src="@drawable/haha_icon" />
 
                 <TextView
@@ -126,12 +126,12 @@
                     style="@style/post_title_text_view"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
-                    android:layout_marginTop="@dimen/margin_24dp"
                     android:paddingStart="@dimen/margin_16dp"
                     android:paddingEnd="@dimen/normal_margin"
                     android:textAlignment="viewStart"
                     app:layout_constraintStart_toStartOf="@+id/user_name_text_view"
-                    app:layout_constraintTop_toBottomOf="@+id/user_profile_image"
+                    app:layout_constraintTop_toTopOf="@+id/couple_user_profile_image"
+                    app:layout_constraintVertical_chainStyle="packed"
                     bind:couple_with="@{viewModel.profileCoupleUser}"
                     bind:visibility="@{viewModel.hasCouple}"
                     tools:text="@string/str_couple_with_exam"
@@ -139,17 +139,17 @@
 
                 <com.google.android.material.imageview.ShapeableImageView
                     android:id="@+id/couple_user_profile_image"
-                    android:layout_width="@dimen/profile_image_size_small"
-                    android:layout_height="@dimen/profile_image_size_small"
-                    bind:image_uid="@{viewModel.profileUser.strCoupleUid}"
-                    android:src="@drawable/haha_icon"
                     style="@style/circle_shape_image_view"
-                    app:layout_constraintBottom_toBottomOf="@+id/couple_user_email_text_view"
+                    android:layout_width="@dimen/profile_image_size"
+                    android:layout_height="@dimen/profile_image_size"
+                    android:layout_marginTop="@dimen/margin_24dp"
+                    android:onClick="@{()->fragment.imageButton(viewModel.profileCoupleUser.strImgPath)}"
+                    android:src="@drawable/haha_icon"
                     app:layout_constraintEnd_toEndOf="@+id/user_profile_image"
                     app:layout_constraintStart_toStartOf="@+id/user_profile_image"
-                    app:layout_constraintTop_toTopOf="@+id/couple_with_text_view"
+                    app:layout_constraintTop_toBottomOf="@+id/user_profile_image"
+                    bind:image_uid="@{viewModel.profileUser.strCoupleUid}"
                     bind:visibility="@{viewModel.hasCouple}"
-                    android:onClick="@{()->fragment.imageButton(viewModel.profileCoupleUser.strImgPath)}"
                     tools:src="@drawable/heart_icon"
                     tools:visibility="visible" />
 
@@ -308,12 +308,12 @@
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_marginEnd="@dimen/margin_16dp"
-                    bind:default_text="@{viewModel.profileUser.strIntroduction}"
                     android:textAlignment="viewStart"
                     android:textColor="@color/grey"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="@+id/introduction_text_view"
                     app:layout_constraintTop_toBottomOf="@+id/introduction_text_view"
+                    bind:default_text="@{viewModel.profileUser.strIntroduction}"
                     tools:text="@string/str_introduction" />
 
                 <View
@@ -343,12 +343,12 @@
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_marginEnd="@dimen/margin_16dp"
-                    bind:default_text="@{viewModel.profileUser.strEducation}"
                     android:textAlignment="viewStart"
                     android:textColor="@color/grey"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="@+id/education_text_view"
                     app:layout_constraintTop_toBottomOf="@+id/education_text_view"
+                    bind:default_text="@{viewModel.profileUser.strEducation}"
                     tools:text="@string/str_education" />
 
                 <TextView
@@ -370,12 +370,12 @@
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_marginEnd="@dimen/margin_16dp"
-                    bind:default_text="@{viewModel.profileUser.strCareer}"
                     android:textAlignment="viewStart"
                     android:textColor="@color/grey"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="@+id/career_text_view"
                     app:layout_constraintTop_toBottomOf="@+id/career_text_view"
+                    bind:default_text="@{viewModel.profileUser.strCareer}"
                     tools:text="@string/str_career" />
 
                 <TextView
@@ -396,12 +396,12 @@
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_marginEnd="@dimen/margin_16dp"
-                    bind:default_text="@{viewModel.profileUser.strPhoneNumber}"
                     android:textAlignment="viewStart"
                     android:textColor="@color/grey"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="@+id/phone_number_text_view"
                     app:layout_constraintTop_toBottomOf="@+id/phone_number_text_view"
+                    bind:default_text="@{viewModel.profileUser.strPhoneNumber}"
                     tools:text="@string/str_phone_number" />
 
                 <View
@@ -430,12 +430,12 @@
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_marginEnd="@dimen/margin_16dp"
-                    bind:default_text="@{viewModel.profileUser.strFavorites}"
                     android:textAlignment="viewStart"
                     android:textColor="@color/grey"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="@+id/favorites_text_view"
                     app:layout_constraintTop_toBottomOf="@+id/favorites_text_view"
+                    bind:default_text="@{viewModel.profileUser.strFavorites}"
                     tools:text="@string/str_favorites" />
 
                 <TextView
@@ -457,7 +457,6 @@
                     android:layout_height="wrap_content"
                     android:layout_marginEnd="@dimen/margin_16dp"
                     android:layout_marginBottom="@dimen/margin_24dp"
-                    bind:default_text="@{viewModel.profileUser.strDislikes}"
                     android:textAlignment="viewStart"
                     android:textColor="@color/grey"
                     app:layout_constraintBottom_toBottomOf="parent"
@@ -465,6 +464,7 @@
                     app:layout_constraintStart_toStartOf="@+id/dislikes_text_view"
                     app:layout_constraintTop_toBottomOf="@+id/dislikes_text_view"
                     app:layout_constraintVertical_bias="0.0"
+                    bind:default_text="@{viewModel.profileUser.strDislikes}"
                     tools:text="@string/str_dislikes" />
 
             </androidx.constraintlayout.widget.ConstraintLayout>

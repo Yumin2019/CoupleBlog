@@ -129,7 +129,7 @@ class CB_EmailAdapter(private val fragment: CB_MailBoxFragment,
     override fun onCreateViewHolder(viewGroup: ViewGroup, viewType: Int): ViewHolder =
         DataBindingUtil.inflate<MailItemBinding>(
             LayoutInflater.from(viewGroup.context),
-            R.layout.mail_item, viewGroup, false
+            R.layout.cb_mail_item, viewGroup, false
         ).let { ViewHolder(it) }
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) =
