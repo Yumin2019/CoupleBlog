@@ -8,10 +8,10 @@ plugins {
 android {
     signingConfigs {
         config {
-            storeFile file('C:\\Users\\lmj33\\CoupleBlog\\app\\keystore.jks')
+            storeFile file('keystore.jks')
             keyAlias 'coupleblogKey'
-            storePassword 'aaa'
-            keyPassword 'aaa'
+            storePassword 'coupleblog@123'
+            keyPassword 'coupleblog@123'
         }
     }
     compileSdk 30
@@ -20,8 +20,8 @@ android {
         applicationId "com.coupleblog"
         minSdk 21
         targetSdk 30
-        versionCode 102
-        versionName "1.0.2"
+        versionCode 103
+        versionName "1.0.3"
 
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
     }
@@ -37,6 +37,12 @@ android {
             minifyEnabled false
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
             signingConfig signingConfigs.config
+        }
+
+        android.applicationVariants.all { variant ->
+            variant.outputs.all { output ->
+                outputFileName = "${rootProject.name}_${variant.buildType.name}_${versionName}.apk"
+            }
         }
     }
 
