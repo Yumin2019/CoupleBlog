@@ -1,5 +1,6 @@
 package com.coupleblog.fragment
 
+import android.content.Context
 import android.graphics.Bitmap
 import android.graphics.Typeface
 import android.os.Bundle
@@ -84,16 +85,10 @@ class CB_PhotoEditorFragment: CB_BaseFragment("PhotoEditorFragment"),
     override fun onViewCreated(view: View, savedInstanceState: Bundle?)
     {
         super.onViewCreated(view, savedInstanceState)
+        requireActivity().window.addFlags(WindowManager.LayoutParams.FLAG_LAYOUT_NO_LIMITS)
 
         // bottom text view
         CB_ViewModel.strCurTool.postValue(getString(R.string.app_name))
-
-        // FULL SCREEN + NO ACTION BAR
-        requireActivity().apply {
-            requestWindowFeature(Window.FEATURE_NO_TITLE)
-            window.addFlags(WindowManager.LayoutParams.FLAG_LAYOUT_NO_LIMITS)
-        }
-
         mPropertiesBSFragment = PropertiesBSFragment()
         mEmojiBSFragment = EmojiBSFragment()
         mStickerBSFragment = StickerBSFragment()
@@ -133,12 +128,13 @@ class CB_PhotoEditorFragment: CB_BaseFragment("PhotoEditorFragment"),
     override fun onDetach()
     {
         super.onDetach()
+        requireActivity().window.clearFlags(WindowManager.LayoutParams.FLAG_LAYOUT_NO_LIMITS)
+    }
 
-        // DISABLE FULL SCREEN + ACTION BAR
-        requireActivity().apply {
-            requestWindowFeature(Window.FEATURE_ACTION_BAR)
-            window.clearFlags(WindowManager.LayoutParams.FLAG_LAYOUT_NO_LIMITS)
-        }
+    override fun onDestroy()
+    {
+        super.onDestroy()
+        _binding = null
     }
 
     fun undo() { mPhotoEditor.undo() }
@@ -152,12 +148,6 @@ class CB_PhotoEditorFragment: CB_BaseFragment("PhotoEditorFragment"),
         CB_AppFunc.confirmDialog(requireActivity(), R.string.str_warning,
             R.string.str_clear_all_views_msg, R.drawable.warning_icon, true, R.string.str_discard,
         yesListener = {  _, _ -> mPhotoEditor.clearAllViews() }, R.string.str_cancel, null)
-    }
-
-    override fun onDestroy()
-    {
-        super.onDestroy()
-        _binding = null
     }
 
     override fun backPressed()

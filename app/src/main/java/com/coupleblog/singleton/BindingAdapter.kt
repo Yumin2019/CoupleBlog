@@ -254,13 +254,6 @@ fun setGenderImg(imageView: ImageView, userData: CB_User)
         imageView.setImageResource(iRes)
 }
 
-@BindingAdapter("bind:couple_with")
-fun setCoupleWith(textView: TextView, userData: CB_User)
-{
-    val strText = CB_AppFunc.getString(R.string.str_couple_with) + " ${userData.strUserName}"
-    textView.text = strText
-}
-
 @BindingAdapter("bind:user_presence")
 fun setUserPresence(textView: TextView, userData: CB_User)
 {

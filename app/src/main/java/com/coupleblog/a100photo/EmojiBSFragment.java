@@ -3,12 +3,16 @@ package com.coupleblog.a100photo;
 import android.annotation.SuppressLint;
 import android.app.Dialog;
 import android.content.Context;
+import android.graphics.Color;
+import android.graphics.drawable.ColorDrawable;
+import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import androidx.coordinatorlayout.widget.CoordinatorLayout;
 import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
@@ -55,10 +59,11 @@ public class EmojiBSFragment extends BottomSheetDialogFragment {
         CoordinatorLayout.LayoutParams params = (CoordinatorLayout.LayoutParams) ((View) contentView.getParent()).getLayoutParams();
         CoordinatorLayout.Behavior behavior = params.getBehavior();
 
-        if (behavior != null && behavior instanceof BottomSheetBehavior) {
+        if (behavior instanceof BottomSheetBehavior) {
             ((BottomSheetBehavior) behavior).addBottomSheetCallback(mBottomSheetBehaviorCallback);
         }
-        ((View) contentView.getParent()).setBackgroundColor(getResources().getColor(android.R.color.transparent));
+
+        //((View) contentView.getParent()).setBackgroundColor(Color.TRANSPARENT);
         RecyclerView rvEmoji = contentView.findViewById(R.id.rvEmoji);
 
         GridLayoutManager gridLayoutManager = new GridLayoutManager(getActivity(), 5);
@@ -66,7 +71,6 @@ public class EmojiBSFragment extends BottomSheetDialogFragment {
         EmojiAdapter emojiAdapter = new EmojiAdapter();
         rvEmoji.setAdapter(emojiAdapter);
     }
-
     public void setEmojiListener(EmojiListener emojiListener) {
         mEmojiListener = emojiListener;
     }

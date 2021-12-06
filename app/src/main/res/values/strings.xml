@@ -667,7 +667,6 @@ Couple blog 은(는) 정보주체의 이용정보를 저장하고 수시로 불�
     <string name="str_profile_email_exam">yumingames@gmail.com</string>
     <string name="str_user_presence_exam">◆ 1h 30m ago</string>
     <string name="str_region_exam">9:00 AM, Korea</string>
-    <string name="str_couple_with_exam">Couple with Jihae</string>
     <string name="str_date_of_birth_exam">2002. 12. 03</string>
     <string name="str_joined_n_days_ago_exam">Joined Couple blog 3 days ago</string>
 
@@ -686,7 +685,6 @@ Couple blog 은(는) 정보주체의 이용정보를 저장하고 수시로 불�
     <string name="str_m_ago">m ago</string>
     <string name="str_ago">ago</string>
 
-    <string name="str_couple_with">Couple with</string>
     <string name="str_introduction">Introduction</string>
     <string name="str_region">Region</string>
     <string name="str_education">Education</string>

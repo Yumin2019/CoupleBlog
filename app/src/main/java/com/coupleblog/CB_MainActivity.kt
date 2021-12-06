@@ -3,8 +3,10 @@ package com.coupleblog
 import android.content.BroadcastReceiver
 import android.content.Context
 import android.content.Intent
+import android.os.Build
 import android.os.Bundle
 import android.os.IBinder
+import android.provider.Settings
 import android.util.Log
 import androidx.core.os.bundleOf
 import androidx.core.view.isGone
@@ -22,6 +24,10 @@ import com.coupleblog.singleton.CB_ViewModel
 import com.coupleblog.storage.CB_DownloadService
 import com.coupleblog.storage.CB_UploadService
 import com.google.android.material.snackbar.Snackbar
+import android.net.wifi.WifiManager
+
+
+
 
 class CB_MainActivity : CB_BaseActivity("MainActivity", CB_SingleSystemMgr.ACTIVITY_TYPE.MAIN)
 {

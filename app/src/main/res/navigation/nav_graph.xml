@@ -56,7 +56,7 @@
             app:destination="@id/CB_NewPostFragment">
 
             <argument android:name="strPostKey" app:nullable="false"
-                app:argType="String" android:defaultValue=""/>
+                app:argType="string" android:defaultValue=""/>
         </action>
         <action
             android:id="@+id/action_CB_MainFragment_to_CB_NewMailFragment"

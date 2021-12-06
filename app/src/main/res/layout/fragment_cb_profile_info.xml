@@ -93,6 +93,21 @@
                     tools:visibility="visible" />
 
                 <TextView
+                    android:id="@+id/couple_user_presence_text_view"
+                    style="@style/normal_text_style"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:paddingStart="@dimen/margin_16dp"
+                    android:paddingEnd="@dimen/margin_16dp"
+                    android:textAlignment="viewStart"
+                    android:textColor="@color/grey"
+                    app:layout_constraintBottom_toBottomOf="@+id/couple_user_profile_image"
+                    app:layout_constraintStart_toStartOf="@+id/couple_with_text_view"
+                    bind:user_presence="@{viewModel.profileCoupleUser}"
+                    tools:text="@string/str_online"
+                    tools:textColor="@color/green" />
+
+                <TextView
                     android:id="@+id/user_presence_text_view"
                     style="@style/normal_text_style"
                     android:layout_width="0dp"
@@ -132,9 +147,9 @@
                     app:layout_constraintStart_toStartOf="@+id/user_name_text_view"
                     app:layout_constraintTop_toTopOf="@+id/couple_user_profile_image"
                     app:layout_constraintVertical_chainStyle="packed"
-                    bind:couple_with="@{viewModel.profileCoupleUser}"
+                    android:text="@{viewModel.profileCoupleUser.strUserName}"
                     bind:visibility="@{viewModel.hasCouple}"
-                    tools:text="@string/str_couple_with_exam"
+                    tools:text="@string/str_profile_name_exam"
                     tools:visibility="visible" />
 
                 <com.google.android.material.imageview.ShapeableImageView

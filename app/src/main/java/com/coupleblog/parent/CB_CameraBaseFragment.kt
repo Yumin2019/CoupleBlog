@@ -14,6 +14,7 @@ import androidx.activity.result.contract.ActivityResultContracts
 import androidx.core.content.FileProvider
 import androidx.navigation.fragment.findNavController
 import com.coupleblog.R
+import com.coupleblog.a100photo.EditImageActivity
 import com.coupleblog.fragment.CB_PhotoEditorFragment
 import com.coupleblog.singleton.CB_AppFunc
 import com.coupleblog.singleton.CB_SingleSystemMgr
@@ -135,7 +136,8 @@ abstract class CB_CameraBaseFragment(strTag: String,
             CB_AppFunc.mainScope.launch {
                 CB_ViewModel.editorBitmap = imageBitmap
                 CB_PhotoEditorFragment.cameraListener = this@CB_CameraBaseFragment
-                beginActionToEdtior()
+                startActivity(Intent(requireContext(), EditImageActivity::class.java))
+                /*beginActionToEdtior()*/
             }
         }
     }
