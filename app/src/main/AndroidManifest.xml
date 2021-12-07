@@ -25,6 +25,10 @@
                 android:resource="@xml/file_paths" />
         </provider>
 
+        <activity android:name=".CB_PhotoEditorActivity"
+            android:screenOrientation="portrait"
+            />
+
         <activity android:name=".a100photo.EditImageActivity"
             android:screenOrientation="portrait"
             />

@@ -15,7 +15,7 @@ import com.coupleblog.dialog.DialogItem
 import com.coupleblog.model.CB_Couple
 import com.coupleblog.model.CB_Mail
 import com.coupleblog.model.CB_User
-import com.coupleblog.parent.CB_BaseFragment
+import com.coupleblog.base.CB_BaseFragment
 import com.coupleblog.singleton.CB_AppFunc
 import com.coupleblog.singleton.CB_SingleSystemMgr
 import com.coupleblog.singleton.CB_ViewModel

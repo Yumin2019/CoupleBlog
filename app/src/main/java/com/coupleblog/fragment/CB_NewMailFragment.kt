@@ -11,7 +11,7 @@ import com.coupleblog.dialog.CB_LoadingDialog
 import com.coupleblog.dialog.DialogItem
 import com.coupleblog.model.CB_Mail
 import com.coupleblog.model.MAIL_TYPE
-import com.coupleblog.parent.CB_CameraBaseFragment
+import com.coupleblog.base.CB_CameraBaseFragment
 import com.coupleblog.singleton.CB_AppFunc
 import com.coupleblog.singleton.CB_SingleSystemMgr
 import com.coupleblog.singleton.CB_ViewModel

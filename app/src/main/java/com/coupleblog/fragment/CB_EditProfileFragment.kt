@@ -22,8 +22,8 @@ import androidx.navigation.fragment.findNavController
 import com.coupleblog.R
 import com.coupleblog.dialog.*
 import com.coupleblog.model.GENDER
-import com.coupleblog.parent.CB_BaseFragment
-import com.coupleblog.parent.CB_CameraBaseFragment
+import com.coupleblog.base.CB_BaseFragment
+import com.coupleblog.base.CB_CameraBaseFragment
 import com.coupleblog.singleton.CB_AppFunc
 import com.coupleblog.singleton.CB_SingleSystemMgr
 import com.coupleblog.singleton.CB_ViewModel

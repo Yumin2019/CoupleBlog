@@ -9,6 +9,8 @@ import android.content.pm.PackageManager
 import android.content.res.ColorStateList
 import android.database.Cursor
 import android.graphics.*
+import android.graphics.drawable.BitmapDrawable
+import android.graphics.drawable.Drawable
 import android.media.ExifInterface
 import android.net.Uri
 import android.os.Build
@@ -16,6 +18,7 @@ import android.provider.MediaStore
 import android.text.Editable
 import android.text.Editable.Factory.getInstance
 import android.text.format.DateFormat
+import android.util.Base64.*
 import android.util.DisplayMetrics
 import android.util.Log
 import android.view.View
@@ -25,6 +28,7 @@ import android.view.inputmethod.InputMethodManager
 import android.widget.EditText
 import android.widget.ImageView
 import androidx.annotation.RequiresApi
+import androidx.appcompat.content.res.AppCompatResources
 import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
 import com.bumptech.glide.Glide
@@ -33,7 +37,7 @@ import com.bumptech.glide.annotation.GlideModule
 import com.coupleblog.MainActivityBinding
 import com.coupleblog.R
 import com.coupleblog.model.CB_User
-import com.coupleblog.parent.CB_BaseActivity
+import com.coupleblog.base.CB_BaseActivity
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import com.google.android.material.snackbar.Snackbar
 import com.google.firebase.auth.FirebaseAuth
@@ -51,6 +55,7 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.tasks.await
+import java.io.ByteArrayOutputStream
 import java.io.File
 import java.io.FileOutputStream
 import java.lang.Exception
@@ -156,6 +161,21 @@ class CB_AppFunc
         fun getColorValue(colorResId: Int): Int
         {
             return ContextCompat.getColor(application, colorResId)
+        }
+
+        fun drawableToBitmap(drawableId: Int): Bitmap
+        {
+            return BitmapFactory.decodeResource(application.resources, drawableId)
+        }
+
+        fun bitmapToDrawable(bitmap: Bitmap): BitmapDrawable
+        {
+            return BitmapDrawable(application.resources, bitmap)
+        }
+
+        fun getDrawable(drawableId: Int): Drawable
+        {
+            return AppCompatResources.getDrawable(application, drawableId)!!
         }
 
         val emailRegex = "^[0-9a-zA-Z]([-_.]?[0-9a-zA-Z])*@[0-9a-zA-Z]([-_.]?[0-9a-zA-Z])*.[a-zA-Z]{2,3}$".toRegex()

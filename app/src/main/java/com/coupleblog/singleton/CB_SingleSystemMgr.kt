@@ -10,7 +10,7 @@ class CB_SingleSystemMgr
     enum class ACTIVITY_TYPE
     {
         MAIN,
-        REGISTER,
+        PHOTO_EDTIOR,
         ACTIVITY_TYPE_END
     }
 

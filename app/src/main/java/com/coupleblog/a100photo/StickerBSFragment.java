@@ -36,6 +36,13 @@ public class StickerBSFragment extends BottomSheetDialogFragment {
         void onStickerClick(Bitmap bitmap);
     }
 
+    @Override
+    public void onCreate(@Nullable Bundle savedInstanceState)
+    {
+        super.onCreate(savedInstanceState);
+        setStyle(BottomSheetDialogFragment.STYLE_NORMAL, R.style.transparent_bottom_sheet_theme);
+    }
+
     private BottomSheetBehavior.BottomSheetCallback mBottomSheetBehaviorCallback = new BottomSheetBehavior.BottomSheetCallback() {
 
         @Override

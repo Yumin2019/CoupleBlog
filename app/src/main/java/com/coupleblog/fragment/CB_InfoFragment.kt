@@ -6,7 +6,7 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.navigation.fragment.findNavController
 import com.coupleblog.R
-import com.coupleblog.parent.CB_BaseFragment
+import com.coupleblog.base.CB_BaseFragment
 
 
 class CB_InfoFragment : CB_BaseFragment("InfoFragment") {

@@ -3,6 +3,7 @@ package com.coupleblog.a100photo;
 import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.graphics.Bitmap;
+import android.graphics.drawable.Drawable;
 import android.net.Uri;
 import android.os.Bundle;
 import android.provider.MediaStore;
@@ -31,6 +32,8 @@ import com.coupleblog.a100photo.filters.FilterListener;
 import com.coupleblog.a100photo.filters.FilterViewAdapter;
 import com.coupleblog.a100photo.tools.EditingToolsAdapter;
 import com.coupleblog.a100photo.tools.ToolType;
+import com.coupleblog.singleton.CB_AppFunc;
+import com.coupleblog.singleton.CB_ViewModel;
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment;
 
 import java.io.IOException;
@@ -118,8 +121,14 @@ public class EditImageActivity extends AppCompatActivity implements OnPhotoEdito
 
         mPhotoEditor.setOnPhotoEditorListener(this);
 
+        mPhotoEditor.clearAllViews();
+        Drawable image = CB_AppFunc.Companion.bitmapToDrawable(CB_ViewModel.Companion.getEditorBitmap());
         //Set Image Dynamically
-        mPhotoEditorView.getSource().setImageResource(R.drawable.paris_tower);
+       // mPhotoEditorView.getSource().setImage();
+
+        /*mPhotoEditorView.getSource().setImageDrawable(image);*/ // doesn't work
+        mPhotoEditorView.getSource().setImageBitmap(CB_ViewModel.Companion.getEditorBitmap()); // doesn't work
+        // mPhotoEditorView.getSource().setImageResource(R.drawable.paris_tower); // works well
     }
     //
 

@@ -9,7 +9,7 @@ import androidx.viewpager2.widget.ViewPager2
 import com.coupleblog.singleton.CB_AppFunc
 import com.coupleblog.fragment.listfragments.CB_CouplePostsFragment
 import com.coupleblog.fragment.listfragments.CB_MyPostsFragment
-import com.coupleblog.parent.CB_BaseFragment
+import com.coupleblog.base.CB_BaseFragment
 import com.coupleblog.singleton.CB_ViewModel
 import com.google.android.material.tabs.TabLayoutMediator
 import com.coupleblog.fragment.PAGE_TYPE.*

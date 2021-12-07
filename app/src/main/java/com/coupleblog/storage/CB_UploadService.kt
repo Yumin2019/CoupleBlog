@@ -9,7 +9,7 @@ import com.coupleblog.CB_MainActivity
 import com.coupleblog.R
 import com.coupleblog.fragment.CB_NewMailFragment
 import com.coupleblog.fragment.CB_NewPostFragment
-import com.coupleblog.parent.CB_BaseTaskService
+import com.coupleblog.base.CB_BaseTaskService
 import com.coupleblog.singleton.CB_AppFunc
 import com.google.firebase.storage.StorageReference
 import com.google.firebase.storage.ktx.component1

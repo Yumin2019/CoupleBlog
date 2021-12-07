@@ -8,7 +8,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.coupleblog.R
 import com.coupleblog.fragment.PostItemBinding
 import com.coupleblog.model.CB_Post
-import com.coupleblog.parent.CB_PostListFragment
+import com.coupleblog.base.CB_PostListFragment
 import com.firebase.ui.database.FirebaseRecyclerAdapter
 import com.firebase.ui.database.FirebaseRecyclerOptions
 import com.google.firebase.database.DatabaseError

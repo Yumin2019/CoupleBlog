@@ -17,7 +17,7 @@ import androidx.navigation.findNavController
 import androidx.navigation.fragment.findNavController
 import com.coupleblog.fragment.CB_PostDetailFragment
 import com.coupleblog.fragment.PAGE_TYPE
-import com.coupleblog.parent.CB_BaseActivity
+import com.coupleblog.base.CB_BaseActivity
 import com.coupleblog.singleton.CB_AppFunc
 import com.coupleblog.singleton.CB_SingleSystemMgr
 import com.coupleblog.singleton.CB_ViewModel

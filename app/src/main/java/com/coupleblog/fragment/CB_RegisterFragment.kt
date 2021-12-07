@@ -12,7 +12,7 @@ import com.coupleblog.R
 import com.coupleblog.dialog.CB_LoadingDialog
 import com.coupleblog.model.CB_Couple
 import com.coupleblog.model.CB_User
-import com.coupleblog.parent.CB_BaseFragment
+import com.coupleblog.base.CB_BaseFragment
 import com.google.firebase.FirebaseException
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch

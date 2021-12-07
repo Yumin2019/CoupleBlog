@@ -1,4 +1,4 @@
-package com.coupleblog.parent
+package com.coupleblog.base
 
 import android.annotation.SuppressLint
 import android.os.Bundle

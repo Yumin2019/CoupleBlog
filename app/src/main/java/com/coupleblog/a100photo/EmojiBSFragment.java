@@ -50,6 +50,13 @@ public class EmojiBSFragment extends BottomSheetDialogFragment {
         }
     };
 
+    @Override
+    public void onCreate(@Nullable Bundle savedInstanceState)
+    {
+        super.onCreate(savedInstanceState);
+        setStyle(BottomSheetDialogFragment.STYLE_NORMAL, R.style.transparent_bottom_sheet_theme);
+    }
+
     @SuppressLint("RestrictedApi")
     @Override
     public void setupDialog(Dialog dialog, int style) {
@@ -63,9 +70,7 @@ public class EmojiBSFragment extends BottomSheetDialogFragment {
             ((BottomSheetBehavior) behavior).addBottomSheetCallback(mBottomSheetBehaviorCallback);
         }
 
-        //((View) contentView.getParent()).setBackgroundColor(Color.TRANSPARENT);
         RecyclerView rvEmoji = contentView.findViewById(R.id.rvEmoji);
-
         GridLayoutManager gridLayoutManager = new GridLayoutManager(getActivity(), 5);
         rvEmoji.setLayoutManager(gridLayoutManager);
         EmojiAdapter emojiAdapter = new EmojiAdapter();

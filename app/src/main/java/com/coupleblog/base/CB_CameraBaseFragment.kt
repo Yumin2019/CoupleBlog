@@ -1,4 +1,4 @@
-package com.coupleblog.parent
+package com.coupleblog.base
 
 import android.content.Intent
 import android.graphics.Bitmap
@@ -13,9 +13,9 @@ import androidx.activity.result.ActivityResultLauncher
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.core.content.FileProvider
 import androidx.navigation.fragment.findNavController
+import com.coupleblog.CB_PhotoEditorActivity
 import com.coupleblog.R
 import com.coupleblog.a100photo.EditImageActivity
-import com.coupleblog.fragment.CB_PhotoEditorFragment
 import com.coupleblog.singleton.CB_AppFunc
 import com.coupleblog.singleton.CB_SingleSystemMgr
 import com.coupleblog.singleton.CB_ViewModel
@@ -31,7 +31,7 @@ import java.lang.Exception
 abstract class CB_CameraBaseFragment(strTag: String,
                                      protected val uploadType: UPLOAD_TYPE,
                                      protected val bDeferred: Boolean = false)
-    : CB_BaseFragment(strTag), CB_PhotoEditorFragment.CameraListener
+    : CB_BaseFragment(strTag), CB_PhotoEditorActivity.CameraListener
 {
     // registerForActivityResult
     protected lateinit var cameraLauncher: ActivityResultLauncher<Uri>
@@ -135,9 +135,8 @@ abstract class CB_CameraBaseFragment(strTag: String,
             // image is not null, go to PhotoEditorFragment
             CB_AppFunc.mainScope.launch {
                 CB_ViewModel.editorBitmap = imageBitmap
-                CB_PhotoEditorFragment.cameraListener = this@CB_CameraBaseFragment
+                CB_PhotoEditorActivity.cameraListener = this@CB_CameraBaseFragment
                 startActivity(Intent(requireContext(), EditImageActivity::class.java))
-                /*beginActionToEdtior()*/
             }
         }
     }

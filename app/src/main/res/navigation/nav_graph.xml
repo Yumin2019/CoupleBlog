@@ -9,7 +9,7 @@
         android:id="@+id/CB_PhotoEditorFragment"
         android:name="com.coupleblog.fragment.CB_PhotoEditorFragment"
         android:label="fragment_cb_photo_editor"
-        tools:layout="@layout/fragment_cb_photo_editor"/>
+        tools:layout="@layout/activity_photo_editor"/>
 
     <fragment
         android:id="@+id/CB_PermissionFragment"

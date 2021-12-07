@@ -1,6 +1,5 @@
-package com.coupleblog.fragment
+package com.coupleblog
 
-import android.content.Context
 import android.graphics.Bitmap
 import android.graphics.Typeface
 import android.os.Bundle
@@ -9,17 +8,16 @@ import android.view.animation.AnticipateOvershootInterpolator
 import androidx.appcompat.app.AppCompatActivity
 import androidx.constraintlayout.widget.ConstraintSet
 import androidx.core.content.res.ResourcesCompat
-import androidx.navigation.fragment.findNavController
+import androidx.databinding.DataBindingUtil
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.transition.ChangeBounds
 import androidx.transition.TransitionManager
-import com.coupleblog.R
 import com.coupleblog.a100photo.*
 import com.coupleblog.a100photo.filters.FilterListener
 import com.coupleblog.a100photo.filters.FilterViewAdapter
 import com.coupleblog.a100photo.tools.EditingToolsAdapter
 import com.coupleblog.a100photo.tools.ToolType
-import com.coupleblog.parent.CB_BaseFragment
+import com.coupleblog.base.CB_BaseActivity
 import com.coupleblog.singleton.CB_AppFunc
 import com.coupleblog.singleton.CB_SingleSystemMgr
 import com.coupleblog.singleton.CB_ViewModel
@@ -29,7 +27,7 @@ import ja.burhanrashid52.photoeditor.shape.ShapeBuilder
 import ja.burhanrashid52.photoeditor.shape.ShapeType
 import java.lang.Exception
 
-class CB_PhotoEditorFragment: CB_BaseFragment("PhotoEditorFragment"),
+class CB_PhotoEditorActivity: CB_BaseActivity("CB_PhotoEditorActivity", CB_SingleSystemMgr.ACTIVITY_TYPE.PHOTO_EDTIOR),
      OnPhotoEditorListener,
      PropertiesBSFragment.Properties,
      ShapeBSFragment.Properties,
@@ -56,8 +54,7 @@ class CB_PhotoEditorFragment: CB_BaseFragment("PhotoEditorFragment"),
     private var mIsFilterVisible = false
 
     // PhotoEditor End
-    private var _binding            : PhotoEditorBinding? = null
-    private val binding get() = _binding!!
+    private lateinit var binding: PhotoEditorBinding
 
     interface CameraListener
     {
@@ -65,27 +62,22 @@ class CB_PhotoEditorFragment: CB_BaseFragment("PhotoEditorFragment"),
         fun onCancel()
     }
 
-    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View
+    override fun onCreate(savedInstanceState: Bundle?)
     {
-        _binding = PhotoEditorBinding.inflate(inflater, container, false)
+        super.onCreate(savedInstanceState)
+        binding   = DataBindingUtil.setContentView(this, R.layout.activity_photo_editor)
         binding.apply {
-            lifecycleOwner  = viewLifecycleOwner
-            fragment = this@CB_PhotoEditorFragment
+            activity = this@CB_PhotoEditorActivity
             viewModel = CB_ViewModel.Companion
 
-            llmTools = LinearLayoutManager(requireContext(), LinearLayoutManager.HORIZONTAL, false)
-            toolsAdapter = EditingToolsAdapter(this@CB_PhotoEditorFragment)
+            llmTools = LinearLayoutManager(this@CB_PhotoEditorActivity, LinearLayoutManager.HORIZONTAL, false)
+            toolsAdapter = EditingToolsAdapter(this@CB_PhotoEditorActivity)
 
-            llmFilters = LinearLayoutManager(requireContext(), LinearLayoutManager.HORIZONTAL, false)
-            filterViewAdapter = FilterViewAdapter(this@CB_PhotoEditorFragment)
+            llmFilters = LinearLayoutManager(this@CB_PhotoEditorActivity, LinearLayoutManager.HORIZONTAL, false)
+            filterViewAdapter = FilterViewAdapter(this@CB_PhotoEditorActivity)
         }
-        return binding.root
-    }
 
-    override fun onViewCreated(view: View, savedInstanceState: Bundle?)
-    {
-        super.onViewCreated(view, savedInstanceState)
-        requireActivity().window.addFlags(WindowManager.LayoutParams.FLAG_LAYOUT_NO_LIMITS)
+        window.addFlags(WindowManager.LayoutParams.FLAG_LAYOUT_NO_LIMITS)
 
         // bottom text view
         CB_ViewModel.strCurTool.postValue(getString(R.string.app_name))
@@ -100,19 +92,19 @@ class CB_PhotoEditorFragment: CB_BaseFragment("PhotoEditorFragment"),
         mShapeBSFragment!!.setPropertiesChangeListener(this)
 
         // use custom fonts
-        val loraRegularTf = ResourcesCompat.getFont(requireActivity(), R.font.lora_regular)
+        val loraRegularTf = ResourcesCompat.getFont(applicationContext, R.font.lora_regular)
 
         // load fonts from asset
-        val emogiTf = Typeface.createFromAsset(requireContext().assets, "emojione-android.ttf")
+        val emogiTf = Typeface.createFromAsset(applicationContext.assets, "emojione-android.ttf")
 
-        _photoEditor = PhotoEditor.Builder(requireContext(), binding.photoEditorView)
+        _photoEditor = PhotoEditor.Builder(applicationContext, binding.photoEditorView)
             .setPinchTextScalable(true)
             .setClipSourceImage(false)
             .setDefaultTextTypeface(loraRegularTf)
             .setDefaultEmojiTypeface(emogiTf)
             .build()
 
-        mPhotoEditor.setOnPhotoEditorListener(this@CB_PhotoEditorFragment)
+        mPhotoEditor.setOnPhotoEditorListener(this@CB_PhotoEditorActivity)
 
         // set bitmap to imageView
         if(CB_ViewModel.editorBitmap != null)
@@ -125,18 +117,6 @@ class CB_PhotoEditorFragment: CB_BaseFragment("PhotoEditorFragment"),
         }
     }
 
-    override fun onDetach()
-    {
-        super.onDetach()
-        requireActivity().window.clearFlags(WindowManager.LayoutParams.FLAG_LAYOUT_NO_LIMITS)
-    }
-
-    override fun onDestroy()
-    {
-        super.onDestroy()
-        _binding = null
-    }
-
     fun undo() { mPhotoEditor.undo() }
     fun redo() { mPhotoEditor.redo() }
     fun clearAllChanges()
@@ -145,12 +125,12 @@ class CB_PhotoEditorFragment: CB_BaseFragment("PhotoEditorFragment"),
             return
 
         // if you click discard button, it'll be discarded all changes
-        CB_AppFunc.confirmDialog(requireActivity(), R.string.str_warning,
+        CB_AppFunc.confirmDialog(this@CB_PhotoEditorActivity, R.string.str_warning,
             R.string.str_clear_all_views_msg, R.drawable.warning_icon, true, R.string.str_discard,
         yesListener = {  _, _ -> mPhotoEditor.clearAllViews() }, R.string.str_cancel, null)
     }
 
-    override fun backPressed()
+    override fun onBackPressed()
     {
         if(mIsFilterVisible)
         {
@@ -161,25 +141,25 @@ class CB_PhotoEditorFragment: CB_BaseFragment("PhotoEditorFragment"),
         else if(!mPhotoEditor.isCacheEmpty)
         {
             // if it has changes
-            CB_AppFunc.confirmDialog(requireActivity(), R.string.str_warning,
+            CB_AppFunc.confirmDialog(this@CB_PhotoEditorActivity, R.string.str_warning,
                 R.string.str_discard_msg, R.drawable.warning_icon, true,
                 R.string.str_discard,
                 yesListener = { _, _ ->
-                    findNavController().popBackStack()
+                    super.onBackPressed()
                     cameraListener?.onCancel()
                 }, R.string.str_cancel, null)
         }
         else
         {
             // if it has no changes
-            findNavController().popBackStack()
             cameraListener?.onCancel()
+            super.onBackPressed()
         }
     }
 
     override fun onEditTextChangeListener(rootView: View, text: String, colorCode: Int)
     {
-        val textEditorDialogFragment = TextEditorDialogFragment.show(requireActivity() as AppCompatActivity, text, colorCode)
+        val textEditorDialogFragment = TextEditorDialogFragment.show(this, text, colorCode)
         textEditorDialogFragment.setOnTextEditorListener { inputText: String?, newColorCode: Int ->
             val styleBuilder = TextStyleBuilder()
             styleBuilder.withTextColor(newColorCode)
@@ -272,7 +252,7 @@ class CB_PhotoEditorFragment: CB_BaseFragment("PhotoEditorFragment"),
             ToolType.TEXT ->
             {
                 // show fragment -> select color and text -> process this function
-                val textEditorFragment = TextEditorDialogFragment.show(requireActivity() as AppCompatActivity)
+                val textEditorFragment = TextEditorDialogFragment.show(this@CB_PhotoEditorActivity)
                 textEditorFragment.setOnTextEditorListener { inputText, colorCode ->
                     val styleBuilder = TextStyleBuilder()
                     styleBuilder.withTextColor(colorCode)
@@ -304,7 +284,7 @@ class CB_PhotoEditorFragment: CB_BaseFragment("PhotoEditorFragment"),
         if(fragment == null || fragment.isAdded)
             return
 
-        fragment.show(requireActivity().supportFragmentManager, fragment.tag)
+        fragment.show(supportFragmentManager, fragment.tag)
     }
 
     private fun showFilter(isVisible: Boolean)
@@ -346,7 +326,7 @@ class CB_PhotoEditorFragment: CB_BaseFragment("PhotoEditorFragment"),
             override fun onBitmapReady(saveBitmap: Bitmap)
             {
                 CB_ViewModel.editorBitmap = saveBitmap
-                findNavController().popBackStack()
+                onBackPressed()
                 cameraListener?.onProcess()
             }
 

@@ -5,7 +5,7 @@ import android.view.*
 import androidx.core.os.bundleOf
 import androidx.navigation.fragment.findNavController
 import com.coupleblog.R
-import com.coupleblog.parent.CB_BaseFragment
+import com.coupleblog.base.CB_BaseFragment
 import com.coupleblog.singleton.CB_AppFunc
 import com.coupleblog.singleton.CB_ViewModel
 

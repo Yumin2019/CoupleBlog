@@ -8,7 +8,7 @@ import android.util.Log
 import androidx.localbroadcastmanager.content.LocalBroadcastManager
 import com.coupleblog.CB_MainActivity
 import com.coupleblog.R
-import com.coupleblog.parent.CB_BaseTaskService
+import com.coupleblog.base.CB_BaseTaskService
 import com.coupleblog.singleton.CB_AppFunc
 import com.google.firebase.storage.ktx.component1
 import com.google.firebase.storage.ktx.component2

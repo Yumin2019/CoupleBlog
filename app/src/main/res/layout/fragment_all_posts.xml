@@ -7,7 +7,7 @@
     <data class="com.coupleblog.fragment.AllPostsBinding">
         <variable
             name="fragment"
-            type="com.coupleblog.parent.CB_PostListFragment" />
+            type="com.coupleblog.base.CB_PostListFragment" />
 
         <variable
             name="adapter"

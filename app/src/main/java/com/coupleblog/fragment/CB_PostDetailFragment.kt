@@ -17,7 +17,7 @@ import com.coupleblog.dialog.DialogItem
 import com.coupleblog.model.CB_Comment
 import com.coupleblog.model.CB_Post
 import com.coupleblog.model.REACTION_TYPE
-import com.coupleblog.parent.CB_BaseFragment
+import com.coupleblog.base.CB_BaseFragment
 import com.coupleblog.singleton.CB_AppFunc
 import com.coupleblog.singleton.CB_SingleSystemMgr
 import com.coupleblog.singleton.CB_ViewModel

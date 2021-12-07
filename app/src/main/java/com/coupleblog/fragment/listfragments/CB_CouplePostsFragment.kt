@@ -5,7 +5,7 @@ import android.view.MenuItem
 import androidx.navigation.fragment.findNavController
 import com.coupleblog.R
 import com.coupleblog.singleton.CB_AppFunc
-import com.coupleblog.parent.CB_PostListFragment
+import com.coupleblog.base.CB_PostListFragment
 import com.coupleblog.singleton.CB_ViewModel
 import com.google.firebase.database.Query
 

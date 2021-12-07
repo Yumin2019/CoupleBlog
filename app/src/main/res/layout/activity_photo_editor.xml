@@ -4,10 +4,10 @@
     xmlns:bind="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools">
 
-    <data class="com.coupleblog.fragment.PhotoEditorBinding">
+    <data class="com.coupleblog.PhotoEditorBinding">
         <variable
-            name="fragment"
-            type="com.coupleblog.fragment.CB_PhotoEditorFragment" />
+            name="activity"
+            type="com.coupleblog.CB_PhotoEditorActivity" />
 
         <variable
             name="viewModel"
@@ -60,7 +60,7 @@
             android:layout_height="@dimen/icon_image_size"
             android:layout_marginEnd="4dp"
             android:background="@color/semi_black_transparent"
-            android:onClick="@{()->fragment.clearAllChanges()}"
+            android:onClick="@{()->activity.clearAllChanges()}"
             android:src="@drawable/trash_can"
             app:layout_constraintBottom_toBottomOf="@+id/photoEditorView"
             app:layout_constraintEnd_toStartOf="@+id/imgUndo"
@@ -68,7 +68,7 @@
 
         <ImageView
             android:id="@+id/imgUndo"
-            android:onClick="@{()->fragment.undo()}"
+            android:onClick="@{()->activity.undo()}"
             android:layout_width="@dimen/top_tool_icon_width"
             android:layout_height="wrap_content"
             android:background="@color/semi_black_transparent"
@@ -79,7 +79,7 @@
 
         <ImageView
             android:id="@+id/imgRedo"
-            android:onClick="@{()->fragment.redo()}"
+            android:onClick="@{()->activity.redo()}"
             android:layout_width="@dimen/top_tool_icon_width"
             android:layout_height="wrap_content"
             android:background="@color/semi_black_transparent"
@@ -90,7 +90,7 @@
 
         <ImageView
             android:id="@+id/imgClose"
-            android:onClick="@{()->fragment.backPressed()}"
+            android:onClick="@{()->activity.onBackPressed()}"
             android:layout_width="@dimen/icon_image_size"
             android:layout_height="@dimen/icon_image_size"
             android:layout_alignParentStart="true"
@@ -147,7 +147,7 @@
         <TextView
             android:id="@+id/txtDoneButton"
             style="@style/subtitle_text_style"
-            android:onClick="@{()->fragment.saveImage()}"
+            android:onClick="@{()->activity.saveImage()}"
             android:background="?android:attr/selectableItemBackgroundBorderless"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"

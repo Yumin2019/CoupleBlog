@@ -1,4 +1,4 @@
-package com.coupleblog.parent
+package com.coupleblog.base
 
 import android.os.Bundle
 import android.util.Log
@@ -10,6 +10,10 @@ open class CB_BaseActivity(val strTag : String,
                            val actFlag : CB_SingleSystemMgr.ACTIVITY_TYPE)
     : AppCompatActivity()
 {
+    fun infoLog(strMsg: String) = Log.i(strTag, strMsg)
+    fun errorLog(strMsg: String) = Log.e(strTag, strMsg)
+    fun debugLog(strMsg: String) = Log.d(strTag, strMsg)
+
     override fun onCreate(savedInstanceState: Bundle?)
     {
         super.onCreate(savedInstanceState)
@@ -43,6 +47,4 @@ open class CB_BaseActivity(val strTag : String,
         finish()
         CB_AppFunc.topToBottomAnimation(this)
     }
-
-    fun infoLog(msg: String) = Log.i(strTag, msg)
 }
