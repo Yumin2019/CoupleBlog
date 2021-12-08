@@ -147,7 +147,7 @@
         <TextView
             android:id="@+id/txtDoneButton"
             style="@style/subtitle_text_style"
-            android:onClick="@{()->activity.saveImage()}"
+            android:onClick="@{()->activity.uploadImage()}"
             android:background="?android:attr/selectableItemBackgroundBorderless"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"

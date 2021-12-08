@@ -1,6 +1,8 @@
 package com.coupleblog.fragment
 
+import android.content.Intent
 import android.os.Bundle
+import android.provider.MediaStore
 import android.util.Log
 import android.view.*
 import androidx.core.widget.doAfterTextChanged
@@ -108,13 +110,15 @@ class CB_NewMailFragment: CB_CameraBaseFragment("NewMailFragment", UPLOAD_TYPE.E
                         callback =
                         {
                             Log.i(strTag, "camera")
-                            cameraLauncher.launch(imageUri)
+                            cameraActivity()
+                           // cameraLauncher.launch(imageUri)
                         }),
                     DialogItem(getString(R.string.str_gallery), R.drawable.image,
                         callback =
                         {
+                            galleryActivity()
                             Log.i(strTag, "gallery")
-                            galleryLauncher.launch("image/*")
+                            //galleryLauncher.launch("image/*")
                         })
                 )
 

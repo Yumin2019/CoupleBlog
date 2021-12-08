@@ -1,5 +1,8 @@
 package com.coupleblog.a100photo;
 
+import static android.content.pm.PackageManager.PERMISSION_GRANTED;
+
+import android.Manifest;
 import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.graphics.Bitmap;
@@ -16,12 +19,14 @@ import android.view.animation.AnticipateOvershootInterpolator;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.annotation.VisibleForTesting;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.constraintlayout.widget.ConstraintSet;
+import androidx.core.content.ContextCompat;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 import androidx.transition.ChangeBounds;
@@ -32,6 +37,7 @@ import com.coupleblog.a100photo.filters.FilterListener;
 import com.coupleblog.a100photo.filters.FilterViewAdapter;
 import com.coupleblog.a100photo.tools.EditingToolsAdapter;
 import com.coupleblog.a100photo.tools.ToolType;
+import com.coupleblog.generated.callback.OnClickListener;
 import com.coupleblog.singleton.CB_AppFunc;
 import com.coupleblog.singleton.CB_ViewModel;
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment;
@@ -39,9 +45,11 @@ import com.google.android.material.bottomsheet.BottomSheetDialogFragment;
 import java.io.IOException;
 
 import ja.burhanrashid52.photoeditor.OnPhotoEditorListener;
+import ja.burhanrashid52.photoeditor.OnSaveBitmap;
 import ja.burhanrashid52.photoeditor.PhotoEditor;
 import ja.burhanrashid52.photoeditor.PhotoEditorView;
 import ja.burhanrashid52.photoeditor.PhotoFilter;
+import ja.burhanrashid52.photoeditor.SaveSettings;
 import ja.burhanrashid52.photoeditor.TextStyleBuilder;
 import ja.burhanrashid52.photoeditor.ViewType;
 import ja.burhanrashid52.photoeditor.shape.ShapeBuilder;
@@ -121,16 +129,46 @@ public class EditImageActivity extends AppCompatActivity implements OnPhotoEdito
 
         mPhotoEditor.setOnPhotoEditorListener(this);
 
-        mPhotoEditor.clearAllViews();
-        Drawable image = CB_AppFunc.Companion.bitmapToDrawable(CB_ViewModel.Companion.getEditorBitmap());
+        //Drawable image = CB_AppFunc.Companion.bitmapToDrawable(CB_ViewModel.Companion.getEditorBitmap());
         //Set Image Dynamically
-       // mPhotoEditorView.getSource().setImage();
+        // mPhotoEditorView.getSource().setImage();
 
         /*mPhotoEditorView.getSource().setImageDrawable(image);*/ // doesn't work
-        mPhotoEditorView.getSource().setImageBitmap(CB_ViewModel.Companion.getEditorBitmap()); // doesn't work
-        // mPhotoEditorView.getSource().setImageResource(R.drawable.paris_tower); // works well
+        /*    mPhotoEditorView.getSource().setImageBitmap(bitmap); // doesn't work*/
+        // mPhotoEditorView.getSource().setImageResource(R.drawable.paris_tower); // works
+
+
+        //mPhotoEditor.clearAllViews();
+
+        Bitmap bitmap = CB_ViewModel.Companion.getEditorBitmap();
+
+        if(bitmap == null)
+            Log.e(TAG, "bitmap is null");
+
+        mPhotoEditorView.getSource().setImageBitmap(bitmap);
+
+        findViewById(R.id.txtDone).setOnClickListener(this);
     }
-    //
+
+    private void saveImage() {
+        SaveSettings saveSettings = new SaveSettings.Builder()
+                .setClearViewsEnabled(true)
+                .setTransparencyEnabled(true)
+                .build();
+
+        mPhotoEditor.saveAsBitmap(saveSettings, new OnSaveBitmap() {
+            @Override
+            public void onBitmapReady(Bitmap saveBitmap) {
+                Log.i(TAG, "saveBitmap");
+                mPhotoEditorView.getSource().setImageBitmap(saveBitmap);
+            }
+
+            @Override
+            public void onFailure(Exception e) {
+                e.printStackTrace();
+            }
+        });
+    }
 
     // PhotoEditorView에 이미지를 설정한다.
     private void handleIntentImage(ImageView source)
@@ -171,6 +209,14 @@ public class EditImageActivity extends AppCompatActivity implements OnPhotoEdito
     private void initViews() {
         ImageView imgUndo;
         ImageView imgRedo;
+        ImageView imgCamera;
+        ImageView imgGallery;
+
+        imgCamera = findViewById(R.id.imgCamera);
+        imgCamera.setOnClickListener(this);
+
+        imgGallery = findViewById(R.id.imgGallery);
+        imgGallery.setOnClickListener(this);
 
         mPhotoEditorView = findViewById(R.id.photoEditorView);
         mTxtCurrentTool = findViewById(R.id.txtCurrentTool);
@@ -238,6 +284,22 @@ public class EditImageActivity extends AppCompatActivity implements OnPhotoEdito
 
             case R.id.imgClose:
                 onBackPressed();
+                break;
+
+            case R.id.imgCamera:
+                Intent cameraIntent = new Intent(android.provider.MediaStore.ACTION_IMAGE_CAPTURE);
+                startActivityForResult(cameraIntent, CAMERA_REQUEST);
+                break;
+
+            case R.id.imgGallery:
+                Intent intent = new Intent();
+                intent.setType("image/*");
+                intent.setAction(Intent.ACTION_GET_CONTENT);
+                startActivityForResult(Intent.createChooser(intent, "Select Picture"), PICK_REQUEST);
+                break;
+
+            case R.id.txtDone:
+                saveImage();
                 break;
         }
     } //

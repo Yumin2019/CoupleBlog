@@ -3,6 +3,7 @@ package com.coupleblog
 import android.graphics.Bitmap
 import android.graphics.Typeface
 import android.os.Bundle
+import android.util.Log
 import android.view.*
 import android.view.animation.AnticipateOvershootInterpolator
 import androidx.appcompat.app.AppCompatActivity
@@ -128,6 +129,32 @@ class CB_PhotoEditorActivity: CB_BaseActivity("CB_PhotoEditorActivity", CB_Singl
         CB_AppFunc.confirmDialog(this@CB_PhotoEditorActivity, R.string.str_warning,
             R.string.str_clear_all_views_msg, R.drawable.warning_icon, true, R.string.str_discard,
         yesListener = {  _, _ -> mPhotoEditor.clearAllViews() }, R.string.str_cancel, null)
+    }
+
+    fun uploadImage()
+    {
+        val saveSettings = SaveSettings.Builder()
+            .setClearViewsEnabled(true)
+            .setTransparencyEnabled(true)
+            .build()
+
+        mPhotoEditor.saveAsBitmap(saveSettings, object : OnSaveBitmap
+        {
+            override fun onBitmapReady(saveBitmap: Bitmap)
+            {
+                infoLog("mPhotoEditor: uploadImage")
+                CB_ViewModel.editorBitmap = saveBitmap
+                cameraListener?.onProcess()
+                finish()
+            }
+
+            override fun onFailure(e: Exception)
+            {
+                e.printStackTrace()
+                CB_AppFunc.okDialog(this@CB_PhotoEditorActivity, R.string.str_error,
+                    R.string.str_failed_to_upload_image, R.drawable.error_icon, true)
+            }
+        })
     }
 
     override fun onBackPressed()
@@ -318,22 +345,5 @@ class CB_PhotoEditorActivity: CB_BaseActivity("CB_PhotoEditorActivity", CB_Singl
 
         TransitionManager.beginDelayedTransition(binding.rootView, changeBounds)
         mConstraintSet.applyTo(binding.rootView)
-    }
-
-    fun saveImage()
-    {
-        mPhotoEditor.saveAsBitmap(object: OnSaveBitmap{
-            override fun onBitmapReady(saveBitmap: Bitmap)
-            {
-                CB_ViewModel.editorBitmap = saveBitmap
-                onBackPressed()
-                cameraListener?.onProcess()
-            }
-
-            override fun onFailure(e: Exception)
-            {
-                e.printStackTrace()
-            }
-        })
     }
 }

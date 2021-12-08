@@ -1,6 +1,7 @@
 package com.coupleblog.fragment
 
 import android.Manifest
+import android.app.Activity
 import android.content.ContentResolver
 import android.content.Intent
 import android.graphics.Bitmap
@@ -19,7 +20,9 @@ import androidx.activity.result.contract.ActivityResultContracts
 import androidx.core.content.ContextCompat
 import androidx.core.content.FileProvider
 import androidx.navigation.fragment.findNavController
+import com.coupleblog.CB_PhotoEditorActivity
 import com.coupleblog.R
+import com.coupleblog.a100photo.EditImageActivity
 import com.coupleblog.dialog.*
 import com.coupleblog.model.GENDER
 import com.coupleblog.base.CB_BaseFragment
@@ -35,6 +38,7 @@ import com.google.android.material.datepicker.MaterialDatePicker
 import com.google.firebase.storage.ktx.storage
 import kotlinx.coroutines.launch
 import java.io.File
+import java.io.IOException
 import java.util.*
 
 class CB_EditProfileFragment : CB_CameraBaseFragment("EditProfile", UPLOAD_TYPE.PROFILE_IMAGE)
@@ -109,14 +113,16 @@ class CB_EditProfileFragment : CB_CameraBaseFragment("EditProfile", UPLOAD_TYPE.
             DialogItem(getString(R.string.str_camera), R.drawable.camera,
                 callback =
                 {
+                    cameraActivity()
                     Log.i(strTag, "camera")
-                    cameraLauncher.launch(imageUri)
+                    //cameraLauncher.launch(imageUri)
                 }),
             DialogItem(getString(R.string.str_gallery), R.drawable.image,
                 callback =
                 {
+                    galleryActivity()
                     Log.i(strTag, "gallery")
-                    galleryLauncher.launch("image/*")
+                    //galleryLauncher.launch("image/*")
                 })
         )
 

@@ -199,13 +199,15 @@ class CB_NewPostFragment: CB_CameraBaseFragment("NewPostFragment", UPLOAD_TYPE.P
                         callback =
                         {
                             Log.i(strTag, "camera")
-                            cameraLauncher.launch(imageUri)
+                            cameraActivity()
+                            // cameraLauncher.launch(imageUri)
                         }),
                     DialogItem(getString(R.string.str_gallery), R.drawable.image,
                         callback =
                         {
+                            galleryActivity()
                             Log.i(strTag, "gallery")
-                            galleryLauncher.launch("image/*")
+                            //galleryLauncher.launch("image/*")
                         })
                 )
 
