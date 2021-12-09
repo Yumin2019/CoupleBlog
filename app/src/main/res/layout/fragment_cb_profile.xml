@@ -175,6 +175,68 @@
 
         </com.google.android.material.card.MaterialCardView>
 
+        <com.google.android.material.card.MaterialCardView
+            android:id="@+id/days_card_view"
+            style="@style/card_view_style"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/couple_user_card_view"
+            bind:visibility="@{!viewModel.curUser.strCoupleUid.isEmpty()}">
+
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="?android:attr/selectableItemBackgroundBorderless">
+
+                <TextView
+                    android:id="@+id/days_text_view"
+                    style="@style/post_title_text_view"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="@dimen/margin_16dp"
+                    android:paddingStart="@dimen/margin_16dp"
+                    android:paddingEnd="@dimen/margin_16dp"
+                    android:text="@string/str_days"
+                    app:layout_constraintBottom_toTopOf="@+id/days_desc_text_view"
+                    app:layout_constraintStart_toEndOf="@+id/days_image_view"
+                    app:layout_constraintTop_toTopOf="@+id/days_image_view"
+                    tools:text="@string/str_days" />
+
+                <TextView
+                    android:id="@+id/days_desc_text_view"
+                    style="@style/normal_text_style"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:paddingStart="@dimen/margin_16dp"
+                    android:paddingEnd="@dimen/margin_16dp"
+                    android:text="@string/str_days_desc_exam"
+                    android:textAlignment="viewStart"
+                    android:textColor="@color/grey"
+                    app:layout_constraintBottom_toBottomOf="@+id/days_image_view"
+                    app:layout_constraintStart_toStartOf="@+id/days_text_view"
+                    app:layout_constraintTop_toBottomOf="@+id/days_text_view"
+                    tools:text="@string/str_days_desc_exam" />
+
+                <ImageView
+                    android:id="@+id/days_image_view"
+                    style="@style/circle_shape_image_view"
+                    android:layout_width="@dimen/profile_image_size"
+                    android:layout_height="@dimen/profile_image_size"
+                    android:layout_marginStart="@dimen/margin_16dp"
+                    android:layout_marginTop="@dimen/margin_24dp"
+                    android:layout_marginBottom="@dimen/margin_24dp"
+                    android:src="@drawable/calendar"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent"
+                    bind:image_uid="@{viewModel.curUser.strCoupleUid}" />
+            </androidx.constraintlayout.widget.ConstraintLayout>
+
+        </com.google.android.material.card.MaterialCardView>
+
+
 
 
     </androidx.constraintlayout.widget.ConstraintLayout>

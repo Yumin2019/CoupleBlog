@@ -669,6 +669,9 @@ Couple blog 은(는) 정보주체의 이용정보를 저장하고 수시로 불�
     <string name="str_region_exam">9:00 AM, Korea</string>
     <string name="str_date_of_birth_exam">2002. 12. 03</string>
     <string name="str_joined_n_days_ago_exam">Joined Couple blog 3 days ago</string>
+    <string name="str_days_desc_exam">We can share our special days.</string>
+    <string name="str_days_item_title_desc">Yumin ♥ Jihae</string>
+    <string name="str_days_exam">300 days</string>
 
     <!-- example texts -->
 
@@ -684,6 +687,7 @@ Couple blog 은(는) 정보주체의 이용정보를 저장하고 수시로 불�
     <string name="str_h_ago">h ago</string>
     <string name="str_m_ago">m ago</string>
     <string name="str_ago">ago</string>
+    <string name="str_days">Days</string>
 
     <string name="str_introduction">Introduction</string>
     <string name="str_region">Region</string>
@@ -704,6 +708,7 @@ Couple blog 은(는) 정보주체의 이용정보를 저장하고 수시로 불�
     <string name="str_sign_up">Sign Up</string>
     <string name="str_recipients">Recipients</string>
     <string name="str_add_image">Add image</string>
+    <string name="str_add_item">Add item</string>
     <string name="str_no_image">No image</string>
     <string name="str_email">Email</string>
     <string name="str_password">Password</string>
@@ -828,4 +833,5 @@ Couple blog 은(는) 정보주체의 이용정보를 저장하고 수시로 불�
     <string name="str_comment_edited">You edited this comment.</string>
     <string name="str_comment_deleted">You deleted this comment.</string>
     <string name="str_registration_success">Registration was successful.</string>
+    <string name="str_days_empty_desc">You can add an event with edit button</string>
 </resources>

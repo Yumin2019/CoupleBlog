@@ -63,6 +63,11 @@ class CB_ProfileFragment: CB_BaseFragment()
             R.id.CB_MainFragment, bundleOf(CB_ProfileInfoFragment.ARGU_UID to uid))
     }
 
+    fun calendarButton()
+    {
+
+    }
+
     override fun onDestroy()
     {
         super.onDestroy()
