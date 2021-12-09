@@ -16,7 +16,7 @@ import com.coupleblog.singleton.CB_ViewModel
 import com.firebase.ui.database.FirebaseRecyclerOptions
 import com.google.firebase.database.Query
 
-abstract class CB_PostListFragment : CB_BaseFragment("PostList")
+abstract class CB_PostListFragment : CB_BaseFragment()
 {
     private var _binding            : AllPostsBinding? = null
     private val binding get() = _binding!!

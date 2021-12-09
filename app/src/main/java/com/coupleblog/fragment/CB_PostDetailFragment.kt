@@ -32,7 +32,7 @@ import kotlinx.coroutines.launch
 import kotlinx.coroutines.tasks.await
 import java.lang.IllegalArgumentException
 
-class CB_PostDetailFragment: CB_BaseFragment("PostDetail")
+class CB_PostDetailFragment: CB_BaseFragment()
 {
     companion object
     {

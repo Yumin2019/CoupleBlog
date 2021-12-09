@@ -6,10 +6,10 @@ import androidx.appcompat.app.AppCompatActivity
 import com.coupleblog.singleton.CB_AppFunc
 import com.coupleblog.singleton.CB_SingleSystemMgr
 
-open class CB_BaseActivity(val strTag : String,
-                           val actFlag : CB_SingleSystemMgr.ACTIVITY_TYPE)
+open class CB_BaseActivity(val actFlag : CB_SingleSystemMgr.ACTIVITY_TYPE)
     : AppCompatActivity()
 {
+    val strTag: String = javaClass.simpleName
     fun infoLog(strMsg: String) = Log.i(strTag, strMsg)
     fun errorLog(strMsg: String) = Log.e(strTag, strMsg)
     fun debugLog(strMsg: String) = Log.d(strTag, strMsg)

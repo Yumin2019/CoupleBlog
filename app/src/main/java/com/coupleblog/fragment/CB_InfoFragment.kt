@@ -9,8 +9,8 @@ import com.coupleblog.R
 import com.coupleblog.base.CB_BaseFragment
 
 
-class CB_InfoFragment : CB_BaseFragment("InfoFragment") {
-
+class CB_InfoFragment : CB_BaseFragment()
+{
     private var _binding            : InfoBinding? = null
     private val binding get() = _binding!!
 

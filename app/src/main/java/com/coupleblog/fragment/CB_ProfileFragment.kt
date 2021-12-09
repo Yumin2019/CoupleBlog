@@ -9,7 +9,7 @@ import com.coupleblog.base.CB_BaseFragment
 import com.coupleblog.singleton.CB_AppFunc
 import com.coupleblog.singleton.CB_ViewModel
 
-class CB_ProfileFragment: CB_BaseFragment("Profilefragment")
+class CB_ProfileFragment: CB_BaseFragment()
 {
     private var _binding            : ProfileBinding? = null
     private val binding get() = _binding!!

@@ -28,7 +28,7 @@ import ja.burhanrashid52.photoeditor.shape.ShapeBuilder
 import ja.burhanrashid52.photoeditor.shape.ShapeType
 import java.lang.Exception
 
-class CB_PhotoEditorActivity: CB_BaseActivity("CB_PhotoEditorActivity", CB_SingleSystemMgr.ACTIVITY_TYPE.PHOTO_EDTIOR),
+class CB_PhotoEditorActivity: CB_BaseActivity(CB_SingleSystemMgr.ACTIVITY_TYPE.PHOTO_EDTIOR),
      OnPhotoEditorListener,
      PropertiesBSFragment.Properties,
      ShapeBSFragment.Properties,

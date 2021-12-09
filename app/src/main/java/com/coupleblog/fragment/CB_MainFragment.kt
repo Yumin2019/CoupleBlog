@@ -24,7 +24,7 @@ enum class PAGE_TYPE
     PAGE_TYPE_NONE,
 }
 
-class CB_MainFragment : CB_BaseFragment("MainFragment")
+class CB_MainFragment : CB_BaseFragment()
 {
     private var _binding            : MainBinding? = null
     private val binding get() = _binding!!

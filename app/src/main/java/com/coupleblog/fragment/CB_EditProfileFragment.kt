@@ -41,7 +41,7 @@ import java.io.File
 import java.io.IOException
 import java.util.*
 
-class CB_EditProfileFragment : CB_CameraBaseFragment("EditProfile", UPLOAD_TYPE.PROFILE_IMAGE)
+class CB_EditProfileFragment : CB_CameraBaseFragment(UPLOAD_TYPE.PROFILE_IMAGE)
 {
     // EDIT FIELD
     val NAME          = EDIT_FIELD_TYPE.NAME         .ordinal

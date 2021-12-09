@@ -18,7 +18,7 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.tasks.await
 
-class CB_RegisterFragment : CB_BaseFragment("RegisterFragment")
+class CB_RegisterFragment : CB_BaseFragment()
 {
 
     private var _binding            : RegisterBinding? = null

@@ -22,7 +22,7 @@ import com.google.firebase.database.ktx.getValue
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 
-class CB_MailBoxFragment: CB_BaseFragment("MailBoxFragment")
+class CB_MailBoxFragment: CB_BaseFragment()
 {
     private var _binding            : MailboxBinding? = null
     private val binding get() = _binding!!

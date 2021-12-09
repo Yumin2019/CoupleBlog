@@ -30,10 +30,9 @@ import java.io.IOException
 import java.lang.Exception
 
 // all of fragments want to use camera function, extend this fragment
-abstract class CB_CameraBaseFragment(strTag: String,
-                                     protected val uploadType: UPLOAD_TYPE,
+abstract class CB_CameraBaseFragment(protected val uploadType: UPLOAD_TYPE,
                                      protected val bDeferred: Boolean = false)
-    : CB_BaseFragment(strTag), CB_PhotoEditorActivity.CameraListener
+    : CB_BaseFragment(), CB_PhotoEditorActivity.CameraListener
 {
     // registerForActivityResult
     protected lateinit var cameraLauncher: ActivityResultLauncher<Uri>

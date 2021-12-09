@@ -26,10 +26,7 @@ import com.coupleblog.storage.CB_UploadService
 import com.google.android.material.snackbar.Snackbar
 import android.net.wifi.WifiManager
 
-
-
-
-class CB_MainActivity : CB_BaseActivity("MainActivity", CB_SingleSystemMgr.ACTIVITY_TYPE.MAIN)
+class CB_MainActivity : CB_BaseActivity(CB_SingleSystemMgr.ACTIVITY_TYPE.MAIN)
 {
     private lateinit var binding    : MainActivityBinding
     private lateinit var broadcastReceiver: BroadcastReceiver

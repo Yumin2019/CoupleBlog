@@ -16,8 +16,9 @@ import android.view.View.OnTouchListener
 import com.google.android.material.snackbar.Snackbar
 
 
-abstract class CB_BaseFragment(val strTag: String) : Fragment()
+abstract class CB_BaseFragment() : Fragment()
 {
+    val strTag: String = javaClass.simpleName
     fun infoLog(strMsg: String) = Log.i(strTag, strMsg)
     fun errorLog(strMsg: String) = Log.e(strTag, strMsg)
     fun debugLog(strMsg: String) = Log.d(strTag, strMsg)

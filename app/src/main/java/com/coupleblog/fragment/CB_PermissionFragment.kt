@@ -15,7 +15,7 @@ import com.coupleblog.R
 import com.coupleblog.base.CB_BaseFragment
 import com.coupleblog.singleton.CB_AppFunc
 
-class CB_PermissionFragment : CB_BaseFragment("PermissionFragment")
+class CB_PermissionFragment : CB_BaseFragment()
 {
     private var _binding            : PermissionBinding? = null
     private val binding get() = _binding!!

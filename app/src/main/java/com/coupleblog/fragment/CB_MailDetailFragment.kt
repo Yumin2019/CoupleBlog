@@ -29,7 +29,7 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import java.lang.IllegalArgumentException
 
-class CB_MailDetailFragment : CB_BaseFragment("MailDetail")
+class CB_MailDetailFragment : CB_BaseFragment()
 {
     companion object
     {
