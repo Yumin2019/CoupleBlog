@@ -1,44 +1,21 @@
-package com.coupleblog.fragment
+package com.coupleblog.fragment.profile
 
-import android.Manifest
-import android.app.Activity
-import android.content.ContentResolver
-import android.content.Intent
-import android.graphics.Bitmap
-import android.graphics.ImageDecoder
-import android.media.ExifInterface
-import android.net.Uri
-import android.os.Build
 import android.os.Bundle
-import android.os.Environment
-import android.provider.MediaStore
-import android.provider.Settings
 import android.util.Log
 import android.view.*
-import androidx.activity.result.ActivityResultLauncher
-import androidx.activity.result.contract.ActivityResultContracts
-import androidx.core.content.ContextCompat
-import androidx.core.content.FileProvider
 import androidx.navigation.fragment.findNavController
-import com.coupleblog.CB_PhotoEditorActivity
 import com.coupleblog.R
-import com.coupleblog.a100photo.EditImageActivity
 import com.coupleblog.dialog.*
 import com.coupleblog.model.GENDER
-import com.coupleblog.base.CB_BaseFragment
 import com.coupleblog.base.CB_CameraBaseFragment
+import com.coupleblog.fragment.EditProfileBinding
 import com.coupleblog.singleton.CB_AppFunc
 import com.coupleblog.singleton.CB_SingleSystemMgr
 import com.coupleblog.singleton.CB_ViewModel
-import com.coupleblog.storage.CB_UploadService
 import com.coupleblog.storage.UPLOAD_TYPE
 import com.google.android.material.datepicker.CalendarConstraints
 import com.google.android.material.datepicker.DateValidatorPointBackward
 import com.google.android.material.datepicker.MaterialDatePicker
-import com.google.firebase.storage.ktx.storage
-import kotlinx.coroutines.launch
-import java.io.File
-import java.io.IOException
 import java.util.*
 
 class CB_EditProfileFragment : CB_CameraBaseFragment(UPLOAD_TYPE.PROFILE_IMAGE)
@@ -252,11 +229,6 @@ class CB_EditProfileFragment : CB_CameraBaseFragment(UPLOAD_TYPE.PROFILE_IMAGE)
     {
         super.onDestroy()
         _binding = null
-    }
-
-    override fun beginActionToEdtior()
-    {
-        beginAction(R.id.action_CB_EditProfileFragment_to_CB_PhotoEditorFragment, R.id.CB_EditProfileFragment)
     }
 
     override fun backPressed()

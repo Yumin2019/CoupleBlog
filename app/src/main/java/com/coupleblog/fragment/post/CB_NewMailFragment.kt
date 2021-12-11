@@ -1,8 +1,6 @@
-package com.coupleblog.fragment
+package com.coupleblog.fragment.post
 
-import android.content.Intent
 import android.os.Bundle
-import android.provider.MediaStore
 import android.util.Log
 import android.view.*
 import androidx.core.widget.doAfterTextChanged
@@ -14,6 +12,7 @@ import com.coupleblog.dialog.DialogItem
 import com.coupleblog.model.CB_Mail
 import com.coupleblog.model.MAIL_TYPE
 import com.coupleblog.base.CB_CameraBaseFragment
+import com.coupleblog.fragment.NewMailBinding
 import com.coupleblog.singleton.CB_AppFunc
 import com.coupleblog.singleton.CB_SingleSystemMgr
 import com.coupleblog.singleton.CB_ViewModel
@@ -57,11 +56,6 @@ class CB_NewMailFragment: CB_CameraBaseFragment(UPLOAD_TYPE.EMAIL_IMAGE, bDeferr
         }
 
         strRecipientUid = ""
-    }
-
-    override fun beginActionToEdtior()
-    {
-        beginAction(R.id.action_CB_NewMailFragment_to_CB_PhotoEditorFragment, R.id.CB_NewMailFragment)
     }
 
     override fun onResume()

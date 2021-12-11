@@ -1,15 +1,15 @@
-package com.coupleblog.fragment
+package com.coupleblog.fragment.mail
 
 import android.os.Bundle
 import android.view.*
 import androidx.core.os.bundleOf
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
-import androidx.recyclerview.widget.RecyclerView
 import com.coupleblog.R
 import com.coupleblog.adapter.CB_EmailAdapter
 import com.coupleblog.model.*
 import com.coupleblog.base.CB_BaseFragment
+import com.coupleblog.fragment.MailboxBinding
 import com.coupleblog.singleton.CB_AppFunc
 import com.coupleblog.singleton.CB_SingleSystemMgr
 import com.coupleblog.singleton.CB_ViewModel

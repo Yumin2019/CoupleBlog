@@ -1,10 +1,11 @@
-package com.coupleblog.fragment
+package com.coupleblog.fragment.days
 
 import android.os.Bundle
 import android.view.*
 import androidx.navigation.fragment.findNavController
 import com.coupleblog.R
 import com.coupleblog.base.CB_BaseFragment
+import com.coupleblog.fragment.DaysBinding
 
 class CB_DaysFragment : CB_BaseFragment()
 {

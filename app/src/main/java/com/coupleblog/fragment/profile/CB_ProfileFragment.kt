@@ -1,4 +1,4 @@
-package com.coupleblog.fragment
+package com.coupleblog.fragment.profile
 
 import android.os.Bundle
 import android.view.*
@@ -6,6 +6,7 @@ import androidx.core.os.bundleOf
 import androidx.navigation.fragment.findNavController
 import com.coupleblog.R
 import com.coupleblog.base.CB_BaseFragment
+import com.coupleblog.fragment.ProfileBinding
 import com.coupleblog.singleton.CB_AppFunc
 import com.coupleblog.singleton.CB_ViewModel
 
@@ -65,7 +66,7 @@ class CB_ProfileFragment: CB_BaseFragment()
 
     fun calendarButton()
     {
-
+        beginAction(R.id.action_CB_MainFragment_to_CB_ProfileInfoFragment, R.id.CB_MainFragment)
     }
 
     override fun onDestroy()

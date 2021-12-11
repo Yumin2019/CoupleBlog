@@ -8,7 +8,7 @@ import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.databinding.DataBindingUtil
 import com.coupleblog.R
-import com.coupleblog.fragment.CB_PostDetailFragment
+import com.coupleblog.fragment.post.CB_PostDetailFragment
 import com.coupleblog.model.CB_Comment
 import com.coupleblog.singleton.CB_AppFunc
 import com.coupleblog.singleton.CB_SingleSystemMgr

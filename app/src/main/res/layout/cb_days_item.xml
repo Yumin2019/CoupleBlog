@@ -4,11 +4,11 @@
     xmlns:bind="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools">
 
-    <data class="com.coupleblog.fragment.MailItemBinding">
+    <data class="com.coupleblog.fragment.days.DaysItemBinding">
 
         <variable
             name="fragment"
-            type="com.coupleblog.fragment.CB_DaysFragment" />
+            type="com.coupleblog.fragment.days.CB_DaysFragment" />
 
    <!--     <variable
             name="viewHolder"

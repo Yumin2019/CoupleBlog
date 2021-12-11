@@ -7,8 +7,8 @@ import android.util.Log
 import androidx.localbroadcastmanager.content.LocalBroadcastManager
 import com.coupleblog.CB_MainActivity
 import com.coupleblog.R
-import com.coupleblog.fragment.CB_NewMailFragment
-import com.coupleblog.fragment.CB_NewPostFragment
+import com.coupleblog.fragment.post.CB_NewMailFragment
+import com.coupleblog.fragment.post.CB_NewPostFragment
 import com.coupleblog.base.CB_BaseTaskService
 import com.coupleblog.singleton.CB_AppFunc
 import com.google.firebase.storage.StorageReference

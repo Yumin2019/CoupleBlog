@@ -26,6 +26,7 @@
     <dimen name="icon_image_size_25dp">25dp</dimen>
     <dimen name="gender_image_size">20dp</dimen>
     <dimen name="profile_image_size">80dp</dimen>
+    <dimen name="days_icon_item_size">80dp</dimen>
     <dimen name="profile_image_size_small">60dp</dimen>
     <dimen name="profile_icon_size">35dp</dimen>
 </resources>

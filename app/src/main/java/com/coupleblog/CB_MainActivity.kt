@@ -3,19 +3,12 @@ package com.coupleblog
 import android.content.BroadcastReceiver
 import android.content.Context
 import android.content.Intent
-import android.os.Build
 import android.os.Bundle
-import android.os.IBinder
-import android.provider.Settings
 import android.util.Log
 import androidx.core.os.bundleOf
-import androidx.core.view.isGone
-import androidx.core.view.isVisible
 import androidx.databinding.DataBindingUtil
-import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.findNavController
-import androidx.navigation.fragment.findNavController
-import com.coupleblog.fragment.CB_PostDetailFragment
+import com.coupleblog.fragment.post.CB_PostDetailFragment
 import com.coupleblog.fragment.PAGE_TYPE
 import com.coupleblog.base.CB_BaseActivity
 import com.coupleblog.singleton.CB_AppFunc
@@ -23,8 +16,6 @@ import com.coupleblog.singleton.CB_SingleSystemMgr
 import com.coupleblog.singleton.CB_ViewModel
 import com.coupleblog.storage.CB_DownloadService
 import com.coupleblog.storage.CB_UploadService
-import com.google.android.material.snackbar.Snackbar
-import android.net.wifi.WifiManager
 
 class CB_MainActivity : CB_BaseActivity(CB_SingleSystemMgr.ACTIVITY_TYPE.MAIN)
 {

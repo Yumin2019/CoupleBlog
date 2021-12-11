@@ -6,12 +6,6 @@
     app:startDestination="@id/CB_PermissionFragment">
 
     <fragment
-        android:id="@+id/CB_PhotoEditorFragment"
-        android:name="com.coupleblog.fragment.CB_PhotoEditorFragment"
-        android:label="fragment_cb_photo_editor"
-        tools:layout="@layout/activity_photo_editor"/>
-
-    <fragment
         android:id="@+id/CB_PermissionFragment"
         android:name="com.coupleblog.fragment.CB_PermissionFragment"
         android:label="fragment_cb_permission"
@@ -77,6 +71,9 @@
             <argument android:name="strUid" app:nullable="false"
                 app:argType="string" android:defaultValue=""/>
         </action>
+        <action
+            android:id="@+id/action_CB_MainFragment_to_CB_DaysFragment"
+            app:destination="@id/CB_DaysFragment" />
 
     </fragment>
 
@@ -99,7 +96,7 @@
 
     <fragment
         android:id="@+id/CB_PostDetailFragment"
-        android:name="com.coupleblog.fragment.CB_PostDetailFragment"
+        android:name="com.coupleblog.fragment.post.CB_PostDetailFragment"
         android:label="fragment_cb_post_detail"
         tools:layout="@layout/fragment_cb_post_detail" >
 
@@ -121,29 +118,21 @@
 
     <fragment
         android:id="@+id/CB_NewPostFragment"
-        android:name="com.coupleblog.fragment.CB_NewPostFragment"
+        android:name="com.coupleblog.fragment.post.CB_NewPostFragment"
         android:label="fragment_cb_new_post"
         tools:layout="@layout/fragment_cb_new_post" >
-        <action
-            android:id="@+id/action_CB_NewPostFragment_to_CB_PhotoEditorFragment"
-            app:destination="@id/CB_PhotoEditorFragment" />
     </fragment>
 
     <fragment
         android:id="@+id/CB_NewMailFragment"
-        android:name="com.coupleblog.fragment.CB_NewMailFragment"
+        android:name="com.coupleblog.fragment.post.CB_NewMailFragment"
         android:label="fragment_cb_new_mail"
         tools:layout="@layout/fragment_cb_new_mail" >
-
-        <action
-            android:id="@+id/action_CB_NewMailFragment_to_CB_PhotoEditorFragment"
-            app:destination="@id/CB_PhotoEditorFragment">
-        </action>
     </fragment>
 
     <fragment
         android:id="@+id/CB_MailDetailFragment"
-        android:name="com.coupleblog.fragment.CB_MailDetailFragment"
+        android:name="com.coupleblog.fragment.mail.CB_MailDetailFragment"
         android:label="fragment_cb_mail_detail"
         tools:layout="@layout/fragment_cb_mail_detail" >
         <action
@@ -156,7 +145,7 @@
 
     <fragment
         android:id="@+id/CB_ProfileInfoFragment"
-        android:name="com.coupleblog.fragment.CB_ProfileInfoFragment"
+        android:name="com.coupleblog.fragment.profile.CB_ProfileInfoFragment"
         android:label="fragment_cb_profile_info"
         tools:layout="@layout/fragment_cb_profile_info" >
 
@@ -168,12 +157,17 @@
 
     <fragment
         android:id="@+id/CB_EditProfileFragment"
-        android:name="com.coupleblog.fragment.CB_EditProfileFragment"
+        android:name="com.coupleblog.fragment.profile.CB_EditProfileFragment"
         android:label="fragment_cb_edit_profile"
         tools:layout="@layout/fragment_cb_edit_profile" >
-        <action
-            android:id="@+id/action_CB_EditProfileFragment_to_CB_PhotoEditorFragment"
-            app:destination="@id/CB_PhotoEditorFragment" />
+    </fragment>
+
+    <fragment
+        android:id="@+id/CB_DaysFragment"
+        android:name="com.coupleblog.fragment.days.CB_DaysFragment"
+        android:label="fragment_cb_days"
+        tools:layout="@layout/fragment_cb_days" >
+
     </fragment>
 
 </navigation>

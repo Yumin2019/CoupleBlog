@@ -6,7 +6,7 @@ import android.view.ViewGroup
 import androidx.databinding.DataBindingUtil
 import androidx.recyclerview.widget.RecyclerView
 import com.coupleblog.R
-import com.coupleblog.fragment.CB_PostDetailFragment
+import com.coupleblog.fragment.post.CB_PostDetailFragment
 import com.coupleblog.model.CB_Comment
 import com.coupleblog.singleton.CB_AppFunc
 import com.google.firebase.database.ChildEventListener

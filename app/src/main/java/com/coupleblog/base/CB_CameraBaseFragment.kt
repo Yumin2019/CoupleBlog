@@ -66,8 +66,6 @@ abstract class CB_CameraBaseFragment(protected val uploadType: UPLOAD_TYPE,
         debugLog("cameraListener: onCancel")
     }
 
-    abstract fun beginActionToEdtior()
-
     override fun onCreate(savedInstanceState: Bundle?)
     {
         super.onCreate(savedInstanceState)

@@ -8,7 +8,7 @@
 
         <variable
             name="fragment"
-            type="com.coupleblog.fragment.CB_MailDetailFragment" />
+            type="com.coupleblog.fragment.mail.CB_MailDetailFragment" />
 
         <variable
             name="viewModel"

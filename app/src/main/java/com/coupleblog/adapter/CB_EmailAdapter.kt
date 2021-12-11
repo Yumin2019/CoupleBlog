@@ -1,7 +1,7 @@
 package com.coupleblog.adapter
 
-import com.coupleblog.fragment.CB_MailBoxFragment
-import com.coupleblog.fragment.MailItemBinding
+import com.coupleblog.fragment.mail.CB_MailBoxFragment
+import com.coupleblog.fragment.mail.MailItemBinding
 import com.coupleblog.model.CB_Mail
 
 import android.util.Log

@@ -1,18 +1,16 @@
-package com.coupleblog.fragment
+package com.coupleblog.fragment.profile
 
 import android.os.Bundle
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.navigation.fragment.findNavController
 import com.coupleblog.R
-import com.coupleblog.adapter.CB_CommentAdapter
 import com.coupleblog.dialog.CB_ImageDialog
-import com.coupleblog.model.CB_Post
 import com.coupleblog.model.CB_User
 import com.coupleblog.base.CB_BaseFragment
+import com.coupleblog.fragment.ProfileInfoBinding
 import com.coupleblog.singleton.CB_AppFunc
 import com.coupleblog.singleton.CB_SingleSystemMgr
 import com.coupleblog.singleton.CB_ViewModel

@@ -1,4 +1,4 @@
-package com.coupleblog.fragment
+package com.coupleblog.fragment.post
 
 import android.graphics.Bitmap
 import android.graphics.drawable.Drawable
@@ -16,6 +16,7 @@ import com.coupleblog.dialog.DialogItem
 import com.coupleblog.model.CB_Post
 import com.coupleblog.model.REACTION_TYPE
 import com.coupleblog.base.CB_CameraBaseFragment
+import com.coupleblog.fragment.NewPostBinding
 import com.coupleblog.singleton.CB_AppFunc
 import com.coupleblog.singleton.CB_SingleSystemMgr
 import com.coupleblog.singleton.CB_ViewModel
@@ -66,11 +67,6 @@ class CB_NewPostFragment: CB_CameraBaseFragment(UPLOAD_TYPE.POST_IMAGE, bDeferre
             CB_ViewModel.postImage.postValue(imageBitmap)
             bImageChanged = true
         }
-    }
-
-    override fun beginActionToEdtior()
-    {
-        beginAction(R.id.action_CB_NewPostFragment_to_CB_PhotoEditorFragment, R.id.CB_NewPostFragment)
     }
 
     override fun onResume()

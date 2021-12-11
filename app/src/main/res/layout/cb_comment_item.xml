@@ -7,7 +7,7 @@
     <data class="com.coupleblog.adapter.CommentItemBinding">
 
         <variable name="fragment"
-            type="com.coupleblog.fragment.CB_PostDetailFragment"/>
+            type="com.coupleblog.fragment.post.CB_PostDetailFragment"/>
 
         <variable
             name="commentData"
