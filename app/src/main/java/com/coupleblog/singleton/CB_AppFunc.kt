@@ -681,7 +681,7 @@ class CB_AppFunc
          *   @param strDate 기준이 되는 시간 string
          */
         fun convertUtcToLocale(strDate: String): Calendar
-        = Calendar.getInstance(TimeZone.getTimeZone("UTC")).apply {
+        = Calendar.getInstance().apply {
 
             // UTC 기준으로 calendar 생성
             time = stringToDate(strDate)
@@ -694,17 +694,14 @@ class CB_AppFunc
          *   현재 시간을 사용
          *   @param iGmtOffset 기준이 되는 gmt offset
          */
-        fun convertUtcToLocale(iGmtOffset: Int): Calendar
-        = Calendar.getInstance(TimeZone.getTimeZone("UTC")).apply {
-            add(Calendar.MINUTE, iGmtOffset)
-        }
+        fun convertUtcToLocale(iGmtOffset: Int): Calendar = convertUtcToLocale(getDateStringForSave(), iGmtOffset)
 
         /*** UTC 기준의 시간을 로컬 시간으로 변환하여 Calendar 로 전달.
          *   @param strDate 기준이 되는 시간 string
          *   @param iGmtOffset 기준이 되는 gmt offset
          */
         fun convertUtcToLocale(strDate: String, iGmtOffset: Int): Calendar
-                = Calendar.getInstance(TimeZone.getTimeZone("UTC")).apply {
+                = Calendar.getInstance().apply {
 
             time = stringToDate(strDate)
             add(Calendar.MINUTE, iGmtOffset)
