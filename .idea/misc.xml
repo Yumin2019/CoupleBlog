@@ -48,7 +48,7 @@
         <entry key="..\:/Users/lmj33/CoupleBlog/app/src/main/res/layout/comment_item.xml" value="0.4" />
         <entry key="..\:/Users/lmj33/CoupleBlog/app/src/main/res/layout/dialog_cb_comment_edit.xml" value="0.4" />
         <entry key="..\:/Users/lmj33/CoupleBlog/app/src/main/res/layout/dialog_cb_edit.xml" value="0.25364583333333335" />
-        <entry key="..\:/Users/lmj33/CoupleBlog/app/src/main/res/layout/dialog_cb_image.xml" value="0.176" />
+        <entry key="..\:/Users/lmj33/CoupleBlog/app/src/main/res/layout/dialog_cb_image.xml" value="0.16799999999999998" />
         <entry key="..\:/Users/lmj33/CoupleBlog/app/src/main/res/layout/dialog_cb_list_item.xml" value="0.2" />
         <entry key="..\:/Users/lmj33/CoupleBlog/app/src/main/res/layout/dialog_cb_loading.xml" value="0.264" />
         <entry key="..\:/Users/lmj33/CoupleBlog/app/src/main/res/layout/dialog_meetings_loading.xml" value="0.36614583333333334" />
@@ -80,7 +80,7 @@
         <entry key="..\:/Users/lmj33/CoupleBlog/app/src/main/res/layout/photo_fragment_bottom_custom_effect_dialog.xml" value="0.2046875" />
         <entry key="..\:/Users/lmj33/CoupleBlog/app/src/main/res/layout/photo_fragment_bottom_properties_dialog.xml" value="0.14635416666666667" />
         <entry key="..\:/Users/lmj33/CoupleBlog/app/src/main/res/layout/photo_fragment_bottom_shapes_dialog.xml" value="0.2" />
-        <entry key="..\:/Users/lmj33/CoupleBlog/app/src/main/res/layout/photo_fragment_bottom_sticker_emoji_dialog.xml" value="0.36614583333333334" />
+        <entry key="..\:/Users/lmj33/CoupleBlog/app/src/main/res/layout/photo_fragment_bottom_sticker_emoji_dialog.xml" value="0.176" />
         <entry key="..\:/Users/lmj33/CoupleBlog/app/src/main/res/layout/photo_row_emoji.xml" value="0.14635416666666667" />
         <entry key="..\:/Users/lmj33/CoupleBlog/app/src/main/res/layout/photo_row_filter_view.xml" value="0.36614583333333334" />
         <entry key="..\:/Users/lmj33/CoupleBlog/app/src/main/res/layout/photo_row_sticker.xml" value="0.36614583333333334" />

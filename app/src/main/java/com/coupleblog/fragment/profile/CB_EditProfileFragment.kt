@@ -90,16 +90,14 @@ class CB_EditProfileFragment : CB_CameraBaseFragment(UPLOAD_TYPE.PROFILE_IMAGE)
             DialogItem(getString(R.string.str_camera), R.drawable.camera,
                 callback =
                 {
-                    cameraActivity()
                     Log.i(strTag, "camera")
-                    //cameraLauncher.launch(imageUri)
+                    cameraLauncher.launch(imageUri)
                 }),
             DialogItem(getString(R.string.str_gallery), R.drawable.image,
                 callback =
                 {
-                    galleryActivity()
                     Log.i(strTag, "gallery")
-                    //galleryLauncher.launch("image/*")
+                    galleryLauncher.launch("image/*")
                 })
         )
 

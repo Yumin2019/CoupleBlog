@@ -104,15 +104,13 @@ class CB_NewMailFragment: CB_CameraBaseFragment(UPLOAD_TYPE.EMAIL_IMAGE, bDeferr
                         callback =
                         {
                             Log.i(strTag, "camera")
-                            cameraActivity()
-                           // cameraLauncher.launch(imageUri)
+                            cameraLauncher.launch(imageUri)
                         }),
                     DialogItem(getString(R.string.str_gallery), R.drawable.image,
                         callback =
                         {
-                            galleryActivity()
                             Log.i(strTag, "gallery")
-                            //galleryLauncher.launch("image/*")
+                            galleryLauncher.launch("image/*")
                         })
                 )
 

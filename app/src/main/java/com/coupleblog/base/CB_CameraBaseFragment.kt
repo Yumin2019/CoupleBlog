@@ -4,6 +4,8 @@ import android.app.Activity
 import android.app.Dialog
 import android.content.Intent
 import android.graphics.Bitmap
+import android.graphics.ImageDecoder
+import android.graphics.drawable.BitmapDrawable
 import android.media.ExifInterface
 import android.net.Uri
 import android.os.Build
@@ -112,7 +114,7 @@ abstract class CB_CameraBaseFragment(protected val uploadType: UPLOAD_TYPE,
     {
         CB_AppFunc.networkScope.launch {
 
-            imageBitmap = CB_AppFunc.getBitmapFromUri(requireActivity().applicationContext.contentResolver, imageUri!!)
+            imageBitmap = CB_AppFunc.getBitmapFromUriSoftware(imageUri!!)
             if(imageBitmap == null)
             {
                 Log.e(strTag, "failed to convert uri to bitmap")
@@ -199,47 +201,6 @@ abstract class CB_CameraBaseFragment(protected val uploadType: UPLOAD_TYPE,
 
             CB_AppFunc.okDialog(requireActivity(), R.string.str_error,
                 iRes, R.drawable.error_icon, true)
-        }
-    }
-
-    protected fun cameraActivity()
-    {
-        val cameraIntent = Intent(MediaStore.ACTION_IMAGE_CAPTURE);
-        startActivityForResult(cameraIntent, 100);
-    }
-
-    protected fun galleryActivity()
-    {
-        val intent =  Intent();
-        intent.type = "image/*";
-        intent.action = Intent.ACTION_GET_CONTENT;
-        startActivityForResult(Intent.createChooser(intent, "Select Picture"), 200);
-    }
-
-    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
-        super.onActivityResult(requestCode, resultCode, data)
-        if (resultCode == Activity.RESULT_OK) {
-            when (requestCode) {
-                100 -> {
-                    // 카메라에서 이미지 선택을 하고 돌아온 경우
-                    val photo = data!!.extras!!["data"] as Bitmap?
-                    CB_ViewModel.editorBitmap = photo
-                    CB_PhotoEditorActivity.cameraListener = this@CB_CameraBaseFragment
-                    val intent = Intent(requireActivity(), CB_PhotoEditorActivity::class.java)
-                    startActivity(intent)
-                }
-                200 ->                     // 이미지를 선택해서 들어온 경우
-                    try {
-                        val uri = data!!.data
-                        val bitmap = MediaStore.Images.Media.getBitmap(requireActivity().contentResolver, uri)
-                        CB_ViewModel.editorBitmap = bitmap
-                        CB_PhotoEditorActivity.cameraListener = this@CB_CameraBaseFragment
-                        val intent = Intent(requireActivity(), CB_PhotoEditorActivity::class.java)
-                        startActivity(intent)
-                    } catch (e: IOException) {
-                        e.printStackTrace()
-                    }
-            }
         }
     }
 }

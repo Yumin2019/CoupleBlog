@@ -383,15 +383,33 @@ class CB_AppFunc
             _coupleUser = CB_User() // default value
         }
 
-        fun getBitmapFromUri(cr: ContentResolver, imageUri: Uri): Bitmap?
+        // Software 할당 방식으로 비트맵을 설정한다.
+        // java.lang.IllegalArgumentException: Software rendering doesn't support hardware bitmaps
+        // https://developer.android.com/reference/android/graphics/ImageDecoder#setMutableRequired(boolean)
+        fun getBitmapFromUriSoftware(imageUri: Uri): Bitmap = let {
+
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.P)
+            {
+                return@let ImageDecoder.decodeBitmap(ImageDecoder.createSource(application.contentResolver, imageUri))
+                { decoder: ImageDecoder, _: ImageDecoder.ImageInfo?, _: ImageDecoder.Source? ->
+                    decoder.isMutableRequired = true
+                    decoder.allocator = ImageDecoder.ALLOCATOR_SOFTWARE
+                }
+            }
+
+            BitmapDrawable(application.resources,
+                MediaStore.Images.Media.getBitmap(application.contentResolver, imageUri)).bitmap
+        }
+
+        fun getBitmapFromUri(imageUri: Uri): Bitmap?
         {
             return if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.P)
             {
-                ImageDecoder.decodeBitmap(ImageDecoder.createSource(cr, imageUri))
+                ImageDecoder.decodeBitmap(ImageDecoder.createSource(application.contentResolver, imageUri))
             }
             else
             {
-                MediaStore.Images.Media.getBitmap(cr, imageUri)
+                MediaStore.Images.Media.getBitmap(application.contentResolver, imageUri)
             }
         }
 
