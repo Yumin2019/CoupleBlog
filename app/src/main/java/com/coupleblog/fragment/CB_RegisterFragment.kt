@@ -201,9 +201,6 @@ class CB_RegisterFragment : CB_BaseFragment()
                             CB_AppFunc._curUser = user
                             CB_AppFunc.getUsersRoot().child(uid).setValue(user).await()
 
-                            // Couple 정보도 couples 항목에 저장한다. (기본값)
-                            CB_AppFunc.getCouplesRoot().child(uid).setValue(CB_Couple()).await()
-
                             launch(Dispatchers.Main)
                             {
                                 // Login Fragment

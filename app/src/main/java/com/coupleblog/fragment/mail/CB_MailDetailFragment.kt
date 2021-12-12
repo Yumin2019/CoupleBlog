@@ -281,11 +281,13 @@ class CB_MailDetailFragment : CB_BaseFragment()
                         val prevUser = CB_AppFunc.curUser
                         val coupleUid = mailData.strSenderUid!!
                         val myUid = CB_AppFunc.getUid()
+                        val coupleInfo = CB_Couple(myUid, coupleUid)
+                        val coupleKey = CB_AppFunc.getCouplesRoot().push().key
 
                         // 유저 정보 수정 내꺼
                         prevUser.strCoupleUid = coupleUid
+                        prevUser.strCoupleKey = coupleKey
                         CB_AppFunc.getUsersRoot().child(myUid).setValue(prevUser)
-                        CB_AppFunc.getCouplesRoot().child(myUid).setValue(CB_Couple(coupleUid))
 
                         CB_AppFunc.getUsersRoot().child(coupleUid)
                             .addListenerForSingleValueEvent(object : ValueEventListener {
@@ -294,11 +296,13 @@ class CB_MailDetailFragment : CB_BaseFragment()
                                     // 커플꺼
                                     CB_AppFunc._coupleUser = snapshot.getValue<CB_User>()!!
                                     CB_AppFunc.coupleUser.strCoupleUid = myUid
+                                    CB_AppFunc.coupleUser.strCoupleKey = coupleKey
                                     CB_AppFunc.getUsersRoot().child(coupleUid).setValue(CB_AppFunc.coupleUser)
-                                    CB_AppFunc.getCouplesRoot().child(coupleUid).setValue(CB_Couple(myUid))
+
+                                    // 커플 정보
+                                    CB_AppFunc.getCouplesRoot().child(coupleKey!!).setValue(coupleInfo)
 
                                     CB_SingleSystemMgr.showToast(R.string.str_you_became_couple)
-
                                     backPressed()
                                 }
 

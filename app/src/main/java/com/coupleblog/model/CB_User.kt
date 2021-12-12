@@ -38,6 +38,7 @@ data class CB_User(
     var strPhoneNumber       : String? = "",                // 핸드폰 번호
     var strFavorites         : String? = "",                // 좋아하는 것
     var strDislikes          : String? = "",                // 싫어하는 것
+    var strCoupleKey         : String? = "",                // 커플 키
 ) {
     @Exclude
     fun toMap(): Map<String, Any?> {

@@ -688,6 +688,13 @@ Couple blog 은(는) 정보주체의 이용정보를 저장하고 수시로 불�
     <string name="str_m_ago">m ago</string>
     <string name="str_ago">ago</string>
     <string name="str_days">Days</string>
+    <string name="str_months">Months</string>
+    <string name="str_years">Years</string>
+    <string name="str_past_event">Past Event</string>
+    <string name="str_future_event">Future Event</string>
+    <string name="str_annual_event">Annual Event</string>
+    <string name="str_write_event">Write Event</string>
+    <string name="str_edit_event">Edit Event</string>
 
     <string name="str_introduction">Introduction</string>
     <string name="str_region">Region</string>

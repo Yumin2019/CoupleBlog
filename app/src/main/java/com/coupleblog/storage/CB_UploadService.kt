@@ -10,6 +10,7 @@ import com.coupleblog.R
 import com.coupleblog.fragment.post.CB_NewMailFragment
 import com.coupleblog.fragment.post.CB_NewPostFragment
 import com.coupleblog.base.CB_BaseTaskService
+import com.coupleblog.base.CB_CameraBaseFragment
 import com.coupleblog.singleton.CB_AppFunc
 import com.google.firebase.storage.StorageReference
 import com.google.firebase.storage.ktx.component1
@@ -204,6 +205,8 @@ class CB_UploadService: CB_BaseTaskService()
 
         addOnCompleteListener {
             cleanUpLambda()
+            CB_CameraBaseFragment.dialog?.cancel()
+            CB_CameraBaseFragment.dialog = null
         }
     }
 

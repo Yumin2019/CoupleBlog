@@ -14,6 +14,7 @@ import com.coupleblog.singleton.CB_ViewModel
 import com.coupleblog.fragment.PAGE_TYPE.*
 import com.coupleblog.fragment.mail.CB_MailBoxFragment
 import com.coupleblog.fragment.profile.CB_ProfileFragment
+import com.coupleblog.model.CB_Couple
 import com.google.android.material.tabs.TabLayoutMediator
 
 enum class PAGE_TYPE
@@ -60,14 +61,29 @@ class CB_MainFragment : CB_BaseFragment()
             override fun getItemCount() = fragments.size
         }
 
-       // 만약 유저의 gmtOffset 값이 다르면 갱신한다.
+        // defence code for new updates
        with(CB_AppFunc)
        {
+           // 만약 유저의 gmtOffset 값이 다르면 갱신한다.
            val gmtOffset = getGMTOffset()
            if(gmtOffset != curUser.iGmtOffset)
            {
                curUser.iGmtOffset = gmtOffset
                getUsersRoot().child(getUid()).setValue(curUser)
+           }
+
+           // if couple, don't have couple info make.
+           if(!curUser.strCoupleUid.isNullOrEmpty() && curUser.strCoupleKey.isNullOrEmpty())
+           {
+               val strCoupleUid = curUser.strCoupleUid!!
+               val coupleInfo = CB_Couple(getUid(), strCoupleUid)
+               val coupleKey = getCouplesRoot().push().key
+
+               curUser.strCoupleKey = coupleKey
+               coupleUser.strCoupleKey = coupleKey
+               getUsersRoot().child(getUid()).setValue(curUser)
+               getUsersRoot().child(strCoupleUid).setValue(coupleUser)
+               getCouplesRoot().child(coupleKey!!).setValue(coupleInfo)
            }
        }
 
@@ -87,7 +103,7 @@ class CB_MainFragment : CB_BaseFragment()
                            PROFILE.ordinal      ->
                            {
                                CB_ViewModel.apply {
-                                   var value = coupleUser.value // refresh
+                                   val value = coupleUser.value // refresh
                                    coupleUser.postValue(value)
 
                                    bAddButton.postValue(false)

@@ -64,9 +64,9 @@ class CB_ProfileFragment: CB_BaseFragment()
             R.id.CB_MainFragment, bundleOf(CB_ProfileInfoFragment.ARGU_UID to uid))
     }
 
-    fun calendarButton()
+    fun daysButton()
     {
-        beginAction(R.id.action_CB_MainFragment_to_CB_ProfileInfoFragment, R.id.CB_MainFragment)
+        beginAction(R.id.action_CB_MainFragment_to_CB_DaysFragment, R.id.CB_MainFragment)
     }
 
     override fun onDestroy()

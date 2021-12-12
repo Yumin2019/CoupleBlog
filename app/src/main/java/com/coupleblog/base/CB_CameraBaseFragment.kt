@@ -1,6 +1,7 @@
 package com.coupleblog.base
 
 import android.app.Activity
+import android.app.Dialog
 import android.content.Intent
 import android.graphics.Bitmap
 import android.media.ExifInterface
@@ -18,6 +19,7 @@ import androidx.navigation.fragment.findNavController
 import com.coupleblog.CB_PhotoEditorActivity
 import com.coupleblog.R
 import com.coupleblog.a100photo.EditImageActivity
+import com.coupleblog.dialog.CB_LoadingDialog
 import com.coupleblog.singleton.CB_AppFunc
 import com.coupleblog.singleton.CB_SingleSystemMgr
 import com.coupleblog.singleton.CB_ViewModel
@@ -43,6 +45,12 @@ abstract class CB_CameraBaseFragment(protected val uploadType: UPLOAD_TYPE,
     protected var strFilePath: String? = null
     protected var imageBitmap: Bitmap? = null
 
+    companion object
+    {
+        var dialog: Dialog? = null
+
+    }
+
     // CameraListener
     override fun onProcess()
     {
@@ -51,6 +59,8 @@ abstract class CB_CameraBaseFragment(protected val uploadType: UPLOAD_TYPE,
 
         if(!bDeferred)
         {
+            // profile upload
+            dialog = CB_LoadingDialog(requireActivity()).apply { show() }
             debugLog("upload start")
             saveBitmapAndUpload()
         }

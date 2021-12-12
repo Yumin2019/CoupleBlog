@@ -22,6 +22,7 @@ class CB_ImageDialog(context: Context) : Dialog(context)
             R.layout.dialog_cb_image, null, false)
         setContentView(binding.root)
         binding.viewModel = CB_ViewModel.Companion
+        binding.dialog = this@CB_ImageDialog
 
         window!!.apply{
             setBackgroundDrawable(ColorDrawable(Color.TRANSPARENT))
@@ -32,6 +33,8 @@ class CB_ImageDialog(context: Context) : Dialog(context)
         CB_SingleSystemMgr.registerDialog(CB_SingleSystemMgr.DIALOG_TYPE.IMAGE)
         show()
     }
+
+    fun exitButton() = onBackPressed()
 
     override fun dismiss()
     {

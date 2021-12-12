@@ -78,8 +78,6 @@ class CB_PhotoEditorActivity: CB_BaseActivity(CB_SingleSystemMgr.ACTIVITY_TYPE.P
             filterViewAdapter = FilterViewAdapter(this@CB_PhotoEditorActivity)
         }
 
-        window.addFlags(WindowManager.LayoutParams.FLAG_LAYOUT_NO_LIMITS)
-
         // bottom text view
         CB_ViewModel.strCurTool.postValue(getString(R.string.app_name))
         mPropertiesBSFragment = PropertiesBSFragment()
