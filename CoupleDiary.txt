@@ -1054,6 +1054,10 @@ Past Event, Event, Anniversary 타입별 선택 가능.
 								 // 무조건 days. 
 	초기에 ~일 남았다로 잡혀있고 타입에  따라서 옵션을 어떻게 설정할 수 있는지가 결정이 된다. 
 	옵션이 없는 경우에는 없어지고... 데이타에서는 해당 flag를 사용하지 않으면 되는 것.
+	
+	data: strTitle, strDesc, strResouce, iDaysType, iDaysFormatType
+	strRecentEditDate, strRecentEditUid
+	최종 수정한 시간, 마지막으로 누가 수정했는지 여부
 								 
 	1. 아이콘 기능이 있어서 다양한 아이콘 중에 하나를 클릭할 수 있도록 한다.
 	2. 두 사람이 해당 부분을 같이 공유할 수 있도록 한다.
@@ -1065,6 +1069,47 @@ newDaysFragment
 - 아이콘
 - 타입 (어떤 형태로 출력할지)
 
+    var strTitle: String? = "",             // 제목
+    var strDesc: String? = "",              // Description
+    var strIconRes: String? = "",           // Icon Res string
+    var iDaysType: Int? = 0,                // Days Type
+    var iDaysTimeFormat: Int? = 0,          // Days Time Format type
+    var strRecentEditDate: String? = "",    // 최근 편집 시기
+    var strRecentEditUid: String? = "",     // 최근 편입자
+
 // Days아이템의 정보를 보기위한 Fragment
 InfoDaysFragment
 
+1. Fullscreen bug fix
+2. PhtoEditor에 스티커 이미지 추가
+3. ImageDialog close 버튼 추가
+4. 프로필 이미지 처리에서 dialog 추가
+5. Couple 데이터 처리 변경
+6. version 1.0.5
+
+기존에 커플이 아니었음. -> 정보가 없어도 상관없다. X 
+신규 커플이 된 경우에는 -> 아라서 잘 만들어주니까 상관 없음 X  
+기존에 커플인 경우에는 정보가 없으면 만들어줘야 한다. (그래야 접근을 하지) 그리고 이후에는 다시 만들지 않는다. V 
+
+version 1.0.6
+1. UTC 시간 오류
+2. ImageDialog close 버튼이 가려지는 오류
+3. 스티커 다이얼로그 너무 느림(캐시, 고정된 사이즈 속성 적용)
+4. 이미지가 회전되어 있는 경우 + 필터 이슈까지
+
+Lint Error
+Error: When using `setHasFixedSize() in an RecyclerView, 
+wrap_content cannot be used as a value for size in the scrolling direction. 
+[InvalidSetHasFixedSize from recyclerview-1.2.1]
+
+So I changed the wrap_content attribution.
+
+우리 소스에 적용한 내용임. 
+
+이모지는 괜찮아. 근데 스티커는 작살난다. ㅋㅋㅋㅋ 
+
+https://github.com/burhanrashid52/PhotoEditor/pull/425
+RecyclerView 성능 이슈가 있었는데 많이 개선 시켰다. ^^ 
+라이브버리 쪽까지 full request 요청.
+
+DaysFragment DB 구조 작업하다가 그만함.
