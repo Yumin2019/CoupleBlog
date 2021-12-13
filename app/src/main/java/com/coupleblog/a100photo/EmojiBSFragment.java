@@ -80,6 +80,8 @@ public class EmojiBSFragment extends BottomSheetDialogFragment {
         EmojiAdapter emojiAdapter = new EmojiAdapter();
         rvEmoji.setAdapter(emojiAdapter);
         rvEmoji.setHasFixedSize(true);
+        rvEmoji.setDrawingCacheEnabled(true);
+        rvEmoji.setDrawingCacheQuality(View.DRAWING_CACHE_QUALITY_HIGH);
         rvEmoji.setItemViewCacheSize(emojisList.size());
     }
     public void setEmojiListener(EmojiListener emojiListener) {

@@ -5,6 +5,7 @@ import android.app.Dialog;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.os.Bundle;
+import android.util.DisplayMetrics;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -17,11 +18,14 @@ import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.coupleblog.R;
+import com.coupleblog.singleton.CB_AppFunc;
 import com.google.android.material.bottomsheet.BottomSheetBehavior;
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment;
 
 public class StickerBSFragment extends BottomSheetDialogFragment {
 
+    static int itemSize = 0;
+    static BitmapFactory.Options options = new BitmapFactory.Options();
     static int[] stickerList = new int[]{
             R.drawable.android,
             R.drawable.arch_1,
@@ -201,6 +205,29 @@ public class StickerBSFragment extends BottomSheetDialogFragment {
             R.drawable.wine_5,
     };
 
+    public static int calculateInSampleSize(
+            BitmapFactory.Options options, int reqWidth, int reqHeight) {
+        // Raw height and width of image
+        final int height = options.outHeight;
+        final int width = options.outWidth;
+        int inSampleSize = 1;
+
+        if (height > reqHeight || width > reqWidth) {
+
+            final int halfHeight = height / 2;
+            final int halfWidth = width / 2;
+
+            // Calculate the largest inSampleSize value that is a power of 2 and keeps both
+            // height and width larger than the requested height and width.
+            while ((halfHeight / inSampleSize) >= reqHeight
+                    && (halfWidth / inSampleSize) >= reqWidth) {
+                inSampleSize *= 2;
+            }
+        }
+
+        return inSampleSize;
+    }
+
     public StickerBSFragment() {
         // Required empty public constructor
     }
@@ -220,6 +247,17 @@ public class StickerBSFragment extends BottomSheetDialogFragment {
     {
         super.onCreate(savedInstanceState);
         setStyle(BottomSheetDialogFragment.STYLE_NORMAL, R.style.transparent_bottom_sheet_theme);
+        itemSize = (int) CB_AppFunc.Companion.convertDpToPixel(50.0f);
+
+        // First decode with inJustDecodeBounds=true to check dimensions
+        options.inJustDecodeBounds = true;
+        BitmapFactory.decodeResource(getResources(), stickerList[0], options);
+
+        // Calculate inSampleSize
+        options.inSampleSize = calculateInSampleSize(options, itemSize, itemSize);
+
+        // Decode bitmap with inSampleSize set
+        options.inJustDecodeBounds = false;
     }
 
     private BottomSheetBehavior.BottomSheetCallback mBottomSheetBehaviorCallback = new BottomSheetBehavior.BottomSheetCallback() {
@@ -253,11 +291,13 @@ public class StickerBSFragment extends BottomSheetDialogFragment {
         ((View) contentView.getParent()).setBackgroundColor(getResources().getColor(android.R.color.transparent));
         RecyclerView rvEmoji = contentView.findViewById(R.id.rvEmoji);
 
-        GridLayoutManager gridLayoutManager = new GridLayoutManager(getActivity(), 5);
+        GridLayoutManager gridLayoutManager = new GridLayoutManager(getActivity(), 3);
         rvEmoji.setLayoutManager(gridLayoutManager);
         StickerAdapter stickerAdapter = new StickerAdapter();
         rvEmoji.setAdapter(stickerAdapter);
         rvEmoji.setHasFixedSize(true);
+        rvEmoji.setDrawingCacheEnabled(true);
+        rvEmoji.setDrawingCacheQuality(View.DRAWING_CACHE_QUALITY_HIGH);
         rvEmoji.setItemViewCacheSize(stickerList.length);
     }
 
@@ -277,7 +317,7 @@ public class StickerBSFragment extends BottomSheetDialogFragment {
 
         @Override
         public void onBindViewHolder(ViewHolder holder, int position) {
-            holder.imgSticker.setImageResource(stickerList[position]);
+            holder.imgSticker.setImageBitmap(BitmapFactory.decodeResource(getResources(), stickerList[position], options));
         }
 
         @Override
