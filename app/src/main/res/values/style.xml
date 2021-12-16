@@ -1,6 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
 
+    <style name="test_theme" parent="Theme.AppCompat">
+
+    </style>
+
     <style name="transparent_bottom_sheet_theme" parent="Theme.Design.Light.BottomSheetDialog">
         <item name="bottomSheetStyle">@style/transparent_bottom_sheet</item>
     </style>
