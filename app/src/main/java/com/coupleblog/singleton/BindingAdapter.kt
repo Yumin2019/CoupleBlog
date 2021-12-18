@@ -3,6 +3,8 @@ package com.coupleblog.singleton
 import android.graphics.Bitmap
 import android.util.Log
 import android.view.View
+import android.widget.ArrayAdapter
+import android.widget.AutoCompleteTextView
 import android.widget.ImageView
 import android.widget.TextView
 import androidx.databinding.BindingAdapter
@@ -394,10 +396,48 @@ fun setAdapter(recyclerView: RecyclerView, adapter: RecyclerView.Adapter<*>?)
     recyclerView.adapter = adapter
 }
 
+@BindingAdapter("bind:adapter")
+fun setAdapter(autoTextView: AutoCompleteTextView, adapter: ArrayAdapter<*>?)
+{
+    autoTextView.setAdapter(adapter)
+}
+
 @BindingAdapter("bind:visibility")
 fun setVisibility(view: View, flag: Boolean?)
 {
     view.visibility = if(flag == true) View.VISIBLE else View.GONE
+}
+
+@BindingAdapter("bind:comment_uid")
+fun setVisibility(view: View, strAuthorUid: String?)
+{
+    // if this user has a permission, visible or gone
+    if(CB_ViewModel.isMyPost.value!! || strAuthorUid == CB_AppFunc.getUid())
+    {
+        view.visibility = View.VISIBLE
+    }
+    else
+    {
+        view.visibility = View.GONE
+    }
+}
+
+@BindingAdapter("bind:visibility")
+fun setVisibility(view: View, iSize: Int)
+{
+    view.visibility = if(iSize > 0) View.VISIBLE else View.GONE
+}
+
+@BindingAdapter("bind:isEmpty")
+fun setIsEmpty(view: View, iSize: Int)
+{
+    view.visibility = if(iSize == 0) View.VISIBLE else View.GONE
+}
+
+@BindingAdapter("bind:isNotEmpty")
+fun setIsNotEmpty(view: View, iSize: Int)
+{
+    view.visibility = if(iSize != 0) View.VISIBLE else View.GONE
 }
 
 @BindingAdapter("bind:mail_type")
@@ -431,20 +471,6 @@ fun setFloatingButtonImg(floatingActionButton: FloatingActionButton, iPageIdx: I
             floatingActionButton.setImageResource(R.drawable.ic_baseline_mail_24)
         }
         else -> {}
-    }
-}
-
-@BindingAdapter("bind:comment_uid")
-fun setVisibility(view: View, strAuthorUid: String?)
-{
-    // if this user has a permission, visible or gone
-    if(CB_ViewModel.isMyPost.value!! || strAuthorUid == CB_AppFunc.getUid())
-    {
-        view.visibility = View.VISIBLE
-    }
-    else
-    {
-        view.visibility = View.GONE
     }
 }
 

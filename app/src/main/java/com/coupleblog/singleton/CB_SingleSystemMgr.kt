@@ -23,6 +23,7 @@ class CB_SingleSystemMgr
         COMMENT_EDIT_DIALOG,
         EDIT_DIALOG,
         IMAGE,
+        STICKER,
 
         // MATERIAL DIALOG CUSTOM
         OK_DIALOG,

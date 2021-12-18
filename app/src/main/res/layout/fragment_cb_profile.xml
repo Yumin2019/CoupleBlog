@@ -188,6 +188,7 @@
             <androidx.constraintlayout.widget.ConstraintLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                bind:visibility="@{!viewModel.curUser.strCoupleUid.isEmpty()}"
                 android:onClick="@{()->fragment.daysButton()}"
                 android:background="?android:attr/selectableItemBackgroundBorderless">
 
@@ -235,9 +236,6 @@
             </androidx.constraintlayout.widget.ConstraintLayout>
 
         </com.google.android.material.card.MaterialCardView>
-
-
-
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 

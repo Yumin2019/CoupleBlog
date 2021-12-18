@@ -23,8 +23,11 @@ data class CB_Days(
     var strTitle: String? = "",             // 제목
     var strDesc: String? = "",              // Description
     var strIconRes: String? = "",           // Icon Res string
-    var iDaysType: Int? = 0,                // Days Type
-    var iDaysTimeFormat: Int? = 0,          // Days Time Format type
+    var iEventType: Int? = 0,               // Days Type
+    var iTimeFormat: Int? = 0,              // Days Time Format type
     var strRecentEditDate: String? = "",    // 최근 편집 시기
     var strRecentEditUid: String? = "",     // 최근 편입자
+    var iOrderIdx: Int? = 0                 // order idx
 )
+
+

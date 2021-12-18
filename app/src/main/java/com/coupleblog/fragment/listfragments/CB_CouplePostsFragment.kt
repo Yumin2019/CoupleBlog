@@ -18,6 +18,7 @@ class CB_CouplePostsFragment: CB_PostListFragment()
         if(coupleUid.isNullOrEmpty())
             return null
 
+        // empty string will make crash.
         return CB_AppFunc.getUserPostsRoot().child(coupleUid)
     }
 }

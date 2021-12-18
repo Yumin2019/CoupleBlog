@@ -1,9 +1,11 @@
 package com.coupleblog.singleton
+import androidx.lifecycle.ViewModel
 
 import android.graphics.Bitmap
 import android.util.Log
 import androidx.lifecycle.MutableLiveData
 import androidx.recyclerview.widget.RecyclerView
+import com.coupleblog.ListLiveData
 import com.coupleblog.R
 import com.coupleblog.adapter.CB_EmailAdapter
 import com.coupleblog.fragment.PAGE_TYPE
@@ -163,6 +165,27 @@ class CB_ViewModel
                        else                R.drawable.ic_baseline_check_box_outline_blank_24
 
             (viewHolder as CB_EmailAdapter.ViewHolder).binding.checkboxImageView.setImageResource(iRes)
+        }
+
+        // DaysFragment
+        var iPastEventCount     = MutableLiveData(0)
+        var iFutureEventCount   = MutableLiveData(0)
+        var iAnnualEventCount   = MutableLiveData(0)
+
+        // NewDaysFragment
+        var strDaysTitle        = MutableLiveData("")
+        var strDaysDesc         = MutableLiveData("")
+        var strDaysIconRes      = MutableLiveData("")
+        var iDaysEventType      = MutableLiveData(0)
+        var iDaysTimeFormat     = MutableLiveData(0)
+
+        fun resetNewDaysFragmentLiveData()
+        {
+            strDaysTitle.postValue("")
+            strDaysDesc.postValue("")
+            strDaysIconRes.postValue("")
+            iDaysEventType.postValue(0)
+            iDaysTimeFormat.postValue(0)
         }
     }
 }

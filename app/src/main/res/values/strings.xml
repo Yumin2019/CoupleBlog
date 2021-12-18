@@ -692,7 +692,7 @@ Couple blog 은(는) 정보주체의 이용정보를 저장하고 수시로 불�
     <string name="str_years">Years</string>
     <string name="str_past_event">Past Event</string>
     <string name="str_future_event">Future Event</string>
-    <string name="str_annual_event">Annual Event</string>
+    <string name="str_annual_event">Anniversary</string>
     <string name="str_write_event">Write Event</string>
     <string name="str_edit_event">Edit Event</string>
 
@@ -829,7 +829,6 @@ Couple blog 은(는) 정보주체의 이용정보를 저장하고 수시로 불�
     <string name="str_warning">Warning</string>
     <string name="str_information">Information</string>
     <string name="str_done">Done</string>
-
     <string name="str_auto_login_success">Auto login was successful.</string>
     <string name="str_send_mail_success">Sending mail was successful.</string>
     <string name="str_mail_deleted">You deleted this mail.</string>
@@ -841,5 +840,5 @@ Couple blog 은(는) 정보주체의 이용정보를 저장하고 수시로 불�
     <string name="str_comment_edited">You edited this comment.</string>
     <string name="str_comment_deleted">You deleted this comment.</string>
     <string name="str_registration_success">Registration was successful.</string>
-    <string name="str_days_empty_desc">You can add an event with edit button</string>
+    <string name="str_days_empty_desc">You can add an event with menu</string>
 </resources>

@@ -13,6 +13,7 @@ import com.coupleblog.singleton.CB_SingleSystemMgr
 import com.coupleblog.R
 import android.view.MotionEvent
 import android.view.View.OnTouchListener
+import androidx.annotation.IdRes
 import com.google.android.material.snackbar.Snackbar
 
 
@@ -99,7 +100,7 @@ abstract class CB_BaseFragment() : Fragment()
         firstTime = secondTime
     }
 
-    fun beginAction(actionId: Int, currentId: Int, args: Bundle? = null)
+    fun beginAction(@IdRes actionId: Int, @IdRes currentId: Int, args: Bundle? = null)
     {
         val navController = findNavController()
         if(navController.currentDestination?.id != currentId)

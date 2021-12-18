@@ -10,6 +10,17 @@
             name="fragment"
             type="com.coupleblog.fragment.days.CB_NewDaysFragment" />
 
+        <variable
+            name="viewModel"
+            type="com.coupleblog.singleton.CB_ViewModel.Companion" />
+
+        <variable
+            name="eventAdapter"
+            type="android.widget.ArrayAdapter"/>
+
+        <variable
+            name="timeFormatAdapter"
+            type="android.widget.ArrayAdapter"/>
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout
@@ -53,6 +64,7 @@
                             style="@style/post_title_text_view"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
+                            android:text="@={viewModel.strDaysTitle}"
                             android:maxLength="30"
                             android:maxLines="1"
                             android:textAlignment="viewStart"
@@ -65,6 +77,7 @@
 
                     <ImageView
                         android:id="@+id/post_image_view"
+                        android:onClick="@{()->fragment.iconButton()}"
                         android:layout_width="@dimen/days_icon_item_size"
                         android:layout_height="@dimen/days_icon_item_size"
                         android:adjustViewBounds="true"
@@ -98,7 +111,7 @@
                         app:layout_constraintWidth_max="500dp">
 
                         <AutoCompleteTextView
-                            android:id="@+id/item_text_view_1"
+                            android:id="@+id/event_auto_complete_text_view"
                             android:layout_width="match_parent"
                             android:layout_height="match_parent"
                             android:layout_marginTop="4dp"
@@ -107,7 +120,8 @@
                             android:inputType="none"
                             android:paddingStart="8dp"
                             android:paddingEnd="8dp"
-                            android:text="@string/str_future_event"
+                            bind:adapter="@{eventAdapter}"
+                            android:text="@string/str_past_event"
                             android:textSize="24sp" />
 
                     </com.google.android.material.textfield.TextInputLayout>
@@ -147,7 +161,7 @@
                         app:layout_constraintWidth_max="500dp">
 
                         <AutoCompleteTextView
-                            android:id="@+id/item_text_view_2"
+                            android:id="@+id/time_format_auto_complete_text_view"
                             android:layout_width="match_parent"
                             android:layout_height="match_parent"
                             android:layout_marginTop="4dp"
@@ -156,6 +170,7 @@
                             android:inputType="none"
                             android:paddingStart="8dp"
                             android:paddingEnd="8dp"
+                            bind:adapter="@{timeFormatAdapter}"
                             android:text="@string/str_days"
                             android:textSize="24sp" />
 
@@ -193,6 +208,7 @@
                         <com.google.android.material.textfield.TextInputEditText
                             android:id="@+id/text_edit_text"
                             style="@style/normal_text_style"
+                            android:text="@={viewModel.strDaysDesc}"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:layout_marginStart="@dimen/margin_16dp"
@@ -220,6 +236,7 @@
                     <com.google.android.material.button.MaterialButton
                         android:id="@+id/ok_button"
                         style="@style/mtrl_button_style"
+                        android:onClick="@{()->fragment.okButton()}"
                         android:layout_width="0dp"
                         android:layout_height="@dimen/button_height"
                         android:layout_marginStart="@dimen/margin_16dp"
@@ -235,6 +252,7 @@
                 </androidx.constraintlayout.widget.ConstraintLayout>
 
             </ScrollView>
+
         </com.google.android.material.card.MaterialCardView>
 
     </androidx.constraintlayout.widget.ConstraintLayout>

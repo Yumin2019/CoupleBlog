@@ -167,7 +167,29 @@
         android:name="com.coupleblog.fragment.days.CB_DaysFragment"
         android:label="fragment_cb_days"
         tools:layout="@layout/fragment_cb_days" >
+        <action
+            android:id="@+id/action_CB_DaysFragment_to_CB_NewDaysFragment"
+            app:destination="@id/CB_NewDaysFragment" />
+        <action
+            android:id="@+id/action_CB_DaysFragment_to_CB_DaysDetailFragment"
+            app:destination="@id/CB_DaysDetailFragment" />
+    </fragment>
 
+    <fragment
+        android:id="@+id/CB_DaysDetailFragment"
+        android:name="com.coupleblog.fragment.days.CB_DaysDetailFragment"
+        android:label="fragment_cb_days_detail"
+        tools:layout="@layout/fragment_cb_days_detail" >
+        <action
+            android:id="@+id/action_CB_DaysDetailFragment_to_CB_NewDaysFragment"
+            app:destination="@id/CB_NewDaysFragment" />
+    </fragment>
+
+    <fragment
+        android:id="@+id/CB_NewDaysFragment"
+        android:name="com.coupleblog.fragment.days.CB_NewDaysFragment"
+        android:label="fragment_cb_new_days"
+        tools:layout="@layout/fragment_cb_new_days" >
     </fragment>
 
 </navigation>

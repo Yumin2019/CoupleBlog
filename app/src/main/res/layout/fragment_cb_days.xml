@@ -25,36 +25,118 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent">
 
+        <androidx.core.widget.NestedScrollView
+            android:id="@+id/scroll_view"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
             <androidx.constraintlayout.widget.ConstraintLayout
                 android:layout_width="match_parent"
-                android:layout_height="match_parent">
+                android:layout_height="wrap_content">
 
                 <TextView
-                    android:id="@+id/item_empty_text_view"
-                    android:visibility="gone"
+                    android:id="@+id/past_event_text_view"
                     style="@style/post_title_text_view"
-                    android:layout_width="wrap_content"
+                    bind:visibility="@{viewModel.IPastEventCount}"
+                    android:textAlignment="center"
+                    android:layout_width="0dp"
                     android:layout_height="wrap_content"
+                    android:layout_gravity="center"
                     android:paddingStart="@dimen/margin_16dp"
                     android:paddingEnd="@dimen/margin_16dp"
-                    android:text="@string/str_days_empty_desc"
-                    app:layout_constraintBottom_toBottomOf="parent"
+                    android:text="@string/str_past_event"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toTopOf="parent" />
 
                 <androidx.recyclerview.widget.RecyclerView
-                    android:id="@+id/days_recycler_view"
+                    android:id="@+id/past_event_recycler_view"
+                    bind:visibility="@{viewModel.IPastEventCount}"
                     android:layout_width="0dp"
-                    android:layout_height="0dp"
+                    android:layout_height="wrap_content"
+                    android:nestedScrollingEnabled="false"
                     android:overScrollMode="never"
-                    tools:listitem="@layout/cb_days_item"
-                    app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toTopOf="parent" />
+                    app:layout_constraintTop_toBottomOf="@+id/past_event_text_view"
+                    tools:itemCount="3"
+                    tools:listitem="@layout/cb_days_item" />
 
-            </androidx.constraintlayout.widget.ConstraintLayout>
+                <TextView
+                    android:id="@+id/future_event_text_view"
+                    style="@style/post_title_text_view"
+                    bind:visibility="@{viewModel.IFutureEventCount}"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:layout_marginTop="@dimen/margin_16dp"
+                    android:paddingStart="@dimen/margin_16dp"
+                    android:paddingEnd="@dimen/margin_16dp"
+                    android:text="@string/str_future_event"
+                    android:textAlignment="center"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/past_event_recycler_view" />
+
+                <androidx.recyclerview.widget.RecyclerView
+                    android:id="@+id/future_event_recycler_view"
+                    bind:visibility="@{viewModel.IFutureEventCount}"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:nestedScrollingEnabled="false"
+                    android:overScrollMode="never"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintHorizontal_bias="1.0"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/future_event_text_view"
+                    tools:itemCount="3"
+                    tools:listitem="@layout/cb_days_item" />
+
+                <TextView
+                    android:id="@+id/annual_event_text_view"
+                    style="@style/post_title_text_view"
+                    bind:visibility="@{viewModel.IAnnualEventCount}"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:layout_marginTop="@dimen/margin_16dp"
+                    android:paddingStart="@dimen/margin_16dp"
+                    android:paddingEnd="@dimen/margin_16dp"
+                    android:text="@string/str_annual_event"
+                    android:textAlignment="center"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/future_event_recycler_view" />
+
+                <androidx.recyclerview.widget.RecyclerView
+                    android:id="@+id/annual_event_recycler_view"
+                    bind:visibility="@{viewModel.IAnnualEventCount}"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:nestedScrollingEnabled="false"
+                    android:overScrollMode="never"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintHorizontal_bias="1.0"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/annual_event_text_view"
+                    tools:itemCount="3"
+                    tools:listitem="@layout/cb_days_item" />
+
+                </androidx.constraintlayout.widget.ConstraintLayout>
+
+        </androidx.core.widget.NestedScrollView>
+
+        <TextView
+            android:id="@+id/item_empty_text_view"
+            bind:isEmpty="@{viewModel.IPastEventCount + viewModel.IFutureEventCount + viewModel.IAnnualEventCount}"
+            style="@style/post_title_text_view"
+            android:layout_gravity="center"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:paddingStart="@dimen/margin_16dp"
+            android:paddingEnd="@dimen/margin_16dp"
+            android:text="@string/str_days_empty_desc"
+            tools:visibility="gone" />
 
     </com.google.android.material.card.MaterialCardView>
 </layout>
