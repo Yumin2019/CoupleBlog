@@ -822,6 +822,7 @@ Couple blog 은(는) 정보주체의 이용정보를 저장하고 수시로 불�
     <string name="str_failed_to_change_read_state">Failed to change read state</string>
     <string name="str_reaction_icon_attach_failed">Reaction icon attach failed</string>
     <string name="str_you_became_couple">You became a couple.</string>
+    <string name="str_select_sticker">Select a sticker</string>
     <string name="str_unknown">Unknown</string>
     <string name="str_yes">Yes</string>
     <string name="str_no">No</string>

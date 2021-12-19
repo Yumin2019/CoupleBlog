@@ -25,11 +25,11 @@
     </style>
 
     <style name="ripple_borderless">
-        <item name="android:background">?android:attr/selectableItemBackgroundBorderless</item>
+        <item name="android:background">?android:attr/selectableItemBackground</item>
     </style>
 
     <style name="ripple_circle">
-        <item name="android:background">?android:attr/selectableItemBackground</item>
+        <item name="android:background">?android:attr/selectableItemBackgroundBorderless</item>
     </style>
 
     <style name="circle_shape_image_view">

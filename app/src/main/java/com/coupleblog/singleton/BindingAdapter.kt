@@ -1,15 +1,15 @@
 package com.coupleblog.singleton
 
 import android.graphics.Bitmap
-import android.util.Log
 import android.view.View
 import android.widget.ArrayAdapter
 import android.widget.AutoCompleteTextView
 import android.widget.ImageView
 import android.widget.TextView
+import androidx.annotation.ColorRes
+import androidx.annotation.DrawableRes
 import androidx.databinding.BindingAdapter
 import androidx.recyclerview.widget.RecyclerView
-import com.bumptech.glide.Glide
 import com.coupleblog.R
 import com.coupleblog.dialog.EDIT_FIELD_TYPE
 import com.coupleblog.fragment.PAGE_TYPE
@@ -22,8 +22,6 @@ import com.google.firebase.database.DataSnapshot
 import com.google.firebase.database.DatabaseError
 import com.google.firebase.database.ValueEventListener
 import com.google.firebase.database.ktx.getValue
-
-
 
 @BindingAdapter("bind:bitmap")
 fun setBitmapImg(imageView: ImageView, bitmap: Bitmap?)
@@ -390,6 +388,18 @@ fun setLayoutManager(recyclerView: RecyclerView, layoutManager: RecyclerView.Lay
     recyclerView.layoutManager = layoutManager
 }
 
+@BindingAdapter("bind:has_fixed_size")
+fun setHasFixedSize(recyclerView: RecyclerView, boolean: Boolean)
+{
+    recyclerView.setHasFixedSize(boolean)
+}
+
+@BindingAdapter("bind:item_view_cache_size")
+fun setItemViewCacheSize(recyclerView: RecyclerView, iSize: Int)
+{
+    recyclerView.setItemViewCacheSize(iSize)
+}
+
 @BindingAdapter("bind:adapter")
 fun setAdapter(recyclerView: RecyclerView, adapter: RecyclerView.Adapter<*>?)
 {
@@ -488,19 +498,38 @@ fun setDateText(textView: TextView, strDate: String?)
     textView.text = CB_AppFunc.getDateStringForOutput(calendar)
 }
 
-@BindingAdapter("bind:drawable_id")
-fun setImage(imageView: ImageView, iResIdx: Int)
+@BindingAdapter("bind:drawable_name")
+fun setImage(imageView: ImageView, strDrawableName: String?)
+{
+    if(strDrawableName.isNullOrEmpty())
+    {
+        imageView.setImageDrawable(null)
+        return
+    }
+
+    val iResIdx = CB_AppFunc.getDrawableIdentifier(strDrawableName)
+    if(iResIdx == 0)
+    {
+        imageView.setImageDrawable(null)
+        return
+    }
+
+    imageView.setImageResource(iResIdx)
+}
+
+@BindingAdapter("bind:drawable")
+fun setImage(imageView: ImageView, @DrawableRes iResIdx: Int)
 {
     imageView.setImageResource(iResIdx)
 }
 
-@BindingAdapter("bind:color_id")
-fun setImageColor(imageView: ImageView, iColorRes: Int)
+@BindingAdapter("bind:image_color")
+fun setImageColor(imageView: ImageView, @ColorRes iColorRes: Int)
 {
-    if(iColorRes == -1)
-        return
+    if(iColorRes == -1) return
     imageView.imageTintList = CB_AppFunc.getColorStateList(iColorRes)
 }
+
 @BindingAdapter("bind:icon_image")
 fun setIconImage(imageView: ImageView, iIconType: Int)
 {

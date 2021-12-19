@@ -21,7 +21,7 @@
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:id="@+id/container"
-        android:layout_width="250dp"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:background="?android:attr/selectableItemBackground">
 
@@ -50,8 +50,8 @@
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
-            bind:drawable_id="@{iIconRes}"
-            bind:color_id="@{iColorRes}"
+            bind:drawable="@{iIconRes}"
+            bind:image_color="@{iColorRes}"
             tools:src="@drawable/haha_icon" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>

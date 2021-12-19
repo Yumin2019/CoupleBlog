@@ -183,7 +183,7 @@ class CB_ViewModel
         {
             strDaysTitle.postValue("")
             strDaysDesc.postValue("")
-            strDaysIconRes.postValue("")
+            strDaysIconRes.postValue(CB_AppFunc.getResourceName(R.drawable.question))
             iDaysEventType.postValue(0)
             iDaysTimeFormat.postValue(0)
         }

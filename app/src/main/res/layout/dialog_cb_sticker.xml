@@ -7,28 +7,52 @@
     <data class="com.coupleblog.dialog.StickerBinding">
 
         <variable
-            name="dialog"
-            type="com.coupleblog.dialog.CB_StickerDialog" />
+            name="iStickerSize"
+            type="Integer" />
+
+        <variable
+            name="adapter"
+            type="androidx.recyclerview.widget.RecyclerView.Adapter" />
+
+        <variable
+            name="layoutManager"
+            type="androidx.recyclerview.widget.RecyclerView.LayoutManager" />
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout
-        android:background="@color/black"
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 
         <androidx.constraintlayout.widget.ConstraintLayout
             android:id="@+id/floating_layout"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:padding="@dimen/normal_margin"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/normal_margin"
+            android:layout_marginEnd="@dimen/normal_margin"
+            android:background="@drawable/rounded_border"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
             app:layout_constraintWidth_max="@dimen/button_max_length">
 
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/sticker_recycler_view"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="@dimen/normal_margin"
+                android:layout_marginTop="@dimen/normal_margin"
+                android:layout_marginEnd="@dimen/normal_margin"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                bind:adapter="@{adapter}"
+                bind:has_fixed_size="@{true}"
+                bind:item_view_cache_size="@{iStickerSize}"
+                bind:layout_manager="@{layoutManager}" />
+
         </androidx.constraintlayout.widget.ConstraintLayout>
 
     </androidx.constraintlayout.widget.ConstraintLayout>
-
 </layout>

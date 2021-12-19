@@ -7,6 +7,7 @@ import android.content.*
 import android.content.pm.ActivityInfo
 import android.content.pm.PackageManager
 import android.content.res.ColorStateList
+import android.content.res.Resources
 import android.database.Cursor
 import android.graphics.*
 import android.graphics.drawable.BitmapDrawable
@@ -27,6 +28,7 @@ import android.view.WindowManager
 import android.view.inputmethod.InputMethodManager
 import android.widget.EditText
 import android.widget.ImageView
+import androidx.annotation.AnyRes
 import androidx.annotation.RequiresApi
 import androidx.appcompat.content.res.AppCompatResources
 import androidx.core.app.ActivityCompat
@@ -38,6 +40,7 @@ import com.coupleblog.MainActivityBinding
 import com.coupleblog.R
 import com.coupleblog.model.CB_User
 import com.coupleblog.base.CB_BaseActivity
+import com.coupleblog.singleton.CB_AppFunc.Companion.convertDpToPixel
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import com.google.android.material.snackbar.Snackbar
 import com.google.firebase.auth.FirebaseAuth
@@ -383,6 +386,25 @@ class CB_AppFunc
             _coupleUser = CB_User() // default value
         }
 
+        fun getResourceName(@AnyRes iRes: Int): String
+        {
+            return application.resources.getResourceName(iRes)
+        }
+
+        fun getResIdentifier(strRes: String, strResType: String): Int
+        {
+            val iRes = application.resources.getIdentifier(strRes, strResType, application.packageName)
+            if(iRes == 0) Log.e(strTag, "getResWithName: iRes value is invalid")
+            return iRes
+        }
+
+        fun getDrawableIdentifier(strDrawableRes: String): Int
+        {
+            val iRes = application.resources.getIdentifier(strDrawableRes, "drawable", application.packageName)
+            if(iRes == 0) Log.e(strTag, "getResWithName: iRes value is invalid")
+            return iRes
+        }
+
         // Software 할당 방식으로 비트맵을 설정한다.
         // java.lang.IllegalArgumentException: Software rendering doesn't support hardware bitmaps
         // https://developer.android.com/reference/android/graphics/ImageDecoder#setMutableRequired(boolean)
@@ -564,6 +586,221 @@ class CB_AppFunc
         fun requestPermission(activity: Activity, strPermission: String)
         {
             ActivityCompat.requestPermissions(activity, arrayOf(strPermission), PERMISSION_REQUEST)
+        }
+
+        val stickerItemSize: Int by lazy { convertDpToPixel(50) }
+        val stickerOptions: BitmapFactory.Options by lazy {
+            BitmapFactory.Options().apply {
+                // First decode with inJustDecodeBounds=true to check dimensions
+                inJustDecodeBounds = true
+                BitmapFactory.decodeResource(application.resources, R.drawable.android,this)
+
+                // Calculate inSampleSize
+                inSampleSize = calculateInSampleSize(this, stickerItemSize, stickerItemSize)
+
+                // Decode bitmap with inSampleSize set
+                inJustDecodeBounds = false
+            }
+        }
+
+        val stickerList: IntArray by lazy {
+            intArrayOf(
+                R.drawable.android,
+                R.drawable.arch_1,
+                R.drawable.arch_2,
+                R.drawable.arch_3,
+                R.drawable.arch_4,
+                R.drawable.ballon_1,
+                R.drawable.ballon_2,
+                R.drawable.bear_1,
+                R.drawable.bear_2,
+                R.drawable.bed_1,
+                R.drawable.bed_2,
+                R.drawable.bed_3,
+                R.drawable.bed_4,
+                R.drawable.bed_5,
+                R.drawable.bed_6,
+                R.drawable.bed_7,
+                R.drawable.bikini_1,
+                R.drawable.bikini_2,
+                R.drawable.bird_1,
+                R.drawable.bird_2,
+                R.drawable.bird_3,
+                R.drawable.bird_4,
+                R.drawable.bird_5,
+                R.drawable.bird_7,
+                R.drawable.bouquet_1,
+                R.drawable.bouquet_2,
+                R.drawable.bouquet_3,
+                R.drawable.bouquet_4,
+                R.drawable.bride_1,
+                R.drawable.bride_2,
+                R.drawable.bride_3,
+                R.drawable.cake_1,
+                R.drawable.cake_2,
+                R.drawable.cake_3,
+                R.drawable.cake_4,
+                R.drawable.cake_5,
+                R.drawable.cake_6,
+                R.drawable.camera_1,
+                R.drawable.camera_2,
+                R.drawable.candle,
+                R.drawable.christmas_1,
+                R.drawable.christmas_2,
+                R.drawable.christmas_3,
+                R.drawable.christmas_4,
+                R.drawable.clover,
+                R.drawable.condom_1,
+                R.drawable.condom_2,
+                R.drawable.abstinence,
+                R.drawable.costume_1,
+                R.drawable.costume_2,
+                R.drawable.costume_3,
+                R.drawable.costume_4,
+                R.drawable.costume_5,
+                R.drawable.costume_6,
+                R.drawable.costume_7,
+                R.drawable.couple_1,
+                R.drawable.couple_2,
+                R.drawable.couple_3,
+                R.drawable.couple_5,
+                R.drawable.couple_6,
+                R.drawable.couple_7,
+                R.drawable.couple_8,
+                R.drawable.couple_blog,
+                R.drawable.diamond_1,
+                R.drawable.diamond_2,
+                R.drawable.diamond_3,
+                R.drawable.dinner_1,
+                R.drawable.dinner_2,
+                R.drawable.dinner_3,
+                R.drawable.dress_1,
+                R.drawable.dress_2,
+                R.drawable.dress_3,
+                R.drawable.dress_4,
+                R.drawable.dress_5,
+                R.drawable.dress_6,
+                R.drawable.dress_7,
+                R.drawable.drink_1,
+                R.drawable.drink_2,
+                R.drawable.drink_3,
+                R.drawable.family,
+                R.drawable.flower_1,
+                R.drawable.flower_10,
+                R.drawable.flower_11,
+                R.drawable.flower_2,
+                R.drawable.flower_3,
+                R.drawable.flower_4,
+                R.drawable.flower_5,
+                R.drawable.flower_6,
+                R.drawable.flower_7,
+                R.drawable.flower_8,
+                R.drawable.flower_9,
+                R.drawable.gender,
+                R.drawable.gift_1,
+                R.drawable.gift_10,
+                R.drawable.gift_11,
+                R.drawable.gift_2,
+                R.drawable.gift_3,
+                R.drawable.gift_4,
+                R.drawable.gift_5,
+                R.drawable.gift_6,
+                R.drawable.gift_7,
+                R.drawable.gift_8,
+                R.drawable.gift_9,
+                R.drawable.girl,
+                R.drawable.groom_1,
+                R.drawable.groom_2,
+                R.drawable.groom_3,
+                R.drawable.hand,
+                R.drawable.heart_1,
+                R.drawable.heart_2,
+                R.drawable.heart_3,
+                R.drawable.heart_4,
+                R.drawable.heart_5,
+                R.drawable.heart_6,
+                R.drawable.heart_7,
+                R.drawable.heart_8,
+                R.drawable.heels_1,
+                R.drawable.heels_2,
+                R.drawable.house_1,
+                R.drawable.house_2,
+                R.drawable.ice_cream_1,
+                R.drawable.ice_cream_2,
+                R.drawable.just_married,
+                R.drawable.key_1,
+                R.drawable.key_2,
+                R.drawable.key_3,
+                R.drawable.kiss_1,
+                R.drawable.kiss_2,
+                R.drawable.kiss_3,
+                R.drawable.letter_1,
+                R.drawable.letter_2,
+                R.drawable.letter_3,
+                R.drawable.lipstick,
+                R.drawable.money_1,
+                R.drawable.money_2,
+                R.drawable.music_1,
+                R.drawable.music_2,
+                R.drawable.necklace_1,
+                R.drawable.necklace_2,
+                R.drawable.necklace_3,
+                R.drawable.necklace_4,
+                R.drawable.necklace_5,
+                R.drawable.necklace_6,
+                R.drawable.pregnant,
+                R.drawable.ring_1,
+                R.drawable.ring_2,
+                R.drawable.ring_3,
+                R.drawable.ring_4,
+                R.drawable.ring_5,
+                R.drawable.ring_6,
+                R.drawable.ring_7,
+                R.drawable.ring_8,
+                R.drawable.ring_9,
+                R.drawable.rose_1,
+                R.drawable.rose_2,
+                R.drawable.rose_3,
+                R.drawable.suit,
+                R.drawable.sweet_1,
+                R.drawable.sweet_2,
+                R.drawable.sweet_3,
+                R.drawable.sweet_4,
+                R.drawable.sweet_5,
+                R.drawable.ticket,
+                R.drawable.time,
+                R.drawable.travel_1,
+                R.drawable.travel_2,
+                R.drawable.travel_3,
+                R.drawable.video_1,
+                R.drawable.video_2,
+                R.drawable.video_3,
+                R.drawable.video_4,
+                R.drawable.wine_1,
+                R.drawable.wine_2,
+                R.drawable.wine_3,
+                R.drawable.wine_4,
+                R.drawable.wine_5
+            )
+        }
+
+        fun calculateInSampleSize(options: BitmapFactory.Options, reqWidth: Int, reqHeight: Int): Int
+        {
+            // Raw height and width of image
+            val height = options.outHeight
+            val width = options.outWidth
+            var inSampleSize = 1
+            if (height > reqHeight || width > reqWidth)
+            {
+                val halfHeight = height / 2
+                val halfWidth = width / 2
+
+                // Calculate the largest inSampleSize value that is a power of 2 and keeps both
+                // height and width larger than the requested height and width.
+                while (halfHeight / inSampleSize >= reqHeight && halfWidth / inSampleSize >= reqWidth)
+                    inSampleSize *= 2
+            }
+            return inSampleSize
         }
 
      /*   fun requestPermissionAll(activity: Activity)
@@ -827,10 +1064,9 @@ class CB_AppFunc
             activity.overridePendingTransition(R.anim.anim_stop, R.anim.anim_stop)
         }
 
-        fun convertDpToPixel(dp: Float): Float
+        fun convertDpToPixel(dp: Int): Int
         {
-            return dp * (application.resources.displayMetrics.densityDpi.toFloat()
-                    / DisplayMetrics.DENSITY_DEFAULT.toFloat())
+            return dp * (application.resources.displayMetrics.densityDpi / DisplayMetrics.DENSITY_DEFAULT)
         }
 
         fun clearFocusing(activity: Activity)
@@ -951,7 +1187,6 @@ class CB_AppFunc
                 }
             }
         }
-
 
         fun setStatusBarTextWhite(window: Window)
         {
