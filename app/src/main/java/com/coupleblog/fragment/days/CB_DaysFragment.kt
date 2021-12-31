@@ -53,7 +53,7 @@ class CB_DaysFragment : CB_BaseFragment()
         for(i: Int in 0 until 3)
         {
             val options = FirebaseRecyclerOptions.Builder<CB_Days>()
-                .setQuery(queries[i], CB_Days::class.java)
+                .setQuery(queries[i].orderByChild("iOrderIdx"), CB_Days::class.java)
                 .build()
 
             eventAdapters.add(CB_DaysAdapter(this@CB_DaysFragment, options))

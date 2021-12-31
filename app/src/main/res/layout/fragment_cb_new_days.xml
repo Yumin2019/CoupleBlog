@@ -81,7 +81,7 @@
                         android:layout_width="@dimen/days_icon_item_size"
                         android:layout_height="@dimen/days_icon_item_size"
                         android:adjustViewBounds="true"
-                        style="@style/ripple_borderless"
+                        android:background="?android:attr/selectableItemBackground"
                         bind:drawable_name="@{viewModel.strDaysIconRes}"
                         tools:src="@drawable/question"
                         app:layout_constraintEnd_toEndOf="parent"
@@ -107,7 +107,7 @@
                         app:hintEnabled="false"
                         app:layout_constraintEnd_toEndOf="parent"
                         app:layout_constraintStart_toStartOf="parent"
-                        app:layout_constraintTop_toBottomOf="@+id/post_image_view"
+                        app:layout_constraintTop_toBottomOf="@+id/date_text_view"
                         app:layout_constraintWidth_max="@dimen/button_max_length">
 
                         <AutoCompleteTextView
@@ -120,9 +120,9 @@
                             android:inputType="none"
                             android:paddingStart="8dp"
                             android:paddingEnd="8dp"
-                            bind:adapter="@{eventAdapter}"
                             android:text="@string/str_past_event"
-                            android:textSize="24sp" />
+                            android:textSize="24sp"
+                            bind:adapter="@{eventAdapter}" />
 
                     </com.google.android.material.textfield.TextInputLayout>
 
@@ -245,6 +245,31 @@
                         app:layout_constraintEnd_toEndOf="parent"
                         app:layout_constraintStart_toStartOf="parent"
                         app:rippleColor="@color/ripple_purple" />
+
+                    <TextView
+                        android:id="@+id/date_text_view"
+                        style="@style/subtitle_text_style"
+                        android:textColor="@color/purple"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        bind:days_calendar_text="@{viewModel.strEventDate}"
+                        tools:text="@string/str_date_of_birth_exam"
+                        android:layout_marginTop="@dimen/margin_16dp"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toBottomOf="@+id/post_image_view" />
+
+                    <ImageView
+                        android:id="@+id/time_image_view"
+                        android:layout_width="@dimen/icon_image_size"
+                        android:background="?android:attr/selectableItemBackground"
+                        android:onClick="@{()->fragment.calendarButton()}"
+                        android:layout_height="@dimen/icon_image_size"
+                        android:layout_marginEnd="@dimen/normal_margin"
+                        app:layout_constraintBottom_toBottomOf="@+id/date_text_view"
+                        app:layout_constraintEnd_toStartOf="@+id/date_text_view"
+                        app:layout_constraintTop_toTopOf="@+id/date_text_view"
+                        android:src="@drawable/time" />
 
                 </androidx.constraintlayout.widget.ConstraintLayout>
 

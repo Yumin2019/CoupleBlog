@@ -9,9 +9,7 @@ import com.coupleblog.ListLiveData
 import com.coupleblog.R
 import com.coupleblog.adapter.CB_EmailAdapter
 import com.coupleblog.fragment.PAGE_TYPE
-import com.coupleblog.model.CB_Mail
-import com.coupleblog.model.CB_Post
-import com.coupleblog.model.CB_User
+import com.coupleblog.model.*
 import com.google.firebase.database.DataSnapshot
 import com.google.firebase.database.DatabaseError
 import com.google.firebase.database.ValueEventListener
@@ -174,18 +172,20 @@ class CB_ViewModel
 
         // NewDaysFragment
         var strDaysTitle        = MutableLiveData("")
+        var strEventDate        = MutableLiveData(CB_AppFunc.getDayStringForSave())
         var strDaysDesc         = MutableLiveData("")
         var strDaysIconRes      = MutableLiveData("")
-        var iDaysEventType      = MutableLiveData(0)
-        var iDaysTimeFormat     = MutableLiveData(0)
+        var iDaysEventType      = MutableLiveData(DAYS_ITEM_TYPE.PAST_EVENT.ordinal)
+        var iDaysTimeFormat     = MutableLiveData(DAYS_TIME_FORMAT.DAYS.ordinal)
 
         fun resetNewDaysFragmentLiveData()
         {
             strDaysTitle.postValue("")
+            strEventDate.postValue(CB_AppFunc.getDayStringForSave())
             strDaysDesc.postValue("")
             strDaysIconRes.postValue(CB_AppFunc.getResourceName(R.drawable.question))
-            iDaysEventType.postValue(0)
-            iDaysTimeFormat.postValue(0)
+            iDaysEventType.postValue(DAYS_ITEM_TYPE.PAST_EVENT.ordinal)
+            iDaysTimeFormat.postValue(DAYS_TIME_FORMAT.DAYS.ordinal)
         }
     }
 }

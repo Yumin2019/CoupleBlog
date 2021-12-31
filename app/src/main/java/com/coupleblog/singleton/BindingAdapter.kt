@@ -13,10 +13,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.coupleblog.R
 import com.coupleblog.dialog.EDIT_FIELD_TYPE
 import com.coupleblog.fragment.PAGE_TYPE
-import com.coupleblog.model.CB_User
-import com.coupleblog.model.GENDER
-import com.coupleblog.model.MAIL_TYPE
-import com.coupleblog.model.REACTION_TYPE
+import com.coupleblog.model.*
 import com.google.android.material.floatingactionbutton.FloatingActionButton
 import com.google.firebase.database.DataSnapshot
 import com.google.firebase.database.DatabaseError
@@ -237,7 +234,7 @@ fun setBirthDate(textView: TextView, userData: CB_User)
 
     // 20021203, without gmt offset
     val calendar = CB_AppFunc.stringToCalendar(userData.strBirthDate)
-    textView.text = CB_AppFunc.getBirthDateString(calendar)
+    textView.text = CB_AppFunc.getDateStringWithoutTime(calendar)
 }
 
 @BindingAdapter("bind:gender_idx")
@@ -324,6 +321,27 @@ fun setUserPresence(textView: TextView, userData: CB_User)
     }
 
     textView.text = strPresence
+}
+
+@BindingAdapter("bind:days_time")
+fun setDaysTime(textView: TextView, tDays: CB_Days)
+{
+    when(tDays.iTimeFormat)
+    {
+        DAYS_TIME_FORMAT.DAYS.ordinal ->
+        {
+        }
+
+        DAYS_TIME_FORMAT.MONTHS.ordinal ->
+        {
+
+        }
+
+        DAYS_TIME_FORMAT.YEARS.ordinal ->
+        {
+
+        }
+    }
 }
 
 @BindingAdapter("bind:user_uid")
@@ -496,6 +514,22 @@ fun setDateText(textView: TextView, strDate: String?)
     // UTC to Local
     val calendar = CB_AppFunc.convertUtcToLocale(strDate)
     textView.text = CB_AppFunc.getDateStringForOutput(calendar)
+}
+
+@BindingAdapter("bind:days_calendar_text")
+fun setDaysCalendarText(textView: TextView, strDate: String)
+{
+    val calendar = CB_AppFunc.stringToCalendar(strDate)
+    val iDaysEventFormat = CB_ViewModel.iDaysEventType.value!!
+    textView.text = when(iDaysEventFormat)
+    {
+        DAYS_ITEM_TYPE.ANNUAL_EVENT.ordinal ->
+        {
+            CB_AppFunc.getDayStringForOutput(calendar)
+        }
+
+        else -> {  CB_AppFunc.getDateStringWithoutTime(calendar)  }
+    }
 }
 
 @BindingAdapter("bind:drawable_name")

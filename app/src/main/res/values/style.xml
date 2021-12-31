@@ -1,10 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
 
-    <style name="test_theme" parent="Theme.AppCompat">
-
-    </style>
-
     <style name="transparent_bottom_sheet_theme" parent="Theme.Design.Light.BottomSheetDialog">
         <item name="bottomSheetStyle">@style/transparent_bottom_sheet</item>
     </style>
@@ -22,14 +18,6 @@
         <item name="android:windowAnimationStyle">@android:style/Animation.Dialog</item>
         <item name="android:windowSoftInputMode">stateUnspecified|adjustPan</item>
         <item name="android:background">@android:color/transparent</item>
-    </style>
-
-    <style name="ripple_borderless">
-        <item name="android:background">?android:attr/selectableItemBackground</item>
-    </style>
-
-    <style name="ripple_circle">
-        <item name="android:background">?android:attr/selectableItemBackgroundBorderless</item>
     </style>
 
     <style name="circle_shape_image_view">

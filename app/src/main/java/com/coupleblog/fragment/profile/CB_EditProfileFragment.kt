@@ -67,7 +67,7 @@ class CB_EditProfileFragment : CB_CameraBaseFragment(UPLOAD_TYPE.PROFILE_IMAGE)
             addOnPositiveButtonClickListener {
                 // get the past date and save it
                 val calendar = Calendar.getInstance(TimeZone.getTimeZone("UTC")).apply { timeInMillis = it }
-                val strBirthDate = CB_AppFunc.calendarToBirthdayString(calendar)
+                val strBirthDate = CB_AppFunc.calendarToDayString(calendar)
 
                 with(CB_AppFunc)
                 {

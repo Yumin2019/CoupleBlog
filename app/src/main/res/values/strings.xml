@@ -790,6 +790,7 @@ Couple blog 은(는) 정보주체의 이용정보를 저장하고 수시로 불�
     <string name="str_input_comment">Please input your comment</string>
     <string name="str_input_title">Please input your title</string>
     <string name="str_input_letter">Please input at least one letter</string>
+    <string name="str_select_icon">Please select an icon</string>
     <string name="str_input_recipient">Please specify at least one recipient.</string>
     <string name="str_check_mail">Please specify at least one mail.</string>
     <string name="str_post_confirm">Do you really want to post?</string>

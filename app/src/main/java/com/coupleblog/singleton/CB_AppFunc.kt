@@ -977,6 +977,7 @@ class CB_AppFunc
         // 저장을 위한 dateString 얻기
         fun getUniqueSuffix(): String = calendarToUniqueSuffix(getCalendarForSave())
         fun getDateStringForSave(): String = calendarToSaveString(getCalendarForSave())
+        fun getDayStringForSave(): String = calendarToDayString(getCalendarForSave())
         fun getCalendarForSave(): Calendar
         = getCurCalendar().apply {
 
@@ -987,10 +988,13 @@ class CB_AppFunc
         // gmt offset을 고려한다.
         fun calendarToUniqueSuffix(calendar: Calendar) = DateFormat.format("yyyyMMddHHmmss", calendar.time).toString()
         fun calendarToSaveString(calendar: Calendar) = DateFormat.format("yyyyMMddHHmm", calendar.time).toString()
-        fun calendarToBirthdayString(calendar: Calendar) = DateFormat.format("yyyyMMdd", calendar.time).toString() + "0000"
+        fun calendarToDayString(calendar: Calendar) = DateFormat.format("yyyyMMdd", calendar.time).toString() + "0000"
         fun getCurCalendar(): Calendar = Calendar.getInstance()
 
-        // 로컬 지역에 따라서 출력용 dateString 얻기
+        /*** 출력용 string 을 얻는다.
+         *  yyyy.MM.dd. HH:mm
+         *  @param calendar 캘린더
+         */
         fun getDateStringForOutput(calendar: Calendar): String
         {
             return if(isKorea)
@@ -1005,7 +1009,11 @@ class CB_AppFunc
             }
         }
 
-        fun getBirthDateString(calendar: Calendar): String
+        /*** 시간 없이 출력용 string 을 얻는다.
+         *  yyyy. MM. dd
+         *  @param calendar 캘린더
+         */
+        fun getDateStringWithoutTime(calendar: Calendar): String
         {
             return if(isKorea)
             {
@@ -1016,6 +1024,22 @@ class CB_AppFunc
             {
                 // 영국식 표기(나머지)
                 DateFormat.format("dd MMM yyyy", calendar.time).toString()
+            }
+        }
+
+        /*** 연도, 시간 없이 출력용 day string 을 구한다.
+         *  MM. dd
+         *  @param calendar 캘린더
+         */
+        fun getDayStringForOutput(calendar: Calendar): String
+        {
+            return if(isKorea)
+            {
+                DateFormat.format("MM. dd", calendar.time).toString()
+            }
+            else
+            {
+                DateFormat.format("dd MMM", calendar.time).toString()
             }
         }
 

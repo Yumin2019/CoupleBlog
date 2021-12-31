@@ -10,6 +10,14 @@
             name="fragment"
             type="com.coupleblog.fragment.days.CB_DaysFragment" />
 
+        <variable
+            name="strDaysTitle"
+            type="String" />
+
+        <variable
+            name="strDaysIconRes"
+            type="String" />
+
    <!--     <variable
             name="viewHolder"
             type="androidx.recyclerview.widget.RecyclerView.ViewHolder" />
@@ -38,7 +46,7 @@
                 android:layout_height="@dimen/icon_image_size"
                 android:layout_marginStart="@dimen/normal_margin"
                 tools:src="@drawable/heart_icon"
-                android:src="@drawable/heart_icon"
+                bind:drawable_name="@{strDaysIconRes}"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent" />
@@ -61,6 +69,7 @@
                 android:layout_height="wrap_content"
                 android:ellipsize="end"
                 android:maxLines="1"
+                android:text="@{strDaysTitle}"
                 android:paddingStart="@dimen/margin_16dp"
                 android:paddingEnd="@dimen/margin_16dp"
                 android:textAlignment="viewStart"

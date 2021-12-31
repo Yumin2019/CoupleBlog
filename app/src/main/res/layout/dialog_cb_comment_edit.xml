@@ -85,7 +85,6 @@
                 bind:date_text="@{commentData.strCommentDate}"
                 tools:text="10 Oct 2021" />
 
-
             <ImageView
                 android:id="@+id/reaction_image_view"
                 android:layout_width="@dimen/icon_image_size_25dp"
