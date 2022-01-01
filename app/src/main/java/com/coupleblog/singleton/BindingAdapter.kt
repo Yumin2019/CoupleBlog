@@ -14,11 +14,14 @@ import com.coupleblog.R
 import com.coupleblog.dialog.EDIT_FIELD_TYPE
 import com.coupleblog.fragment.PAGE_TYPE
 import com.coupleblog.model.*
+import com.coupleblog.singleton.CB_AppFunc.Companion.toCalendar
 import com.google.android.material.floatingactionbutton.FloatingActionButton
 import com.google.firebase.database.DataSnapshot
 import com.google.firebase.database.DatabaseError
 import com.google.firebase.database.ValueEventListener
 import com.google.firebase.database.ktx.getValue
+import java.util.*
+import kotlin.math.absoluteValue
 
 @BindingAdapter("bind:bitmap")
 fun setBitmapImg(imageView: ImageView, bitmap: Bitmap?)
@@ -326,22 +329,94 @@ fun setUserPresence(textView: TextView, userData: CB_User)
 @BindingAdapter("bind:days_time")
 fun setDaysTime(textView: TextView, tDays: CB_Days)
 {
+    val eventCalendar = tDays.strEventDate.toCalendar()
+    val curCalendar = CB_AppFunc.getCurCalendar()
+    var eventDate = eventCalendar.time
+    var curDate = curCalendar.time
+    var iMin = ((curDate.time - eventDate.time).absoluteValue / (60 * 1000)).toInt() // millisecond to minute
+    var iHour = iMin / 60
+    var iDay = iHour / 24
+    val iMonth = iDay / 30
+    val iYear = iMonth / 12
+    var strDate = ""
+
+    // 특정 시점을 기준으로 시간이 얼마나 지났는지 판단한다.
     when(tDays.iTimeFormat)
     {
         DAYS_TIME_FORMAT.DAYS.ordinal ->
         {
+            // Today / %d days
+            strDate = when (iDay) {
+                0 -> CB_AppFunc.getString(R.string.str_today)
+                else -> iDay.toString() + " " + CB_AppFunc.getString(R.string.str_days)
+            }
         }
 
         DAYS_TIME_FORMAT.MONTHS.ordinal ->
         {
-
+            // today / 1 month / %d months / %d days
+            strDate = when {
+                iDay == 0 -> CB_AppFunc.getString(R.string.str_today)
+                iMonth == 1 -> CB_AppFunc.getString(R.string.str_one_month)
+                iMonth > 1 -> iMonth.toString() + " " + CB_AppFunc.getString(R.string.str_months)
+                else -> iDay.toString() + " " + CB_AppFunc.getString(R.string.str_days)
+            }
         }
 
         DAYS_TIME_FORMAT.YEARS.ordinal ->
         {
-
+            // today / 1 year / %d years / 1 month / %d months / %d days
+            strDate = when {
+                iDay == 0 -> CB_AppFunc.getString(R.string.str_today)
+                iYear == 1 -> CB_AppFunc.getString(R.string.str_one_year)
+                iYear > 1 -> iYear.toString() + " " + CB_AppFunc.getString(R.string.str_years)
+                iMonth == 1 -> CB_AppFunc.getString(R.string.str_one_month)
+                iMonth > 1 -> iMonth.toString() + " " + CB_AppFunc.getString(R.string.str_months)
+                else -> iDay.toString() + " " + CB_AppFunc.getString(R.string.str_days)
+            }
         }
     }
+
+    when(tDays.iEventType)
+    {
+        DAYS_ITEM_TYPE.PAST_EVENT.ordinal ->
+        {
+        }
+
+        DAYS_ITEM_TYPE.FUTURE_EVENT.ordinal ->
+        {
+            if(iDay != 0)
+                strDate += " Left"
+        }
+
+        DAYS_ITEM_TYPE.ANNUAL_EVENT.ordinal ->
+        {
+            // 연도를 맞추고 날짜를 다시 계산한다.
+            eventCalendar[Calendar.YEAR] = curCalendar[Calendar.YEAR]
+            if(eventCalendar[Calendar.MONTH] == curCalendar[Calendar.MONTH] &&
+                    eventCalendar[Calendar.DAY_OF_MONTH] == curCalendar[Calendar.DAY_OF_MONTH])
+            {
+                textView.text = CB_AppFunc.getString(R.string.str_today)
+                return
+            }
+
+            if(eventCalendar <= curCalendar)
+            {
+                // past
+                eventCalendar[Calendar.YEAR] = curCalendar[Calendar.YEAR] + 1
+            }
+
+            eventDate = eventCalendar.time
+            curDate = curCalendar.time
+            iMin = ((curDate.time - eventDate.time).absoluteValue / (60 * 1000)).toInt() // millisecond to minute
+            iHour = iMin / 60
+            iDay = iHour / 24
+            strDate = iDay.toString() + " " + CB_AppFunc.getString(R.string.str_days)
+            strDate += " Left"
+        }
+    }
+
+    textView.text = strDate
 }
 
 @BindingAdapter("bind:user_uid")

@@ -974,6 +974,31 @@ class CB_AppFunc
             return@let strSaveDateFormat.parse(strDate)!!
         }
 
+        fun String?.toDate(): Date
+        {
+            if (this@toDate.isNullOrEmpty())
+            {
+                Log.e(strTag, "strDate can't be parsed")
+                return Date()
+            }
+
+            return strSaveDateFormat.parse(this@toDate)!!
+        }
+
+        fun String?.toCalendar(): Calendar
+        {
+            if(this@toCalendar.isNullOrEmpty())
+            {
+                Log.e(strTag, "stringToCalendar can't be parsed")
+                return getCurCalendar()
+            }
+
+            val date = strSaveDateFormat.parse(this@toCalendar)
+            val calendar = getCurCalendar()
+            calendar.time = date!!
+            return calendar
+        }
+
         // 저장을 위한 dateString 얻기
         fun getUniqueSuffix(): String = calendarToUniqueSuffix(getCalendarForSave())
         fun getDateStringForSave(): String = calendarToSaveString(getCalendarForSave())

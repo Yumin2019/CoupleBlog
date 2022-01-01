@@ -1,19 +1,17 @@
 package com.coupleblog.fragment.days
 
-import android.annotation.SuppressLint
 import android.os.Bundle
 import android.view.*
 import androidx.navigation.fragment.findNavController
+import androidx.recyclerview.widget.LinearLayoutManager
 import com.coupleblog.R
 import com.coupleblog.adapter.CB_DaysAdapter
-import com.coupleblog.adapter.CB_PostAdapter
 import com.coupleblog.base.CB_BaseFragment
 import com.coupleblog.fragment.DaysBinding
 import com.coupleblog.model.CB_Days
-import com.coupleblog.model.CB_Post
 import com.coupleblog.singleton.CB_AppFunc
+import com.coupleblog.singleton.CB_ViewModel
 import com.firebase.ui.database.FirebaseRecyclerOptions
-import com.google.firebase.database.Query
 
 class CB_DaysFragment : CB_BaseFragment()
 {
@@ -30,8 +28,28 @@ class CB_DaysFragment : CB_BaseFragment()
     {
         _binding = DaysBinding.inflate(inflater, container, false)
         binding.apply {
-            lifecycleOwner  = viewLifecycleOwner
-            fragment        = this@CB_DaysFragment
+            lifecycleOwner      = viewLifecycleOwner
+            fragment            = this@CB_DaysFragment
+            viewModel           = CB_ViewModel.Companion
+            pastEventAdapter    = eventAdapters[0]
+            futureEventAdapter  = eventAdapters[1]
+            annualEventAdapter  = eventAdapters[2]
+
+            pastEventLayoutManager = LinearLayoutManager(activity).apply {
+                reverseLayout = true
+                stackFromEnd  = true
+            }
+
+            futureEventLayoutManager = LinearLayoutManager(activity).apply {
+                reverseLayout = true
+                stackFromEnd  = true
+            }
+
+            annualEventLayoutManager = LinearLayoutManager(activity).apply {
+                reverseLayout = true
+                stackFromEnd  = true
+            }
+
         }
         return binding.root
     }
@@ -66,6 +84,18 @@ class CB_DaysFragment : CB_BaseFragment()
         for(i: Int in eventAdapters.indices)
         {
             eventAdapters[i].startListening()
+
+            // update the size of days item
+            CB_AppFunc.postDelayedUI(1000, null, {
+                val count = eventAdapters[i].itemCount
+                when(i)
+                {
+                    0 -> CB_ViewModel.iPastEventCount.postValue(count)
+                    1 -> CB_ViewModel.iFutureEventCount.postValue(count)
+                    2 -> CB_ViewModel.iAnnualEventCount.postValue(count)
+                }
+            })
+
         }
     }
 

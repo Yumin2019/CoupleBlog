@@ -8,16 +8,25 @@ import androidx.core.widget.doAfterTextChanged
 import androidx.navigation.fragment.findNavController
 import com.coupleblog.R
 import com.coupleblog.base.CB_BaseFragment
+import com.coupleblog.dialog.CB_LoadingDialog
 import com.coupleblog.dialog.CB_StickerDialog
+import com.coupleblog.fragment.post.CB_NewPostFragment
+import com.coupleblog.model.CB_Days
 import com.coupleblog.model.DAYS_ITEM_TYPE
 import com.coupleblog.model.DAYS_TIME_FORMAT
 import com.coupleblog.singleton.CB_AppFunc
+import com.coupleblog.singleton.CB_AppFunc.Companion.toCalendar
+import com.coupleblog.singleton.CB_AppFunc.Companion.toDate
 import com.coupleblog.singleton.CB_SingleSystemMgr
 import com.coupleblog.singleton.CB_ViewModel
 import com.google.android.material.datepicker.CalendarConstraints
 import com.google.android.material.datepicker.DateValidatorPointBackward
 import com.google.android.material.datepicker.DateValidatorPointForward
 import com.google.android.material.datepicker.MaterialDatePicker
+import com.google.firebase.FirebaseException
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.launch
+import kotlinx.coroutines.tasks.await
 import java.util.*
 
 class CB_NewDaysFragment : CB_BaseFragment()
@@ -44,6 +53,8 @@ class CB_NewDaysFragment : CB_BaseFragment()
             eventAutoCompleteTextView.setOnItemClickListener { _, _, position, _ ->
 
                 val iPosition = position + 1
+                var strEventDate = CB_ViewModel.strEventDate.value!!
+                var year = CB_AppFunc.getCurCalendar().get(Calendar.YEAR)
                 with(timeFormatAutoCompleteTextView)
                 {
                     if (iPosition == DAYS_ITEM_TYPE.ANNUAL_EVENT.ordinal)
@@ -53,17 +64,39 @@ class CB_NewDaysFragment : CB_BaseFragment()
                         setText(getString(R.string.str_days))
                         isEnabled = false
                         daysTimeFormatLayout.isEnabled = false
+
+                        // We limits this year to select for annual event
+                        strEventDate = year.toString() + strEventDate.substring(4)
                     }
                     else
                     {
                         isEnabled = true
                         daysTimeFormatLayout.isEnabled = true
                         setAdapter(getActiveTimeFormatAdapter())
+
+                        if(iPosition == DAYS_ITEM_TYPE.PAST_EVENT.ordinal)
+                        {
+                            // if the selected date is in the future, change
+                            if(strEventDate.toCalendar() > CB_AppFunc.getCurCalendar())
+                            {
+                                --year
+                                strEventDate = year.toString() + strEventDate.substring(4)
+                            }
+                        }
+                        else // FUTURE
+                        {
+                            // if the selected date is in the past, change
+                            if(strEventDate.toCalendar() <= CB_AppFunc.getCurCalendar())
+                            {
+                                ++year
+                                strEventDate = year.toString() + strEventDate.substring(4)
+                            }
+                        }
                     }
                 }
 
                 // event 타입에 따라서 연도 조정이 필요하다.
-                CB_ViewModel.strEventDate.postValue(CB_ViewModel.strEventDate.value!!)
+                CB_ViewModel.strEventDate.postValue(strEventDate)
                 CB_ViewModel.iDaysEventType.postValue(iPosition)
             }
 
@@ -194,6 +227,8 @@ class CB_NewDaysFragment : CB_BaseFragment()
         val iDaysEventType = CB_ViewModel.iDaysEventType.value!!
         val iDaysTimeFormat = CB_ViewModel.iDaysTimeFormat.value!!
         val activity = requireActivity()
+        var strListName = ""
+        var iDaysCount = 0
 
         if(strDaysTitle.isEmpty())
         {
@@ -213,27 +248,89 @@ class CB_NewDaysFragment : CB_BaseFragment()
             CB_SingleSystemMgr.showToast(R.string.str_select_icon)
             return
         }
-   }
+
+        when(iDaysEventType)
+        {
+            DAYS_ITEM_TYPE.PAST_EVENT.ordinal ->
+            {
+                strListName = "past-event-list"
+                iDaysCount = CB_ViewModel.iPastEventCount.value!!
+
+                // if the selected date is in the future, change
+                if(strEventDate.toCalendar() > CB_AppFunc.getCurCalendar())
+                {
+                    CB_SingleSystemMgr.showToast(R.string.str_invalid_date_error)
+                    return
+                }
+            }
+
+            DAYS_ITEM_TYPE.FUTURE_EVENT.ordinal ->
+            {
+                strListName = "future-event-list"
+                iDaysCount = CB_ViewModel.iFutureEventCount.value!!
+
+                if(strEventDate.toCalendar() <= CB_AppFunc.getCurCalendar())
+                {
+                    CB_SingleSystemMgr.showToast(R.string.str_invalid_date_error)
+                    return
+                }
+            }
+
+            DAYS_ITEM_TYPE.ANNUAL_EVENT.ordinal ->
+            {
+                strListName = "annual-event-list"
+                iDaysCount = CB_ViewModel.iAnnualEventCount.value!!
+            }
+        }
+
         // check the size of list
-
-
-       /* // we'll check if user really want to post
+        // we'll check if user really want to post
         CB_AppFunc.confirmDialog(activity, R.string.str_information,
-            R.string.str_post_confirm, R.drawable.info_icon, true, R.string.str_post,
+            R.string.str_days_confirm, R.drawable.info_icon, true, R.string.str_write,
             yesListener = { _, _ ->
 
-        val days = CB_Days(
+                val dialog = CB_LoadingDialog(activity).apply { show() }
 
+                CB_AppFunc.networkScope.launch {
 
+                    try
+                    {
+                        val daysListRoot = CB_AppFunc.getCouplesRoot().child(CB_AppFunc.curUser.strCoupleKey!!).child(strListName)
+                        val daysKey = daysListRoot.push().key
+                        if(daysKey == null)
+                        {
+                            // daysKey 가 없는 경우 dialog 처리
+                            launch(Dispatchers.Main)
+                            {
+                                dialog.cancel()
+                                CB_AppFunc.okDialog(activity, R.string.str_error,
+                                    R.string.str_writing_failed, R.drawable.error_icon, true)
+                            }
+                            return@launch
+                        }
 
+                        daysListRoot.child(daysKey).setValue(CB_Days(strDaysTitle, strDaysDesc, strDaysIconRes,
+                            strEventDate, iDaysEventType, iDaysTimeFormat, CB_AppFunc.getDateStringForSave(),
+                             CB_AppFunc.getUid(), iDaysCount))
 
-                            CB_AppFunc.getDateStringForSave(),
-                            CB_AppFunc.getUid(), 0
-                    )
-
-
-
-
-
-    }*/
+                        launch(Dispatchers.Main)
+                        {
+                            dialog.cancel()
+                            CB_SingleSystemMgr.showToast(R.string.str_days_added)
+                            backPressed()
+                        }
+                    }
+                    catch(e: FirebaseException)
+                    {
+                        e.printStackTrace()
+                        launch(Dispatchers.Main)
+                        {
+                            dialog.cancel()
+                            CB_AppFunc.okDialog(activity, R.string.str_error,
+                                R.string.str_writing_failed, R.drawable.error_icon, true)
+                        }
+                    }
+                }
+            }, R.string.str_cancel, null)
+   }
 }

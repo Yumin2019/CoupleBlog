@@ -107,7 +107,7 @@
                         app:hintEnabled="false"
                         app:layout_constraintEnd_toEndOf="parent"
                         app:layout_constraintStart_toStartOf="parent"
-                        app:layout_constraintTop_toBottomOf="@+id/date_text_view"
+                        app:layout_constraintTop_toBottomOf="@+id/date_layout"
                         app:layout_constraintWidth_max="@dimen/button_max_length">
 
                         <AutoCompleteTextView
@@ -246,30 +246,45 @@
                         app:layout_constraintStart_toStartOf="parent"
                         app:rippleColor="@color/ripple_purple" />
 
-                    <TextView
-                        android:id="@+id/date_text_view"
-                        style="@style/subtitle_text_style"
-                        android:textColor="@color/purple"
+                    <androidx.constraintlayout.widget.ConstraintLayout
+                        android:id="@+id/date_layout"
+                        android:onClick="@{()->fragment.calendarButton()}"
+                        android:background="?android:attr/selectableItemBackground"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        bind:days_calendar_text="@{viewModel.strEventDate}"
-                        tools:text="@string/str_date_of_birth_exam"
                         android:layout_marginTop="@dimen/margin_16dp"
                         app:layout_constraintEnd_toEndOf="parent"
                         app:layout_constraintStart_toStartOf="parent"
-                        app:layout_constraintTop_toBottomOf="@+id/post_image_view" />
+                        app:layout_constraintTop_toBottomOf="@+id/post_image_view">
 
-                    <ImageView
-                        android:id="@+id/time_image_view"
-                        android:layout_width="@dimen/icon_image_size"
-                        android:background="?android:attr/selectableItemBackground"
-                        android:onClick="@{()->fragment.calendarButton()}"
-                        android:layout_height="@dimen/icon_image_size"
-                        android:layout_marginEnd="@dimen/normal_margin"
-                        app:layout_constraintBottom_toBottomOf="@+id/date_text_view"
-                        app:layout_constraintEnd_toStartOf="@+id/date_text_view"
-                        app:layout_constraintTop_toTopOf="@+id/date_text_view"
-                        android:src="@drawable/time" />
+                        <TextView
+                            android:id="@+id/date_text_view"
+                            style="@style/subtitle_text_style"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:textColor="@color/purple"
+                            app:layout_constraintBottom_toBottomOf="parent"
+                            app:layout_constraintEnd_toEndOf="parent"
+                            app:layout_constraintHorizontal_bias="0.5"
+                            app:layout_constraintStart_toEndOf="@+id/time_image_view"
+                            app:layout_constraintStart_toStartOf="parent"
+                            app:layout_constraintTop_toTopOf="parent"
+                            bind:days_calendar_text="@{viewModel.strEventDate}"
+                            tools:text="@string/str_date_of_birth_exam" />
+
+                        <ImageView
+                            android:id="@+id/time_image_view"
+                            android:layout_width="@dimen/icon_image_size"
+                            android:layout_height="@dimen/icon_image_size"
+                            android:layout_marginEnd="@dimen/normal_margin"
+                            android:src="@drawable/time"
+                            app:layout_constraintBottom_toBottomOf="@+id/date_text_view"
+                            app:layout_constraintEnd_toStartOf="@+id/date_text_view"
+                            app:layout_constraintHorizontal_bias="0.5"
+                            app:layout_constraintStart_toStartOf="parent"
+                            app:layout_constraintTop_toTopOf="@+id/date_text_view" />
+
+                    </androidx.constraintlayout.widget.ConstraintLayout>
 
                 </androidx.constraintlayout.widget.ConstraintLayout>
 

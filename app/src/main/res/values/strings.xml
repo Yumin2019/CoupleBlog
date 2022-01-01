@@ -706,6 +706,11 @@ Couple blog 은(는) 정보주체의 이용정보를 저장하고 수시로 불�
     <string name="str_date_of_birth">Date of birth</string>
     <string name="str_gender">Gender</string>
     <string name="str_not_set">Not set</string>
+
+    <string name="str_today">Today</string>
+    <string name="str_one_month">1 month</string>
+    <string name="str_one_year">1 year</string>
+
     <string name="str_joined_n_days_ago">Joined Couple Blog %d days ago</string>
     <string name="str_joined_one_day_ago">Joined Couple Blog 1 day ago</string>
     <string name="str_online">◆ Online</string>
@@ -775,6 +780,7 @@ Couple blog 은(는) 정보주체의 이용정보를 저장하고 수시로 불�
     <string name="str_ok">OK</string>
     <string name="str_edit">Edit</string>
     <string name="str_register">Register</string>
+    <string name="str_write">Write</string>
     <string name="str_post">Post</string>
     <string name="str_send">Send</string>
     <string name="str_unspecified">Unspecified</string>
@@ -793,6 +799,7 @@ Couple blog 은(는) 정보주체의 이용정보를 저장하고 수시로 불�
     <string name="str_select_icon">Please select an icon</string>
     <string name="str_input_recipient">Please specify at least one recipient.</string>
     <string name="str_check_mail">Please specify at least one mail.</string>
+    <string name="str_days_confirm">Do you really want to write?</string>
     <string name="str_post_confirm">Do you really want to post?</string>
     <string name="str_discard_msg">Do you really want to discard?</string>
     <string name="str_delete_msg">Do you really want to delete?</string>
@@ -802,6 +809,7 @@ Couple blog 은(는) 정보주체의 이용정보를 저장하고 수시로 불�
     <string name="str_comment_hint">Write a comment…</string>
     <string name="str_password_again_error">Password isn\'t same</string>
     <string name="str_invalid_format_error">It\'s invalid format</string>
+    <string name="str_invalid_date_error">It\'s invalid date</string>
     <string name="str_sign_in_failed">Failed to sign in</string>
     <string name="str_sign_up_failed">Failed to sign out</string>
     <string name="str_failed_to_upload_image">Failed to upload image</string>
@@ -811,6 +819,7 @@ Couple blog 은(는) 정보주체의 이용정보를 저장하고 수시로 불�
     <string name="str_user_is_couple_already">This user is already a couple</string>
     <string name="str_value_update_failed">Value update failed</string>
     <string name="str_post_failed">Post failed</string>
+    <string name="str_writing_failed">Writing failed</string>
     <string name="str_mail_send_failed">Failed to send mail</string>
     <string name="str_user_info_load_failed">User information load failed</string>
     <string name="str_comment_list_load_failed">Comment list load failed</string>
@@ -837,10 +846,10 @@ Couple blog 은(는) 정보주체의 이용정보를 저장하고 수시로 불�
     <string name="str_deleted_these">You deleted these.</string>
     <string name="str_post_deleted">You deleted this post.</string>
     <string name="str_post_edited">You edited this post.</string>
+    <string name="str_days_added">You wrote days item.</string>
     <string name="str_post_posted">Posting was successful.</string>
     <string name="str_comment_posted">You posted a comment.</string>
     <string name="str_comment_edited">You edited this comment.</string>
     <string name="str_comment_deleted">You deleted this comment.</string>
     <string name="str_registration_success">Registration was successful.</string>
-    <string name="str_days_empty_desc">You can add an event with menu</string>
 </resources>
