@@ -1,5 +1,6 @@
 package com.coupleblog.dialog
 
+import android.app.Activity
 import android.app.Dialog
 import android.content.Context
 import android.graphics.Color
@@ -8,7 +9,7 @@ import android.view.ViewGroup
 import com.coupleblog.singleton.CB_SingleSystemMgr
 import com.coupleblog.R
 
-class CB_LoadingDialog(context: Context, callbackFunc: ((dialog: Dialog) -> Unit)? = null) : Dialog(context)
+class CB_LoadingDialog(context: Activity, callbackFunc: ((dialog: Dialog) -> Unit)? = null) : Dialog(context)
 {
     init
     {

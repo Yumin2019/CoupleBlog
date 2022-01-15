@@ -103,11 +103,10 @@
         <action
             android:id="@+id/action_CB_PostDetailFragment_to_CB_NewPostFragment"
             app:destination="@id/CB_NewPostFragment">
-
         <argument android:name="strPostKey" app:nullable="false"
             app:argType="string" android:defaultValue=""/>
-
         </action>
+
         <action
             android:id="@+id/action_CB_PostDetailFragment_to_CB_ProfileInfoFragment"
             app:destination="@id/CB_ProfileInfoFragment">
@@ -180,9 +179,20 @@
         android:name="com.coupleblog.fragment.days.CB_DaysDetailFragment"
         android:label="fragment_cb_days_detail"
         tools:layout="@layout/fragment_cb_days_detail" >
+
         <action
             android:id="@+id/action_CB_DaysDetailFragment_to_CB_NewDaysFragment"
-            app:destination="@id/CB_NewDaysFragment" />
+            app:destination="@id/CB_NewDaysFragment">
+                <argument android:name="strDaysKey" app:nullable="false"
+                    app:argType="string" android:defaultValue=""/>
+        </action>
+
+        <action
+            android:id="@+id/action_CB_DaysDetailFragment_to_CB_ProfileInfoFragment"
+            app:destination="@id/CB_ProfileInfoFragment">
+            <argument android:name="strUid" app:nullable="false"
+                app:argType="string" android:defaultValue=""/>
+        </action>
     </fragment>
 
     <fragment

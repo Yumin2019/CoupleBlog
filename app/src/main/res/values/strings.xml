@@ -751,6 +751,8 @@ Couple blog 은(는) 정보주체의 이용정보를 저장하고 수시로 불�
     <string name="str_sad_icon">Sad icon</string>
     <string name="str_edit_post">Edit post</string>
     <string name="str_delete_post">Delete post</string>
+    <string name="str_edit_days">Edit days</string>
+    <string name="str_delete_days">Delete days</string>
     <string name="str_edit_comment">Edit comment</string>
     <string name="str_delete_mail">Delete mail</string>
     <string name="str_reply_mail">Reply</string>

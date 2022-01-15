@@ -300,7 +300,7 @@ class CB_PostDetailFragment: CB_BaseFragment()
             yesListener = { _, _ ->
 
                 // if user really want to delete, delete comment
-                val dialog = CB_LoadingDialog(requireContext()).apply { show() }
+                val dialog = CB_LoadingDialog(requireActivity()).apply { show() }
 
                 CB_AppFunc.networkScope.launch {
 
@@ -437,14 +437,14 @@ class CB_PostDetailFragment: CB_BaseFragment()
         }
     }
 
-    fun editPost()
+    private fun editPost()
     {
         // move to NewPostFragment for editing
         val arguments = bundleOf(ARGU_POST_KEY to postKey)
         beginAction(R.id.action_CB_PostDetailFragment_to_CB_NewPostFragment, R.id.CB_PostDetailFragment, arguments)
     }
 
-    fun deletePost()
+    private fun deletePost()
     {
         if(CB_SingleSystemMgr.isDialog(CB_SingleSystemMgr.DIALOG_TYPE.LOADING_DIALOG))
             return
@@ -456,7 +456,7 @@ class CB_PostDetailFragment: CB_BaseFragment()
             yesListener = { _, _ ->
 
                 // if user really want to delete, delete post
-                val dialog = CB_LoadingDialog(requireContext()).apply { show() }
+                val dialog = CB_LoadingDialog(requireActivity()).apply { show() }
 
                 CB_AppFunc.networkScope.launch {
 

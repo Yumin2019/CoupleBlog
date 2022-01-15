@@ -16,7 +16,6 @@ import android.view.View.OnTouchListener
 import androidx.annotation.IdRes
 import com.google.android.material.snackbar.Snackbar
 
-
 abstract class CB_BaseFragment() : Fragment()
 {
     val strTag: String = javaClass.simpleName

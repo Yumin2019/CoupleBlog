@@ -10,6 +10,10 @@
             name="fragment"
             type="com.coupleblog.fragment.days.CB_DaysDetailFragment" />
 
+        <variable
+            name="viewModel"
+            type="com.coupleblog.singleton.CB_ViewModel.Companion" />
+
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout
@@ -17,9 +21,9 @@
         android:layout_height="match_parent">
 
         <com.google.android.material.card.MaterialCardView
+            style="@style/card_view_style"
             android:layout_width="0dp"
             android:layout_height="0dp"
-            style="@style/card_view_style"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
@@ -34,110 +38,158 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content">
 
-                    <com.google.android.material.textfield.TextInputLayout
-                        android:id="@+id/title_text_input_layout"
+                    <TextView
+                        android:id="@+id/days_title_text_view"
+                        style="@style/title_text_style"
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
-                        app:endIconMode="clear_text"
-                        app:hintEnabled="true"
-                        app:counterEnabled="true"
-                        app:counterMaxLength="30"
-                        app:errorEnabled="true"
+                        android:text="@{viewModel.tDays.strTitle}"
                         app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintHorizontal_bias="0.0"
                         app:layout_constraintStart_toStartOf="parent"
                         app:layout_constraintTop_toTopOf="parent"
-                        app:layout_constraintWidth_max="@dimen/button_max_length">
+                        tools:text="Couple Days" />
 
-                        <com.google.android.material.textfield.TextInputEditText
-                            android:id="@+id/title_edit_text"
-                            style="@style/post_title_text_view"
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:maxLength="30"
-                            android:maxLines="1"
-                            android:textAlignment="viewStart"
-                            tools:text="Hello world"
-                            android:hint="@string/str_title"
-                            android:imeOptions="actionNext"
-                            android:inputType="text" />
+                    <com.google.android.material.imageview.ShapeableImageView
+                        android:id="@+id/editor_image_view"
+                        style="@style/circle_shape_image_view"
+                        android:layout_width="@dimen/icon_image_size"
+                        android:layout_height="@dimen/icon_image_size"
+                        android:layout_marginStart="@dimen/normal_margin"
+                        android:background="?android:attr/selectableItemBackgroundBorderless"
+                        android:onClick="@{()->fragment.profileButton(viewModel.tDays.strRecentEditUid)}"
+                        bind:image_uid="@{viewModel.tDays.strRecentEditUid}"
+                        bind:layout_constraintBottom_toBottomOf="@+id/view"
+                        bind:layout_constraintStart_toStartOf="parent"
+                        bind:layout_constraintTop_toBottomOf="@+id/days_title_text_view"
+                        tools:src="@drawable/ic_baseline_account_circle_24" />
 
-                    </com.google.android.material.textfield.TextInputLayout>
+                    <TextView
+                        android:id="@+id/editor_text_view"
+                        style="@style/normal_text_style"
+                        android:layout_width="@dimen/normal_field_size"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="@dimen/normal_margin"
+                        android:layout_marginTop="@dimen/normal_margin"
+                        android:textAlignment="viewStart"
+                        app:layout_constraintStart_toEndOf="@+id/editor_image_view"
+                        bind:layout_constraintTop_toBottomOf="@+id/days_title_text_view"
+                        bind:user_uid="@{viewModel.tDays.strRecentEditUid}"
+                        tools:text="Yumin Kim" />
+
+                    <TextView
+                        android:id="@+id/days_edit_date_text_view"
+                        style="@style/normal_text_style"
+                        android:layout_width="@dimen/normal_field_size"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="4dp"
+                        android:textAlignment="viewStart"
+                        android:textColor="@color/grey"
+                        app:layout_constraintStart_toStartOf="@+id/editor_text_view"
+                        app:layout_constraintTop_toBottomOf="@+id/editor_text_view"
+                        bind:date_text="@{viewModel.tDays.strRecentEditDate}"
+                        tools:text="10 Oct 2021 16:33" />
 
                     <ImageView
-                        android:id="@+id/post_image_view"
-                        android:layout_width="@dimen/days_icon_item_size"
-                        android:layout_height="@dimen/days_icon_item_size"
-                        android:layout_marginStart="@dimen/margin_16dp"
-                        android:layout_marginEnd="@dimen/margin_16dp"
-                        android:adjustViewBounds="true"
-                        android:src="@drawable/question"
+                        android:id="@+id/pencil_image_view3"
+                        android:layout_width="30dp"
+                        android:layout_height="30dp"
+                        android:layout_marginEnd="@dimen/normal_margin"
+                        android:background="?android:attr/selectableItemBackground"
+                        android:src="@drawable/ic_baseline_list_24"
+                        android:onClick="@{()->fragment.menuButton()}"
+                        app:layout_constraintBottom_toTopOf="@+id/view"
+                        bind:layout_constraintEnd_toEndOf="parent"
+                        bind:layout_constraintTop_toBottomOf="@+id/days_title_text_view" />
+
+                    <View
+                        android:id="@+id/view"
+                        style="@style/divider"
+                        android:layout_marginTop="@dimen/normal_margin"
                         app:layout_constraintEnd_toEndOf="parent"
                         app:layout_constraintStart_toStartOf="parent"
-                        app:layout_constraintTop_toBottomOf="@+id/title_text_input_layout"
-                        tools:visibility="visible" />
+                        app:layout_constraintTop_toBottomOf="@+id/days_edit_date_text_view" />
 
-                    <com.google.android.material.textfield.TextInputLayout
-                        android:id="@+id/text_input_layout"
+                    <ImageView
+                        android:id="@+id/days_icon_image_view"
+                        android:layout_width="@dimen/days_icon_item_size"
+                        android:layout_height="@dimen/days_icon_item_size"
+                        android:layout_marginTop="@dimen/margin_16dp"
+                        android:adjustViewBounds="true"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toBottomOf="@+id/view"
+                        bind:drawable_name="@{viewModel.tDays.strIconRes}"
+                        tools:src="@drawable/couple_1" />
+
+                    <androidx.constraintlayout.widget.ConstraintLayout
+                        android:id="@+id/date_layout"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="@dimen/margin_16dp"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toBottomOf="@+id/days_icon_image_view">
+
+                        <TextView
+                            android:id="@+id/date_text_view"
+                            style="@style/subtitle_text_style"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:textColor="@color/purple"
+                            app:layout_constraintBottom_toBottomOf="parent"
+                            app:layout_constraintEnd_toEndOf="parent"
+                            app:layout_constraintHorizontal_bias="0.5"
+                            app:layout_constraintStart_toEndOf="@+id/time_image_view"
+                            app:layout_constraintStart_toStartOf="parent"
+                            app:layout_constraintTop_toTopOf="parent"
+                            bind:days_time="@{viewModel.tDays}"
+                            tools:text="@string/str_date_of_birth_exam" />
+
+                        <ImageView
+                            android:id="@+id/time_image_view"
+                            android:layout_width="@dimen/icon_image_size"
+                            android:layout_height="@dimen/icon_image_size"
+                            android:layout_marginEnd="@dimen/normal_margin"
+                            android:src="@drawable/time"
+                            app:layout_constraintBottom_toBottomOf="@+id/date_text_view"
+                            app:layout_constraintEnd_toStartOf="@+id/date_text_view"
+                            app:layout_constraintHorizontal_bias="0.5"
+                            app:layout_constraintStart_toStartOf="parent"
+                            app:layout_constraintTop_toTopOf="@+id/date_text_view" />
+
+                    </androidx.constraintlayout.widget.ConstraintLayout>
+
+                    <TextView
+                        android:id="@+id/days_desc_text_view"
+                        style="@style/normal_text_style"
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
-                        app:counterEnabled="true"
-                        app:endIconMode="none"
-                        app:boxStrokeWidth="0dp"
-                        app:boxStrokeWidthFocused="0dp"
-                        app:hintEnabled="true"
-                        app:errorEnabled="false"
-                        app:counterMaxLength="500"
+                        android:layout_marginStart="@dimen/normal_margin"
+                        android:layout_marginTop="@dimen/margin_16dp"
+                        android:layout_marginEnd="@dimen/normal_margin"
+                        android:layout_marginBottom="@dimen/margin_16dp"
+                        android:minHeight="@dimen/days_detail_text_view_min_height"
+                        android:padding="@dimen/normal_margin"
+                        android:text="@{viewModel.tDays.strDesc}"
+                        android:textAlignment="viewStart"
                         app:layout_constraintBottom_toTopOf="@+id/view2"
                         app:layout_constraintEnd_toEndOf="parent"
                         app:layout_constraintStart_toStartOf="parent"
-                        app:layout_constraintTop_toBottomOf="@+id/post_image_view"
-                        app:layout_constraintWidth_max="@dimen/button_max_length">
-
-                        <com.google.android.material.textfield.TextInputEditText
-                            android:id="@+id/text_edit_text"
-                            style="@style/normal_text_style"
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:minHeight="275dp"
-                            android:layout_marginStart="@dimen/margin_16dp"
-                            android:layout_marginTop="@dimen/margin_16dp"
-                            android:layout_marginEnd="@dimen/margin_16dp"
-                            android:background="@android:color/transparent"
-                            android:gravity="start"
-                            android:hint="@string/str_text"
-                            android:inputType="textMultiLine"
-                            android:maxLength="500"
-                            android:textAlignment="viewStart"
-                            tools:text="This is example text" />
-
-                    </com.google.android.material.textfield.TextInputLayout>
+                        app:layout_constraintTop_toBottomOf="@+id/date_layout"
+                        tools:text="I Love you\nI Love you\nI Love you\nI Love you\n" />
 
                     <View
                         android:id="@+id/view2"
                         style="@style/divider"
-                        android:layout_marginBottom="@dimen/margin_16dp"
-                        app:layout_constraintBottom_toTopOf="@+id/post_button"
-                        app:layout_constraintEnd_toEndOf="parent"
-                        app:layout_constraintStart_toStartOf="parent" />
-
-                    <com.google.android.material.button.MaterialButton
-                        android:id="@+id/post_button"
-                        style="@style/mtrl_button_style"
-                        android:layout_width="0dp"
-                        android:layout_height="@dimen/button_height"
-                        android:layout_marginStart="@dimen/margin_16dp"
-                        android:layout_marginEnd="@dimen/margin_16dp"
-                        android:layout_marginBottom="@dimen/margin_16dp"
-                        android:backgroundTint="@color/purple"
-                        android:text="@string/str_post"
-                        app:layout_constraintBottom_toBottomOf="parent"
                         app:layout_constraintEnd_toEndOf="parent"
                         app:layout_constraintStart_toStartOf="parent"
-                        app:rippleColor="@color/ripple_purple" />
+                        app:layout_constraintTop_toBottomOf="parent" />
 
                 </androidx.constraintlayout.widget.ConstraintLayout>
 
             </ScrollView>
+
         </com.google.android.material.card.MaterialCardView>
 
     </androidx.constraintlayout.widget.ConstraintLayout>

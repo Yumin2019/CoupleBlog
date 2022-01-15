@@ -26,8 +26,6 @@ class CB_ViewModel
         var editorBitmap: Bitmap? = null
         var strCurTool = MutableLiveData("")
 
-
-
         // when you go out of MainFragment
         // when you click view pages
         var bAddButton = MutableLiveData(false)
@@ -187,5 +185,8 @@ class CB_ViewModel
             iDaysEventType.postValue(DAYS_ITEM_TYPE.PAST_EVENT.ordinal)
             iDaysTimeFormat.postValue(DAYS_TIME_FORMAT.DAYS.ordinal)
         }
+
+        // DaysDetailsFragment
+        var tDays               = MutableLiveData(CB_Days())
     }
 }
