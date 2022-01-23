@@ -10,17 +10,13 @@
             name="fragment"
             type="com.coupleblog.fragment.days.CB_DaysFragment" />
 
-            <variable
-                name="days"
-                type="com.coupleblog.model.CB_Days" />
-   <!--     <variable
-            name="viewHolder"
-            type="androidx.recyclerview.widget.RecyclerView.ViewHolder" />
+        <variable
+            name="tDays"
+            type="com.coupleblog.model.CB_Days" />
 
         <variable
-            name="viewModel"
-            type="com.coupleblog.singleton.CB_ViewModel.Companion" />-->
-
+            name="strDaysKey"
+            type="String" />
     </data>
 
     <com.google.android.material.card.MaterialCardView
@@ -33,6 +29,7 @@
             android:paddingTop="@dimen/normal_margin"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:onClick="@{()->fragment.clickedDaysItem(tDays, strDaysKey)}"
             android:background="?android:attr/selectableItemBackground">
 
             <ImageView
@@ -41,7 +38,7 @@
                 android:layout_height="@dimen/days_image_size"
                 android:layout_marginStart="@dimen/normal_margin"
                 tools:src="@drawable/heart_icon"
-                bind:drawable_name="@{days.strIconRes}"
+                bind:drawable_name="@{tDays.strIconRes}"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent" />
@@ -52,7 +49,7 @@
                 android:layout_width="120dp"
                 android:layout_height="wrap_content"
                 android:textSize="@dimen/text_size_16sp"
-                bind:days_time="@{days}"
+                bind:days_time="@{tDays}"
                 android:layout_marginEnd="@dimen/normal_margin"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
@@ -67,7 +64,7 @@
                 android:layout_height="wrap_content"
                 android:ellipsize="end"
                 android:maxLines="1"
-                android:text="@{days.strTitle}"
+                android:text="@{tDays.strTitle}"
                 android:paddingStart="@dimen/margin_16dp"
                 android:paddingEnd="@dimen/margin_16dp"
                 android:textAlignment="viewStart"

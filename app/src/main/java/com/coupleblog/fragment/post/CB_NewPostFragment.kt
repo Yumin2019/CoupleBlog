@@ -41,9 +41,9 @@ class CB_NewPostFragment: CB_CameraBaseFragment(UPLOAD_TYPE.POST_IMAGE, bDeferre
 
     private var _binding            : NewPostBinding? = null
     private val binding get() = _binding!!
-    var editPostKey = ""
 
     // used for editing
+    var editPostKey = ""
     var postData: CB_Post? = null
     var bImageChanged = false
 

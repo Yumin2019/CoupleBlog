@@ -1023,8 +1023,8 @@ Text: 팔레트가 위에 붙어서 선택 불가 V
 기록할 수 있도록 구성할 예정이다. 
 
 	
-채팅,  영상 채팅, 커플 앨범 기능, D-Day Counter, 커플 다이어리, 개발자 페이지, 소셜 로그인 지원
-푸시 알림(커플 성사, D-day 등에 연동), 위젯 처리
+채팅, 영상 채팅, 커플 앨범 기능, D-Day Counter, 커플 다이어리, 개발자 페이지, 소셜 로그인 지원
+푸시 알림(커플 성사, D-day 등에 연동), 위젯 처리, PhotoView 라이브버리를 이용하여 확대하는 기능
 
 커플 정보로 넣을지 유저의 정보로 넣을지? => 커플 정보로 넣는다. 
 
@@ -1045,10 +1045,18 @@ Past Event, Event, Anniversary 타입별 선택 가능.
  *참고로 시간 단위는 처리하지 않을 예정.
 	Days(past)	/ months / years // 과거를 기준으로 지나온 시간 출력 3가지 옵션.
 								 // 무조건 옵션을 따르도록 한다.
+								 // 만약에 1달을 골랐는데 1달 미만이면 days로 출력.
+								 // 1년 미만 -> 1달 미만 -> days 이런 식으로 출력해야 한다.
+								 Today
+								 1일
+								 1달
+								 1년
+								 
+								 오늘인지 / 표현하고 싶은 포맷으로 처리할 수 있는지 
 								 
 	D-day left		 			 // One-time event. 다음날이 되면 지난 이벤트로 존재.
 								 // 옵션을 따르도록 한다.
-								 // 만약에 year을 골랐더라도 1년 미만이면 month,day로 처리.
+								 // 만약에 year을 골랐더라도 1년 미만이면 month, day로 처리.
 								 
 	anuual Anniversary 			 // 미래라면 몇 일이 남았는지. 지났으면 다음 해를 기준으로 얼마나 남았는지.
 								 // 무조건 days. 
@@ -1150,5 +1158,47 @@ OK
 okButton을 누른 경우에 제대로 동작을 하는지.	  
 타입을 바꾸면 출력 format을 변한다. 다만, 
 
+타입이 정해진 상태에서 시간을 설정하는 코드는 작성이 되었으니, 시간이 설정이 된 상태로 타입을 고르는 경우에 대한 처리도 해준다.
+
 // event 타입에 따라서 연도 조정이 필요하다.
+annual의 경우에는 현재 연도로 설정한다. 
+past는 과거 시점
+future은 미래 시점
+
+과거 시점으로 설정 / 오늘로 설정 / 미래로 설정 했을 때 정상 동작 하는지
+ㅇㅇ 								ㅇㅇ 
+
 또한, ok 버튼을 눌러서 추가하는 부분.
+
+이제 Days 편집 기능을 만들어야 하는데... 
+ var strTitle: String? = "",             // 제목
+ var strDesc: String? = "",              // Description
+ var strIconRes: String? = "",           // Icon Res string
+ var strEventDate: String? = "",         // Event Date
+ var iEventType: Int? = 0,               // Days Type
+ var iTimeFormat: Int? = 0,              // Days Time Format type
+ var strRecentEditDate: String? = "",    // 최근 편집 시기
+ var strRecentEditUid: String? = "",     // 최근 편입자
+ var iOrderIdx: Int? = 0                 // order idx
+ 
+ 타이틀, 설명, 아이콘, 이벤트 시기, 최근 편집 시기와 누가 편집을 했는지 출력.
+ 타입X(이벤트 시기를 가지고 문자열과 같이 출력하다보면 알 수 있는 내용)
+ 
+클릭해서 detailFragment로 넘어갈 수 있고 정보는 제대로 가져오는지 ㅇㅇ 
+삭제가 잘 되는지 ㅇㅇ 
+편집을 하는데 타입을 변경하지 않는 경우 ㅇㅇ 
+편집을 하는데 타입을 변경한 경우 ㅇㅇ
+- 경로가 바뀌는 경우 daysFragment로 이동하도록 처리한다. ㅇㅇ 
+
+편집할 때 데이터는 정상적으로 가져오는지 ㅇㅇ 
+
+Poony, if you think you're useless. I'll be your husband. Don't worry.
+I want to be your husband. Don't worry. I'll find a way to marry you. Don't worry.
+
+사진 확대 기능 추가
+days 이미지가 처리가 되지 않는 버그가 있음.
+
+
+
+
+

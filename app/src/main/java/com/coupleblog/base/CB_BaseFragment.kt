@@ -14,6 +14,7 @@ import com.coupleblog.R
 import android.view.MotionEvent
 import android.view.View.OnTouchListener
 import androidx.annotation.IdRes
+import androidx.core.os.bundleOf
 import com.google.android.material.snackbar.Snackbar
 
 abstract class CB_BaseFragment() : Fragment()
@@ -99,7 +100,7 @@ abstract class CB_BaseFragment() : Fragment()
         firstTime = secondTime
     }
 
-    fun beginAction(@IdRes actionId: Int, @IdRes currentId: Int, args: Bundle? = null)
+    fun beginAction(@IdRes actionId: Int, @IdRes currentId: Int, args: Bundle = bundleOf())
     {
         val navController = findNavController()
         if(navController.currentDestination?.id != currentId)

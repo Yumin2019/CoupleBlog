@@ -2,12 +2,14 @@ package com.coupleblog.fragment.days
 
 import android.os.Bundle
 import android.view.*
+import androidx.core.os.bundleOf
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.coupleblog.R
 import com.coupleblog.adapter.CB_DaysAdapter
 import com.coupleblog.base.CB_BaseFragment
 import com.coupleblog.fragment.DaysBinding
+import com.coupleblog.fragment.post.CB_PostDetailFragment
 import com.coupleblog.model.CB_Days
 import com.coupleblog.singleton.CB_AppFunc
 import com.coupleblog.singleton.CB_ViewModel
@@ -18,11 +20,15 @@ class CB_DaysFragment : CB_BaseFragment()
     private var _binding            : DaysBinding? = null
     private val binding get() = _binding!!
 
-    private val coupleRef = CB_AppFunc.getCouplesRoot().child(CB_AppFunc.curUser.strCoupleKey!!)
     private var eventAdapters: ArrayList<CB_DaysAdapter> = arrayListOf()
     // past-event-list   / eventKey 1 / event
     // future-event-list / eventKey 1 / event
     // annual-event-list / eventKey 1 / event
+
+    lateinit var strDaysKey: String
+    lateinit var strEvent: String
+
+    private val coupleRef = CB_AppFunc.getCouplesRoot().child(CB_AppFunc.curUser.strCoupleKey!!)
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View
     {
@@ -109,6 +115,15 @@ class CB_DaysFragment : CB_BaseFragment()
                 notifyItemRangeChanged(0, itemCount)
             }
         }
+    }
+
+    fun clickedDaysItem(tDays: CB_Days, strDaysKey: String)
+    {
+        val args = bundleOf(
+            CB_DaysDetailFragment.DAYS_KEY to strDaysKey,
+            CB_DaysDetailFragment.DAYS_EVENT_TYPE to tDays.getEventTypeString(),
+        )
+        beginAction(R.id.action_CB_DaysFragment_to_CB_DaysDetailFragment, R.id.CB_DaysFragment, args)
     }
 
     override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater)

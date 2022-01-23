@@ -20,11 +20,12 @@ class CB_DaysAdapter(val fragment: CB_DaysFragment, options: FirebaseRecyclerOpt
 {
     class ViewHolder(private val binding: DaysItemBinding) : RecyclerView.ViewHolder(binding.root)
     {
-        fun bind(argFragment: CB_DaysFragment, tDays: CB_Days)
+        fun bind(argFragment: CB_DaysFragment, argDays: CB_Days, arguKey: String)
         {
             binding.apply {
                 fragment    = argFragment
-                days        = tDays
+                tDays       = argDays
+                strDaysKey  = arguKey
                 executePendingBindings()
             }
         }
@@ -38,12 +39,8 @@ class CB_DaysAdapter(val fragment: CB_DaysFragment, options: FirebaseRecyclerOpt
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int, model: CB_Days)
     {
-        holder.bind(fragment, model)
-    }
-
-    override fun onDataChanged()
-    {
-        super.onDataChanged()
+        val strKey = getRef(position).key!!
+        holder.bind(fragment, model, strKey)
     }
 
     override fun onError(error: DatabaseError)

@@ -171,7 +171,14 @@
             app:destination="@id/CB_NewDaysFragment" />
         <action
             android:id="@+id/action_CB_DaysFragment_to_CB_DaysDetailFragment"
-            app:destination="@id/CB_DaysDetailFragment" />
+            app:destination="@id/CB_DaysDetailFragment" >
+
+            <argument android:name="strDaysKey" app:nullable="false"
+                app:argType="string" android:defaultValue=""/>
+
+            <argument android:name="strEventType" app:nullable="false"
+                app:argType="string" android:defaultValue=""/>
+        </action>
     </fragment>
 
     <fragment
@@ -183,8 +190,12 @@
         <action
             android:id="@+id/action_CB_DaysDetailFragment_to_CB_NewDaysFragment"
             app:destination="@id/CB_NewDaysFragment">
-                <argument android:name="strDaysKey" app:nullable="false"
-                    app:argType="string" android:defaultValue=""/>
+
+            <argument android:name="strDaysKey" app:nullable="false"
+                app:argType="string" android:defaultValue=""/>
+
+            <argument android:name="strEventType" app:nullable="false"
+                app:argType="string" android:defaultValue=""/>
         </action>
 
         <action

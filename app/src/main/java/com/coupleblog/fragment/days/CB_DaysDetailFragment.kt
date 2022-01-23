@@ -8,24 +8,43 @@ import android.view.ViewGroup
 import androidx.core.os.bundleOf
 import androidx.navigation.fragment.findNavController
 import com.coupleblog.R
+import com.coupleblog.adapter.CB_CommentAdapter
 import com.coupleblog.base.CB_BaseFragment
 import com.coupleblog.dialog.CB_ItemListDialog
 import com.coupleblog.dialog.CB_LoadingDialog
 import com.coupleblog.dialog.DialogItem
 import com.coupleblog.fragment.post.CB_PostDetailFragment
 import com.coupleblog.fragment.profile.CB_ProfileInfoFragment
+import com.coupleblog.model.CB_Days
 import com.coupleblog.singleton.CB_AppFunc
 import com.coupleblog.singleton.CB_SingleSystemMgr
 import com.coupleblog.singleton.CB_ViewModel
 import com.google.firebase.FirebaseException
+import com.google.firebase.database.*
+import com.google.firebase.database.ktx.getValue
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.tasks.await
+import java.lang.IllegalArgumentException
 
 class CB_DaysDetailFragment : CB_BaseFragment()
 {
+    companion object
+    {
+        val DAYS_KEY = "strDaysKey"
+        val DAYS_EVENT_TYPE = "strEventType"
+    }
+
+    private val coupleRef = CB_AppFunc.getCouplesRoot().child(CB_AppFunc.curUser.strCoupleKey!!)
+
+    private var daysListener: ValueEventListener? = null
+    private lateinit var daysRef: DatabaseReference
+
     private var _binding            : DaysDetailBinding? = null
     private val binding get() = _binding!!
+
+    lateinit var strDaysKey: String
+    lateinit var strEvent: String
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View
     {
@@ -33,8 +52,58 @@ class CB_DaysDetailFragment : CB_BaseFragment()
         binding.apply {
             lifecycleOwner  = viewLifecycleOwner
             fragment        = this@CB_DaysDetailFragment
+            viewModel       = CB_ViewModel.Companion
         }
         return binding.root
+    }
+
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?)
+    {
+        super.onViewCreated(view, savedInstanceState)
+
+        with(requireArguments())
+        {
+            strEvent = getString(DAYS_EVENT_TYPE) ?: throw IllegalArgumentException("must pass strEvent")
+            strDaysKey = getString(DAYS_KEY) ?: throw IllegalArgumentException("must pass strDaysKey")
+            daysRef = coupleRef.child(strEvent).child(strDaysKey)
+        }
+    }
+
+    override fun onStart()
+    {
+        super.onStart()
+
+        // add value event listener to the days
+        val daysListener = object : ValueEventListener
+        {
+            override fun onDataChange(snapshot: DataSnapshot)
+            {
+                val days = snapshot.getValue<CB_Days>()
+                days?.let{
+                    // ViewModel 데이터를 갱신시킨다.
+                    CB_ViewModel.tDays.postValue(days)
+                }
+            }
+
+            override fun onCancelled(error: DatabaseError)
+            {
+                Log.e(strTag, "onCancelled:days load failed")
+                CB_AppFunc.okDialog(requireActivity(), R.string.str_error,
+                    R.string.str_days_data_load_failed, R.drawable.error_icon, true)
+            }
+        }
+
+        // if changes happen at this location, call this listener
+        daysRef.addValueEventListener(daysListener)
+
+        // keep it so it can be removed on app stop
+        this.daysListener = daysListener
+    }
+
+    override fun onStop()
+    {
+        super.onStop()
+        daysListener?.let { daysRef.removeEventListener(it) }
     }
 
     override fun onDestroy()
@@ -72,9 +141,11 @@ class CB_DaysDetailFragment : CB_BaseFragment()
 
     private fun editDays()
     {
-        // move to NewPostFragment for editing
-        //val arguments = bundleOf(CB_DaysDetailFragment.ARGU to postKey)
-        //beginAction(R.id.action_CB_DaysFragment_to_CB_NewDaysFragment, R.id.CB_DaysDetailFragment, arguments)
+        val arguments = bundleOf(
+            DAYS_KEY to strDaysKey,
+            DAYS_EVENT_TYPE to strEvent
+        )
+        beginAction(R.id.action_CB_DaysDetailFragment_to_CB_NewDaysFragment, R.id.CB_DaysDetailFragment, arguments)
     }
 
     private fun deleteDays()
@@ -95,26 +166,14 @@ class CB_DaysDetailFragment : CB_BaseFragment()
 
                     try
                     {
-                        // delete days
-                   /*     val imgPath = CB_ViewModel.tPost.value!!.strImgPath
-                        Log.d(strTag, "strImgPath:$imgPath")
-                        if(!imgPath.isNullOrEmpty())
-                        {
-                            // find upper folder for post
-                            CB_AppFunc.deleteFileFromStorage(imgPath, strTag,
-                                "post image deleted path:$imgPath",
-                                "post image delete failed path:$imgPath")
-                        }
-
-                        postRef.setValue(null).await()
-                        commentRef.setValue(null).await()
-                        Log.d(strTag, "postRef, commentRef deleted")*/
+                        daysRef.setValue(null).await()
+                        Log.d(strTag, "daysRef deleted")
 
                         launch(Dispatchers.Main)
                         {
-                            // if success, move to MainFragment
+                            // if success, move to DaysFragment
                             dialog.cancel()
-                            CB_SingleSystemMgr.showToast(R.string.str_post_deleted)
+                            CB_SingleSystemMgr.showToast(R.string.str_days_deleted)
                             backPressed()
                         }
                     }
@@ -126,7 +185,7 @@ class CB_DaysDetailFragment : CB_BaseFragment()
                         {
                             dialog.cancel()
                             CB_AppFunc.okDialog(requireActivity(), R.string.str_error,
-                                R.string.str_post_delete_failed, R.drawable.error_icon, true)
+                                R.string.str_days_delete_failed, R.drawable.error_icon, true)
                         }
                     }
                 }

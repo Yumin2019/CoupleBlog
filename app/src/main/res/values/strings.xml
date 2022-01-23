@@ -828,7 +828,9 @@ Couple blog 은(는) 정보주체의 이용정보를 저장하고 수시로 불�
     <string name="str_mail_load_failed">Mail load failed</string>
     <string name="str_mail_list_load_failed">Mail list load failed</string>
     <string name="str_post_data_load_failed">Post data load failed</string>
+    <string name="str_days_data_load_failed">Days data load failed</string>
     <string name="str_post_delete_failed">Failed to delete post</string>
+    <string name="str_days_delete_failed">Failed to delete days item</string>
     <string name="str_failed_to_delete_mail">Failed to delete Mail</string>
     <string name="str_failed_to_change_heart_state">Failed to change heart state</string>
     <string name="str_failed_to_change_read_state">Failed to change read state</string>
@@ -847,8 +849,10 @@ Couple blog 은(는) 정보주체의 이용정보를 저장하고 수시로 불�
     <string name="str_mail_deleted">You deleted this mail.</string>
     <string name="str_deleted_these">You deleted these.</string>
     <string name="str_post_deleted">You deleted this post.</string>
+    <string name="str_days_deleted">You deleted days item.</string>
     <string name="str_post_edited">You edited this post.</string>
     <string name="str_days_added">You wrote days item.</string>
+    <string name="str_days_edited">You edited days item.</string>
     <string name="str_post_posted">Posting was successful.</string>
     <string name="str_comment_posted">You posted a comment.</string>
     <string name="str_comment_edited">You edited this comment.</string>

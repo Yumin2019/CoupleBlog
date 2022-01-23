@@ -30,5 +30,17 @@ data class CB_Days(
     var strRecentEditUid: String? = "",     // 최근 편입자
     var iOrderIdx: Int? = 0                 // order idx
 )
+{
+    fun getEventTypeString(): String
+    {
+        return when(iEventType)
+        {
+            DAYS_ITEM_TYPE.PAST_EVENT.ordinal -> "past-event-list"
+            DAYS_ITEM_TYPE.FUTURE_EVENT.ordinal -> "future-event-list"
+            DAYS_ITEM_TYPE.ANNUAL_EVENT.ordinal -> "annual-event-list"
+            else -> ""
+        }
+    }
+}
 
 

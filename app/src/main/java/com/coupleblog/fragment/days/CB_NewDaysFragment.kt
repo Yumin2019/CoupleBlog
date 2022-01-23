@@ -10,7 +10,6 @@ import com.coupleblog.R
 import com.coupleblog.base.CB_BaseFragment
 import com.coupleblog.dialog.CB_LoadingDialog
 import com.coupleblog.dialog.CB_StickerDialog
-import com.coupleblog.fragment.post.CB_NewPostFragment
 import com.coupleblog.model.CB_Days
 import com.coupleblog.model.DAYS_ITEM_TYPE
 import com.coupleblog.model.DAYS_TIME_FORMAT
@@ -24,6 +23,10 @@ import com.google.android.material.datepicker.DateValidatorPointBackward
 import com.google.android.material.datepicker.DateValidatorPointForward
 import com.google.android.material.datepicker.MaterialDatePicker
 import com.google.firebase.FirebaseException
+import com.google.firebase.database.DataSnapshot
+import com.google.firebase.database.DatabaseError
+import com.google.firebase.database.ValueEventListener
+import com.google.firebase.database.ktx.getValue
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.tasks.await
@@ -34,6 +37,13 @@ class CB_NewDaysFragment : CB_BaseFragment()
     private var _binding: NewDaysBinding? = null
     private val binding get() = _binding!!
 
+    private val coupleRef = CB_AppFunc.getCouplesRoot().child(CB_AppFunc.curUser.strCoupleKey!!)
+
+    // for editing
+    lateinit var strDaysKey: String
+    lateinit var strEvent: String
+    var daysData: CB_Days? = null
+
     private fun getActiveTimeFormatAdapter() = ArrayAdapter(requireContext(), R.layout.cb_spinner_item, R.id.item_text_view,
         listOf(getString(R.string.str_days), getString(R.string.str_months), getString(R.string.str_years)))
 
@@ -41,7 +51,8 @@ class CB_NewDaysFragment : CB_BaseFragment()
         inflater: LayoutInflater,
         container: ViewGroup?,
         savedInstanceState: Bundle?
-    ): View {
+    ): View
+    {
         _binding = NewDaysBinding.inflate(inflater, container, false)
         binding.apply {
             lifecycleOwner = viewLifecycleOwner
@@ -112,7 +123,72 @@ class CB_NewDaysFragment : CB_BaseFragment()
     override fun onViewCreated(view: View, savedInstanceState: Bundle?)
     {
         super.onViewCreated(view, savedInstanceState)
-        CB_ViewModel.resetNewDaysFragmentLiveData()
+        strDaysKey = requireArguments().getString(CB_DaysDetailFragment.DAYS_KEY) ?: ""
+        strEvent = requireArguments().getString(CB_DaysDetailFragment.DAYS_EVENT_TYPE) ?: ""
+
+        if(strDaysKey.isNotEmpty() and strEvent.isNotEmpty())
+        {
+            // if edit state, load days data with postKey
+            coupleRef.child(strEvent).child(strDaysKey).addListenerForSingleValueEvent(object : ValueEventListener {
+                override fun onDataChange(snapshot: DataSnapshot)
+                {
+                    daysData = snapshot.getValue<CB_Days>()
+                    if(daysData == null)
+                    {
+                        Log.e(strTag, "days data load cancelled")
+                        CB_AppFunc.okDialog(requireActivity(), R.string.str_error,
+                            R.string.str_days_data_load_failed, R.drawable.error_icon, false,
+                            listener = { _, _ ->
+                                findNavController().popBackStack()
+                            })
+                        return
+                    }
+
+                    CB_ViewModel.apply {
+                        strDaysTitle       .postValue(daysData!!.strTitle)
+                        strEventDate       .postValue(daysData!!.strEventDate)
+                        strDaysDesc        .postValue(daysData!!.strDesc)
+                        strDaysIconRes     .postValue(daysData!!.strIconRes)
+                        iDaysEventType     .postValue(daysData!!.iEventType)
+                        iDaysTimeFormat    .postValue(daysData!!.iTimeFormat)
+
+                        val strEventType = when(iDaysEventType.value!!)
+                        {
+                            DAYS_ITEM_TYPE.PAST_EVENT.ordinal -> getString(R.string.str_past_event)
+                            DAYS_ITEM_TYPE.FUTURE_EVENT.ordinal -> getString(R.string.str_future_event)
+                            DAYS_ITEM_TYPE.ANNUAL_EVENT.ordinal -> getString(R.string.str_annual_event)
+                            else -> ""
+                        }
+
+                        val strTimeFormat = when(daysData!!.iTimeFormat)
+                        {
+                            DAYS_TIME_FORMAT.DAYS.ordinal -> getString(R.string.str_days)
+                            DAYS_TIME_FORMAT.MONTHS.ordinal -> getString(R.string.str_months)
+                            DAYS_TIME_FORMAT.YEARS.ordinal -> getString(R.string.str_years)
+                            else -> ""
+                        }
+
+                        binding.apply {
+                            timeFormatAutoCompleteTextView.setText(strTimeFormat, false)
+                            eventAutoCompleteTextView.setText(strEventType, false)
+                        }
+                    }
+                }
+
+                override fun onCancelled(error: DatabaseError)
+                {
+                    Log.e(strTag, "days data load cancelled", error.toException())
+                    CB_AppFunc.okDialog(requireActivity(), R.string.str_error,
+                        R.string.str_post_data_load_failed, R.drawable.error_icon, true)
+                }
+            })
+
+            binding.okButton.setText(R.string.str_edit_event)
+        }
+        else
+        {
+            CB_ViewModel.resetNewDaysFragmentLiveData()
+        }
 
         binding.titleEditText.apply {
 
@@ -295,29 +371,87 @@ class CB_NewDaysFragment : CB_BaseFragment()
 
                     try
                     {
-                        val daysListRoot = CB_AppFunc.getCouplesRoot().child(CB_AppFunc.curUser.strCoupleKey!!).child(strListName)
-                        val daysKey = daysListRoot.push().key
-                        if(daysKey == null)
+                        if(strDaysKey.isNotEmpty() and strEvent.isNotEmpty())
                         {
-                            // daysKey 가 없는 경우 dialog 처리
+                            // 편집을 하는 경우
+                            if(strListName == strEvent)
+                            {
+                                // 동일한 리스트에서 값만 갱신
+                                coupleRef.child(strEvent).child(strDaysKey).setValue(CB_Days(strDaysTitle, strDaysDesc, strDaysIconRes,
+                                    strEventDate, iDaysEventType, iDaysTimeFormat, CB_AppFunc.getDateStringForSave(),
+                                    CB_AppFunc.getUid(), iDaysCount))
+                                Log.d(strTag, "updated days")
+
+                                launch(Dispatchers.Main)
+                                {
+                                    dialog.cancel()
+                                    CB_SingleSystemMgr.showToast(R.string.str_days_edited)
+                                    backPressed()
+                                }
+                            }
+                            else
+                            {
+                                // 리스트가 변하는 경우에는 기존에 데이터를 없애고 새로 데이터를 만들어야 한다.
+                                val daysListRoot = coupleRef.child(strListName)
+                                val daysKey = daysListRoot.push().key
+                                if(daysKey == null)
+                                {
+                                    // daysKey 가 없는 경우 dialog 처리
+                                    launch(Dispatchers.Main)
+                                    {
+                                        dialog.cancel()
+                                        CB_AppFunc.okDialog(activity, R.string.str_error,
+                                            R.string.str_writing_failed, R.drawable.error_icon, true)
+                                    }
+                                    return@launch
+                                }
+
+                                daysListRoot.child(daysKey).setValue(CB_Days(strDaysTitle, strDaysDesc, strDaysIconRes,
+                                    strEventDate, iDaysEventType, iDaysTimeFormat, CB_AppFunc.getDateStringForSave(),
+                                    CB_AppFunc.getUid(), iDaysCount)).await()
+                                Log.d(strTag, "added days")
+
+                                coupleRef.child(strEvent).child(strDaysKey).setValue(null).await()
+                                Log.d(strTag, "prevDays deleted")
+
+                                launch(Dispatchers.Main)
+                                {
+                                    dialog.cancel()
+                                    CB_SingleSystemMgr.showToast(R.string.str_days_edited)
+
+                                    // 이전과 경로가 완전히 달라져서 리스트로 이동한다.
+                                    findNavController().popBackStack(R.id.CB_DaysFragment, false)
+                                }
+                            }
+                        }
+                        else
+                        {
+                            // 추가를 하는 경우
+                            val daysListRoot = coupleRef.child(strListName)
+                            val daysKey = daysListRoot.push().key
+                            if(daysKey == null)
+                            {
+                                // daysKey 가 없는 경우 dialog 처리
+                                launch(Dispatchers.Main)
+                                {
+                                    dialog.cancel()
+                                    CB_AppFunc.okDialog(activity, R.string.str_error,
+                                        R.string.str_writing_failed, R.drawable.error_icon, true)
+                                }
+                                return@launch
+                            }
+
+                            daysListRoot.child(daysKey).setValue(CB_Days(strDaysTitle, strDaysDesc, strDaysIconRes,
+                                strEventDate, iDaysEventType, iDaysTimeFormat, CB_AppFunc.getDateStringForSave(),
+                                CB_AppFunc.getUid(), iDaysCount))
+                            Log.d(strTag, "added days")
+
                             launch(Dispatchers.Main)
                             {
                                 dialog.cancel()
-                                CB_AppFunc.okDialog(activity, R.string.str_error,
-                                    R.string.str_writing_failed, R.drawable.error_icon, true)
+                                CB_SingleSystemMgr.showToast(R.string.str_days_added)
+                                backPressed()
                             }
-                            return@launch
-                        }
-
-                        daysListRoot.child(daysKey).setValue(CB_Days(strDaysTitle, strDaysDesc, strDaysIconRes,
-                            strEventDate, iDaysEventType, iDaysTimeFormat, CB_AppFunc.getDateStringForSave(),
-                             CB_AppFunc.getUid(), iDaysCount))
-
-                        launch(Dispatchers.Main)
-                        {
-                            dialog.cancel()
-                            CB_SingleSystemMgr.showToast(R.string.str_days_added)
-                            backPressed()
                         }
                     }
                     catch(e: FirebaseException)
