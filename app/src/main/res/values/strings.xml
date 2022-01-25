@@ -428,7 +428,7 @@
 
 
     <!--  photo editor end -->
-<string name="str_personal_information_processing_policy">
+    <string name="str_personal_information_processing_policy">
 Couple Blog Dev: I used Papago translator. sorry if it has contextual errors.
 
 In order to protect the personal information of the data subject and to quickly and smoothly handle the grievances under Article 30 of the Personal Information Protection Act, (https://blog.naver.com/lmj3322) establishes and discloses personal information processing policies as follows.\n\n
@@ -858,4 +858,6 @@ Couple blog 은(는) 정보주체의 이용정보를 저장하고 수시로 불�
     <string name="str_comment_edited">You edited this comment.</string>
     <string name="str_comment_deleted">You deleted this comment.</string>
     <string name="str_registration_success">Registration was successful.</string>
+
+    <string name="str_widget_error">You need to login on Couple Blog</string>
 </resources>

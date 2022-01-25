@@ -1,0 +1,50 @@
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:bind="http://schemas.android.com/apk/res-auto"
+    style="@style/Widget.Coupleblog.AppWidget.Container"
+    android:background="@drawable/rounded_border"
+    android:padding="@dimen/normal_margin"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content">
+
+    <ImageView
+        android:id="@+id/icon_image_view"
+        android:layout_width="@dimen/days_image_size"
+        android:layout_height="@dimen/days_image_size"
+        android:layout_alignParentStart="true"
+        android:layout_centerVertical="true"
+        android:layout_marginStart="@dimen/normal_margin"
+        tools:src="@drawable/heart_icon" />
+
+    <TextView
+        android:id="@+id/days_text_view"
+        style="@style/normal_text_style"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentEnd="true"
+        android:layout_centerVertical="true"
+        android:textSize="@dimen/text_size_16sp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        tools:text="@string/str_days_exam" />
+
+    <TextView
+        android:id="@+id/item_text_view"
+        style="@style/normal_text_style"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerVertical="true"
+        android:layout_toStartOf="@id/days_text_view"
+        android:layout_toEndOf="@id/icon_image_view"
+        android:ellipsize="end"
+        android:maxLines="1"
+        android:paddingStart="@dimen/margin_16dp"
+        android:paddingEnd="@dimen/margin_16dp"
+        android:text="@{tDays.strTitle}"
+        android:textAlignment="viewStart"
+        android:textSize="16sp"
+        tools:text="Couple Blog" />
+
+</RelativeLayout>
