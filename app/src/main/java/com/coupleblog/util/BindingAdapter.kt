@@ -1,4 +1,4 @@
-package com.coupleblog.singleton
+package com.coupleblog.util
 
 import android.graphics.Bitmap
 import android.view.View
@@ -14,7 +14,9 @@ import com.coupleblog.R
 import com.coupleblog.dialog.EDIT_FIELD_TYPE
 import com.coupleblog.fragment.PAGE_TYPE
 import com.coupleblog.model.*
+import com.coupleblog.singleton.CB_AppFunc
 import com.coupleblog.singleton.CB_AppFunc.Companion.toCalendar
+import com.coupleblog.singleton.CB_ViewModel
 import com.google.android.material.floatingactionbutton.FloatingActionButton
 import com.google.firebase.database.DataSnapshot
 import com.google.firebase.database.DatabaseError
@@ -55,14 +57,18 @@ fun setImageUid(imageView: ImageView, strUid: String?)
     {
         CB_AppFunc.getUid() ->
         {
-            CB_AppFunc.setImageWithGlide(CB_AppFunc.curUser.strImgPath.toString(),
-                imageView, R.drawable.ic_baseline_account_circle_24)
+            CB_AppFunc.setImageWithGlide(
+                CB_AppFunc.curUser.strImgPath.toString(),
+                imageView, R.drawable.ic_baseline_account_circle_24
+            )
         }
 
         CB_AppFunc.curUser.strCoupleUid ->
         {
-            CB_AppFunc.setImageWithGlide(CB_AppFunc.coupleUser.strImgPath.toString(),
-                imageView, R.drawable.ic_baseline_account_circle_24)
+            CB_AppFunc.setImageWithGlide(
+                CB_AppFunc.coupleUser.strImgPath.toString(),
+                imageView, R.drawable.ic_baseline_account_circle_24
+            )
         }
         else ->
         {
@@ -75,8 +81,10 @@ fun setImageUid(imageView: ImageView, strUid: String?)
                     if(userInfo == null)
                         imageView.setImageResource(R.drawable.ic_baseline_account_circle_24)
                     else
-                        CB_AppFunc.setImageWithGlide(userInfo.strImgPath.toString(),
-                            imageView, R.drawable.ic_baseline_account_circle_24)
+                        CB_AppFunc.setImageWithGlide(
+                            userInfo.strImgPath.toString(),
+                            imageView, R.drawable.ic_baseline_account_circle_24
+                        )
                 }
 
                 override fun onCancelled(error: DatabaseError)
@@ -161,7 +169,7 @@ fun setJoinDate(textView: TextView, userData: CB_User)
 
     textView.visibility = View.VISIBLE
     textView.text = if(days == 1)
-                        CB_AppFunc.getString(R.string.str_joined_one_day_ago)
+        CB_AppFunc.getString(R.string.str_joined_one_day_ago)
                     else
                         CB_AppFunc.getString(R.string.str_joined_n_days_ago).format(days)
 }
@@ -289,14 +297,14 @@ fun setUserPresence(textView: TextView, userData: CB_User)
         // 1year ago, 2years ago
         strPresence += "$iYear"
         strPresence += if(iYear == 1) CB_AppFunc.getString(R.string.str_year_ago)
-                       else           CB_AppFunc.getString(R.string.str_years_ago)
+                       else CB_AppFunc.getString(R.string.str_years_ago)
     }
     else if(iMonth > 0) // 1 ~ 11 months
     {
         // 1month ago, 2months ago
         strPresence += "$iMonth"
         strPresence += if(iMonth == 1) CB_AppFunc.getString(R.string.str_month_ago)
-                       else            CB_AppFunc.getString(R.string.str_months_ago)
+                       else CB_AppFunc.getString(R.string.str_months_ago)
     }
     else if(iDay > 0) // 1 ~ 29 days
     {
@@ -306,7 +314,7 @@ fun setUserPresence(textView: TextView, userData: CB_User)
         strPresence += if(iHour > 0)
                            "$iHour" + CB_AppFunc.getString(R.string.str_h_ago)
                        else
-                           CB_AppFunc.getString(R.string.str_ago)
+            CB_AppFunc.getString(R.string.str_ago)
     }
     else if(iHour > 0) // 1 ~ 23 hours
     {
@@ -316,7 +324,7 @@ fun setUserPresence(textView: TextView, userData: CB_User)
         strPresence += if(iMin > 0)
                           "$iMin" + CB_AppFunc.getString(R.string.str_m_ago)
                        else
-                           CB_AppFunc.getString(R.string.str_ago)
+            CB_AppFunc.getString(R.string.str_ago)
     }
     else // 0 ~ 59 minutes
     {
@@ -327,8 +335,11 @@ fun setUserPresence(textView: TextView, userData: CB_User)
 }
 
 @BindingAdapter("bind:days_time")
-fun setDaysTime(textView: TextView, tDays: CB_Days)
+fun setDaysTime(textView: TextView?, tDays: CB_Days): String
 {
+    if(textView == null)
+        return ""
+
     val eventCalendar = tDays.strEventDate.toCalendar()
     val curCalendar = CB_AppFunc.getCurCalendar()
     var eventDate = eventCalendar.time
@@ -396,8 +407,9 @@ fun setDaysTime(textView: TextView, tDays: CB_Days)
             if(eventCalendar[Calendar.MONTH] == curCalendar[Calendar.MONTH] &&
                     eventCalendar[Calendar.DAY_OF_MONTH] == curCalendar[Calendar.DAY_OF_MONTH])
             {
-                textView.text = CB_AppFunc.getString(R.string.str_today)
-                return
+                strDate = CB_AppFunc.getString(R.string.str_today)
+                textView.text = strDate
+                return strDate
             }
 
             if(eventCalendar <= curCalendar)
@@ -417,6 +429,7 @@ fun setDaysTime(textView: TextView, tDays: CB_Days)
     }
 
     textView.text = strDate
+    return strDate
 }
 
 @BindingAdapter("bind:user_uid")
@@ -471,8 +484,8 @@ fun setTextByUid(textView: TextView, strUid: String?)
 fun setHeartIconTint(imageView: ImageView, boolean: Boolean)
 {
     imageView.imageTintList =
-    if(boolean)  CB_AppFunc.getColorStateList(R.color.red)
-    else         CB_AppFunc.getColorStateList(R.color.grey)
+    if(boolean) CB_AppFunc.getColorStateList(R.color.red)
+    else CB_AppFunc.getColorStateList(R.color.grey)
 }
 
 @BindingAdapter("bind:layout_manager")
@@ -603,7 +616,9 @@ fun setDaysCalendarText(textView: TextView, strDate: String)
             CB_AppFunc.getDayStringForOutput(calendar)
         }
 
-        else -> {  CB_AppFunc.getDateStringWithoutTime(calendar)  }
+        else -> {
+            CB_AppFunc.getDateStringWithoutTime(calendar)
+        }
     }
 }
 

@@ -17,10 +17,11 @@
         android:theme="@style/Theme.Coupleblog" >
 
         <receiver
-            android:name=".widget.CB_DaysWidget"
+            android:name=".widget.CB_DaysWidgetProvider"
             android:exported="true" >
             <intent-filter>
                 <action android:name="android.appwidget.action.APPWIDGET_UPDATE" />
+                <action android:name="com.coupleblog.DAYS_UPDATE" />
             </intent-filter>
 
             <meta-data
@@ -41,6 +42,11 @@
         <activity
             android:name=".CB_PhotoEditorActivity"
             android:screenOrientation="portrait" />
+
+        <activity
+            android:name=".widget.CB_DaysWidgetActivity"
+            android:screenOrientation="portrait" />
+
         <activity
             android:name=".a100photo.EditImageActivity"
             android:screenOrientation="portrait"

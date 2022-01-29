@@ -13,9 +13,10 @@ import com.coupleblog.fragment.post.CB_PostDetailFragment
 import com.coupleblog.model.CB_Days
 import com.coupleblog.singleton.CB_AppFunc
 import com.coupleblog.singleton.CB_ViewModel
+import com.coupleblog.util.CB_DaysItemClickListener
 import com.firebase.ui.database.FirebaseRecyclerOptions
 
-class CB_DaysFragment : CB_BaseFragment()
+class CB_DaysFragment : CB_BaseFragment(), CB_DaysItemClickListener
 {
     private var _binding            : DaysBinding? = null
     private val binding get() = _binding!!
@@ -117,7 +118,7 @@ class CB_DaysFragment : CB_BaseFragment()
         }
     }
 
-    fun clickedDaysItem(tDays: CB_Days, strDaysKey: String)
+    override fun clickedDaysItem(tDays: CB_Days, strDaysKey: String)
     {
         val args = bundleOf(
             CB_DaysDetailFragment.DAYS_KEY to strDaysKey,

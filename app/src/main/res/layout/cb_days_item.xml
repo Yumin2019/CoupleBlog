@@ -7,8 +7,8 @@
     <data class="com.coupleblog.fragment.days.DaysItemBinding">
 
         <variable
-            name="fragment"
-            type="com.coupleblog.fragment.days.CB_DaysFragment" />
+            name="listener"
+            type="com.coupleblog.util.CB_DaysItemClickListener" />
 
         <variable
             name="tDays"
@@ -29,7 +29,7 @@
             android:paddingTop="@dimen/normal_margin"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:onClick="@{()->fragment.clickedDaysItem(tDays, strDaysKey)}"
+            android:onClick="@{()->listener.clickedDaysItem(tDays, strDaysKey)}"
             android:background="?android:attr/selectableItemBackground">
 
             <ImageView
@@ -77,6 +77,5 @@
         </androidx.constraintlayout.widget.ConstraintLayout>
 
     </com.google.android.material.card.MaterialCardView>
-
 
 </layout>

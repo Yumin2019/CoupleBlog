@@ -4,14 +4,8 @@
     android:initialLayout="@layout/c_b__days_widget"
     android:minWidth="110dp"
     android:minHeight="40dp"
+    android:configure="com.coupleblog.widget.CB_DaysWidgetActivity"
     android:previewImage="@drawable/days_widget_preview"
     android:resizeMode="horizontal|vertical"
     android:updatePeriodMillis="86400000"
     android:widgetCategory="home_screen" />
-
-<!-- https://medium.com/android-bits/android-widgets-ad3d166458d3
- 액티비티에다가 리스트를 쫙해가지고 출력을 해.
- 그리고 아이템을 클릭할 수 있도록 하면 그쪽에서 얻은 키값 정보를 가지고 셋팅을 해주면 될 것 같은데?
- activity에서 값을 위젯으로 전달할 수 있는 부분이 있을 거임. 그러면 그걸 가지고 셋팅.
- 이후에는 그대로 이용하는 형태로 가지 않을까 싶은데..?
- -->

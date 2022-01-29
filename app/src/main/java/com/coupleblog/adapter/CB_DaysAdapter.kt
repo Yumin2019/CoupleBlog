@@ -9,21 +9,21 @@ import com.coupleblog.R
 import com.coupleblog.fragment.days.CB_DaysFragment
 import com.coupleblog.fragment.days.DaysItemBinding
 import com.coupleblog.model.CB_Days
-import com.coupleblog.model.CB_Post
+import com.coupleblog.util.CB_DaysItemClickListener
 import com.firebase.ui.database.FirebaseRecyclerAdapter
 import com.firebase.ui.database.FirebaseRecyclerOptions
 import com.google.firebase.database.DatabaseError
 
 // FirebaseRecyclerAdapter 내부에서 데이터를 Query 값으로 가지고 있는다.
-class CB_DaysAdapter(val fragment: CB_DaysFragment, options: FirebaseRecyclerOptions<CB_Days>)
+class CB_DaysAdapter(val listener: CB_DaysItemClickListener, options: FirebaseRecyclerOptions<CB_Days>)
     : FirebaseRecyclerAdapter<CB_Days, CB_DaysAdapter.ViewHolder>(options)
 {
     class ViewHolder(private val binding: DaysItemBinding) : RecyclerView.ViewHolder(binding.root)
     {
-        fun bind(argFragment: CB_DaysFragment, argDays: CB_Days, arguKey: String)
+        fun bind(argListener: CB_DaysItemClickListener, argDays: CB_Days, arguKey: String)
         {
             binding.apply {
-                fragment    = argFragment
+                listener    = argListener
                 tDays       = argDays
                 strDaysKey  = arguKey
                 executePendingBindings()
@@ -40,7 +40,7 @@ class CB_DaysAdapter(val fragment: CB_DaysFragment, options: FirebaseRecyclerOpt
     override fun onBindViewHolder(holder: ViewHolder, position: Int, model: CB_Days)
     {
         val strKey = getRef(position).key!!
-        holder.bind(fragment, model, strKey)
+        holder.bind(listener, model, strKey)
     }
 
     override fun onError(error: DatabaseError)
