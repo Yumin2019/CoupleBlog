@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <appwidget-provider xmlns:android="http://schemas.android.com/apk/res/android"
-    android:initialKeyguardLayout="@layout/c_b__days_widget"
-    android:initialLayout="@layout/c_b__days_widget"
+    android:initialKeyguardLayout="@layout/cb_days_widget"
+    android:initialLayout="@layout/cb_days_widget"
     android:minWidth="110dp"
     android:minHeight="40dp"
     android:configure="com.coupleblog.widget.CB_DaysWidgetActivity"

@@ -37,19 +37,19 @@ class CB_DaysWidgetProvider : AppWidgetProvider() {
                 strDaysKey = getString("strDaysKey$appWidgetId", "") ?: ""
             }
 
-            val remoteViews = RemoteViews(context.packageName, R.layout.c_b__days_widget)
+            val remoteViews = RemoteViews(context.packageName, R.layout.cb_days_widget)
             var hasError = false
             var strErrorText = ""
 
             // error cases
             if (CB_AppFunc.getAuth().currentUser == null || CB_AppFunc._curUser == null) {
-                strErrorText = CB_AppFunc.getString(R.string.str_widget_login_error)
+                strErrorText = context.getString(R.string.str_widget_login_error)
                 hasError = true
             } else if (CB_AppFunc.curUser.strCoupleKey.isNullOrEmpty()) {
-                strErrorText = CB_AppFunc.getString(R.string.str_widget_couple_error)
+                strErrorText = context.getString(R.string.str_widget_couple_error)
                 hasError = true
             } else if (strEventType.isEmpty() || strDaysKey.isEmpty()) {
-                strErrorText = CB_AppFunc.getString(R.string.str_days_data_load_failed)
+                strErrorText = context.getString(R.string.str_days_data_load_failed)
                 hasError = true
             }
 
@@ -58,6 +58,7 @@ class CB_DaysWidgetProvider : AppWidgetProvider() {
                     setTextViewText(R.id.item_text_view, strErrorText)
                     setViewVisibility(R.id.days_text_view, View.GONE)
                     setViewVisibility(R.id.icon_image_view, View.GONE)
+                    Log.e("widget", "id: $appWidgetId has error")
                 }
                 continue
             }
@@ -81,6 +82,7 @@ class CB_DaysWidgetProvider : AppWidgetProvider() {
                                     setImageViewResource(R.id.icon_image_view, iResIdx)
                                 }
 
+                                Log.e("widget", "id: $appWidgetId finish")
                                 appWidgetManager.updateAppWidget(appWidgetId, remoteViews)
                             }
                         }

@@ -74,6 +74,12 @@
         <action
             android:id="@+id/action_CB_MainFragment_to_CB_DaysFragment"
             app:destination="@id/CB_DaysFragment" />
+        <action
+            android:id="@+id/action_CB_MainFragment_to_CB_OpensourceFragment"
+            app:destination="@id/CB_OpensourceFragment" />
+        <action
+            android:id="@+id/action_CB_MainFragment_to_CB_DeveloperFragment"
+            app:destination="@id/CB_DeveloperFragment" />
 
     </fragment>
 
@@ -89,7 +95,7 @@
 
     <fragment
         android:id="@+id/CB_InfoFragment"
-        android:name="com.coupleblog.fragment.CB_InfoFragment"
+        android:name="com.coupleblog.fragment.info.CB_PersonalInfoFragment"
         android:label="fragment_cb_info"
         tools:layout="@layout/fragment_cb_info" >
     </fragment>
@@ -211,6 +217,20 @@
         android:name="com.coupleblog.fragment.days.CB_NewDaysFragment"
         android:label="fragment_cb_new_days"
         tools:layout="@layout/fragment_cb_new_days" >
+    </fragment>
+
+    <fragment
+        android:id="@+id/CB_DeveloperFragment"
+        android:name="com.coupleblog.fragment.info.CB_DeveloperFragment"
+        android:label="fragment_cb_developer"
+        tools:layout="@layout/cb_fragment_developer" >
+    </fragment>
+
+    <fragment
+        android:id="@+id/CB_OpensourceFragment"
+        android:name="com.coupleblog.fragment.info.CB_OpensourceFragment"
+        android:label="fragment_cb_opensource"
+        tools:layout="@layout/fragment_cb_info" >
     </fragment>
 
 </navigation>

@@ -64,10 +64,21 @@ abstract class CB_PostListFragment : CB_BaseFragment()
         inflater.inflate(R.menu.menu_main, menu)
     }
 
+    // for post page
     override fun onOptionsItemSelected(item: MenuItem): Boolean
     {
         when(item.itemId)
         {
+            R.id.action_developer ->
+            {
+                beginAction(R.id.action_CB_MainFragment_to_CB_DeveloperFragment, R.id.CB_MainFragment)
+            }
+
+            R.id.action_opensource ->
+            {
+                beginAction(R.id.action_CB_MainFragment_to_CB_OpensourceFragment, R.id.CB_MainFragment)
+            }
+
             R.id.action_logout ->
             {
                 // 로그아웃을 진행한다.

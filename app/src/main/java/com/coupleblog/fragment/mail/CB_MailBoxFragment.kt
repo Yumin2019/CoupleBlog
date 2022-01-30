@@ -73,6 +73,16 @@ class CB_MailBoxFragment: CB_BaseFragment()
     {
         when(item.itemId)
         {
+            R.id.action_developer ->
+            {
+                beginAction(R.id.action_CB_MainFragment_to_CB_DeveloperFragment, R.id.CB_MainFragment)
+            }
+
+            R.id.action_opensource ->
+            {
+                beginAction(R.id.action_CB_MainFragment_to_CB_OpensourceFragment, R.id.CB_MainFragment)
+            }
+
             R.id.action_logout ->
             {
                 // 로그아웃을 진행한다.

@@ -2,21 +2,14 @@ package com.coupleblog.widget
 
 import android.appwidget.AppWidgetManager
 import android.os.Bundle
-import android.os.PersistableBundle
 import android.util.Log
-import android.widget.ListView
 import android.widget.RemoteViews
 import androidx.annotation.StringRes
-import androidx.appcompat.app.AppCompatActivity
 import com.coupleblog.R
 import com.coupleblog.model.CB_Days
 import com.coupleblog.singleton.CB_AppFunc
 import com.coupleblog.util.CB_DaysItemClickListener
 import com.google.firebase.database.DatabaseReference
-import com.google.firebase.database.DatabaseError
-import com.google.firebase.database.DataSnapshot
-import com.google.firebase.database.ValueEventListener
-import com.google.firebase.database.ktx.getValue
 import android.content.Intent
 import com.coupleblog.base.CB_BaseActivity
 import com.coupleblog.singleton.CB_SingleSystemMgr
@@ -54,7 +47,7 @@ class CB_DaysWidgetActivity : CB_BaseActivity(CB_SingleSystemMgr.ACTIVITY_TYPE.D
     {
         Log.d(strTag, "clickedDaysItem")
         val widgetManager = AppWidgetManager.getInstance(this@CB_DaysWidgetActivity)
-        val remoteViews = RemoteViews(packageName, R.layout.c_b__days_widget)
+        val remoteViews = RemoteViews(packageName, R.layout.cb_days_widget)
 
         // add pendingIntent and update remote views
         val intent = Intent(this, CB_MainActivity::class.java)

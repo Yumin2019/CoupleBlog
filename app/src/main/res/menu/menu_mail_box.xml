@@ -3,6 +3,20 @@
     xmlns:app="http://schemas.android.com/apk/res-auto">
 
     <item
+        android:id="@+id/action_developer"
+        android:title="@string/str_developer"
+        android:visible="true"
+        app:showAsAction="never"
+        />
+
+    <item
+        android:id="@+id/action_opensource"
+        android:title="@string/str_opensource_license"
+        android:visible="true"
+        app:showAsAction="never"
+        />
+
+    <item
         android:id="@+id/action_logout"
         android:title="@string/str_sign_out"
         android:visible="true"

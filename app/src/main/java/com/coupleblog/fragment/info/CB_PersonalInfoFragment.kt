@@ -1,4 +1,4 @@
-package com.coupleblog.fragment
+package com.coupleblog.fragment.info
 
 import android.os.Bundle
 import android.view.LayoutInflater
@@ -7,8 +7,9 @@ import android.view.ViewGroup
 import androidx.navigation.fragment.findNavController
 import com.coupleblog.R
 import com.coupleblog.base.CB_BaseFragment
+import com.coupleblog.fragment.InfoBinding
 
-class CB_InfoFragment : CB_BaseFragment()
+class CB_PersonalInfoFragment : CB_BaseFragment()
 {
     private var _binding            : InfoBinding? = null
     private val binding get() = _binding!!
@@ -18,7 +19,8 @@ class CB_InfoFragment : CB_BaseFragment()
         _binding = InfoBinding.inflate(inflater, container, false)
         binding.apply {
             lifecycleOwner  = viewLifecycleOwner
-            fragment        = this@CB_InfoFragment
+            strTitle = getString(R.string.str_personal_info_policy)
+            strText = getString(R.string.str_personal_info_policy_text)
         }
         return binding.root
     }
