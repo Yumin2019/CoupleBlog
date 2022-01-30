@@ -7,10 +7,6 @@
     <data class="com.coupleblog.fragment.DaysBinding">
 
         <variable
-            name="fragment"
-            type="com.coupleblog.fragment.days.CB_DaysFragment" />
-
-        <variable
             name="viewModel"
             type="com.coupleblog.singleton.CB_ViewModel.Companion" />
 

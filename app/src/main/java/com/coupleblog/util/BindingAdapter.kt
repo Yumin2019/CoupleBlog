@@ -337,9 +337,6 @@ fun setUserPresence(textView: TextView, userData: CB_User)
 @BindingAdapter("bind:days_time")
 fun setDaysTime(textView: TextView?, tDays: CB_Days): String
 {
-    if(textView == null)
-        return ""
-
     val eventCalendar = tDays.strEventDate.toCalendar()
     val curCalendar = CB_AppFunc.getCurCalendar()
     var eventDate = eventCalendar.time
@@ -408,7 +405,7 @@ fun setDaysTime(textView: TextView?, tDays: CB_Days): String
                     eventCalendar[Calendar.DAY_OF_MONTH] == curCalendar[Calendar.DAY_OF_MONTH])
             {
                 strDate = CB_AppFunc.getString(R.string.str_today)
-                textView.text = strDate
+                textView?.text = strDate
                 return strDate
             }
 
@@ -428,7 +425,7 @@ fun setDaysTime(textView: TextView?, tDays: CB_Days): String
         }
     }
 
-    textView.text = strDate
+    textView?.text = strDate
     return strDate
 }
 

@@ -7,6 +7,7 @@ import android.content.Intent
 import android.util.Log
 import android.view.View
 import android.widget.RemoteViews
+import com.coupleblog.CB_MainActivity
 import com.coupleblog.R
 import com.coupleblog.model.CB_Days
 import com.coupleblog.singleton.CB_AppFunc
@@ -15,51 +16,56 @@ import com.google.firebase.database.DataSnapshot
 import com.google.firebase.database.DatabaseError
 import com.google.firebase.database.ValueEventListener
 import com.google.firebase.database.ktx.getValue
+import android.app.PendingIntent
 
-/**
- * Implementation of App Widget functionality.
- */
 class CB_DaysWidgetProvider : AppWidgetProvider() {
-
-    companion object {
-        const val DAYS_UPDATE = "com.coupleblog.DAYS_UPDATE"
-    }
 
     override fun onUpdate(
         context: Context,
         appWidgetManager: AppWidgetManager,
         appWidgetIds: IntArray
     ) {
-        // There may be multiple widgets active, so update all of them
         for (appWidgetId in appWidgetIds) {
-            updateAppWidget(context, appWidgetManager, appWidgetId)
-        }
-    }
+            val intent = Intent(context, CB_MainActivity::class.java)
+            val pendingIntent = PendingIntent.getActivity(context, 0, intent, 0)
+            var strDaysKey = ""
+            var strEventType = ""
 
-    override fun onEnabled(context: Context) {
-        // Enter relevant functionality for when the first widget is created
-    }
+            // load data from sharedPreferences
+            CB_AppFunc.getSharedPref(context).apply {
+                strEventType = getString("strEventType$appWidgetId", "") ?: ""
+                strDaysKey = getString("strDaysKey$appWidgetId", "") ?: ""
+            }
 
-    override fun onDisabled(context: Context) {
-        // Enter relevant functionality for when the last widget is disabled
-    }
+            val remoteViews = RemoteViews(context.packageName, R.layout.c_b__days_widget)
+            var hasError = false
+            var strErrorText = ""
 
-    override fun onReceive(context: Context?, intent: Intent?) {
-        super.onReceive(context, intent)
-        if (intent?.action == DAYS_UPDATE) {
-
+            // error cases
             if (CB_AppFunc.getAuth().currentUser == null || CB_AppFunc._curUser == null) {
-                return
+                strErrorText = CB_AppFunc.getString(R.string.str_widget_login_error)
+                hasError = true
+            } else if (CB_AppFunc.curUser.strCoupleKey.isNullOrEmpty()) {
+                strErrorText = CB_AppFunc.getString(R.string.str_widget_couple_error)
+                hasError = true
+            } else if (strEventType.isEmpty() || strDaysKey.isEmpty()) {
+                strErrorText = CB_AppFunc.getString(R.string.str_days_data_load_failed)
+                hasError = true
             }
 
-            if (CB_AppFunc.curUser.strCoupleKey.isNullOrEmpty()) {
-                return
+            if (hasError) {
+                remoteViews.apply {
+                    setTextViewText(R.id.item_text_view, strErrorText)
+                    setViewVisibility(R.id.days_text_view, View.GONE)
+                    setViewVisibility(R.id.icon_image_view, View.GONE)
+                }
+                continue
             }
 
-            val strEventType = intent.getStringExtra("strEventType")!!
-            val strDaysKey = intent.getStringExtra("strDaysKey")!!
-            val remoteViews = RemoteViews(context?.packageName, R.layout.c_b__days_widget)
+            // set pendingIntent to container layout
+            remoteViews.setOnClickPendingIntent(R.id.days_widget_container, pendingIntent)
 
+            // load data from firebase with key
             val coupleRef = CB_AppFunc.getCouplesRoot().child(CB_AppFunc.curUser.strCoupleKey!!)
             coupleRef.child(strEventType).child(strDaysKey)
                 .addListenerForSingleValueEvent(object : ValueEventListener {
@@ -74,6 +80,8 @@ class CB_DaysWidgetProvider : AppWidgetProvider() {
                                 if(iResIdx != 0){
                                     setImageViewResource(R.id.icon_image_view, iResIdx)
                                 }
+
+                                appWidgetManager.updateAppWidget(appWidgetId, remoteViews)
                             }
                         }
                     }
@@ -82,36 +90,8 @@ class CB_DaysWidgetProvider : AppWidgetProvider() {
                         Log.e("daysWidgetProvider", "onCancelled: $databaseError")
                     }
                 })
+
         }
     }
 }
 
-internal fun updateAppWidget(
-    context: Context,
-    appWidgetManager: AppWidgetManager,
-    appWidgetId: Int
-) {
-    val remoteViews = RemoteViews(context.packageName, R.layout.c_b__days_widget)
-    var hasError = false
-    var strErrorText = ""
-
-    if (CB_AppFunc.getAuth().currentUser == null || CB_AppFunc._curUser == null) {
-        strErrorText = CB_AppFunc.getString(R.string.str_widget_login_error)
-        hasError = true
-    } else if (CB_AppFunc.curUser.strCoupleKey.isNullOrEmpty()) {
-        strErrorText = CB_AppFunc.getString(R.string.str_widget_couple_error)
-        hasError = true
-    }
-
-    if (hasError) {
-        remoteViews.apply {
-            setTextViewText(R.id.item_text_view, strErrorText)
-            setViewVisibility(R.id.days_text_view, View.GONE)
-            setViewVisibility(R.id.icon_image_view, View.GONE)
-        }
-        return
-    }
-
-    // Instruct the widget manager to update the widget
-    appWidgetManager.updateAppWidget(appWidgetId, remoteViews)
-}

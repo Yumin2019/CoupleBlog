@@ -20,12 +20,24 @@ import com.google.firebase.database.ktx.getValue
 import android.content.Intent
 import com.coupleblog.base.CB_BaseActivity
 import com.coupleblog.singleton.CB_SingleSystemMgr
+import android.app.PendingIntent
+import androidx.databinding.DataBindingUtil
+import androidx.recyclerview.widget.LinearLayoutManager
+import com.coupleblog.CB_MainActivity
+import com.coupleblog.adapter.CB_DaysAdapter
+import com.coupleblog.fragment.DaysBinding
+import com.coupleblog.singleton.CB_ViewModel
+import com.coupleblog.util.setDaysTime
+import com.firebase.ui.database.FirebaseRecyclerOptions
 
 class CB_DaysWidgetActivity : CB_BaseActivity(CB_SingleSystemMgr.ACTIVITY_TYPE.DAYS_WIDGET), CB_DaysItemClickListener
 {
-    private var eventAdapters: ArrayList<CB_DaysWidgetListViewAdapter> = arrayListOf()
-    private var coupleRef: DatabaseReference? = null
+    private var eventAdapters: ArrayList<CB_DaysAdapter> = arrayListOf()
     private var widgetId = AppWidgetManager.INVALID_APPWIDGET_ID
+    private lateinit var coupleRef: DatabaseReference
+
+    private var _binding            : DaysBinding? = null
+    private val binding get() = _binding!!
 
     private fun errorMsgAndExit(@StringRes iErrorMsg: Int)
     {
@@ -42,23 +54,57 @@ class CB_DaysWidgetActivity : CB_BaseActivity(CB_SingleSystemMgr.ACTIVITY_TYPE.D
     {
         Log.d(strTag, "clickedDaysItem")
         val widgetManager = AppWidgetManager.getInstance(this@CB_DaysWidgetActivity)
-        val remoteViews = RemoteViews(packageName, R.layout.activity_cb_days_widget)
+        val remoteViews = RemoteViews(packageName, R.layout.c_b__days_widget)
 
-        // send data to widget
-        sendBroadcast(Intent(CB_DaysWidgetProvider.DAYS_UPDATE).apply {
-            putExtra("strDaysKey", strDaysKey)
-            putExtra("strEventType", tDays.getEventTypeString())
-        })
+        // add pendingIntent and update remote views
+        val intent = Intent(this, CB_MainActivity::class.java)
+        val pendingIntent = PendingIntent.getActivity(this, 0, intent, 0)
 
-        widgetManager.updateAppWidget(widgetId, remoteViews)
+        remoteViews.apply {
+            val iResIdx = CB_AppFunc.getDrawableIdentifier(tDays.strIconRes!!)
+            setTextViewText(R.id.item_text_view, tDays.strTitle)
+            setTextViewText(R.id.days_text_view, setDaysTime(null, tDays))
+            if(iResIdx != 0){
+                setImageViewResource(R.id.icon_image_view, iResIdx)
+            }
+            setOnClickPendingIntent(R.id.days_widget_container, pendingIntent)
+            widgetManager.updateAppWidget(widgetId, remoteViews)
+        }
+
+        // save key and event type to sharedPreferences
+        CB_AppFunc.getSharedPref(this@CB_DaysWidgetActivity).edit().apply {
+            putString("strEventType$widgetId", tDays.getEventTypeString())
+            putString("strDaysKey$widgetId", strDaysKey)
+        }.apply()
+
         setResult(RESULT_OK, Intent().putExtra(AppWidgetManager.EXTRA_APPWIDGET_ID, widgetId))
         finish()
         CB_AppFunc.bottomToTopAnimation(this@CB_DaysWidgetActivity)
     }
 
+    override fun onStart()
+    {
+        super.onStart()
+        for(i: Int in eventAdapters.indices)
+        {
+            eventAdapters[i].startListening()
+        }
+    }
+
+    override fun onStop()
+    {
+        super.onStop()
+        for(i: Int in eventAdapters.indices)
+        {
+            eventAdapters[i].apply {
+                stopListening()
+                notifyItemRangeChanged(0, itemCount)
+            }
+        }
+    }
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_cb_days_widget)
         setResult(RESULT_CANCELED)
         CB_AppFunc.application = application
 
@@ -87,46 +133,42 @@ class CB_DaysWidgetActivity : CB_BaseActivity(CB_SingleSystemMgr.ACTIVITY_TYPE.D
 
         // load data from firebase
         coupleRef = CB_AppFunc.getCouplesRoot().child(CB_AppFunc.curUser.strCoupleKey!!)
-
         val queries = arrayListOf(
-            coupleRef!!.child("past-event-list"),
-            coupleRef!!.child("future-event-list"),
-            coupleRef!!.child("annual-event-list"))
+            coupleRef.child("past-event-list"),
+            coupleRef.child("future-event-list"),
+            coupleRef.child("annual-event-list"))
 
         for(i: Int in 0 until 3)
         {
-            queries[i].addListenerForSingleValueEvent(object : ValueEventListener {
-                override fun onDataChange(dataSnapshot: DataSnapshot)
-                {
-                    val daysList = ArrayList<CB_Days>()
-                    val keyList = ArrayList<String>()
+            val options = FirebaseRecyclerOptions.Builder<CB_Days>()
+                .setQuery(queries[i].orderByChild("iOrderIdx"), CB_Days::class.java)
+                .build()
 
-                    for (child in dataSnapshot.children) {
-                        val data = child.getValue<CB_Days>()
-                        if(data == null){
-                            Log.e(strTag, "onDataChange: child.getValue<CB_Days>() null", )
-                            continue
-                        }
-                        daysList.add(data)
-                        keyList.add(child.key!!)
-                    }
-
-                    eventAdapters.add(CB_DaysWidgetListViewAdapter(this@CB_DaysWidgetActivity, daysList, keyList))
-                    Log.d(strTag, "eventAdapters added")
-                }
-
-                override fun onCancelled(databaseError: DatabaseError)
-                {
-                    Log.e(strTag, "onCancelled: $databaseError")
-                }
-            })
+            eventAdapters.add(CB_DaysAdapter(this@CB_DaysWidgetActivity, options))
         }
 
-        // wait for loading time
-        CB_AppFunc.postDelayedUI(1000, null, funcSecond = {
-            findViewById<ListView>(R.id.past_event_list_view).adapter = eventAdapters[0]
-            findViewById<ListView>(R.id.future_event_list_view).adapter = eventAdapters[1]
-            findViewById<ListView>(R.id.annual_event_list_view).adapter = eventAdapters[2]
-        })
+        _binding = DataBindingUtil.setContentView(this@CB_DaysWidgetActivity, R.layout.fragment_cb_days)
+        binding.apply {
+            lifecycleOwner      = this@CB_DaysWidgetActivity
+            viewModel           = CB_ViewModel.Companion
+            pastEventAdapter    = eventAdapters[0]
+            futureEventAdapter  = eventAdapters[1]
+            annualEventAdapter  = eventAdapters[2]
+
+            pastEventLayoutManager = LinearLayoutManager(this@CB_DaysWidgetActivity).apply {
+                reverseLayout = true
+                stackFromEnd  = true
+            }
+
+            futureEventLayoutManager = LinearLayoutManager(this@CB_DaysWidgetActivity).apply {
+                reverseLayout = true
+                stackFromEnd  = true
+            }
+
+            annualEventLayoutManager = LinearLayoutManager(this@CB_DaysWidgetActivity).apply {
+                reverseLayout = true
+                stackFromEnd  = true
+            }
+        }
     }
 }

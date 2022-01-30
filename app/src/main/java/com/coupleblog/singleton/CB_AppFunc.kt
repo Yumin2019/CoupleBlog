@@ -156,6 +156,11 @@ class CB_AppFunc
             return activity.getSharedPreferences("Config", 0) // PRIVATE
         }
 
+        fun getSharedPref(context: Context): SharedPreferences
+        {
+            return context.getSharedPreferences("Config", 0) // PRIVATE
+        }
+
         fun getColorStateList(colorResId: Int): ColorStateList
         {
             return ColorStateList.valueOf(ContextCompat.getColor(application, colorResId))

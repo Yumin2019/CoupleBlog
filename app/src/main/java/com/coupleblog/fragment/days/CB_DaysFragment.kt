@@ -36,7 +36,6 @@ class CB_DaysFragment : CB_BaseFragment(), CB_DaysItemClickListener
         _binding = DaysBinding.inflate(inflater, container, false)
         binding.apply {
             lifecycleOwner      = viewLifecycleOwner
-            fragment            = this@CB_DaysFragment
             viewModel           = CB_ViewModel.Companion
             pastEventAdapter    = eventAdapters[0]
             futureEventAdapter  = eventAdapters[1]
