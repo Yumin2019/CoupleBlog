@@ -67,8 +67,8 @@ class CB_SingleSystemMgr
             if(type == ACTIVITY_TYPE.ACTIVITY_TYPE_END)
                 return
 
-            if(isActivity[type.ordinal])
-                assert(false)
+           /* if(isActivity[type.ordinal])
+                assert(false)*/
 
             isActivity[type.ordinal] = true
         }
@@ -78,24 +78,24 @@ class CB_SingleSystemMgr
             if(type == ACTIVITY_TYPE.ACTIVITY_TYPE_END)
                 return
 
-            if(!isActivity[type.ordinal])
-                assert(false)
+           /* if(!isActivity[type.ordinal])
+                assert(false)*/
 
             isActivity[type.ordinal] = false
         }
 
         fun registerDialog(type : DIALOG_TYPE)
         {
-            if(isDialog[type.ordinal])
-                assert(false)
+           /* if(isDialog[type.ordinal])
+                assert(false)*/
 
             isDialog[type.ordinal] = true
         }
 
         fun releaseDialog(type : DIALOG_TYPE)
         {
-            if(!isDialog[type.ordinal])
-                assert(false)
+            /*if(!isDialog[type.ordinal])
+                assert(false)*/
 
             isDialog[type.ordinal] = false
         }

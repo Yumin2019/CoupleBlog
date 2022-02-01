@@ -1,6 +1,7 @@
 package com.coupleblog.fragment
 
 import android.os.Bundle
+import android.util.Log
 import android.view.*
 import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.RecyclerView
@@ -15,7 +16,10 @@ import com.coupleblog.fragment.PAGE_TYPE.*
 import com.coupleblog.fragment.mail.CB_MailBoxFragment
 import com.coupleblog.fragment.profile.CB_ProfileFragment
 import com.coupleblog.model.CB_Couple
+import com.google.android.gms.tasks.OnCompleteListener
 import com.google.android.material.tabs.TabLayoutMediator
+import com.google.firebase.ktx.Firebase
+import com.google.firebase.messaging.ktx.messaging
 
 enum class PAGE_TYPE
 {
@@ -86,6 +90,19 @@ class CB_MainFragment : CB_BaseFragment()
                getCouplesRoot().child(coupleKey!!).setValue(coupleInfo)
            }
        }
+
+        // if user has no token, make one
+        Firebase.messaging.token.addOnCompleteListener(OnCompleteListener { task ->
+            if (!task.isSuccessful) {
+                Log.w(strTag, "Fetching FCM registration token failed", task.exception)
+                return@OnCompleteListener
+            }
+
+            // Get new FCM registration token
+            val token = task.result.toString()
+            Log.d(strTag, "fcmToken:$token")
+            CB_AppFunc.getUsersRoot().child(CB_AppFunc.getUid()).child("strFcmToken").setValue(token)
+        })
 
        // ViewPager 설정
        with(binding)

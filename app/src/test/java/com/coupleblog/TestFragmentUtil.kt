@@ -1,16 +1,11 @@
-package com.coupleblog.util
+package com.coupleblog
 
 import android.os.Bundle
-import android.view.View
-import androidx.core.content.MimeTypeFilter.matches
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.testing.FragmentScenario
 import androidx.fragment.app.testing.launchFragmentInContainer
 import androidx.navigation.NavController
 import androidx.navigation.Navigation
-import androidx.test.platform.ui.UiController
-import com.coupleblog.R
-import junit.framework.AssertionFailedError
 
 class TestFragmentUtil
 {

@@ -1,8 +1,11 @@
 package com.coupleblog
 
+import android.app.NotificationChannel
+import android.app.NotificationManager
 import android.content.BroadcastReceiver
 import android.content.Context
 import android.content.Intent
+import android.os.Build
 import android.os.Bundle
 import android.util.Log
 import androidx.core.os.bundleOf
@@ -25,7 +28,6 @@ class CB_MainActivity : CB_BaseActivity(CB_SingleSystemMgr.ACTIVITY_TYPE.MAIN)
     override fun onCreate(savedInstanceState: Bundle?)
     {
         super.onCreate(savedInstanceState)
-
         binding   = DataBindingUtil.setContentView(this, R.layout.activity_cb_main)
         binding.apply {
             lifecycleOwner = this@CB_MainActivity
@@ -33,6 +35,16 @@ class CB_MainActivity : CB_BaseActivity(CB_SingleSystemMgr.ACTIVITY_TYPE.MAIN)
             viewModel      = CB_ViewModel.Companion
 
             setSupportActionBar(toolbar)
+        }
+
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+            // Create channel to show notifications.
+            val channelId = getString(R.string.default_notification_channel_id)
+            val channelName = getString(R.string.default_notification_channel_name)
+            val notificationManager = getSystemService(NotificationManager::class.java)
+            notificationManager?.createNotificationChannel(NotificationChannel(channelId,
+                channelName, NotificationManager.IMPORTANCE_DEFAULT)
+            )
         }
 
         broadcastReceiver = object: BroadcastReceiver() {
@@ -66,14 +78,7 @@ class CB_MainActivity : CB_BaseActivity(CB_SingleSystemMgr.ACTIVITY_TYPE.MAIN)
 
         // Init
         CB_AppFunc.application = application
-        CB_AppFunc.binding = binding
         findNavController(R.id.nav_host_fragment).setGraph(R.navigation.nav_graph)
-    }
-
-    override fun onDestroy()
-    {
-        super.onDestroy()
-        CB_AppFunc.binding = null
     }
 
     // Add 버튼 함수 (MainFragment - MyPostLists 에서 사용한다)

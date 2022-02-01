@@ -41,6 +41,7 @@ import com.coupleblog.R
 import com.coupleblog.model.CB_User
 import com.coupleblog.base.CB_BaseActivity
 import com.coupleblog.singleton.CB_AppFunc.Companion.convertDpToPixel
+import com.coupleblog.util.CB_APIService
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import com.google.android.material.snackbar.Snackbar
 import com.google.firebase.auth.FirebaseAuth
@@ -58,6 +59,8 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.tasks.await
+import retrofit2.Retrofit
+import retrofit2.converter.gson.GsonConverterFactory
 import java.io.ByteArrayOutputStream
 import java.io.File
 import java.io.FileOutputStream
@@ -97,8 +100,15 @@ class CB_AppFunc
         val networkScope                     = CoroutineScope(Dispatchers.IO)
 
         lateinit var application: Application
-        // we have to give null to it on app end
         var binding: MainActivityBinding? = null
+
+        val apiService: CB_APIService by lazy {
+            Retrofit.Builder()
+                .baseUrl("https://fcm.googleapis.com/")
+                .addConverterFactory(GsonConverterFactory.create())
+                .build()
+                .create(CB_APIService::class.java)
+        }
 
         val PERMISSION_REQUEST               = 100
 
@@ -1135,23 +1145,6 @@ class CB_AppFunc
             val imm = context.getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager
             editText.requestFocus()
             imm.showSoftInput(editText, InputMethodManager.SHOW_IMPLICIT)
-        }
-
-        fun showSnackbar(iMsgRes: Int, iSnackbarLength: Int = Snackbar.LENGTH_SHORT,
-                         iActionRes: Int? = null, actionFunc: (()->Unit)? = null)
-        {
-            val snackbar = Snackbar.make(binding!!.rootView, iMsgRes, iSnackbarLength)
-            if(iActionRes != null)
-            {
-                snackbar.setAction(iActionRes)
-                {
-                    actionFunc?.invoke()
-                }
-            }
-
-            snackbar.setAnchorView(binding!!.fragmentLayout)
-                    .setAnimationMode(Snackbar.ANIMATION_MODE_FADE)
-                    .show()
         }
 
         // replace string to resId

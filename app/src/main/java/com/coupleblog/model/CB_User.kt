@@ -26,6 +26,7 @@ data class CB_User(
     var strSignUpDate        : String? = "",                // 가입 시기
     var strImgPath           : String? = "",                // 유저 프로필 이미지 Path
     var strCoupleUid         : String? = "",                // 커플 정보 Uid
+    var strFcmToken          : String? = "",                // FCM Token
     var isOnline             : Boolean? = false,            // 온라인 여부
     var strLogoutDate        : String? = "",                // 로그아웃 시기
     var iGender              : Int? = GENDER.NONE.ordinal,  // gender

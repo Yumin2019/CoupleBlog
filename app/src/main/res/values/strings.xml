@@ -803,6 +803,12 @@ OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.            
         My Email: yumingames@gmail.com                                                               \n
     </string>
 
+    <string name="default_notification_channel_id">ChannelId</string>
+    <string name="default_notification_channel_name">ChannelName</string>
+
+    <string name="str_posted_notification">%s posted a new post.</string>
+    <string name="str_sent_notification">%s sent a mail.</string>
+    <string name="str_commented_notification">%s wrote a comment.</string>
     <string name="str_couple_blog_github">Couple Blog github</string>
     <string name="str_couple_blog_github_link">https://github.com/Yumin2019/CoupleBlog</string>
     <string name="str_developer_blog">Developer Blog</string>
