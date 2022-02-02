@@ -7,6 +7,7 @@ import android.app.PendingIntent
 import android.app.Service
 import android.content.Context
 import android.content.Intent
+import android.graphics.BitmapFactory
 import android.os.Build
 import android.os.IBinder
 import android.util.Log
@@ -73,9 +74,12 @@ abstract class CB_BaseTaskService: Service()
         createDefaultChannel()
         val builder = NotificationCompat.Builder(this, CHANNEL_ID_DEFAULT)
             .setSmallIcon(R.drawable.ic_file_upload_white_24dp)
+            .setLargeIcon(BitmapFactory.decodeResource(resources, R.drawable.couple_blog))
             .setContentTitle(getString(R.string.app_name))
             .setContentText(getString(iResCaption))
             .setProgress(100, iPercent, false)
+            .setGroup(getString(R.string.app_name))
+            .setGroupSummary(true)
 
         notiMgr.notify(PROGRESS_NOTIFICATION_ID, builder.build())
     }
@@ -91,14 +95,16 @@ abstract class CB_BaseTaskService: Service()
             /* request Code */ 0, intent, PendingIntent.FLAG_UPDATE_CURRENT)
 
         val iIcon = if(bSuccess) R.drawable.ic_check_white_24 else R.drawable.ic_error_white_24dp
-
         createDefaultChannel()
         val builder = NotificationCompat.Builder(this, CHANNEL_ID_DEFAULT)
             .setSmallIcon(iIcon)
+            .setLargeIcon(BitmapFactory.decodeResource(resources, R.drawable.couple_blog))
             .setContentTitle(getString(R.string.app_name))
             .setContentText(getString(iResCaption))
             .setAutoCancel(true) // when you click this notification, it'll be destroyed
             .setContentIntent(pendingIntent)
+            .setGroup(getString(R.string.app_name))
+            .setGroupSummary(true)
 
         notiMgr.notify(FINISHED_NOTIFICATION_ID, builder.build())
     }

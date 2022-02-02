@@ -4,11 +4,11 @@
     xmlns:bind="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools">
 
-    <data class="com.coupleblog.fragment.NewMailBinding">
+    <data class="com.coupleblog.fragment.mail.NewMailBinding">
 
         <variable
             name="fragment"
-            type="com.coupleblog.fragment.post.CB_NewMailFragment" />
+            type="com.coupleblog.fragment.mail.CB_NewMailFragment" />
 
         <variable
             name="viewModel"

@@ -130,7 +130,7 @@
 
     <fragment
         android:id="@+id/CB_NewMailFragment"
-        android:name="com.coupleblog.fragment.post.CB_NewMailFragment"
+        android:name="com.coupleblog.fragment.mail.CB_NewMailFragment"
         android:label="fragment_cb_new_mail"
         tools:layout="@layout/fragment_cb_new_mail" >
     </fragment>

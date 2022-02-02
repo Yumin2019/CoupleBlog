@@ -1,5 +1,6 @@
-package com.coupleblog.fragment.post
+package com.coupleblog.fragment.mail
 
+import android.app.Dialog
 import android.os.Bundle
 import android.util.Log
 import android.view.*
@@ -12,7 +13,6 @@ import com.coupleblog.dialog.DialogItem
 import com.coupleblog.model.CB_Mail
 import com.coupleblog.model.MAIL_TYPE
 import com.coupleblog.base.CB_CameraBaseFragment
-import com.coupleblog.fragment.NewMailBinding
 import com.coupleblog.singleton.CB_AppFunc
 import com.coupleblog.singleton.CB_SingleSystemMgr
 import com.coupleblog.singleton.CB_ViewModel
@@ -22,6 +22,7 @@ import com.google.firebase.FirebaseException
 import com.google.firebase.database.DataSnapshot
 import com.google.firebase.database.DatabaseError
 import com.google.firebase.database.ValueEventListener
+import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.tasks.await
@@ -275,6 +276,7 @@ class CB_NewMailFragment: CB_CameraBaseFragment(UPLOAD_TYPE.EMAIL_IMAGE, bDeferr
                             val list = (snapshot.value as HashMap<*, *>).toList()
                             strRecipientUid = list[0].first as String
                             val strRecipientCoupleUid = (list[0].second as HashMap<*, *>)["strCoupleUid"] as String?
+                            val strRecipientFcmToken = (list[0].second as HashMap<*, *>)["strFcmToken"] as String?
                             val myUid = CB_AppFunc.getUid()
 
                             if(eType == MAIL_TYPE.REQUEST_COUPLE)
@@ -328,12 +330,7 @@ class CB_NewMailFragment: CB_CameraBaseFragment(UPLOAD_TYPE.EMAIL_IMAGE, bDeferr
                                 uriRoot.child(mailKey).setValue(mail).await()
                                 Log.d(strTag, "sent a mail to recipient uid:$strRecipientUid")
 
-                                launch(Dispatchers.Main)
-                                {
-                                    dialog.cancel()
-                                    findNavController().popBackStack()
-                                    CB_SingleSystemMgr.showToast(R.string.str_send_mail_success)
-                                }
+                                sentMail(dialog, strTitle, strRecipientFcmToken)
                             }
                             else
                             {
@@ -350,12 +347,7 @@ class CB_NewMailFragment: CB_CameraBaseFragment(UPLOAD_TYPE.EMAIL_IMAGE, bDeferr
                                             Log.d(CB_AppFunc.strTag, "update img to users/$strRecipientUid/" +
                                                     "user-mails/$mailKey/strImgPath")
 
-                                            launch(Dispatchers.Main)
-                                            {
-                                                dialog.cancel()
-                                                findNavController().popBackStack()
-                                                CB_SingleSystemMgr.showToast(R.string.str_send_mail_success)
-                                            }
+                                            sentMail(dialog, strTitle, strRecipientFcmToken)
                                         }
                                     }
 
@@ -392,6 +384,25 @@ class CB_NewMailFragment: CB_CameraBaseFragment(UPLOAD_TYPE.EMAIL_IMAGE, bDeferr
                         R.drawable.error_icon, true)
                 }
             })
+    }
+
+    fun sentMail(dialog: Dialog, strTitle: String, strFcmToken: String?)
+    {
+        Log.d(strTag, "mail notification to receiver")
+        CoroutineScope(Dispatchers.Main).launch {
+            dialog.cancel()
+            findNavController().popBackStack()
+            CB_SingleSystemMgr.showToast(R.string.str_send_mail_success)
+        }
+
+        if(strFcmToken.isNullOrEmpty())
+        {
+            Log.e(strTag, "sentMail token is null or empty")
+            return
+        }
+
+        CB_AppFunc.sendNotification(strTitle,
+            String.format(getString(R.string.str_mail_notification), CB_AppFunc.curUser.strUserName), strFcmToken)
     }
 
     override fun onDestroy()

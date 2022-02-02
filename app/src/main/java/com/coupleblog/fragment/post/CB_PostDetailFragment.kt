@@ -507,11 +507,11 @@ class CB_PostDetailFragment: CB_BaseFragment()
             R.id.CB_PostDetailFragment, bundleOf(CB_ProfileInfoFragment.ARGU_UID to strUid))
     }
 
-    fun postButton()
+    fun commentPostButton()
     {
         CB_AppFunc.clearFocusing(requireActivity())
 
-        // 포스트 내용을 알아온다.
+        // 댓글 내용을 알아온다.
         val strComment = binding.commentEditText.text.toString()
         if(strComment.isEmpty())
         {
@@ -539,6 +539,16 @@ class CB_PostDetailFragment: CB_BaseFragment()
 
                     // scroll to bottom
                     binding.scrollView.fullScroll(View.FOCUS_DOWN)
+
+                    // send a notification to couple user
+                    if(!CB_ViewModel.isMyPost.value!! && !CB_AppFunc.coupleUser.strFcmToken.isNullOrEmpty())
+                    {
+                        // if A posted a comment on A's post(X)
+                        // if A posted a comment on B's post(O)
+                        CB_AppFunc.sendNotification(getString(R.string.str_new_comment),
+                            String.format(getString(R.string.str_new_comment_notification), CB_AppFunc.curUser.strUserName),
+                            CB_AppFunc.coupleUser.strFcmToken!!)
+                    }
                 }
             }
             catch(e: FirebaseException)

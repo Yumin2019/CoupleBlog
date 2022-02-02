@@ -806,9 +806,14 @@ OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.            
     <string name="default_notification_channel_id">ChannelId</string>
     <string name="default_notification_channel_name">ChannelName</string>
 
-    <string name="str_posted_notification">%s posted a new post.</string>
-    <string name="str_sent_notification">%s sent a mail.</string>
-    <string name="str_commented_notification">%s wrote a comment.</string>
+    <string name="str_new_comment">New Comment</string>
+    <string name="str_new_comment_notification">%s posted a new comment.</string>
+    <string name="str_new_couple">New Couple</string>
+    <string name="str_new_couple_notification">You\'re a couple with %s.\nClick this message.</string>
+    <string name="str_post_notification">%s posted a new post.</string>
+    <string name="str_mail_notification">%s sent a mail.</string>
+    <string name="str_days_notification">%s made a days item.</string>
+    <string name="str_comment_notification">%s wrote a comment.</string>
     <string name="str_couple_blog_github">Couple Blog github</string>
     <string name="str_couple_blog_github_link">https://github.com/Yumin2019/CoupleBlog</string>
     <string name="str_developer_blog">Developer Blog</string>

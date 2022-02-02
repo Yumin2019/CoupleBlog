@@ -1,11 +1,14 @@
 package com.coupleblog.fragment.mail
 
 
+import android.content.Context
+import android.content.DialogInterface
 import android.os.Bundle
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.annotation.DrawableRes
 import androidx.core.os.bundleOf
 import androidx.navigation.fragment.findNavController
 import com.coupleblog.R
@@ -245,9 +248,9 @@ class CB_MailDetailFragment : CB_BaseFragment()
             return
 
         // dialog 를 출력하여 해당 유저와 커플이 되길 원하는지 판단한다.
-        // 1. 자신한테 요청 메세지를 보낼 수는 없다. V
+        // 1. 자신한테 요청 메세지를 보낼 수는 없다. V NewMail
         // 2. 이미 커플인 상태라면 해당 버튼을 누를 수 없다. (gone) V
-        // 3. 커플이면 요청 메일을 보낼 수 없다. V
+        // 3. 커플이면 요청 메일을 보낼 수 없다. V NewMail
         val mailData = CB_ViewModel.tMail.value!!
 
         // sender 정보를 토대로 유저 정보를 찾아온다.
@@ -274,7 +277,8 @@ class CB_MailDetailFragment : CB_BaseFragment()
                 // 다른 사람이 보낸 요청이고 두 사람 모두 커플이 아닌 경우에 dialog 를 출력하여 여부를 확인한다.
                 CB_AppFunc.confirmDialog(requireActivity(), getString(R.string.str_request_couple),
                     getString(R.string.str_request_couple_msg) + senderUserInfo.strUserName,
-                            R.drawable.haha_icon, /*  유저 이미지*/ true,
+                    strImgStoragePath = senderUserInfo.strImgPath,
+                    iDefaultIcon =  R.drawable.notification_icon, true,
                     getString(R.string.str_yes),
                     yesListener = { _, _ ->
 
@@ -304,6 +308,20 @@ class CB_MailDetailFragment : CB_BaseFragment()
 
                                     CB_SingleSystemMgr.showToast(R.string.str_you_became_couple)
                                     backPressed()
+
+                                    // 나에게 알림을 보낸다.
+                                    if(!CB_AppFunc.curUser.strFcmToken.isNullOrEmpty())
+                                    {
+                                        CB_AppFunc.sendNotification(getString(R.string.str_new_couple),
+                                            String.format(getString(R.string.str_new_couple_notification), CB_AppFunc.coupleUser.strUserName!!), CB_AppFunc.curUser.strFcmToken!!)
+                                    }
+
+                                    // 상대에게 알림을 보낸다.
+                                    if(!CB_AppFunc.coupleUser.strFcmToken.isNullOrEmpty())
+                                    {
+                                        CB_AppFunc.sendNotification(getString(R.string.str_new_couple),
+                                            String.format(getString(R.string.str_new_couple_notification), CB_AppFunc.curUser.strUserName!!), CB_AppFunc.coupleUser.strFcmToken!!)
+                                    }
                                 }
 
                                 override fun onCancelled(error: DatabaseError)

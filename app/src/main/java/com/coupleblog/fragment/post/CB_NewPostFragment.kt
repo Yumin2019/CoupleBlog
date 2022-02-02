@@ -18,15 +18,12 @@ import com.coupleblog.model.CB_Post
 import com.coupleblog.model.REACTION_TYPE
 import com.coupleblog.base.CB_CameraBaseFragment
 import com.coupleblog.fragment.NewPostBinding
-import com.coupleblog.model.CB_FCMData
-import com.coupleblog.model.CB_Notification
 import com.coupleblog.singleton.CB_AppFunc
 import com.coupleblog.singleton.CB_SingleSystemMgr
 import com.coupleblog.singleton.CB_ViewModel
 import com.coupleblog.singleton.GlideApp
 import com.coupleblog.storage.CB_UploadService
 import com.coupleblog.storage.UPLOAD_TYPE
-import com.coupleblog.util.CB_Response
 import com.google.firebase.FirebaseException
 import com.google.firebase.database.DataSnapshot
 import com.google.firebase.database.DatabaseError
@@ -36,9 +33,6 @@ import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.tasks.await
-import retrofit2.Call
-import retrofit2.Callback
-import retrofit2.Response
 
 class CB_NewPostFragment: CB_CameraBaseFragment(UPLOAD_TYPE.POST_IMAGE, bDeferred = true)
 {
@@ -412,62 +406,24 @@ class CB_NewPostFragment: CB_CameraBaseFragment(UPLOAD_TYPE.POST_IMAGE, bDeferre
 
     private fun postPosted(strTitle:String, dialog: Dialog)
     {
+        Log.d(strTag, "post notification to receiver")
         CoroutineScope(Dispatchers.Main).launch {
             // 저장을 완료한 이후에 다시 mainFragment 로 이동한다.
             dialog.cancel()
             CB_SingleSystemMgr.showToast(R.string.str_post_posted)
             findNavController().popBackStack()
-
-            if(CB_AppFunc.curUser.strCoupleUid.isNullOrEmpty() || CB_AppFunc.coupleUser.strFcmToken.isNullOrEmpty())
-            {
-                Log.e(strTag, "post upload: no token or not couple")
-                return@launch
-            }
-
-            val notification = CB_Notification(CB_AppFunc.coupleUser.strFcmToken,
-                CB_FCMData(strTitle, String.format(getString(R.string.str_posted_notification), CB_AppFunc.curUser.strUserName)))
-            CB_AppFunc.apiService.sendNotification(notification)
-                .enqueue(object: Callback<CB_Response> {
-                    override fun onResponse(
-                        call: Call<CB_Response>,
-                        response: Response<CB_Response>
-                    ) {
-                        when(response.code()) {
-                            200 -> {
-                                val body = response.body()!!
-                                if (body.failure > 0) {
-                                    Log.e(strTag, "onFailure : retrofit notification processing failed")
-                                    for(error in body.results) {
-                                        Log.e(strTag, "body.results id = ${error.message_id} error: ${error.error}")
-                                    }
-                                }
-
-                            }
-
-                            400 -> {
-                                Log.e(strTag, "onFailure : json parsing error")
-                            }
-
-                            401 -> {
-                                Log.e(strTag, "onFailure : sender auth error")
-                            }
-
-                            else -> {
-
-                            }
-                        }
-
-                        // https://firebase.google.com/docs/cloud-messaging/http-server-ref#send-downstream
-                        Log.d(strTag, "onResponse code:${response.code()}")
-                        Log.d(strTag, "resposne body:${response.body()}")
-                    }
-
-                    override fun onFailure(call: Call<CB_Response>, t: Throwable)
-                    {
-                        Log.e(strTag, "onFailure : retrofit notification processing failed msg:" + t.message)
-                    }
-                })
         }
+
+        if(CB_AppFunc.curUser.strCoupleUid.isNullOrEmpty() || CB_AppFunc.coupleUser.strFcmToken.isNullOrEmpty())
+        {
+            Log.e(strTag, "post upload: no token or not couple")
+            return
+        }
+
+        // send notification to couple user
+        CB_AppFunc.sendNotification(strTitle, String.format(getString(R.string.str_post_notification), CB_AppFunc.curUser.strUserName),
+            CB_AppFunc.coupleUser.strFcmToken!!
+        )
     }
 
     override fun backPressed()

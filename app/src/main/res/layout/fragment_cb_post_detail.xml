@@ -191,7 +191,7 @@
                     android:layout_marginStart="@dimen/normal_margin"
                     android:layout_marginEnd="@dimen/normal_margin"
                     android:backgroundTint="@color/purple"
-                    android:onClick="@{()->fragment.postButton()}"
+                    android:onClick="@{()->fragment.commentPostButton()}"
                     android:text="@string/str_post"
                     android:textSize="@dimen/normal_text_size"
                     app:layout_constraintBottom_toBottomOf="@+id/comment_text_input_layout"

@@ -29,19 +29,26 @@ import android.view.inputmethod.InputMethodManager
 import android.widget.EditText
 import android.widget.ImageView
 import androidx.annotation.AnyRes
+import androidx.annotation.DrawableRes
 import androidx.annotation.RequiresApi
+import androidx.annotation.StringRes
 import androidx.appcompat.content.res.AppCompatResources
 import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
 import com.bumptech.glide.Glide
 import com.bumptech.glide.Glide.with
 import com.bumptech.glide.annotation.GlideModule
+import com.bumptech.glide.request.target.CustomTarget
+import com.bumptech.glide.request.transition.Transition
 import com.coupleblog.MainActivityBinding
 import com.coupleblog.R
 import com.coupleblog.model.CB_User
 import com.coupleblog.base.CB_BaseActivity
+import com.coupleblog.model.CB_FCMData
+import com.coupleblog.model.CB_Notification
 import com.coupleblog.singleton.CB_AppFunc.Companion.convertDpToPixel
 import com.coupleblog.util.CB_APIService
+import com.coupleblog.util.CB_Response
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import com.google.android.material.snackbar.Snackbar
 import com.google.firebase.auth.FirebaseAuth
@@ -54,11 +61,11 @@ import com.google.firebase.database.ktx.database
 import com.google.firebase.database.ktx.getValue
 import com.google.firebase.ktx.Firebase
 import com.google.firebase.storage.ktx.storage
-import kotlinx.coroutines.CoroutineScope
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.delay
-import kotlinx.coroutines.launch
+import kotlinx.coroutines.*
 import kotlinx.coroutines.tasks.await
+import retrofit2.Call
+import retrofit2.Callback
+import retrofit2.Response
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
 import java.io.ByteArrayOutputStream
@@ -212,6 +219,56 @@ class CB_AppFunc
              val bSnsUser            = pref.getBoolean("bSnsUser", false)
              val bAutoLogin          = pref.getBoolean("bAutoLogin", false)
          */
+
+        fun sendNotification(strTitle: String, strBody: String, strFcmToken: String)
+        {
+            Log.d(strTag, "sendNotification strTitle:$strTitle, strBody:$strBody, strFcmToken:$strFcmToken")
+            val notification = CB_Notification(
+                strFcmToken,
+                CB_FCMData(strTitle, strBody)
+            )
+            apiService.sendNotification(notification)
+                .enqueue(object: Callback<CB_Response> {
+                    override fun onResponse(
+                        call: Call<CB_Response>,
+                        response: Response<CB_Response>
+                    ) {
+                        when(response.code()) {
+                            200 -> {
+                                val body = response.body()!!
+                                if (body.failure > 0) {
+                                    Log.e(strTag, "onFailure : retrofit notification processing failed")
+                                    for(error in body.results) {
+                                        Log.e(strTag, "body.results id = ${error.message_id} error: ${error.error}")
+                                    }
+                                }
+
+                            }
+
+                            400 -> {
+                                Log.e(strTag, "onFailure : json parsing error")
+                            }
+
+                            401 -> {
+                                Log.e(strTag, "onFailure : sender auth error")
+                            }
+
+                            else -> {
+
+                            }
+                        }
+
+                        // https://firebase.google.com/docs/cloud-messaging/http-server-ref#send-downstream
+                        Log.d(strTag, "onResponse code:${response.code()}")
+                        Log.d(strTag, "resposne body:${response.body()}")
+                    }
+
+                    override fun onFailure(call: Call<CB_Response>, t: Throwable)
+                    {
+                        Log.e(strTag, "onFailure : retrofit notification processing failed msg:" + t.message)
+                    }
+                })
+        }
 
         fun getUserPresence()
         {
@@ -1148,14 +1205,14 @@ class CB_AppFunc
         }
 
         // replace string to resId
-        fun okDialog(context: Activity, iResTitle: Int, iResMessage:Int,
-                     iconId: Int?, bCancelable: Boolean, listener: DialogInterface.OnClickListener? = null)
+        fun okDialog(context: Activity, @StringRes iResTitle: Int, @StringRes iResMessage:Int,
+                     @DrawableRes iconId: Int?, bCancelable: Boolean, listener: DialogInterface.OnClickListener? = null)
         {
             okDialog(context, getString(iResTitle), getString(iResMessage), iconId, bCancelable, listener)
         }
 
         fun okDialog(context: Activity, str_title: String?, str_message: String?,
-                     iconId: Int?, bCancelable: Boolean, listener: DialogInterface.OnClickListener? = null)
+                     @DrawableRes iconId: Int?, bCancelable: Boolean, listener: DialogInterface.OnClickListener? = null)
         {
             if (CB_SingleSystemMgr.isDialog(CB_SingleSystemMgr.DIALOG_TYPE.OK_DIALOG))
                 return
@@ -1176,15 +1233,15 @@ class CB_AppFunc
         }
 
         // replace string to resId
-        fun confirmDialog(context: Context, iResTitle: Int, iResMessage: Int, iconId: Int?,
-                          bCancelable: Boolean, iYesText: Int, yesListener: DialogInterface.OnClickListener?,
-                          iNoText: Int, noListener: DialogInterface.OnClickListener?)
+        fun confirmDialog(context: Context, @StringRes iResTitle: Int, @StringRes iResMessage: Int, @DrawableRes iconId: Int?,
+                          bCancelable: Boolean, @StringRes iYesText: Int, yesListener: DialogInterface.OnClickListener?,
+                          @StringRes iNoText: Int, noListener: DialogInterface.OnClickListener?)
         {
             confirmDialog(context, getString(iResTitle), getString(iResMessage), iconId, bCancelable,
             getString(iYesText), yesListener, getString(iNoText), noListener)
         }
 
-        fun confirmDialog(context: Context, str_title: String?, str_message: String, iconId: Int?,
+        fun confirmDialog(context: Context, str_title: String?, str_message: String, @DrawableRes iconId: Int?,
                           bCancelable: Boolean, yesText: String, yesListener: DialogInterface.OnClickListener?,
                           noText: String, noListener: DialogInterface.OnClickListener?)
         {
@@ -1205,6 +1262,49 @@ class CB_AppFunc
 
             iconId?.let { dialog.setIcon(iconId) }
             dialog.show()
+        }
+
+        fun confirmDialog(context: Context, str_title: String?, str_message: String, strImgStoragePath: String?,
+                          @DrawableRes iDefaultIcon: Int, bCancelable: Boolean, yesText: String, yesListener: DialogInterface.OnClickListener?,
+                          noText: String, noListener: DialogInterface.OnClickListener?)
+        {
+            if (CB_SingleSystemMgr.isDialog(CB_SingleSystemMgr.DIALOG_TYPE.CONFIRM_DIALOG))
+                return
+
+            CB_SingleSystemMgr.registerDialog(CB_SingleSystemMgr.DIALOG_TYPE.CONFIRM_DIALOG)
+
+            val dialog = MaterialAlertDialogBuilder(context)
+                .setTitle(str_title)
+                .setMessage(str_message)
+                .setCancelable(bCancelable)
+                .setPositiveButton(yesText, yesListener)
+                .setNegativeButton(noText, noListener)
+                .setOnDismissListener {
+                    CB_SingleSystemMgr.releaseDialog(CB_SingleSystemMgr.DIALOG_TYPE.CONFIRM_DIALOG)
+                }
+
+            if(strImgStoragePath.isNullOrEmpty())
+            {
+                dialog.setIcon(iDefaultIcon)
+                dialog.show()
+            }
+            else
+            {
+                // getImage from storage
+                val imageRef = getStorageRef(strImgStoragePath)
+                GlideApp.with(application)
+                    .asBitmap()
+                    .load(imageRef)
+                    .into(object: CustomTarget<Bitmap>()
+                    {
+                        override fun onResourceReady(resource: Bitmap, transition: Transition<in Bitmap>?)
+                        {
+                            dialog.setIcon(bitmapToDrawable(resource))
+                            dialog.show()
+                        }
+                        override fun onLoadCleared(placeholder: Drawable?){}
+                    })
+            }
         }
 
         @SuppressLint("SourceLockedOrientationActivity")

@@ -452,6 +452,13 @@ class CB_NewDaysFragment : CB_BaseFragment()
                                 CB_SingleSystemMgr.showToast(R.string.str_days_added)
                                 backPressed()
                             }
+
+                            // send notification to couple
+                            if(!CB_AppFunc.coupleUser.strFcmToken.isNullOrEmpty())
+                            {
+                                CB_AppFunc.sendNotification(strDaysTitle, String.format(getString(R.string.str_days_notification),
+                                    CB_AppFunc.curUser.strUserName), CB_AppFunc.coupleUser.strFcmToken!!)
+                            }
                         }
                     }
                     catch(e: FirebaseException)

@@ -54,6 +54,8 @@ class CB_FirebaseMessagingService : FirebaseMessagingService() {
             .setSound(defaultSoundUri)
             .setContentIntent(pendingIntent)
             .setChannelId(channelId)
+            .setGroup(getString(R.string.app_name))
+            .setGroupSummary(true)
 
         val notificationManager = getSystemService(Context.NOTIFICATION_SERVICE) as NotificationManager
 
