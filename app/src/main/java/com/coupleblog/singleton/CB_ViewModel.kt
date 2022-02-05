@@ -124,9 +124,9 @@ class CB_ViewModel
 
         fun resetNewPostFragmentLiveData()
         {
-            strPostTitle.postValue("")
-            strPostBody.postValue("")
-            postImage.postValue(null)
+            strPostTitle.value = ""
+            strPostBody.value = ""
+            postImage.value = null
         }
 
         // ImageDialog
@@ -143,10 +143,10 @@ class CB_ViewModel
 
         fun resetNewMailFragmentLiveData()
         {
-            strRecipient.postValue("")
-            strMailTitle.postValue("")
-            strMailBody.postValue("")
-            mailImage.postValue(null)
+            strRecipient.value = ""
+            strMailTitle.value = ""
+            strMailBody.value = ""
+            mailImage.value = null
         }
 
         // MailBoxFragment
@@ -178,12 +178,12 @@ class CB_ViewModel
 
         fun resetNewDaysFragmentLiveData()
         {
-            strDaysTitle.postValue("")
-            strEventDate.postValue(CB_AppFunc.getDayStringForSave())
-            strDaysDesc.postValue("")
-            strDaysIconRes.postValue(CB_AppFunc.getResourceName(R.drawable.question))
-            iDaysEventType.postValue(DAYS_ITEM_TYPE.PAST_EVENT.ordinal)
-            iDaysTimeFormat.postValue(DAYS_TIME_FORMAT.DAYS.ordinal)
+            strDaysTitle.value = ""
+            strEventDate.value = CB_AppFunc.getDayStringForSave()
+            strDaysDesc.value = ""
+            strDaysIconRes.value = CB_AppFunc.getResourceName(R.drawable.question)
+            iDaysEventType.value = DAYS_ITEM_TYPE.PAST_EVENT.ordinal
+            iDaysTimeFormat.value = DAYS_TIME_FORMAT.DAYS.ordinal
         }
 
         // DaysDetailsFragment
