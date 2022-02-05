@@ -421,6 +421,10 @@ class CB_AppFunc
                 return
             }
 
+            // user 업데이트를 할 때마다 없애고 재등록하는 과정을 거치고 있는데, 그럴 필요가 없다.
+            if(coupleUserInfoListener != null && !coupleUser.strUserName.isNullOrEmpty())
+                return
+
             cleanUpCoupleUserListener()
             coupleUserInfoListener = object : ValueEventListener {
 

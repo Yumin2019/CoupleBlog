@@ -13,9 +13,6 @@
         <variable
             name="viewModel"
             type="com.coupleblog.singleton.CB_ViewModel.Companion" />
-       <!-- <variable
-            name="coupleData"
-            type="com.coupleblog.model.CB_User" />-->
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout
