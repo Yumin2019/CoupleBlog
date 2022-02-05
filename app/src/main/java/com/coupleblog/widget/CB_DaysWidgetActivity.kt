@@ -28,6 +28,7 @@ class CB_DaysWidgetActivity : CB_BaseActivity(CB_SingleSystemMgr.ACTIVITY_TYPE.D
     private var eventAdapters: ArrayList<CB_DaysAdapter> = arrayListOf()
     private var widgetId = AppWidgetManager.INVALID_APPWIDGET_ID
     private lateinit var coupleRef: DatabaseReference
+    private lateinit var strCoupleKey: String
 
     private var _binding            : DaysBinding? = null
     private val binding get() = _binding!!
@@ -112,20 +113,15 @@ class CB_DaysWidgetActivity : CB_BaseActivity(CB_SingleSystemMgr.ACTIVITY_TYPE.D
             return
         }
 
-        if(CB_AppFunc.getAuth().currentUser == null || CB_AppFunc._curUser == null)
-        {
-            errorMsgAndExit(R.string.str_widget_login_error)
-            return
-        }
-
-        if(CB_AppFunc.curUser.strCoupleKey.isNullOrEmpty())
+        strCoupleKey = CB_AppFunc.getSharedPref(this@CB_DaysWidgetActivity).getString("strCoupleKey", "") ?: ""
+        if(strCoupleKey.isEmpty())
         {
             errorMsgAndExit(R.string.str_widget_couple_error)
             return
         }
 
         // load data from firebase
-        coupleRef = CB_AppFunc.getCouplesRoot().child(CB_AppFunc.curUser.strCoupleKey!!)
+        coupleRef = CB_AppFunc.getCouplesRoot().child(strCoupleKey)
         val queries = arrayListOf(
             coupleRef.child("past-event-list"),
             coupleRef.child("future-event-list"),

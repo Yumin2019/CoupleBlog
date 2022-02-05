@@ -20,6 +20,10 @@ import android.app.PendingIntent
 
 class CB_DaysWidgetProvider : AppWidgetProvider() {
 
+    private var strDaysKey = ""
+    private var strEventType = ""
+    private var strCoupleKey = ""
+
     override fun onUpdate(
         context: Context,
         appWidgetManager: AppWidgetManager,
@@ -28,13 +32,13 @@ class CB_DaysWidgetProvider : AppWidgetProvider() {
         for (appWidgetId in appWidgetIds) {
             val intent = Intent(context, CB_MainActivity::class.java)
             val pendingIntent = PendingIntent.getActivity(context, 0, intent, 0)
-            var strDaysKey = ""
-            var strEventType = ""
+
 
             // load data from sharedPreferences
             CB_AppFunc.getSharedPref(context).apply {
                 strEventType = getString("strEventType$appWidgetId", "") ?: ""
                 strDaysKey = getString("strDaysKey$appWidgetId", "") ?: ""
+                strCoupleKey = getString("strCoupleKey", "") ?: ""
             }
 
             val remoteViews = RemoteViews(context.packageName, R.layout.cb_days_widget)
@@ -42,10 +46,7 @@ class CB_DaysWidgetProvider : AppWidgetProvider() {
             var strErrorText = ""
 
             // error cases
-            if (CB_AppFunc.getAuth().currentUser == null || CB_AppFunc._curUser == null) {
-                strErrorText = context.getString(R.string.str_widget_login_error)
-                hasError = true
-            } else if (CB_AppFunc.curUser.strCoupleKey.isNullOrEmpty()) {
+           if (strCoupleKey.isEmpty()) {
                 strErrorText = context.getString(R.string.str_widget_couple_error)
                 hasError = true
             } else if (strEventType.isEmpty() || strDaysKey.isEmpty()) {
@@ -67,7 +68,7 @@ class CB_DaysWidgetProvider : AppWidgetProvider() {
             remoteViews.setOnClickPendingIntent(R.id.days_widget_container, pendingIntent)
 
             // load data from firebase with key
-            val coupleRef = CB_AppFunc.getCouplesRoot().child(CB_AppFunc.curUser.strCoupleKey!!)
+            val coupleRef = CB_AppFunc.getCouplesRoot().child(strCoupleKey)
             coupleRef.child(strEventType).child(strDaysKey)
                 .addListenerForSingleValueEvent(object : ValueEventListener {
 
@@ -82,7 +83,7 @@ class CB_DaysWidgetProvider : AppWidgetProvider() {
                                     setImageViewResource(R.id.icon_image_view, iResIdx)
                                 }
 
-                                Log.e("widget", "id: $appWidgetId finish")
+                                Log.i("widget", "id: $appWidgetId finish")
                                 appWidgetManager.updateAppWidget(appWidgetId, remoteViews)
                             }
                         }

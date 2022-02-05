@@ -76,7 +76,7 @@ class CB_MainFragment : CB_BaseFragment()
                getUsersRoot().child(getUid()).setValue(curUser)
            }
 
-           // if couple, don't have couple info make.
+           // if couple, didn't have couple info make.
            if(!curUser.strCoupleUid.isNullOrEmpty() && curUser.strCoupleKey.isNullOrEmpty())
            {
                val strCoupleUid = curUser.strCoupleUid!!
@@ -90,6 +90,11 @@ class CB_MainFragment : CB_BaseFragment()
                getCouplesRoot().child(coupleKey!!).setValue(coupleInfo)
            }
        }
+
+        Log.d(strTag, "onViewCreated: saved couple key")
+        CB_AppFunc.getSharedPref(requireActivity()).edit().apply {
+            putString("strCoupleKey", CB_AppFunc.curUser.strCoupleKey)
+        }.apply()
 
         // if user has no token, make one
         Firebase.messaging.token.addOnCompleteListener(OnCompleteListener { task ->
