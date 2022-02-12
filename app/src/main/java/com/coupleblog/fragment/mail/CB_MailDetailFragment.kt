@@ -1,14 +1,11 @@
 package com.coupleblog.fragment.mail
 
 
-import android.content.Context
-import android.content.DialogInterface
 import android.os.Bundle
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import androidx.annotation.DrawableRes
 import androidx.core.os.bundleOf
 import androidx.navigation.fragment.findNavController
 import com.coupleblog.R
@@ -312,14 +309,14 @@ class CB_MailDetailFragment : CB_BaseFragment()
                                     // 나에게 알림을 보낸다.
                                     if(!CB_AppFunc.curUser.strFcmToken.isNullOrEmpty())
                                     {
-                                        CB_AppFunc.sendNotification(getString(R.string.str_new_couple),
+                                        CB_AppFunc.sendFCM(getString(R.string.str_new_couple),
                                             String.format(getString(R.string.str_new_couple_notification), CB_AppFunc.coupleUser.strUserName!!), CB_AppFunc.curUser.strFcmToken!!)
                                     }
 
                                     // 상대에게 알림을 보낸다.
                                     if(!CB_AppFunc.coupleUser.strFcmToken.isNullOrEmpty())
                                     {
-                                        CB_AppFunc.sendNotification(getString(R.string.str_new_couple),
+                                        CB_AppFunc.sendFCM(getString(R.string.str_new_couple),
                                             String.format(getString(R.string.str_new_couple_notification), CB_AppFunc.curUser.strUserName!!), CB_AppFunc.coupleUser.strFcmToken!!)
                                     }
                                 }

@@ -400,9 +400,14 @@ class CB_NewMailFragment: CB_CameraBaseFragment(UPLOAD_TYPE.EMAIL_IMAGE, bDeferr
             Log.e(strTag, "sentMail token is null or empty")
             return
         }
+        else if(strFcmToken == CB_AppFunc.curUser.strFcmToken)
+        {
+            Log.i(strTag, "user sent a mail to self")
+            return
+        }
 
-        CB_AppFunc.sendNotification(strTitle,
-            String.format(getString(R.string.str_mail_notification), CB_AppFunc.curUser.strUserName), strFcmToken)
+        CB_AppFunc.sendFCM(strTitle,
+            String.format(CB_AppFunc.getString(R.string.str_mail_notification), CB_AppFunc.curUser.strUserName), strFcmToken)
     }
 
     override fun onDestroy()

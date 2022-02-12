@@ -545,7 +545,7 @@ class CB_PostDetailFragment: CB_BaseFragment()
                     {
                         // if A posted a comment on A's post(X)
                         // if A posted a comment on B's post(O)
-                        CB_AppFunc.sendNotification(getString(R.string.str_new_comment),
+                        CB_AppFunc.sendFCM(getString(R.string.str_new_comment),
                             String.format(getString(R.string.str_new_comment_notification), CB_AppFunc.curUser.strUserName),
                             CB_AppFunc.coupleUser.strFcmToken!!)
                     }

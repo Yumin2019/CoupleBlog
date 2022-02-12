@@ -19,24 +19,8 @@ import com.google.firebase.messaging.RemoteMessage
 
 class CB_FirebaseMessagingService : FirebaseMessagingService() {
 
-    /**
-     * Called when message is received.
-     *
-     * @param remoteMessage Object representing the message received from Firebase Cloud Messaging.
-     */
-    override fun onMessageReceived(remoteMessage: RemoteMessage) {
-        Log.d(TAG, "onMessageReceived from : ${remoteMessage.from}")
-
-        if (remoteMessage.data.isNullOrEmpty())
-        {
-            Log.e(TAG, "remoteMessage.data is null")
-            return
-        }
-
-        val strTitle        = remoteMessage.data["title"] ?: ""
-        val strText         = remoteMessage.data["body"] ?: ""
-        Log.d(TAG, "onMessageReceived: title: $strTitle body:$strText")
-
+    fun notify(strTitle: String, strContent: String)
+    {
         val intent = Intent(this, CB_MainActivity::class.java).apply { addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP) }
         val pendingIntent = PendingIntent.getActivity(this, 0, intent, PendingIntent.FLAG_ONE_SHOT)
 
@@ -47,7 +31,7 @@ class CB_FirebaseMessagingService : FirebaseMessagingService() {
             .setLargeIcon(BitmapFactory.decodeResource(resources, R.drawable.couple_blog))
             .setSmallIcon(R.drawable.notification_icon)
             .setContentTitle(strTitle)
-            .setContentText(strText)
+            .setContentText(strContent)
             .setAutoCancel(true)
             .setPriority(NotificationCompat.PRIORITY_MAX)
             .setDefaults(Notification.DEFAULT_VIBRATE)
@@ -73,6 +57,54 @@ class CB_FirebaseMessagingService : FirebaseMessagingService() {
         }
 
         notificationManager.notify(0 /* ID of notification */, notificationBuilder.build())
+    }
+
+    /**
+     * Called when message is received.
+     *
+     * @param remoteMessage Object representing the message received from Firebase Cloud Messaging.
+     */
+    override fun onMessageReceived(remoteMessage: RemoteMessage) {
+        Log.d(TAG, "onMessageReceived from : ${remoteMessage.from}")
+
+        if (remoteMessage.data.isNullOrEmpty())
+        {
+            Log.e(TAG, "remoteMessage.data is null")
+            return
+        }
+
+        val strTitle        = remoteMessage.data["title"] ?: ""
+        val strBody         = remoteMessage.data["body"] ?: ""
+        val arrText         = strBody.split('#')
+        Log.d(TAG, "onMessageReceived: title: $strTitle body:$strBody")
+
+        when(arrText[0].toInt())
+        {
+            CB_AppFunc.FCM_TYPE.NOTIFY.ordinal ->
+            {
+                // notify
+                notify(strTitle, arrText[1])
+            }
+
+            CB_AppFunc.FCM_TYPE.DAYS_WORKER.ordinal ->
+            {
+                val strDeleteItem = arrText[2]
+                val strAddItem = arrText[3]
+
+                if(strDeleteItem != "null")
+                {
+                    CB_AppFunc.cancelWorker(applicationContext, strDeleteItem)
+                }
+
+                if(strAddItem != "null")
+                {
+                    val strFcmToken = arrText[4]
+                    val lDelayTime = arrText[5].toLong()
+                    CB_AppFunc.requestWorker(applicationContext, strAddItem, strTitle, arrText[1], strFcmToken, lDelayTime)
+                }
+
+            }
+        }
     }
 
     /**

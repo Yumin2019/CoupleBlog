@@ -35,6 +35,10 @@ import androidx.annotation.StringRes
 import androidx.appcompat.content.res.AppCompatResources
 import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
+import androidx.work.Data
+import androidx.work.ExistingWorkPolicy
+import androidx.work.OneTimeWorkRequest
+import androidx.work.WorkManager
 import com.bumptech.glide.Glide
 import com.bumptech.glide.Glide.with
 import com.bumptech.glide.annotation.GlideModule
@@ -49,6 +53,7 @@ import com.coupleblog.model.CB_Notification
 import com.coupleblog.singleton.CB_AppFunc.Companion.convertDpToPixel
 import com.coupleblog.util.CB_APIService
 import com.coupleblog.util.CB_Response
+import com.coupleblog.work.CB_NotificationWorker
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import com.google.android.material.snackbar.Snackbar
 import com.google.firebase.auth.FirebaseAuth
@@ -74,6 +79,7 @@ import java.io.FileOutputStream
 import java.lang.Exception
 import java.text.SimpleDateFormat
 import java.util.*
+import java.util.concurrent.TimeUnit
 
 /***
  *  ALL FUNCTIONS ARE FOR ACTIVITIES
@@ -82,21 +88,17 @@ import java.util.*
 
 class CB_AppFunc
 {
-    enum class PERMISSION
-    {
-        CAMERA,
-        RECORD_AUDIO,
-        MODIFY_AUDIO_SETTINGS,
-        READ_EXTERNAL_STORAGE,
-        VIBRATE,
-        END
-    }
-
     enum class STATUSBAR_TEXT_COLOR
     {
         BLACK,
         WHITE,
         NONE
+    }
+
+    enum class FCM_TYPE
+    {
+        NOTIFY,
+        DAYS_WORKER
     }
 
     companion object
@@ -220,12 +222,42 @@ class CB_AppFunc
              val bAutoLogin          = pref.getBoolean("bAutoLogin", false)
          */
 
-        fun sendNotification(strTitle: String, strBody: String, strFcmToken: String)
+        fun cancelWorker(context: Context, strDaysKey: String)
+        {
+            // to remove all work of this type from the queue in order to prevent duplicates.
+            WorkManager.getInstance(context).cancelAllWorkByTag(strDaysKey)
+        }
+
+        fun requestWorker(context: Context, strDaysKey: String, strTitle: String?, strBody: String?, strFcmToken: String?, lDelayTime: Long)
+        {
+            val inputData = Data.Builder().apply {
+                putString("strTitle", strTitle)
+                putString("strBody", strBody)
+                putString("strFcmToken", strFcmToken)
+            }.build()
+
+            // You can query and cancel work by tag
+            // InputData to pass to NotificationWorker
+            val notificationWork = OneTimeWorkRequest.Builder(CB_NotificationWorker::class.java)
+                .setInitialDelay(lDelayTime, TimeUnit.MILLISECONDS)
+                .setInputData(inputData)
+                .addTag(strDaysKey)
+                .build()
+
+            // We can use this form to determine what happens to the existing stack
+            WorkManager.getInstance(context)
+                .beginUniqueWork(strDaysKey, ExistingWorkPolicy.REPLACE, notificationWork)
+                .enqueue()
+        }
+
+        /*** 추가 데이터가 필요한 경우라면 strBody에 body#delete#add#fcmToken#delayTime
+         */
+        fun sendFCM(strTitle: String, strBody: String, strFcmToken: String, eFCMType: FCM_TYPE = FCM_TYPE.NOTIFY)
         {
             Log.d(strTag, "sendNotification strTitle:$strTitle, strBody:$strBody, strFcmToken:$strFcmToken")
             val notification = CB_Notification(
                 strFcmToken,
-                CB_FCMData(strTitle, strBody)
+                CB_FCMData(strTitle, "${eFCMType.ordinal}#$strBody")
             )
             apiService.sendNotification(notification)
                 .enqueue(object: Callback<CB_Response> {

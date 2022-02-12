@@ -421,7 +421,7 @@ class CB_NewPostFragment: CB_CameraBaseFragment(UPLOAD_TYPE.POST_IMAGE, bDeferre
         }
 
         // send notification to couple user
-        CB_AppFunc.sendNotification(strTitle, String.format(getString(R.string.str_post_notification), CB_AppFunc.curUser.strUserName),
+        CB_AppFunc.sendFCM(strTitle, String.format(getString(R.string.str_post_notification), CB_AppFunc.curUser.strUserName),
             CB_AppFunc.coupleUser.strFcmToken!!
         )
     }
