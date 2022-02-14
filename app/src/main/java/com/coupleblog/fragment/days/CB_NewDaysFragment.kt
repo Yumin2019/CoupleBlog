@@ -15,7 +15,6 @@ import com.coupleblog.model.DAYS_ITEM_TYPE
 import com.coupleblog.model.DAYS_TIME_FORMAT
 import com.coupleblog.singleton.CB_AppFunc
 import com.coupleblog.singleton.CB_AppFunc.Companion.toCalendar
-import com.coupleblog.singleton.CB_AppFunc.Companion.toDate
 import com.coupleblog.singleton.CB_SingleSystemMgr
 import com.coupleblog.singleton.CB_ViewModel
 import com.google.android.material.datepicker.CalendarConstraints
@@ -388,6 +387,21 @@ class CB_NewDaysFragment : CB_BaseFragment()
                                     CB_SingleSystemMgr.showToast(R.string.str_days_edited)
                                     backPressed()
                                 }
+
+                                // TEST 해볼 것.
+                                // 일단 기존의 days 정보를 취소한다.
+                                CB_AppFunc.cancelWorker(CB_AppFunc.application, strDaysKey)
+                                CB_AppFunc.cancelNotificationFCM(strDaysKey, CB_AppFunc.coupleUser.strFcmToken!!)
+
+                                if(iDaysEventType != DAYS_ITEM_TYPE.PAST_EVENT.ordinal)
+                                {
+                                    // 과거의 이벤트가 아니라면 등록을 한다.
+                                    CB_AppFunc.requestWorker(CB_AppFunc.application, strDaysKey, strDaysTitle,
+                                        getString(R.string.str_today), CB_AppFunc.curUser.strFcmToken, strEventDate)
+
+                                    val strBody = getString(R.string.str_today) + "#null#$strDaysKey#${CB_AppFunc.coupleUser.strFcmToken!!}#$strEventDate"
+                                    CB_AppFunc.sendFCM(strDaysTitle, strBody, CB_AppFunc.coupleUser.strFcmToken!!, CB_AppFunc.FCM_TYPE.DAYS_WORKER)
+                                }
                             }
                             else
                             {
@@ -453,11 +467,19 @@ class CB_NewDaysFragment : CB_BaseFragment()
                                 backPressed()
                             }
 
-                            // send notification to couple
-                            if(!CB_AppFunc.coupleUser.strFcmToken.isNullOrEmpty())
+                           // send notification to couple
+                           CB_AppFunc.sendFCM(strDaysTitle, String.format(getString(R.string.str_days_notification),
+                               CB_AppFunc.curUser.strUserName), CB_AppFunc.coupleUser.strFcmToken!!)
+
+                            // TEST 해볼 것.
+                            if(iDaysEventType != DAYS_ITEM_TYPE.PAST_EVENT.ordinal)
                             {
-                                CB_AppFunc.sendNotification(strDaysTitle, String.format(getString(R.string.str_days_notification),
-                                    CB_AppFunc.curUser.strUserName), CB_AppFunc.coupleUser.strFcmToken!!)
+                                // 과거의 이벤트가 아니라면 등록을 한다.
+                                CB_AppFunc.requestWorker(CB_AppFunc.application, daysKey, strDaysTitle,
+                                    getString(R.string.str_today), CB_AppFunc.curUser.strFcmToken, strEventDate)
+
+                                val strBody = getString(R.string.str_today) + "#null#$daysKey#${CB_AppFunc.coupleUser.strFcmToken!!}#$strEventDate"
+                                CB_AppFunc.sendFCM(strDaysTitle, strBody, CB_AppFunc.coupleUser.strFcmToken!!, CB_AppFunc.FCM_TYPE.DAYS_WORKER)
                             }
                         }
                     }

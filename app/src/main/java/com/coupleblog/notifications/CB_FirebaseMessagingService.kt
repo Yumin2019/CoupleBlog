@@ -99,8 +99,8 @@ class CB_FirebaseMessagingService : FirebaseMessagingService() {
                 if(strAddItem != "null")
                 {
                     val strFcmToken = arrText[4]
-                    val lDelayTime = arrText[5].toLong()
-                    CB_AppFunc.requestWorker(applicationContext, strAddItem, strTitle, arrText[1], strFcmToken, lDelayTime)
+                    val strEventDate = arrText[5]
+                    CB_AppFunc.requestWorker(applicationContext, strAddItem, strTitle, arrText[1], strFcmToken, strEventDate)
                 }
 
             }

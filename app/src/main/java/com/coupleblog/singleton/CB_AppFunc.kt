@@ -7,7 +7,6 @@ import android.content.*
 import android.content.pm.ActivityInfo
 import android.content.pm.PackageManager
 import android.content.res.ColorStateList
-import android.content.res.Resources
 import android.database.Cursor
 import android.graphics.*
 import android.graphics.drawable.BitmapDrawable
@@ -39,9 +38,6 @@ import androidx.work.Data
 import androidx.work.ExistingWorkPolicy
 import androidx.work.OneTimeWorkRequest
 import androidx.work.WorkManager
-import com.bumptech.glide.Glide
-import com.bumptech.glide.Glide.with
-import com.bumptech.glide.annotation.GlideModule
 import com.bumptech.glide.request.target.CustomTarget
 import com.bumptech.glide.request.transition.Transition
 import com.coupleblog.MainActivityBinding
@@ -50,12 +46,10 @@ import com.coupleblog.model.CB_User
 import com.coupleblog.base.CB_BaseActivity
 import com.coupleblog.model.CB_FCMData
 import com.coupleblog.model.CB_Notification
-import com.coupleblog.singleton.CB_AppFunc.Companion.convertDpToPixel
 import com.coupleblog.util.CB_APIService
 import com.coupleblog.util.CB_Response
 import com.coupleblog.work.CB_NotificationWorker
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
-import com.google.android.material.snackbar.Snackbar
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.ktx.auth
 import com.google.firebase.database.DataSnapshot
@@ -73,7 +67,6 @@ import retrofit2.Callback
 import retrofit2.Response
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
-import java.io.ByteArrayOutputStream
 import java.io.File
 import java.io.FileOutputStream
 import java.lang.Exception
@@ -228,7 +221,7 @@ class CB_AppFunc
             WorkManager.getInstance(context).cancelAllWorkByTag(strDaysKey)
         }
 
-        fun requestWorker(context: Context, strDaysKey: String, strTitle: String?, strBody: String?, strFcmToken: String?, lDelayTime: Long)
+        fun requestWorker(context: Context, strDaysKey: String, strTitle: String?, strBody: String?, strFcmToken: String?, strEventDate: String)
         {
             val inputData = Data.Builder().apply {
                 putString("strTitle", strTitle)
@@ -236,10 +229,15 @@ class CB_AppFunc
                 putString("strFcmToken", strFcmToken)
             }.build()
 
+            val eventDate = stringToDate(strEventDate)
+            val curDate = getCalendarForSave().time
+            val interval = 5000L
+            // TEST eventDate.time - curDate.time
+
             // You can query and cancel work by tag
             // InputData to pass to NotificationWorker
             val notificationWork = OneTimeWorkRequest.Builder(CB_NotificationWorker::class.java)
-                .setInitialDelay(lDelayTime, TimeUnit.MILLISECONDS)
+                .setInitialDelay(interval, TimeUnit.MILLISECONDS)
                 .setInputData(inputData)
                 .addTag(strDaysKey)
                 .build()
@@ -250,7 +248,12 @@ class CB_AppFunc
                 .enqueue()
         }
 
-        /*** 추가 데이터가 필요한 경우라면 strBody에 body#delete#add#fcmToken#delayTime
+        fun cancelNotificationFCM(strCancelDaysKey: String, strFcmToken: String)
+        {
+            sendFCM("title", strBody = "body#$strCancelDaysKey#null#${strFcmToken}#eventDate", "eventDate", FCM_TYPE.DAYS_WORKER)
+        }
+
+        /*** 추가 데이터가 필요한 경우라면 strBody에 body#delete#add#fcmToken#strEventDate
          */
         fun sendFCM(strTitle: String, strBody: String, strFcmToken: String, eFCMType: FCM_TYPE = FCM_TYPE.NOTIFY)
         {
