@@ -397,7 +397,7 @@ class CB_NewDaysFragment : CB_BaseFragment()
                                 {
                                     // 과거의 이벤트가 아니라면 등록을 한다.
                                     CB_AppFunc.requestWorker(CB_AppFunc.application, strDaysKey, strDaysTitle,
-                                        getString(R.string.str_today), CB_AppFunc.curUser.strFcmToken, strEventDate)
+                                        CB_AppFunc.getString(R.string.str_today), CB_AppFunc.curUser.strFcmToken, strEventDate)
 
                                     val strBody = getString(R.string.str_today) + "#null#$strDaysKey#${CB_AppFunc.coupleUser.strFcmToken!!}#$strEventDate"
                                     CB_AppFunc.sendFCM(strDaysTitle, strBody, CB_AppFunc.coupleUser.strFcmToken!!, CB_AppFunc.FCM_TYPE.DAYS_WORKER)
@@ -436,6 +436,20 @@ class CB_NewDaysFragment : CB_BaseFragment()
                                     // 이전과 경로가 완전히 달라져서 리스트로 이동한다.
                                     findNavController().popBackStack(R.id.CB_DaysFragment, false)
                                 }
+
+                                CB_AppFunc.cancelWorker(CB_AppFunc.application, strDaysKey)
+                                CB_AppFunc.cancelNotificationFCM(strDaysKey, CB_AppFunc.coupleUser.strFcmToken!!)
+
+                                if(iDaysEventType != DAYS_ITEM_TYPE.PAST_EVENT.ordinal)
+                                {
+                                    // 과거의 이벤트가 아니라면 등록을 한다.
+                                    CB_AppFunc.requestWorker(CB_AppFunc.application, daysKey, strDaysTitle,
+                                        CB_AppFunc.getString(R.string.str_today), CB_AppFunc.curUser.strFcmToken, strEventDate)
+
+                                    val strBody = getString(R.string.str_today) + "#null#$daysKey#${CB_AppFunc.coupleUser.strFcmToken!!}#$strEventDate"
+                                    CB_AppFunc.sendFCM(strDaysTitle, strBody, CB_AppFunc.coupleUser.strFcmToken!!, CB_AppFunc.FCM_TYPE.DAYS_WORKER)
+                                }
+
                             }
                         }
                         else
@@ -476,9 +490,9 @@ class CB_NewDaysFragment : CB_BaseFragment()
                             {
                                 // 과거의 이벤트가 아니라면 등록을 한다.
                                 CB_AppFunc.requestWorker(CB_AppFunc.application, daysKey, strDaysTitle,
-                                    getString(R.string.str_today), CB_AppFunc.curUser.strFcmToken, strEventDate)
+                                    CB_AppFunc.getString(R.string.str_today), CB_AppFunc.curUser.strFcmToken, strEventDate)
 
-                                val strBody = getString(R.string.str_today) + "#null#$daysKey#${CB_AppFunc.coupleUser.strFcmToken!!}#$strEventDate"
+                                val strBody = CB_AppFunc.getString(R.string.str_today) + "#null#$daysKey#${CB_AppFunc.coupleUser.strFcmToken!!}#$strEventDate"
                                 CB_AppFunc.sendFCM(strDaysTitle, strBody, CB_AppFunc.coupleUser.strFcmToken!!, CB_AppFunc.FCM_TYPE.DAYS_WORKER)
                             }
                         }

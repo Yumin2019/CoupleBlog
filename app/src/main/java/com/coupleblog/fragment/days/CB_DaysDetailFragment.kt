@@ -176,6 +176,9 @@ class CB_DaysDetailFragment : CB_BaseFragment()
                             CB_SingleSystemMgr.showToast(R.string.str_days_deleted)
                             backPressed()
                         }
+
+                        CB_AppFunc.cancelWorker(CB_AppFunc.application, strDaysKey)
+                        CB_AppFunc.cancelNotificationFCM(strDaysKey, CB_AppFunc.coupleUser.strFcmToken!!)
                     }
                     catch(e: FirebaseException)
                     {
