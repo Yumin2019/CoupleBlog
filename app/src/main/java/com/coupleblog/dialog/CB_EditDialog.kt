@@ -15,8 +15,8 @@ import com.coupleblog.singleton.CB_SingleSystemMgr
 enum class EDIT_FIELD_TYPE
 {
     NAME,
-    IMAGE, // 준비중
-    EMAIL, // 준비중
+    IMAGE,
+    EMAIL,
     GENDER,
     DATE_OF_BIRTH,
     REGION,
@@ -25,7 +25,9 @@ enum class EDIT_FIELD_TYPE
     CAREER,
     PHONE_NUMBER,
     FAVORITES,
-    DISLIKES
+    DISLIKES,
+
+    RESET_PASSWORD_EMAIL
 }
 
 class CB_EditDialog(context: Activity, iType: Int, iLines: Int, strInit: String,

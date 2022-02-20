@@ -101,18 +101,19 @@ fun setFieldTypeHint(textView: TextView, iFieldType: Int)
 {
     val strText = when(iFieldType)
     {
-        EDIT_FIELD_TYPE.NAME         .ordinal -> CB_AppFunc.getString(R.string.str_user_name)
-        EDIT_FIELD_TYPE.IMAGE        .ordinal -> CB_AppFunc.getString(R.string.str_user_image)
-        EDIT_FIELD_TYPE.EMAIL        .ordinal -> CB_AppFunc.getString(R.string.str_email)
-        EDIT_FIELD_TYPE.GENDER       .ordinal -> CB_AppFunc.getString(R.string.str_gender)
-        EDIT_FIELD_TYPE.DATE_OF_BIRTH.ordinal -> CB_AppFunc.getString(R.string.str_date_of_birth)
-        EDIT_FIELD_TYPE.REGION       .ordinal -> CB_AppFunc.getString(R.string.str_region)
-        EDIT_FIELD_TYPE.INTRODUCTION .ordinal -> CB_AppFunc.getString(R.string.str_introduction)
-        EDIT_FIELD_TYPE.EDUCATION    .ordinal -> CB_AppFunc.getString(R.string.str_education)
-        EDIT_FIELD_TYPE.CAREER       .ordinal -> CB_AppFunc.getString(R.string.str_career)
-        EDIT_FIELD_TYPE.PHONE_NUMBER .ordinal -> CB_AppFunc.getString(R.string.str_phone_number)
-        EDIT_FIELD_TYPE.FAVORITES    .ordinal -> CB_AppFunc.getString(R.string.str_favorites)
-        EDIT_FIELD_TYPE.DISLIKES     .ordinal -> CB_AppFunc.getString(R.string.str_dislikes)
+        EDIT_FIELD_TYPE.NAME                        .ordinal -> CB_AppFunc.getString(R.string.str_user_name)
+        EDIT_FIELD_TYPE.IMAGE                       .ordinal -> CB_AppFunc.getString(R.string.str_user_image)
+        EDIT_FIELD_TYPE.EMAIL                       .ordinal -> CB_AppFunc.getString(R.string.str_email)
+        EDIT_FIELD_TYPE.GENDER                      .ordinal -> CB_AppFunc.getString(R.string.str_gender)
+        EDIT_FIELD_TYPE.DATE_OF_BIRTH               .ordinal -> CB_AppFunc.getString(R.string.str_date_of_birth)
+        EDIT_FIELD_TYPE.REGION                      .ordinal -> CB_AppFunc.getString(R.string.str_region)
+        EDIT_FIELD_TYPE.INTRODUCTION                .ordinal -> CB_AppFunc.getString(R.string.str_introduction)
+        EDIT_FIELD_TYPE.EDUCATION                   .ordinal -> CB_AppFunc.getString(R.string.str_education)
+        EDIT_FIELD_TYPE.CAREER                      .ordinal -> CB_AppFunc.getString(R.string.str_career)
+        EDIT_FIELD_TYPE.PHONE_NUMBER                .ordinal -> CB_AppFunc.getString(R.string.str_phone_number)
+        EDIT_FIELD_TYPE.FAVORITES                   .ordinal -> CB_AppFunc.getString(R.string.str_favorites)
+        EDIT_FIELD_TYPE.DISLIKES                    .ordinal -> CB_AppFunc.getString(R.string.str_dislikes)
+        EDIT_FIELD_TYPE.RESET_PASSWORD_EMAIL        .ordinal -> CB_AppFunc.getString(R.string.str_input_email)
         else -> ""
     }
     textView.hint = strText
@@ -123,21 +124,32 @@ fun setFieldType(textView: TextView, iFieldType: Int)
 {
     val strText = when(iFieldType)
     {
-        EDIT_FIELD_TYPE.NAME         .ordinal -> CB_AppFunc.getString(R.string.str_user_name)
-        EDIT_FIELD_TYPE.IMAGE        .ordinal -> CB_AppFunc.getString(R.string.str_user_image)
-        EDIT_FIELD_TYPE.EMAIL        .ordinal -> CB_AppFunc.getString(R.string.str_email)
-        EDIT_FIELD_TYPE.GENDER       .ordinal -> CB_AppFunc.getString(R.string.str_gender)
-        EDIT_FIELD_TYPE.DATE_OF_BIRTH.ordinal -> CB_AppFunc.getString(R.string.str_date_of_birth)
-        EDIT_FIELD_TYPE.REGION       .ordinal -> CB_AppFunc.getString(R.string.str_region)
-        EDIT_FIELD_TYPE.INTRODUCTION .ordinal -> CB_AppFunc.getString(R.string.str_introduction)
-        EDIT_FIELD_TYPE.EDUCATION    .ordinal -> CB_AppFunc.getString(R.string.str_education)
-        EDIT_FIELD_TYPE.CAREER       .ordinal -> CB_AppFunc.getString(R.string.str_career)
-        EDIT_FIELD_TYPE.PHONE_NUMBER .ordinal -> CB_AppFunc.getString(R.string.str_phone_number)
-        EDIT_FIELD_TYPE.FAVORITES    .ordinal -> CB_AppFunc.getString(R.string.str_favorites)
-        EDIT_FIELD_TYPE.DISLIKES     .ordinal -> CB_AppFunc.getString(R.string.str_dislikes)
+        EDIT_FIELD_TYPE.NAME                        .ordinal -> CB_AppFunc.getString(R.string.str_user_name)
+        EDIT_FIELD_TYPE.IMAGE                       .ordinal -> CB_AppFunc.getString(R.string.str_user_image)
+        EDIT_FIELD_TYPE.EMAIL                       .ordinal -> CB_AppFunc.getString(R.string.str_email)
+        EDIT_FIELD_TYPE.GENDER                      .ordinal -> CB_AppFunc.getString(R.string.str_gender)
+        EDIT_FIELD_TYPE.DATE_OF_BIRTH               .ordinal -> CB_AppFunc.getString(R.string.str_date_of_birth)
+        EDIT_FIELD_TYPE.REGION                      .ordinal -> CB_AppFunc.getString(R.string.str_region)
+        EDIT_FIELD_TYPE.INTRODUCTION                .ordinal -> CB_AppFunc.getString(R.string.str_introduction)
+        EDIT_FIELD_TYPE.EDUCATION                   .ordinal -> CB_AppFunc.getString(R.string.str_education)
+        EDIT_FIELD_TYPE.CAREER                      .ordinal -> CB_AppFunc.getString(R.string.str_career)
+        EDIT_FIELD_TYPE.PHONE_NUMBER                .ordinal -> CB_AppFunc.getString(R.string.str_phone_number)
+        EDIT_FIELD_TYPE.FAVORITES                   .ordinal -> CB_AppFunc.getString(R.string.str_favorites)
+        EDIT_FIELD_TYPE.DISLIKES                    .ordinal -> CB_AppFunc.getString(R.string.str_dislikes)
+        EDIT_FIELD_TYPE.RESET_PASSWORD_EMAIL        .ordinal -> CB_AppFunc.getString(R.string.str_email)
+
         else -> ""
     }
     textView.text = strText
+}
+
+@BindingAdapter("bind:field_button_text")
+fun setFieldButtonText(textView: TextView, iFieldType: Int)
+{
+    textView.text = CB_AppFunc.getString(R.string.str_edit)
+
+    if(iFieldType == EDIT_FIELD_TYPE.RESET_PASSWORD_EMAIL.ordinal)
+        textView.text = CB_AppFunc.getString(R.string.str_send)
 }
 
 @BindingAdapter("bind:profile_user_name")

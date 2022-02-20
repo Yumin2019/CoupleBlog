@@ -40,7 +40,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginStart="@dimen/margin_16dp"
                 android:layout_marginTop="@dimen/margin_16dp"
-                android:text="@string/str_user_name"
+                tools:text="@string/str_user_name"
                 bind:field_type="@{iFieldType}"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent" />
@@ -64,11 +64,11 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     bind:field_type_hint="@{iFieldType}"
-                    android:inputType="textMultiLine"
+                    tools:inputType="textMultiLine"
                     android:lines="@{iMaxLines}"
                     android:maxLines="@{iMaxLines}"
                     tools:lines="20"
-                    android:hint="@string/str_user_name" />
+                    tools:hint="@string/str_user_name" />
 
             </com.google.android.material.textfield.TextInputLayout>
 
@@ -81,7 +81,8 @@
                 android:layout_marginEnd="4dp"
                 android:layout_marginBottom="@dimen/margin_16dp"
                 android:backgroundTint="@color/purple"
-                android:text="@string/str_edit"
+                bind:field_button_text="@{iFieldType}"
+                tools:text="@string/str_edit"
                 android:textSize="@dimen/normal_text_size"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toStartOf="@+id/cancel_button"

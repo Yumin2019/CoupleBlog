@@ -980,6 +980,7 @@ OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.            
     <string name="str_sign_in_failed">Failed to sign in</string>
     <string name="str_sign_up_failed">Failed to sign out</string>
     <string name="str_invalid_auth">Invalid authentication</string>
+    <string name="str_forgot_password">Forgot password</string>
     <string name="str_password_change_failed">Failed to change password</string>
     <string name="str_failed_to_upload_image">Failed to upload image</string>
     <string name="str_select_image_from_gallery">Select an image from gallery</string>
@@ -999,6 +1000,8 @@ OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.            
     <string name="str_post_delete_failed">Failed to delete post</string>
     <string name="str_days_delete_failed">Failed to delete days item</string>
     <string name="str_failed_to_delete_mail">Failed to delete Mail</string>
+    <string name="str_invalid_mail">Invalid mail</string>
+    <string name="str_failed_to_auto_login">Failed to AutoLogin</string>
     <string name="str_failed_to_change_heart_state">Failed to change heart state</string>
     <string name="str_failed_to_change_read_state">Failed to change read state</string>
     <string name="str_reaction_icon_attach_failed">Reaction icon attach failed</string>
@@ -1011,6 +1014,7 @@ OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.            
     <string name="str_warning">Warning</string>
     <string name="str_information">Information</string>
     <string name="str_done">Done</string>
+    <string name="str_password_reset_mail_success">Email sent.</string>
     <string name="str_password_change_success">Password changed.</string>
     <string name="str_auto_login_success">Auto login was successful.</string>
     <string name="str_send_mail_success">Sending mail was successful.</string>

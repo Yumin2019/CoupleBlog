@@ -1,6 +1,7 @@
 package com.coupleblog.fragment
 
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -10,7 +11,10 @@ import com.coupleblog.singleton.CB_SingleSystemMgr
 import com.coupleblog.R
 import com.coupleblog.dialog.CB_LoadingDialog
 import com.coupleblog.base.CB_BaseFragment
+import com.coupleblog.dialog.CB_EditDialog
+import com.coupleblog.dialog.EDIT_FIELD_TYPE
 import com.coupleblog.singleton.CB_ViewModel
+import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.FirebaseUser
 import kotlinx.coroutines.launch
 
@@ -96,6 +100,30 @@ class CB_LoginFragment : CB_BaseFragment()
         }
     }
 
+    fun forgotPasswordButton()
+    {
+        if(CB_SingleSystemMgr.isDialog(CB_SingleSystemMgr.DIALOG_TYPE.EDIT_DIALOG))
+            return
+
+        CB_EditDialog(requireActivity(), EDIT_FIELD_TYPE.RESET_PASSWORD_EMAIL.ordinal, 1, "",
+        editFunc =
+        {
+            val strEmail = CB_EditDialog.strText
+            FirebaseAuth.getInstance().sendPasswordResetEmail(strEmail).addOnCompleteListener { task ->
+                if(task.isSuccessful)
+                {
+                    CB_SingleSystemMgr.showToast(R.string.str_password_reset_mail_success)
+                }
+                else
+                {
+                    Log.e(strTag, "forgot password : task ${task.exception}")
+                    CB_AppFunc.okDialog(requireActivity(), CB_AppFunc.getString(R.string.str_error),
+                        CB_AppFunc.getString(R.string.str_invalid_mail), R.drawable.error_icon, true)
+                }
+            }
+        }, false)
+    }
+
     fun signInButton()
     {
         if(CB_SingleSystemMgr.isDialog(CB_SingleSystemMgr.DIALOG_TYPE.LOADING_DIALOG))
@@ -172,13 +200,16 @@ class CB_LoginFragment : CB_BaseFragment()
             CB_AppFunc.getUserInfo(requireActivity(),
             funcSuccess =
             {
-                CB_AppFunc.mainScope.launch {
-                    // 유저 정보를 제대로 가져온 경우에만 이동한다
-                    dialog.cancel()
-                    CB_SingleSystemMgr.showToast(R.string.str_auto_login_success)
-                    beginAction(R.id.action_CB_LoginFragment_to_CB_MainFragment, R.id.CB_LoginFragment)
-                }
-            }, null)
+                // 유저 정보를 제대로 가져온 경우에만 이동한다
+                dialog.cancel()
+                CB_SingleSystemMgr.showToast(R.string.str_auto_login_success)
+                beginAction(R.id.action_CB_LoginFragment_to_CB_MainFragment, R.id.CB_LoginFragment)
+            },
+            funcFailure =
+            {
+                dialog.cancel()
+                CB_SingleSystemMgr.showToast(R.string.str_failed_to_auto_login)
+            })
         }
     }
 
