@@ -40,7 +40,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginStart="@dimen/margin_16dp"
                 android:layout_marginTop="@dimen/margin_16dp"
-                tools:text="@string/str_user_name"
+                android:text="@string/str_user_name"
                 bind:field_type="@{iFieldType}"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent" />
@@ -68,7 +68,7 @@
                     android:lines="@{iMaxLines}"
                     android:maxLines="@{iMaxLines}"
                     tools:lines="20"
-                    tools:hint="@string/str_user_name" />
+                    android:hint="@string/str_user_name" />
 
             </com.google.android.material.textfield.TextInputLayout>
 

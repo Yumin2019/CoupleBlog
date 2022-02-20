@@ -4,6 +4,13 @@
     xmlns:tools="http://schemas.android.com/tools">
 
     <item
+        android:id="@+id/action_change_password"
+        android:title="@string/str_change_password"
+        android:visible="true"
+        app:showAsAction="never"
+        />
+
+    <item
         android:id="@+id/action_developer"
         android:title="@string/str_developer"
         android:visible="true"

@@ -9,6 +9,7 @@ import com.coupleblog.R
 import com.coupleblog.adapter.CB_EmailAdapter
 import com.coupleblog.model.*
 import com.coupleblog.base.CB_BaseFragment
+import com.coupleblog.dialog.CB_PasswordChangeDialog
 import com.coupleblog.fragment.MailboxBinding
 import com.coupleblog.singleton.CB_AppFunc
 import com.coupleblog.singleton.CB_SingleSystemMgr
@@ -73,6 +74,14 @@ class CB_MailBoxFragment: CB_BaseFragment()
     {
         when(item.itemId)
         {
+            R.id.action_change_password ->
+            {
+                if(CB_SingleSystemMgr.isDialog(CB_SingleSystemMgr.DIALOG_TYPE.PASSWORD_CHANGE))
+                    return true
+
+                CB_PasswordChangeDialog(requireActivity(), false)
+            }
+
             R.id.action_developer ->
             {
                 beginAction(R.id.action_CB_MainFragment_to_CB_DeveloperFragment, R.id.CB_MainFragment)

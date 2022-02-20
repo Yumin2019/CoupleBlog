@@ -46,6 +46,7 @@
         <entry key="..\:/Users/lmj33/CoupleBlog/app/src/main/res/layout/cb_comment_item.xml" value="0.36614583333333334" />
         <entry key="..\:/Users/lmj33/CoupleBlog/app/src/main/res/layout/cb_days_item.xml" value="0.264" />
         <entry key="..\:/Users/lmj33/CoupleBlog/app/src/main/res/layout/cb_days_widget.xml" value="0.36614583333333334" />
+        <entry key="..\:/Users/lmj33/CoupleBlog/app/src/main/res/layout/cb_dialog_password_change.xml" value="0.2" />
         <entry key="..\:/Users/lmj33/CoupleBlog/app/src/main/res/layout/cb_fragment_developer.xml" value="0.2" />
         <entry key="..\:/Users/lmj33/CoupleBlog/app/src/main/res/layout/cb_list_dialog_item.xml" value="0.36614583333333334" />
         <entry key="..\:/Users/lmj33/CoupleBlog/app/src/main/res/layout/cb_mail_item.xml" value="0.36614583333333334" />
@@ -58,6 +59,7 @@
         <entry key="..\:/Users/lmj33/CoupleBlog/app/src/main/res/layout/dialog_cb_image.xml" value="0.16799999999999998" />
         <entry key="..\:/Users/lmj33/CoupleBlog/app/src/main/res/layout/dialog_cb_list_item.xml" value="0.4" />
         <entry key="..\:/Users/lmj33/CoupleBlog/app/src/main/res/layout/dialog_cb_loading.xml" value="0.264" />
+        <entry key="..\:/Users/lmj33/CoupleBlog/app/src/main/res/layout/dialog_cb_password_change.xml" value="0.2" />
         <entry key="..\:/Users/lmj33/CoupleBlog/app/src/main/res/layout/dialog_cb_sticker.xml" value="0.1" />
         <entry key="..\:/Users/lmj33/CoupleBlog/app/src/main/res/layout/dialog_meetings_loading.xml" value="0.36614583333333334" />
         <entry key="..\:/Users/lmj33/CoupleBlog/app/src/main/res/layout/fragment_all_posts.xml" value="0.2" />

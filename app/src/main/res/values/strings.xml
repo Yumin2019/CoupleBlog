@@ -875,12 +875,16 @@ OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.            
     <string name="str_sign_out">Sign Out</string>
     <string name="str_sign_up">Sign Up</string>
     <string name="str_opensource_license">Open Source</string>
+    <string name="str_change_password">Change Password</string>
     <string name="str_developer">Developer</string>
     <string name="str_recipients">Recipients</string>
     <string name="str_add_image">Add image</string>
     <string name="str_add_item">Add item</string>
     <string name="str_no_image">No image</string>
     <string name="str_email">Email</string>
+    <string name="str_current_password">Current Password</string>
+    <string name="str_new_password">New Password</string>
+    <string name="str_new_password_again">New Password again</string>
     <string name="str_password">Password</string>
     <string name="str_password_again">Password again</string>
     <string name="str_to">To</string>
@@ -939,6 +943,7 @@ OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.            
     <string name="str_upload_fail">Upload failure</string>
     <string name="str_ok">OK</string>
     <string name="str_edit">Edit</string>
+    <string name="str_change">Change</string>
     <string name="str_register">Register</string>
     <string name="str_write">Write</string>
     <string name="str_post">Post</string>
@@ -950,8 +955,10 @@ OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.            
     <string name="str_register_msg">if you don\'t have an account</string>
     <string name="str_personal_information_policy_msg">if you want to see</string>
     <string name="str_personal_info_policy">Personal information processing policy</string>
+    <string name="str_login_again">Please restart couple blog</string>
     <string name="str_input_email">Please input your email</string>
     <string name="str_input_password">Please input your password</string>
+    <string name="str_input_current_password">Please input your current password</string>
     <string name="str_input_password_again">Please input your password again</string>
     <string name="str_input_comment">Please input your comment</string>
     <string name="str_input_title">Please input your title</string>
@@ -972,6 +979,8 @@ OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.            
     <string name="str_invalid_date_error">It\'s invalid date</string>
     <string name="str_sign_in_failed">Failed to sign in</string>
     <string name="str_sign_up_failed">Failed to sign out</string>
+    <string name="str_invalid_auth">Invalid authentication</string>
+    <string name="str_password_change_failed">Failed to change password</string>
     <string name="str_failed_to_upload_image">Failed to upload image</string>
     <string name="str_select_image_from_gallery">Select an image from gallery</string>
     <string name="str_failed_to_find_user">Failed to find user</string>
@@ -1002,6 +1011,7 @@ OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.            
     <string name="str_warning">Warning</string>
     <string name="str_information">Information</string>
     <string name="str_done">Done</string>
+    <string name="str_password_change_success">Password changed.</string>
     <string name="str_auto_login_success">Auto login was successful.</string>
     <string name="str_send_mail_success">Sending mail was successful.</string>
     <string name="str_mail_deleted">You deleted this mail.</string>

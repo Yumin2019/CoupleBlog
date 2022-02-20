@@ -6,8 +6,10 @@ import androidx.core.os.bundleOf
 import androidx.navigation.fragment.findNavController
 import com.coupleblog.R
 import com.coupleblog.base.CB_BaseFragment
+import com.coupleblog.dialog.CB_PasswordChangeDialog
 import com.coupleblog.fragment.ProfileBinding
 import com.coupleblog.singleton.CB_AppFunc
+import com.coupleblog.singleton.CB_SingleSystemMgr
 import com.coupleblog.singleton.CB_ViewModel
 
 class CB_ProfileFragment: CB_BaseFragment()
@@ -41,6 +43,14 @@ class CB_ProfileFragment: CB_BaseFragment()
     {
         when(item.itemId)
         {
+            R.id.action_change_password ->
+            {
+                if(CB_SingleSystemMgr.isDialog(CB_SingleSystemMgr.DIALOG_TYPE.PASSWORD_CHANGE))
+                    return true
+
+                CB_PasswordChangeDialog(requireActivity(), false)
+            }
+
             R.id.action_developer ->
             {
                 beginAction(R.id.action_CB_MainFragment_to_CB_DeveloperFragment, R.id.CB_MainFragment)
