@@ -28,7 +28,7 @@ class CB_StickerDialog(context: Context) : Dialog(context)
             R.layout.dialog_cb_sticker, null, false)
         binding.apply {
             adapter = CB_StickerAdapter { position ->
-                val strResName = CB_AppFunc.getResourceName(stickerList[position])
+                val strResName = CB_AppFunc.getResourceName(context, stickerList[position])
                 CB_ViewModel.strDaysIconRes.value = strResName
                 Log.i("stickerDialog", "strResName:$strResName")
                 cancel()

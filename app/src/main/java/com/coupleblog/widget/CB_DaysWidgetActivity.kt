@@ -55,7 +55,7 @@ class CB_DaysWidgetActivity : CB_BaseActivity(CB_SingleSystemMgr.ACTIVITY_TYPE.D
         val pendingIntent = PendingIntent.getActivity(this, 0, intent, 0)
 
         remoteViews.apply {
-            val iResIdx = CB_AppFunc.getDrawableIdentifier(tDays.strIconRes!!)
+            val iResIdx = CB_AppFunc.getDrawableIdentifier(applicationContext, tDays.strIconRes!!)
             setTextViewText(R.id.item_text_view, tDays.strTitle)
             setTextViewText(R.id.days_text_view, setDaysTime(null, tDays))
             if(iResIdx != 0){

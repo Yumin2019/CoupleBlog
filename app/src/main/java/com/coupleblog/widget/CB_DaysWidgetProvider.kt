@@ -76,7 +76,7 @@ class CB_DaysWidgetProvider : AppWidgetProvider() {
                         val days = dataSnapshot.getValue<CB_Days>()
                         days?.let {
                             remoteViews.apply {
-                                val iResIdx = CB_AppFunc.getDrawableIdentifier(it.strIconRes!!)
+                                val iResIdx = CB_AppFunc.getDrawableIdentifier(context, it.strIconRes!!)
                                 setTextViewText(R.id.item_text_view, days.strTitle)
                                 setTextViewText(R.id.days_text_view, setDaysTime(null, days))
                                 if(iResIdx != 0){

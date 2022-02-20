@@ -628,7 +628,7 @@ fun setImage(imageView: ImageView, strDrawableName: String?)
         return
     }
 
-    val iResIdx = CB_AppFunc.getDrawableIdentifier(strDrawableName)
+    val iResIdx = CB_AppFunc.getDrawableIdentifier(CB_AppFunc.application, strDrawableName)
     if(iResIdx == 0)
     {
         imageView.setImageDrawable(null)

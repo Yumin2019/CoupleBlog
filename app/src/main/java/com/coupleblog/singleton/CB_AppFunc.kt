@@ -231,8 +231,11 @@ class CB_AppFunc
 
             val eventDate = stringToDate(strEventDate)
             val curDate = getCalendarForSave().time
-            val interval = 5000L
-            // TEST eventDate.time - curDate.time
+            val interval = eventDate.time - curDate.time
+            Log.i(strTag, "time interval : $interval")
+
+            if(interval <= 0)
+                return
 
             // You can query and cancel work by tag
             // InputData to pass to NotificationWorker
@@ -250,7 +253,7 @@ class CB_AppFunc
 
         fun cancelNotificationFCM(strCancelDaysKey: String, strFcmToken: String)
         {
-            sendFCM("title", strBody = "body#$strCancelDaysKey#null#${strFcmToken}#eventDate", "eventDate", FCM_TYPE.DAYS_WORKER)
+            sendFCM("title", strBody = "body#$strCancelDaysKey#null#$strFcmToken#eventDate", strFcmToken, FCM_TYPE.DAYS_WORKER)
         }
 
         /*** 추가 데이터가 필요한 경우라면 strBody에 body#delete#add#fcmToken#strEventDate
@@ -497,21 +500,21 @@ class CB_AppFunc
             _coupleUser = CB_User() // default value
         }
 
-        fun getResourceName(@AnyRes iRes: Int): String
+        fun getResourceName(context: Context, @AnyRes iRes: Int): String
         {
-            return application.resources.getResourceName(iRes)
+            return context.resources.getResourceName(iRes)
         }
 
-        fun getResIdentifier(strRes: String, strResType: String): Int
+        fun getResIdentifier(context: Context, strRes: String, strResType: String): Int
         {
-            val iRes = application.resources.getIdentifier(strRes, strResType, application.packageName)
+            val iRes = context.resources.getIdentifier(strRes.split("/")[1], strResType, context.packageName)
             if(iRes == 0) Log.e(strTag, "getResWithName: iRes value is invalid")
             return iRes
         }
 
-        fun getDrawableIdentifier(strDrawableRes: String): Int
+        fun getDrawableIdentifier(context: Context, strDrawableRes: String): Int
         {
-            val iRes = application.resources.getIdentifier(strDrawableRes, "drawable", application.packageName)
+            val iRes = context.resources.getIdentifier(strDrawableRes.split("/")[1], "drawable", context.packageName)
             if(iRes == 0) Log.e(strTag, "getResWithName: iRes value is invalid")
             return iRes
         }

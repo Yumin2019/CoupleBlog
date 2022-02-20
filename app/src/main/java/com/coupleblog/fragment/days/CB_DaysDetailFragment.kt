@@ -179,6 +179,7 @@ class CB_DaysDetailFragment : CB_BaseFragment()
 
                         CB_AppFunc.cancelWorker(CB_AppFunc.application, strDaysKey)
                         CB_AppFunc.cancelNotificationFCM(strDaysKey, CB_AppFunc.coupleUser.strFcmToken!!)
+                        Log.i(strTag, "notification canceled $strDaysKey")
                     }
                     catch(e: FirebaseException)
                     {

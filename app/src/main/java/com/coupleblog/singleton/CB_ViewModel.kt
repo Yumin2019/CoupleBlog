@@ -181,7 +181,7 @@ class CB_ViewModel
             strDaysTitle.value = ""
             strEventDate.value = CB_AppFunc.getDayStringForSave()
             strDaysDesc.value = ""
-            strDaysIconRes.value = CB_AppFunc.getResourceName(R.drawable.question)
+            strDaysIconRes.value = CB_AppFunc.getResourceName(CB_AppFunc.application, R.drawable.question)
             iDaysEventType.value = DAYS_ITEM_TYPE.PAST_EVENT.ordinal
             iDaysTimeFormat.value = DAYS_TIME_FORMAT.DAYS.ordinal
         }

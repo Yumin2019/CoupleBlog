@@ -317,7 +317,7 @@ class CB_NewDaysFragment : CB_BaseFragment()
                 binding.titleTextInputLayout.error.toString(), R.drawable.error_icon, true)
             return
         }
-        else if(strDaysIconRes == CB_AppFunc.getResourceName(R.drawable.question))
+        else if(strDaysIconRes == CB_AppFunc.getResourceName(CB_AppFunc.application, R.drawable.question))
         {
             // User didn't select icon for item
             CB_SingleSystemMgr.showToast(R.string.str_select_icon)
@@ -388,10 +388,10 @@ class CB_NewDaysFragment : CB_BaseFragment()
                                     backPressed()
                                 }
 
-                                // TEST 해볼 것.
                                 // 일단 기존의 days 정보를 취소한다.
                                 CB_AppFunc.cancelWorker(CB_AppFunc.application, strDaysKey)
                                 CB_AppFunc.cancelNotificationFCM(strDaysKey, CB_AppFunc.coupleUser.strFcmToken!!)
+                                Log.i(strTag, "notification canceled $strDaysKey")
 
                                 if(iDaysEventType != DAYS_ITEM_TYPE.PAST_EVENT.ordinal)
                                 {
@@ -399,8 +399,9 @@ class CB_NewDaysFragment : CB_BaseFragment()
                                     CB_AppFunc.requestWorker(CB_AppFunc.application, strDaysKey, strDaysTitle,
                                         CB_AppFunc.getString(R.string.str_today), CB_AppFunc.curUser.strFcmToken, strEventDate)
 
-                                    val strBody = getString(R.string.str_today) + "#null#$strDaysKey#${CB_AppFunc.coupleUser.strFcmToken!!}#$strEventDate"
+                                    val strBody = CB_AppFunc.getString(R.string.str_today) + "#null#$strDaysKey#${CB_AppFunc.coupleUser.strFcmToken!!}#$strEventDate"
                                     CB_AppFunc.sendFCM(strDaysTitle, strBody, CB_AppFunc.coupleUser.strFcmToken!!, CB_AppFunc.FCM_TYPE.DAYS_WORKER)
+                                    Log.i(strTag, "notification registered $strDaysKey")
                                 }
                             }
                             else
@@ -439,6 +440,7 @@ class CB_NewDaysFragment : CB_BaseFragment()
 
                                 CB_AppFunc.cancelWorker(CB_AppFunc.application, strDaysKey)
                                 CB_AppFunc.cancelNotificationFCM(strDaysKey, CB_AppFunc.coupleUser.strFcmToken!!)
+                                Log.i(strTag, "notification canceled $strDaysKey")
 
                                 if(iDaysEventType != DAYS_ITEM_TYPE.PAST_EVENT.ordinal)
                                 {
@@ -446,8 +448,9 @@ class CB_NewDaysFragment : CB_BaseFragment()
                                     CB_AppFunc.requestWorker(CB_AppFunc.application, daysKey, strDaysTitle,
                                         CB_AppFunc.getString(R.string.str_today), CB_AppFunc.curUser.strFcmToken, strEventDate)
 
-                                    val strBody = getString(R.string.str_today) + "#null#$daysKey#${CB_AppFunc.coupleUser.strFcmToken!!}#$strEventDate"
+                                    val strBody = CB_AppFunc.getString(R.string.str_today) + "#null#$daysKey#${CB_AppFunc.coupleUser.strFcmToken!!}#$strEventDate"
                                     CB_AppFunc.sendFCM(strDaysTitle, strBody, CB_AppFunc.coupleUser.strFcmToken!!, CB_AppFunc.FCM_TYPE.DAYS_WORKER)
+                                    Log.i(strTag, "notification registered $daysKey")
                                 }
 
                             }
@@ -482,10 +485,9 @@ class CB_NewDaysFragment : CB_BaseFragment()
                             }
 
                            // send notification to couple
-                           CB_AppFunc.sendFCM(strDaysTitle, String.format(getString(R.string.str_days_notification),
+                           CB_AppFunc.sendFCM(strDaysTitle, String.format(CB_AppFunc.getString(R.string.str_days_notification),
                                CB_AppFunc.curUser.strUserName), CB_AppFunc.coupleUser.strFcmToken!!)
 
-                            // TEST 해볼 것.
                             if(iDaysEventType != DAYS_ITEM_TYPE.PAST_EVENT.ordinal)
                             {
                                 // 과거의 이벤트가 아니라면 등록을 한다.
@@ -494,6 +496,7 @@ class CB_NewDaysFragment : CB_BaseFragment()
 
                                 val strBody = CB_AppFunc.getString(R.string.str_today) + "#null#$daysKey#${CB_AppFunc.coupleUser.strFcmToken!!}#$strEventDate"
                                 CB_AppFunc.sendFCM(strDaysTitle, strBody, CB_AppFunc.coupleUser.strFcmToken!!, CB_AppFunc.FCM_TYPE.DAYS_WORKER)
+                                Log.i(strTag, "notification registered $daysKey")
                             }
                         }
                     }
