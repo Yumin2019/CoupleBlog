@@ -5,6 +5,7 @@ import android.graphics.Bitmap
 import android.util.Log
 import androidx.lifecycle.MutableLiveData
 import androidx.recyclerview.widget.RecyclerView
+import com.coupleblog.BuildConfig
 import com.coupleblog.ListLiveData
 import com.coupleblog.R
 import com.coupleblog.adapter.CB_EmailAdapter
@@ -21,6 +22,8 @@ class CB_ViewModel
     companion object
     {
         const val strTag = "ViewModel"
+
+        var strVersion = MutableLiveData(BuildConfig.VERSION_NAME)
 
         // photoEditor Fragment
         var editorBitmap: Bitmap? = null

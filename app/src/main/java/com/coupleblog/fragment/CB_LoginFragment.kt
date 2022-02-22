@@ -30,6 +30,7 @@ class CB_LoginFragment : CB_BaseFragment()
         binding.apply {
             lifecycleOwner  = viewLifecycleOwner
             fragment        = this@CB_LoginFragment
+            viewModel       = CB_ViewModel
         }
         return binding.root
     }
@@ -163,7 +164,6 @@ class CB_LoginFragment : CB_BaseFragment()
 
         CB_AppFunc.getAuth().signInWithEmailAndPassword(strEmail, strPassword)
             .addOnCompleteListener { task ->
-
                 dialog.cancel()
                 if(task.isSuccessful)
                 {
@@ -172,13 +172,18 @@ class CB_LoginFragment : CB_BaseFragment()
                     funcSuccess =
                     {
                         beginAction(R.id.action_CB_LoginFragment_to_CB_MainFragment, R.id.CB_LoginFragment)
-                    }, null)
+                    },
+                    funcFailure =
+                    {
+
+                    })
                 }
                 else
                 {
                     // 로그인 실패
                     CB_AppFunc.okDialog(activity, R.string.str_error,
                         R.string.str_sign_in_failed, R.drawable.error_icon, true)
+                    Log.e(strTag, "sign in error : ${task.exception}")
                 }
             }
     }

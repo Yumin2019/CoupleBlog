@@ -8,6 +8,10 @@
         <variable
             name="fragment"
             type="com.coupleblog.fragment.CB_LoginFragment" />
+
+        <variable
+            name="viewModel"
+            type="com.coupleblog.singleton.CB_ViewModel.Companion" />
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout
@@ -40,6 +44,18 @@
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
+
+        <TextView
+            android:id="@+id/version_text_view"
+            style="@style/subtitle_text_style"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="@dimen/margin_16dp"
+            android:text="@{viewModel.strVersion}"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            tools:text="1.1.1" />
 
         <com.google.android.material.textfield.TextInputLayout
             android:id="@+id/email_text_input_layout"

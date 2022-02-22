@@ -26,6 +26,7 @@ class CB_DeveloperFragment : CB_BaseFragment()
         binding.apply {
             lifecycleOwner  = viewLifecycleOwner
             fragment = this@CB_DeveloperFragment
+            viewModel = CB_ViewModel
         }
         return binding.root
     }
