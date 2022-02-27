@@ -74,12 +74,9 @@ class CB_MailBoxFragment: CB_BaseFragment()
     {
         when(item.itemId)
         {
-            R.id.action_change_password ->
+            R.id.action_account ->
             {
-                if(CB_SingleSystemMgr.isDialog(CB_SingleSystemMgr.DIALOG_TYPE.PASSWORD_CHANGE))
-                    return true
 
-                CB_PasswordChangeDialog(requireActivity(), false)
             }
 
             R.id.action_developer ->

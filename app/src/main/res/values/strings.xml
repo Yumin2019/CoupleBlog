@@ -875,6 +875,7 @@ OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.            
     <string name="str_sign_out">Sign Out</string>
     <string name="str_sign_up">Sign Up</string>
     <string name="str_opensource_license">Open Source</string>
+    <string name="str_account">Account</string>
     <string name="str_change_password">Change Password</string>
     <string name="str_developer">Developer</string>
     <string name="str_recipients">Recipients</string>
@@ -896,6 +897,8 @@ OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.            
     <string name="str_delete">Delete</string>
     <string name="str_loading">Loading …</string>
     <string name="str_camera">Camera</string>
+    <string name="str_break_up">Break up</string>
+    <string name="str_delete_account">Delete account</string>
     <string name="str_storage">Storage</string>
     <string name="str_gallery">Gallery</string>
     <string name="str_change_profile_image">Change profile image</string>
@@ -966,6 +969,8 @@ OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.            
     <string name="str_select_icon">Please select an icon</string>
     <string name="str_input_recipient">Please specify at least one recipient.</string>
     <string name="str_check_mail">Please specify at least one mail.</string>
+    <string name="str_delete_account_msg">Do you really want to delete your account?</string>
+    <string name="str_break_up_msg">Do you really want to break up?</string>
     <string name="str_days_confirm">Do you really want to write?</string>
     <string name="str_post_confirm">Do you really want to post?</string>
     <string name="str_discard_msg">Do you really want to discard?</string>

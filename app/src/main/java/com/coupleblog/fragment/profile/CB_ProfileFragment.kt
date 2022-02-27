@@ -1,12 +1,15 @@
 package com.coupleblog.fragment.profile
 
 import android.os.Bundle
+import android.util.Log
 import android.view.*
 import androidx.core.os.bundleOf
 import androidx.navigation.fragment.findNavController
 import com.coupleblog.R
 import com.coupleblog.base.CB_BaseFragment
+import com.coupleblog.dialog.CB_ItemListDialog
 import com.coupleblog.dialog.CB_PasswordChangeDialog
+import com.coupleblog.dialog.DialogItem
 import com.coupleblog.fragment.ProfileBinding
 import com.coupleblog.singleton.CB_AppFunc
 import com.coupleblog.singleton.CB_SingleSystemMgr
@@ -43,12 +46,41 @@ class CB_ProfileFragment: CB_BaseFragment()
     {
         when(item.itemId)
         {
-            R.id.action_change_password ->
+            R.id.action_account ->
             {
-                if(CB_SingleSystemMgr.isDialog(CB_SingleSystemMgr.DIALOG_TYPE.PASSWORD_CHANGE))
-                    return true
+                val listItem: ArrayList<DialogItem> = arrayListOf(
+                    DialogItem(getString(R.string.str_delete_account), R.drawable.error_icon,
+                    callback =
+                    {
 
-                CB_PasswordChangeDialog(requireActivity(), false)
+                    }))
+
+                if(!CB_AppFunc.curUser.strCoupleKey.isNullOrEmpty())
+                {
+                    listItem.add(DialogItem(getString(R.string.str_break_up), R.drawable.broken_heart,
+                        callback =
+                        {
+                            CB_AppFunc.confirmDialog(requireActivity(), R.string.str_break_up,
+                                R.string.str_break_up_msg, R.drawable.broken_heart, false, R.string.str_yes,
+                            yesListener =
+                            {  _, _ ->
+                                // couple 정보를 삭제하는 함수를 만들어서 처리한다.
+
+                            }, R.string.str_cancel, null)
+                        })
+                    )
+                }
+
+                listItem.add(DialogItem(getString(R.string.str_change_password), R.drawable.lock,
+                    callback =
+                    {
+                        if(CB_SingleSystemMgr.isDialog(CB_SingleSystemMgr.DIALOG_TYPE.PASSWORD_CHANGE))
+                            return@DialogItem
+
+                        CB_PasswordChangeDialog(requireActivity(), false)
+                    }))
+
+                CB_ItemListDialog(requireActivity(), getString(R.string.str_add_image), listItem, true)
             }
 
             R.id.action_developer ->

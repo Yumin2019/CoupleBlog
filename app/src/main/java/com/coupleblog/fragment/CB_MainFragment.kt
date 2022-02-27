@@ -7,6 +7,7 @@ import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.RecyclerView
 import androidx.viewpager2.adapter.FragmentStateAdapter
 import androidx.viewpager2.widget.ViewPager2
+import com.coupleblog.R
 import com.coupleblog.singleton.CB_AppFunc
 import com.coupleblog.fragment.listfragments.CB_CouplePostsFragment
 import com.coupleblog.fragment.listfragments.CB_MyPostsFragment
@@ -16,10 +17,19 @@ import com.coupleblog.fragment.PAGE_TYPE.*
 import com.coupleblog.fragment.mail.CB_MailBoxFragment
 import com.coupleblog.fragment.profile.CB_ProfileFragment
 import com.coupleblog.model.CB_Couple
+import com.coupleblog.model.CB_Days
 import com.google.android.gms.tasks.OnCompleteListener
 import com.google.android.material.tabs.TabLayoutMediator
+import com.google.firebase.database.DataSnapshot
+import com.google.firebase.database.DatabaseError
+import com.google.firebase.database.DatabaseReference
+import com.google.firebase.database.ValueEventListener
+import com.google.firebase.database.ktx.getValue
 import com.google.firebase.ktx.Firebase
 import com.google.firebase.messaging.ktx.messaging
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.launch
 
 enum class PAGE_TYPE
 {
@@ -109,6 +119,27 @@ class CB_MainFragment : CB_BaseFragment()
             CB_AppFunc.getUsersRoot().child(CB_AppFunc.getUid()).child("strFcmToken").setValue(token)
         })
 
+        // if couple, update DaysItem
+        if(!CB_AppFunc.curUser.strCoupleKey.isNullOrEmpty())
+        {
+            val daysList: ArrayList<CB_Days> = arrayListOf()
+            val daysKeyList: ArrayList<String> = arrayListOf()
+            val coupleRef = CB_AppFunc.getCouplesRoot().child(CB_AppFunc.curUser.strCoupleKey!!)
+            CB_AppFunc.networkScope.launch {
+                launch {
+                    loadDaysItem(coupleRef, "future-event-list", daysList, daysKeyList)
+                    loadDaysItem(coupleRef, "annual-event-list", daysList, daysKeyList)
+                }.join()
+
+                val strToday = CB_AppFunc.getString(R.string.str_today)
+                for(i in 0 until daysList.size)
+                {
+                    CB_AppFunc.requestWorker(CB_AppFunc.application, daysKeyList[i], daysList[i].strTitle,
+                        strToday, CB_AppFunc.curUser.strFcmToken, daysList[i].strEventDate!!)
+                }
+            }
+        }
+
        // ViewPager 설정
        with(binding)
        {
@@ -197,6 +228,21 @@ class CB_MainFragment : CB_BaseFragment()
            }.attach()
        }
     }
+
+    private fun loadDaysItem(coupleRef: DatabaseReference, strPath: String, list: ArrayList<CB_Days>, keyList: ArrayList<String>)
+    = coupleRef.child(strPath).addListenerForSingleValueEvent(object: ValueEventListener {
+        override fun onDataChange(snapshot: DataSnapshot) {
+               for (child in snapshot.children)
+               {
+                   list.add(child.getValue<CB_Days>()!!)
+                   child.key!!.let { keyList.add(it) }
+               }
+           }
+
+           override fun onCancelled(error: DatabaseError) {
+               Log.e(strTag, error.toString())
+           }
+    })
 
     override fun backPressed()
     {
