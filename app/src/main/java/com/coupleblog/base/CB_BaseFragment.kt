@@ -15,7 +15,11 @@ import android.view.MotionEvent
 import android.view.View.OnTouchListener
 import androidx.annotation.IdRes
 import androidx.core.os.bundleOf
+import com.coupleblog.fragment.profile.CB_ProfileInfoFragment
 import com.google.android.material.snackbar.Snackbar
+import com.google.firebase.database.DataSnapshot
+import com.google.firebase.database.DatabaseError
+import com.google.firebase.database.ValueEventListener
 
 abstract class CB_BaseFragment() : Fragment()
 {
@@ -107,5 +111,31 @@ abstract class CB_BaseFragment() : Fragment()
             return
 
         navController.navigate(actionId, args)
+    }
+
+    fun beginActionToProfileInfo(beginAction: ()->Unit, profileUid: String)
+    {
+        CB_AppFunc.getUsersRoot().child(profileUid).addListenerForSingleValueEvent(object:
+            ValueEventListener {
+            override fun onDataChange(snapshot: DataSnapshot) {
+                if(snapshot.exists())
+                {
+                    beginAction.invoke()
+                }
+                else
+                {
+                    CB_AppFunc.okDialog(requireActivity(), R.string.str_information, R.string.str_failed_to_find_user,
+                        R.drawable.ic_baseline_account_circle_24, false)
+                    Log.e(strTag, "beginActionToProfileInfo: snapshot is null")
+                }
+            }
+
+            override fun onCancelled(error: DatabaseError)
+            {
+                CB_AppFunc.okDialog(requireActivity(), R.string.str_information, R.string.str_failed_to_find_user,
+                    R.drawable.ic_baseline_account_circle_24, false)
+                Log.e(strTag, "beginActionToProfileInfo: $error")
+            }
+        })
     }
 }

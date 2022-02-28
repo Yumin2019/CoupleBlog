@@ -53,7 +53,21 @@ class CB_ProfileFragment: CB_BaseFragment()
                     DialogItem(getString(R.string.str_delete_account), R.drawable.error_icon,
                     callback =
                     {
-
+                        CB_AppFunc.mainScope.launch {
+                            val bResult = CB_AppFunc.tryDeleteAccount()
+                            if(bResult)
+                            {
+                                CB_AppFunc.okDialog(requireActivity(), R.string.str_information, R.string.str_delete_account,
+                                    R.drawable.ic_baseline_account_circle_24, false, listener = { _, _ ->
+                                        CB_AppFunc.restartApp(requireActivity())
+                                    })
+                            }
+                            else
+                            {
+                                CB_AppFunc.okDialog(requireActivity(), R.string.str_error, R.string.str_failed_to_delete_couple,
+                                    R.drawable.broken_heart, false, null)
+                            }
+                        }
                     }))
 
                 if(!CB_AppFunc.curUser.strCoupleKey.isNullOrEmpty())
@@ -123,9 +137,11 @@ class CB_ProfileFragment: CB_BaseFragment()
 
     fun profileButton(isMyProfile: Boolean)
     {
-        val uid = if(isMyProfile) CB_AppFunc.getUid() else CB_AppFunc.curUser.strCoupleUid
-        beginAction(R.id.action_CB_MainFragment_to_CB_ProfileInfoFragment,
-            R.id.CB_MainFragment, bundleOf(CB_ProfileInfoFragment.ARGU_UID to uid))
+        val uid = if(isMyProfile) CB_AppFunc.getUid() else CB_AppFunc.curUser.strCoupleUid.toString()
+        beginActionToProfileInfo(beginAction = {
+            beginAction(R.id.action_CB_MainFragment_to_CB_ProfileInfoFragment,
+                R.id.CB_MainFragment, bundleOf(CB_ProfileInfoFragment.ARGU_UID to uid))
+        }, uid)
     }
 
     fun daysButton()

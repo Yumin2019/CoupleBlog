@@ -71,7 +71,7 @@
                 android:inputType="text"
                 android:maxLines="1"
                 android:imeOptions="actionNext"
-                android:hint="@string/str_email" />
+                android:hint="@string/str_email_desc" />
 
         </com.google.android.material.textfield.TextInputLayout>
 

@@ -235,8 +235,10 @@ class CB_MailDetailFragment : CB_BaseFragment()
 
     fun profileButton(strUid: String)
     {
-        beginAction(R.id.action_CB_MailDetailFragment_to_CB_ProfileInfoFragment,
-            R.id.CB_MailDetailFragment, bundleOf(CB_ProfileInfoFragment.ARGU_UID to strUid))
+        beginActionToProfileInfo(beginAction = {
+            beginAction(R.id.action_CB_MailDetailFragment_to_CB_ProfileInfoFragment,
+                R.id.CB_MailDetailFragment, bundleOf(CB_ProfileInfoFragment.ARGU_UID to strUid))
+        }, strUid)
     }
 
     fun coupleRequestButton()

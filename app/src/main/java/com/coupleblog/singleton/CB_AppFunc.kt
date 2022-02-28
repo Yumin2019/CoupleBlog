@@ -42,11 +42,8 @@ import com.bumptech.glide.request.target.CustomTarget
 import com.bumptech.glide.request.transition.Transition
 import com.coupleblog.MainActivityBinding
 import com.coupleblog.R
-import com.coupleblog.model.CB_User
 import com.coupleblog.base.CB_BaseActivity
-import com.coupleblog.model.CB_Days
-import com.coupleblog.model.CB_FCMData
-import com.coupleblog.model.CB_Notification
+import com.coupleblog.model.*
 import com.coupleblog.util.CB_APIService
 import com.coupleblog.util.CB_Response
 import com.coupleblog.work.CB_NotificationWorker
@@ -499,13 +496,14 @@ class CB_AppFunc
             _coupleUser = CB_User() // default value
         }
 
-        fun loadDaysItem(coupleRef: DatabaseReference, strPath: String, list: ArrayList<CB_Days>, keyList: ArrayList<String>)
-                = coupleRef.child(strPath).addListenerForSingleValueEvent(object: ValueEventListener {
+        fun loadDaysItem(nodeRef: DatabaseReference, strPath: String, list: ArrayList<CB_Days>, keyList: ArrayList<String>)
+                = nodeRef.child(strPath).addListenerForSingleValueEvent(object: ValueEventListener {
             override fun onDataChange(snapshot: DataSnapshot) {
                 for (child in snapshot.children)
                 {
-                    list.add(child.getValue<CB_Days>()!!)
-                    child.key!!.let { keyList.add(it) }
+                    val item = child.getValue<CB_Days>()
+                    item?.let { list.add(it) }
+                    child.key?.let { keyList.add(it) }
                 }
             }
 
@@ -513,6 +511,141 @@ class CB_AppFunc
                 Log.e(strTag, error.toString())
             }
         })
+
+        fun getPostItems(nodeRef: DatabaseReference, strPath: String, list: ArrayList<CB_Post>, keyList: ArrayList<String>)
+                = nodeRef.child(strPath).addListenerForSingleValueEvent(object: ValueEventListener {
+            override fun onDataChange(snapshot: DataSnapshot) {
+                for (child in snapshot.children)
+                {
+                    val item = child.getValue<CB_Post>()
+                    item?.let { list.add(it) }
+                    child.key?.let { keyList.add(it) }
+                }
+            }
+
+            override fun onCancelled(error: DatabaseError) {
+                Log.e(strTag, error.toString())
+            }
+        })
+
+        fun getMailItems(nodeRef: DatabaseReference, strPath: String, list: ArrayList<CB_Mail>, keyList: ArrayList<String>)
+                = nodeRef.child(strPath).addListenerForSingleValueEvent(object: ValueEventListener {
+            override fun onDataChange(snapshot: DataSnapshot) {
+                for (child in snapshot.children)
+                {
+                    val item = child.getValue<CB_Mail>()
+                    item?.let { list.add(it) }
+                    child.key?.let { keyList.add(it) }
+                }
+            }
+
+            override fun onCancelled(error: DatabaseError) {
+                Log.e(strTag, error.toString())
+            }
+        })
+
+        suspend fun tryDeleteAccount() = networkScope.async {
+
+            Log.i(strTag, "tryDeleteAccount")
+
+            // if couple, delete couple info
+            if(!curUser.strCoupleKey.isNullOrEmpty())
+            {
+                val isDeleted = tryBreakingUp()
+                if(!isDeleted)
+                    return@async false
+            }
+
+            val userPostsRef = getUserPostsRoot().child(getUid())
+            val postList: ArrayList<CB_Post> = arrayListOf()
+            val keyList: ArrayList<String> = arrayListOf()
+            launch { getPostItems(getUserPostsRoot(), getUid(), postList, keyList) }.join()
+
+            for(i in 0 until postList.size)
+            {
+                val postRef = userPostsRef.child(keyList[i])
+                val commentRef = getPostCommentsRoot().child(keyList[i])
+                val strImagePath = postList[i].strImgPath
+                if(!strImagePath.isNullOrEmpty())
+                {
+                    // find upper folder for post
+                    deleteFileFromStorage(strImagePath, strTag,
+                        "post image deleted path:$strImagePath",
+                        "post image delete failed path:$strImagePath")
+                }
+
+                postRef.setValue(null).await()
+                commentRef.setValue(null).await()
+                Log.d(strTag, "deleted post, postKey: ${keyList[i]}")
+            }
+
+            val userMailRef = getMailBoxRoot().child(getUid())
+            val mailList: ArrayList<CB_Mail> = arrayListOf()
+            keyList.clear()
+            launch { getMailItems(getMailBoxRoot(), getUid(), mailList, keyList) }.join()
+
+            for(i in 0 until mailList.size)
+            {
+                val mailRef = userMailRef.child(keyList[i])
+                val strImagePath = mailList[i].strImgPath
+                if(!strImagePath.isNullOrEmpty())
+                {
+                    // find upper folder for post
+                    deleteFileFromStorage(strImagePath, strTag,
+                        "mail image deleted path:$strImagePath",
+                        "mail image delete failed path:$strImagePath")
+                }
+
+                mailRef.setValue(null).await()
+                Log.d(strTag, "deleted mail, mailKey: ${keyList[i]}")
+            }
+
+            val strImgPath = curUser.strImgPath
+            if(!strImgPath.isNullOrEmpty())
+            {
+                // find upper folder for post
+                deleteFileFromStorage(strImgPath, strTag,
+                    "user image deleted path:$strImgPath",
+                    "user image delete failed path:$strImgPath")
+            }
+
+            getUsersRoot().child(getUid()).setValue(null).await()
+            //FirebaseAuth.getInstance().currentUser.delete()
+        /* 유저 삭제
+         val credential = EmailAuthProvider.getCredential(curUser.email!!, strCurrentPassword)
+                val dialog = CB_LoadingDialog(context).apply { show() }
+
+                curUser.reauthenticate(credential).addOnCompleteListener { task ->
+
+                    if(task.isSuccessful)
+                    {
+                        curUser.updatePassword(strNewPassword).addOnCompleteListener { task ->
+
+                            dialog.cancel()
+                            if(task.isSuccessful)
+                            {
+                                CB_SingleSystemMgr.showToast(R.string.str_password_change_success)
+                                cancel()
+                            }
+                            else
+                            {
+                                Log.e("PasswordChangeDialog", "error : ${task.exception}")
+                                CB_AppFunc.okDialog(context, context.getString(R.string.str_error),
+                                    getString(R.string.str_password_change_failed), R.drawable.error_icon, true)
+                            }
+                        }
+                    }
+                    else
+                    {
+                        dialog.cancel()
+                        Log.e("PasswordChangeDialog", "error : ${task.exception}")
+                        CB_AppFunc.okDialog(context, context.getString(R.string.str_error),
+                            getString(R.string.str_invalid_auth), R.drawable.error_icon, true)
+                    }
+
+         */
+            return@async true
+        }.await()
 
         suspend fun tryBreakingUp() = networkScope.async {
 
