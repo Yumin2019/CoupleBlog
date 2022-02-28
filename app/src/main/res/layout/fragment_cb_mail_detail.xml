@@ -166,7 +166,7 @@
                     app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
-                    bind:mail_type="@{viewModel.TMail.IMailType}" />
+                    bind:request_mail="@{viewModel.TMail}" />
 
             </androidx.constraintlayout.widget.ConstraintLayout>
         </ScrollView>

@@ -307,18 +307,12 @@ class CB_MailDetailFragment : CB_BaseFragment()
                                     backPressed()
 
                                     // 나에게 알림을 보낸다.
-                                    if(!CB_AppFunc.curUser.strFcmToken.isNullOrEmpty())
-                                    {
-                                        CB_AppFunc.sendFCM(getString(R.string.str_new_couple),
-                                            String.format(getString(R.string.str_new_couple_notification), CB_AppFunc.coupleUser.strUserName!!), CB_AppFunc.curUser.strFcmToken!!)
-                                    }
+                                    CB_AppFunc.sendFCM(getString(R.string.str_new_couple),
+                                        String.format(getString(R.string.str_new_couple_notification), CB_AppFunc.coupleUser.strUserName!!), CB_AppFunc.curUser.strFcmToken!!)
 
                                     // 상대에게 알림을 보낸다.
-                                    if(!CB_AppFunc.coupleUser.strFcmToken.isNullOrEmpty())
-                                    {
-                                        CB_AppFunc.sendFCM(getString(R.string.str_new_couple),
-                                            String.format(getString(R.string.str_new_couple_notification), CB_AppFunc.curUser.strUserName!!), CB_AppFunc.coupleUser.strFcmToken!!)
-                                    }
+                                    CB_AppFunc.sendFCM(getString(R.string.str_new_couple),
+                                        String.format(getString(R.string.str_new_couple_notification), CB_AppFunc.curUser.strUserName!!), CB_AppFunc.coupleUser.strFcmToken!!)
                                 }
 
                                 override fun onCancelled(error: DatabaseError)

@@ -969,8 +969,10 @@ OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.            
     <string name="str_select_icon">Please select an icon</string>
     <string name="str_input_recipient">Please specify at least one recipient.</string>
     <string name="str_check_mail">Please specify at least one mail.</string>
-    <string name="str_delete_account_msg">Do you really want to delete your account?</string>
-    <string name="str_break_up_msg">Do you really want to break up?</string>
+    <string name="str_delete_account_msg">Do you really want to delete your account?\nYour information will be deleted.</string>
+    <string name="str_break_up_msg">Do you really want to break up?\nCouple information will be deleted.</string>
+    <string name="str_deleted_account">Your account deleted successfully.</string>
+    <string name="str_deleted_couple">Couple information deleted successfully.</string>
     <string name="str_days_confirm">Do you really want to write?</string>
     <string name="str_post_confirm">Do you really want to post?</string>
     <string name="str_discard_msg">Do you really want to discard?</string>
@@ -988,6 +990,8 @@ OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.            
     <string name="str_forgot_password">Forgot password</string>
     <string name="str_password_change_failed">Failed to change password</string>
     <string name="str_failed_to_upload_image">Failed to upload image</string>
+    <string name="str_failed_to_delete_account">Failed to delete account</string>
+    <string name="str_failed_to_delete_couple">Failed to delete couple</string>
     <string name="str_select_image_from_gallery">Select an image from gallery</string>
     <string name="str_failed_to_find_user">Failed to find user</string>
     <string name="str_tried_to_request_to_yourself">You can\'t be a couple with yourself</string>

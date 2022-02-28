@@ -127,8 +127,8 @@ class CB_MainFragment : CB_BaseFragment()
             val coupleRef = CB_AppFunc.getCouplesRoot().child(CB_AppFunc.curUser.strCoupleKey!!)
             CB_AppFunc.networkScope.launch {
                 launch {
-                    loadDaysItem(coupleRef, "future-event-list", daysList, daysKeyList)
-                    loadDaysItem(coupleRef, "annual-event-list", daysList, daysKeyList)
+                    CB_AppFunc.loadDaysItem(coupleRef, "future-event-list", daysList, daysKeyList)
+                    CB_AppFunc.loadDaysItem(coupleRef, "annual-event-list", daysList, daysKeyList)
                 }.join()
 
                 val strToday = CB_AppFunc.getString(R.string.str_today)
@@ -228,21 +228,6 @@ class CB_MainFragment : CB_BaseFragment()
            }.attach()
        }
     }
-
-    private fun loadDaysItem(coupleRef: DatabaseReference, strPath: String, list: ArrayList<CB_Days>, keyList: ArrayList<String>)
-    = coupleRef.child(strPath).addListenerForSingleValueEvent(object: ValueEventListener {
-        override fun onDataChange(snapshot: DataSnapshot) {
-               for (child in snapshot.children)
-               {
-                   list.add(child.getValue<CB_Days>()!!)
-                   child.key!!.let { keyList.add(it) }
-               }
-           }
-
-           override fun onCancelled(error: DatabaseError) {
-               Log.e(strTag, error.toString())
-           }
-    })
 
     override fun backPressed()
     {

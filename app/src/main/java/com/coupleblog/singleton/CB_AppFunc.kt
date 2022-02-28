@@ -44,6 +44,7 @@ import com.coupleblog.MainActivityBinding
 import com.coupleblog.R
 import com.coupleblog.model.CB_User
 import com.coupleblog.base.CB_BaseActivity
+import com.coupleblog.model.CB_Days
 import com.coupleblog.model.CB_FCMData
 import com.coupleblog.model.CB_Notification
 import com.coupleblog.util.CB_APIService
@@ -52,10 +53,7 @@ import com.coupleblog.work.CB_NotificationWorker
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.ktx.auth
-import com.google.firebase.database.DataSnapshot
-import com.google.firebase.database.DatabaseError
-import com.google.firebase.database.FirebaseDatabase
-import com.google.firebase.database.ValueEventListener
+import com.google.firebase.database.*
 import com.google.firebase.database.ktx.database
 import com.google.firebase.database.ktx.getValue
 import com.google.firebase.ktx.Firebase
@@ -73,6 +71,7 @@ import java.lang.Exception
 import java.text.SimpleDateFormat
 import java.util.*
 import java.util.concurrent.TimeUnit
+import kotlin.math.absoluteValue
 
 /***
  *  ALL FUNCTIONS ARE FOR ACTIVITIES
@@ -499,6 +498,79 @@ class CB_AppFunc
             coupleUserInfoListener = null
             _coupleUser = CB_User() // default value
         }
+
+        fun loadDaysItem(coupleRef: DatabaseReference, strPath: String, list: ArrayList<CB_Days>, keyList: ArrayList<String>)
+                = coupleRef.child(strPath).addListenerForSingleValueEvent(object: ValueEventListener {
+            override fun onDataChange(snapshot: DataSnapshot) {
+                for (child in snapshot.children)
+                {
+                    list.add(child.getValue<CB_Days>()!!)
+                    child.key!!.let { keyList.add(it) }
+                }
+            }
+
+            override fun onCancelled(error: DatabaseError) {
+                Log.e(strTag, error.toString())
+            }
+        })
+
+        suspend fun tryBreakingUp() = networkScope.async {
+
+            Log.i(strTag, "tryBreakingUp")
+            if(curUser.strCoupleKey.isNullOrEmpty() || curUser.strCoupleKey.isNullOrEmpty()) {
+                Log.e(strTag, "tryBreakingUp: User's not a couple")
+                return@async false
+            }
+
+            val strUid = getUid()
+            val strCoupleUid = curUser.strCoupleUid!!
+            val strCoupleKey = curUser.strCoupleKey!!
+
+            // root - couples 노드를 정리한다. daysItem 정리 및 노드 삭제
+            val daysList: ArrayList<CB_Days> = arrayListOf()
+            val daysKeyList: ArrayList<String> = arrayListOf()
+            val coupleRef = getCouplesRoot().child(strCoupleKey)
+
+            launch {
+                loadDaysItem(coupleRef, "future-event-list", daysList, daysKeyList)
+                loadDaysItem(coupleRef, "annual-event-list", daysList, daysKeyList)
+            }.join()
+
+            for(i in 0 until daysList.size) {
+                cancelWorker(application, daysKeyList[i])
+                cancelNotificationFCM(daysKeyList[i], coupleUser.strFcmToken!!)
+            }
+
+            Log.i(strTag, "cancel all of event")
+            coupleRef.setValue(null).await()
+
+            // root - users couple 정보를 정리한다.
+            cleanUpCoupleUserListener()
+
+            curUser.strCoupleUid = null
+            curUser.strCoupleKey = null
+            coupleUser.strCoupleUid = null
+            coupleUser.strCoupleKey = null
+
+            getUsersRoot().child(strUid).setValue(curUser).await()
+            getUsersRoot().child(strCoupleUid).setValue(coupleUser).await()
+            Log.i(strTag, "clear couple info")
+
+            return@async true
+        }.await()
+
+        fun getTimeDiffMilliseconds(eventCalendar: Calendar): Int
+        {
+            val curDate = CB_AppFunc.getCurCalendar().time
+            val eventDate = eventCalendar.time
+            return ((curDate.time - eventDate.time).absoluteValue).toInt()
+        }
+
+        fun getTimeDiffMinutes(eventCalendar: Calendar): Int = (getTimeDiffMilliseconds(eventCalendar) / (60 * 1000))
+        fun getTimeDiffHours(eventCalendar: Calendar): Int = (getTimeDiffMinutes(eventCalendar) / 60)
+        fun getTimeDiffDays(eventCalendar: Calendar): Int = (getTimeDiffHours(eventCalendar) / 24)
+        fun getTimeDiffMonths(eventCalendar: Calendar): Int = (getTimeDiffDays(eventCalendar) / 30)
+        fun getTimeDiffYears(eventCalendar: Calendar): Int = (getTimeDiffMonths(eventCalendar) / 12)
 
         fun getResourceName(context: Context, @AnyRes iRes: Int): String
         {
@@ -1191,6 +1263,14 @@ class CB_AppFunc
         fun changeStatusBarColorTransparent(activity: Activity)
         {
             activity.window.statusBarColor = Color.TRANSPARENT
+        }
+        
+        fun restartApp(activity: Activity)
+        {
+            val intent = activity.packageManager.getLaunchIntentForPackage(activity.packageName)
+            val mainIntent = Intent.makeRestartActivityTask(intent!!.component)
+            activity.startActivity(mainIntent)
+            Runtime.getRuntime().exit(0)
         }
 
         // without data

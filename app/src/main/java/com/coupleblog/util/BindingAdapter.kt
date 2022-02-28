@@ -161,6 +161,7 @@ fun setProfileUserName(textView: TextView, userData: CB_User)
     textView.text = strName
 }
 
+
 @BindingAdapter("bind:joined_date")
 fun setJoinDate(textView: TextView, userData: CB_User)
 {
@@ -565,20 +566,25 @@ fun setIsNotEmpty(view: View, iSize: Int)
     view.visibility = if(iSize != 0) View.VISIBLE else View.GONE
 }
 
-@BindingAdapter("bind:mail_type")
-fun setCoupleRequestTextView(textView: TextView, iMailType: Int)
+@BindingAdapter("bind:request_mail")
+fun setCoupleRequestTextView(textView: TextView, tMail: CB_Mail)
 {
-    // already this user is a couple
-    if(!CB_AppFunc.curUser.strCoupleUid.isNullOrEmpty())
+    // already this user is a couple or not request mail
+    if(!CB_AppFunc.curUser.strCoupleUid.isNullOrEmpty() || tMail.iMailType != MAIL_TYPE.REQUEST_COUPLE.ordinal)
     {
         textView.visibility = View.GONE
         return
     }
 
-    if(iMailType == MAIL_TYPE.REQUEST_COUPLE.ordinal)
-        textView.visibility = View.VISIBLE
-    else
+    // expired
+    val diffDays = CB_AppFunc.getTimeDiffDays(tMail.strSendDate.toCalendar())
+    if(diffDays > 7)
+    {
         textView.visibility = View.GONE
+        return
+    }
+
+    textView.visibility = View.VISIBLE
 }
 
 @BindingAdapter("bind:page_idx")
