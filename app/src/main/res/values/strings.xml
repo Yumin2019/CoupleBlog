@@ -911,8 +911,12 @@ OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.            
     <string name="str_delete_account_desc">
     We\'ll delete your account on Couple Blog\n
     1. Your User Information\n
-    2. Your Post Information\n
+    2. Your Posts\n
     3. Your Mail Box\n
+    </string>
+    <string name="str_break_up_desc">
+    We\'ll delete your couple pair on Couple Blog\n
+    1. Couple Information\n(profile of couple, Days)
     </string>
     <string name="str_storage">Storage</string>
     <string name="str_gallery">Gallery</string>

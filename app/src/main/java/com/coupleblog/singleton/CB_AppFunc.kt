@@ -136,11 +136,11 @@ class CB_AppFunc
         fun getStroageRef() = Firebase.storage.reference
         fun getStorageRef(strPath: String) = Firebase.storage.getReference(strPath)
 
-        suspend fun deleteFileFromStorage(strPath: String, strTag: String, strSuccessMsg: String, strFailMsg: String)
+        fun deleteFileFromStorage(strPath: String, strTag: String, strSuccessMsg: String, strFailMsg: String)
         {
             getStorageRef(strPath).delete()
                 .addOnSuccessListener { Log.d(strTag, strSuccessMsg) }
-                .addOnFailureListener { e -> Log.e(strTag, strFailMsg + "e: $e") }.await()
+                .addOnFailureListener { e -> Log.e(strTag, strFailMsg + "e: $e") }
         }
 
         @SuppressLint("ConstantLocale")
@@ -426,11 +426,18 @@ class CB_AppFunc
 
                 override fun onDataChange(snapshot: DataSnapshot)
                 {
-                    _curUser = snapshot.getValue<CB_User>()!!
-                    CB_ViewModel.curUser.postValue(curUser)
+                    _curUser = snapshot.getValue<CB_User>()
+                    if(_curUser != null)
+                    {
+                        CB_ViewModel.curUser.postValue(curUser)
 
-                    // 커플이 된 경우를 확인하여 추가한다.
-                    addEventListenerToCoupleUserInfo()
+                        // 커플이 된 경우를 확인하여 추가한다.
+                        addEventListenerToCoupleUserInfo()
+                    }
+                    else
+                    {
+                        _curUser = CB_User()
+                    }
                 }
 
                 override fun onCancelled(error: DatabaseError)
@@ -486,14 +493,18 @@ class CB_AppFunc
             userInfoListener?.let { getUsersRoot().child(getUid()).removeEventListener(it) }
             userInfoListener = null
 
-            cleanUpCoupleUserListener()
+            cleanUpCoupleUserListener(false)
         }
 
-        fun cleanUpCoupleUserListener()
+        fun cleanUpCoupleUserListener(isClearData: Boolean = true)
         {
             coupleUserInfoListener?.let {  getUsersRoot().child(curUser.strCoupleUid!!).removeEventListener(it) }
             coupleUserInfoListener = null
-            _coupleUser = CB_User() // default value
+
+            if(isClearData)
+            {
+                _coupleUser = CB_User() // default value
+            }
         }
 
         fun loadDaysItem(nodeRef: DatabaseReference, strPath: String, list: ArrayList<CB_Days>, keyList: ArrayList<String>)
@@ -546,7 +557,7 @@ class CB_AppFunc
 
         suspend fun tryDeleteAccount() = networkScope.async {
 
-            Log.i(strTag, "tryDeleteAccount")
+            Log.i(strTag, "tryDeleteAccount userUid: ${getUid()}")
 
             // if couple, delete couple info
             if(!curUser.strCoupleKey.isNullOrEmpty())
@@ -559,7 +570,8 @@ class CB_AppFunc
             val userPostsRef = getUserPostsRoot().child(getUid())
             val postList: ArrayList<CB_Post> = arrayListOf()
             val keyList: ArrayList<String> = arrayListOf()
-            launch { getPostItems(getUserPostsRoot(), getUid(), postList, keyList) }.join()
+            getPostItems(getUserPostsRoot(), getUid(), postList, keyList)
+            delay(500)
 
             for(i in 0 until postList.size)
             {
@@ -574,15 +586,16 @@ class CB_AppFunc
                         "post image delete failed path:$strImagePath")
                 }
 
-                postRef.setValue(null).await()
-                commentRef.setValue(null).await()
+                postRef.setValue(null)
+                commentRef.setValue(null)
                 Log.d(strTag, "deleted post, postKey: ${keyList[i]}")
             }
 
             val userMailRef = getMailBoxRoot().child(getUid())
             val mailList: ArrayList<CB_Mail> = arrayListOf()
             keyList.clear()
-            launch { getMailItems(getMailBoxRoot(), getUid(), mailList, keyList) }.join()
+            getMailItems(getMailBoxRoot(), getUid(), mailList, keyList)
+            delay(500)
 
             for(i in 0 until mailList.size)
             {
@@ -596,7 +609,7 @@ class CB_AppFunc
                         "mail image delete failed path:$strImagePath")
                 }
 
-                mailRef.setValue(null).await()
+                mailRef.setValue(null)
                 Log.d(strTag, "deleted mail, mailKey: ${keyList[i]}")
             }
 
@@ -609,41 +622,10 @@ class CB_AppFunc
                     "user image delete failed path:$strImgPath")
             }
 
-            getUsersRoot().child(getUid()).setValue(null).await()
-            //FirebaseAuth.getInstance().currentUser.delete()
-        /* 유저 삭제
-         val credential = EmailAuthProvider.getCredential(curUser.email!!, strCurrentPassword)
-                val dialog = CB_LoadingDialog(context).apply { show() }
+            cleanUpListener()
+            getUsersRoot().child(getUid()).setValue(null)
+            FirebaseAuth.getInstance().currentUser?.delete()
 
-                curUser.reauthenticate(credential).addOnCompleteListener { task ->
-
-                    if(task.isSuccessful)
-                    {
-                        curUser.updatePassword(strNewPassword).addOnCompleteListener { task ->
-
-                            dialog.cancel()
-                            if(task.isSuccessful)
-                            {
-                                CB_SingleSystemMgr.showToast(R.string.str_password_change_success)
-                                cancel()
-                            }
-                            else
-                            {
-                                Log.e("PasswordChangeDialog", "error : ${task.exception}")
-                                CB_AppFunc.okDialog(context, context.getString(R.string.str_error),
-                                    getString(R.string.str_password_change_failed), R.drawable.error_icon, true)
-                            }
-                        }
-                    }
-                    else
-                    {
-                        dialog.cancel()
-                        Log.e("PasswordChangeDialog", "error : ${task.exception}")
-                        CB_AppFunc.okDialog(context, context.getString(R.string.str_error),
-                            getString(R.string.str_invalid_auth), R.drawable.error_icon, true)
-                    }
-
-         */
             return@async true
         }.await()
 
@@ -664,10 +646,9 @@ class CB_AppFunc
             val daysKeyList: ArrayList<String> = arrayListOf()
             val coupleRef = getCouplesRoot().child(strCoupleKey)
 
-            launch {
-                loadDaysItem(coupleRef, "future-event-list", daysList, daysKeyList)
-                loadDaysItem(coupleRef, "annual-event-list", daysList, daysKeyList)
-            }.join()
+            loadDaysItem(coupleRef, "future-event-list", daysList, daysKeyList)
+            loadDaysItem(coupleRef, "annual-event-list", daysList, daysKeyList)
+            delay(500)
 
             for(i in 0 until daysList.size) {
                 cancelWorker(application, daysKeyList[i])
@@ -675,18 +656,18 @@ class CB_AppFunc
             }
 
             Log.i(strTag, "cancel all of event")
-            coupleRef.setValue(null).await()
+            coupleRef.setValue(null)
 
             // root - users couple 정보를 정리한다.
-            cleanUpCoupleUserListener()
+            cleanUpCoupleUserListener(false)
 
-            curUser.strCoupleUid = null
-            curUser.strCoupleKey = null
-            coupleUser.strCoupleUid = null
-            coupleUser.strCoupleKey = null
+            curUser.strCoupleUid = ""
+            curUser.strCoupleKey = ""
+            coupleUser.strCoupleUid = ""
+            coupleUser.strCoupleKey = ""
 
-            getUsersRoot().child(strUid).setValue(curUser).await()
-            getUsersRoot().child(strCoupleUid).setValue(coupleUser).await()
+            getUsersRoot().child(strUid).setValue(curUser)
+            getUsersRoot().child(strCoupleUid).setValue(coupleUser)
             Log.i(strTag, "clear couple info")
 
             return@async true
@@ -694,7 +675,7 @@ class CB_AppFunc
 
         fun getTimeDiffMilliseconds(eventCalendar: Calendar): Int
         {
-            val curDate = CB_AppFunc.getCurCalendar().time
+            val curDate = getCurCalendar().time
             val eventDate = eventCalendar.time
             return ((curDate.time - eventDate.time).absoluteValue).toInt()
         }

@@ -24,6 +24,7 @@ class CB_SingleSystemMgr
         COMMENT_EDIT_DIALOG,
         EDIT_DIALOG,
         CHANGE_DIALOG,
+        WARN_BEHAVIOR_DIALOG,
         IMAGE,
         STICKER,
 

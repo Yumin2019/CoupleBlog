@@ -29,6 +29,7 @@ import com.google.firebase.ktx.Firebase
 import com.google.firebase.messaging.ktx.messaging
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
 
 enum class PAGE_TYPE
@@ -126,10 +127,9 @@ class CB_MainFragment : CB_BaseFragment()
             val daysKeyList: ArrayList<String> = arrayListOf()
             val coupleRef = CB_AppFunc.getCouplesRoot().child(CB_AppFunc.curUser.strCoupleKey!!)
             CB_AppFunc.networkScope.launch {
-                launch {
-                    CB_AppFunc.loadDaysItem(coupleRef, "future-event-list", daysList, daysKeyList)
-                    CB_AppFunc.loadDaysItem(coupleRef, "annual-event-list", daysList, daysKeyList)
-                }.join()
+                CB_AppFunc.loadDaysItem(coupleRef, "future-event-list", daysList, daysKeyList)
+                CB_AppFunc.loadDaysItem(coupleRef, "annual-event-list", daysList, daysKeyList)
+                delay(500)
 
                 val strToday = CB_AppFunc.getString(R.string.str_today)
                 for(i in 0 until daysList.size)
