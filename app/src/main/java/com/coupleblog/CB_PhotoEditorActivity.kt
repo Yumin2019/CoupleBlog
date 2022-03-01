@@ -22,6 +22,7 @@ import com.coupleblog.base.CB_BaseActivity
 import com.coupleblog.singleton.CB_AppFunc
 import com.coupleblog.singleton.CB_SingleSystemMgr
 import com.coupleblog.singleton.CB_ViewModel
+import com.google.android.gms.ads.AdRequest
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment
 import ja.burhanrashid52.photoeditor.*
 import ja.burhanrashid52.photoeditor.shape.ShapeBuilder
@@ -76,6 +77,12 @@ class CB_PhotoEditorActivity: CB_BaseActivity(CB_SingleSystemMgr.ACTIVITY_TYPE.P
 
             llmFilters = LinearLayoutManager(this@CB_PhotoEditorActivity, LinearLayoutManager.HORIZONTAL, false)
             filterViewAdapter = FilterViewAdapter(this@CB_PhotoEditorActivity)
+
+            if(!BuildConfig.DEBUG)
+                adView.adUnitId = getString(R.string.str_admob_banner_id)
+
+            val adRequest = AdRequest.Builder().build()
+            adView.loadAd(adRequest)
         }
 
         // bottom text view
@@ -114,6 +121,24 @@ class CB_PhotoEditorActivity: CB_BaseActivity(CB_SingleSystemMgr.ACTIVITY_TYPE.P
         {
             binding.photoEditorView.source.setBackgroundResource(R.color.white)
         }
+    }
+
+    override fun onPause()
+    {
+        binding.adView.pause()
+        super.onPause()
+    }
+
+    override fun onResume()
+    {
+        binding.adView.resume()
+        super.onResume()
+    }
+
+    override fun onDestroy()
+    {
+        binding.adView.destroy()
+        super.onDestroy()
     }
 
     fun undo() { mPhotoEditor.undo() }

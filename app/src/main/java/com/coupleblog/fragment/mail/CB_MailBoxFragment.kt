@@ -9,6 +9,10 @@ import com.coupleblog.R
 import com.coupleblog.adapter.CB_EmailAdapter
 import com.coupleblog.model.*
 import com.coupleblog.base.CB_BaseFragment
+import com.coupleblog.dialog.CB_ChangeDialog
+import com.coupleblog.dialog.CB_ItemListDialog
+import com.coupleblog.dialog.CB_WarnBehaviorDialog
+import com.coupleblog.dialog.DialogItem
 import com.coupleblog.fragment.MailboxBinding
 import com.coupleblog.singleton.CB_AppFunc
 import com.coupleblog.singleton.CB_SingleSystemMgr
@@ -75,7 +79,55 @@ class CB_MailBoxFragment: CB_BaseFragment()
         {
             R.id.action_account ->
             {
+                val listItem: ArrayList<DialogItem> = arrayListOf(
+                    DialogItem(getString(R.string.str_delete_account), R.drawable.error_icon,
+                        callback =
+                        {
+                            if(CB_SingleSystemMgr.isDialog(CB_SingleSystemMgr.DIALOG_TYPE.WARN_BEHAVIOR_DIALOG))
+                                return@DialogItem
 
+                            CB_WarnBehaviorDialog(requireActivity(), bCancelable = false, isAccount = true)
+                        })
+                )
+
+                if(!CB_AppFunc.curUser.strCoupleKey.isNullOrEmpty())
+                {
+                    listItem.add(
+                        DialogItem(getString(R.string.str_break_up), R.drawable.broken_heart,
+                        callback =
+                        {
+                            if(CB_SingleSystemMgr.isDialog(CB_SingleSystemMgr.DIALOG_TYPE.WARN_BEHAVIOR_DIALOG))
+                                return@DialogItem
+
+                            CB_WarnBehaviorDialog(requireActivity(), bCancelable = false, isAccount = false)
+                        })
+                    )
+                }
+
+                // email & password
+                listItem.add(
+                    DialogItem(getString(R.string.str_change_email), R.drawable.email_mark,
+                    callback =
+                    {
+                        if(CB_SingleSystemMgr.isDialog(CB_SingleSystemMgr.DIALOG_TYPE.CHANGE_DIALOG))
+                            return@DialogItem
+
+                        CB_ChangeDialog(requireActivity(), bCancelable = false, isPassword = false)
+                    })
+                )
+
+                listItem.add(
+                    DialogItem(getString(R.string.str_change_password), R.drawable.lock,
+                    callback =
+                    {
+                        if(CB_SingleSystemMgr.isDialog(CB_SingleSystemMgr.DIALOG_TYPE.CHANGE_DIALOG))
+                            return@DialogItem
+
+                        CB_ChangeDialog(requireActivity(), bCancelable = false, isPassword = true)
+                    })
+                )
+
+                CB_ItemListDialog(requireActivity(), getString(R.string.str_account), listItem, true)
             }
 
             R.id.action_developer ->

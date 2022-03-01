@@ -2,6 +2,7 @@ package com.coupleblog.singleton
 import androidx.lifecycle.ViewModel
 
 import android.graphics.Bitmap
+import android.os.Build
 import android.util.Log
 import androidx.lifecycle.MutableLiveData
 import androidx.recyclerview.widget.RecyclerView
@@ -24,6 +25,7 @@ class CB_ViewModel
         const val strTag = "ViewModel"
 
         var strVersion = MutableLiveData(BuildConfig.VERSION_NAME)
+        val isDebug = MutableLiveData(BuildConfig.DEBUG)
 
         // photoEditor Fragment
         var editorBitmap: Bitmap? = null

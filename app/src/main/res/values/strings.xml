@@ -834,6 +834,9 @@ OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.            
     <string name="str_days_item_title_desc">Yumin ♥ Jihae</string>
     <string name="str_days_exam">300 days</string>
 
+    <string name="str_admob_banner_id">ca-app-pub-6742614297266407/7657086441</string>
+    <string name="str_admob_banner_test_id">ca-app-pub-3940256099942544/6300978111</string>
+
     <!-- example texts -->
 
     <string name="app_name">Couple Blog</string>

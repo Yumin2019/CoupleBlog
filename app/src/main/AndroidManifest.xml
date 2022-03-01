@@ -16,6 +16,10 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.Coupleblog" >
 
+        <meta-data
+            android:name="com.google.android.gms.ads.APPLICATION_ID"
+            android:value="ca-app-pub-6742614297266407~2815823304"/>
+
         <receiver
             android:name=".widget.CB_DaysWidgetProvider"
             android:exported="true" >
@@ -40,19 +44,23 @@
 
         <activity
             android:name=".CB_PhotoEditorActivity"
+            android:hardwareAccelerated="true"
             android:screenOrientation="portrait" />
 
         <activity
             android:name=".widget.CB_DaysWidgetActivity"
             android:screenOrientation="portrait" />
 
+        <!-- unused -->
         <activity
             android:name=".a100photo.EditImageActivity"
             android:screenOrientation="portrait"
             android:theme="@android:style/Theme.Black.NoTitleBar.Fullscreen" />
+
         <activity
             android:name=".CB_MainActivity"
             android:exported="true"
+            android:hardwareAccelerated="true"
             android:screenOrientation="portrait"
             android:windowSoftInputMode="adjustPan" >
             <intent-filter>

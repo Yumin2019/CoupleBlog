@@ -19,6 +19,8 @@ import com.coupleblog.singleton.CB_SingleSystemMgr
 import com.coupleblog.singleton.CB_ViewModel
 import com.coupleblog.storage.CB_DownloadService
 import com.coupleblog.storage.CB_UploadService
+import com.google.android.gms.ads.AdRequest
+import com.google.android.gms.ads.MobileAds
 
 class CB_MainActivity : CB_BaseActivity(CB_SingleSystemMgr.ACTIVITY_TYPE.MAIN)
 {
@@ -33,6 +35,9 @@ class CB_MainActivity : CB_BaseActivity(CB_SingleSystemMgr.ACTIVITY_TYPE.MAIN)
             lifecycleOwner = this@CB_MainActivity
             activity       = this@CB_MainActivity
             viewModel      = CB_ViewModel.Companion
+
+            if(!BuildConfig.DEBUG)
+                adView.adUnitId = getString(R.string.str_admob_banner_id)
 
             setSupportActionBar(toolbar)
         }
@@ -77,6 +82,10 @@ class CB_MainActivity : CB_BaseActivity(CB_SingleSystemMgr.ACTIVITY_TYPE.MAIN)
         }
 
         // Init
+        MobileAds.initialize(this) {}
+        val adRequest = AdRequest.Builder().build()
+        binding.adView.loadAd(adRequest)
+
         CB_AppFunc.application = application
         findNavController(R.id.nav_host_fragment).setGraph(R.navigation.nav_graph)
     }
@@ -106,5 +115,23 @@ class CB_MainActivity : CB_BaseActivity(CB_SingleSystemMgr.ACTIVITY_TYPE.MAIN)
             else -> {}
         }
 
+    }
+
+    override fun onPause()
+    {
+        binding.adView.pause()
+        super.onPause()
+    }
+
+    override fun onResume()
+    {
+        binding.adView.resume()
+        super.onResume()
+    }
+
+    override fun onDestroy()
+    {
+        binding.adView.destroy()
+        super.onDestroy()
     }
 }
