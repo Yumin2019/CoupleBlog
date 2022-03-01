@@ -88,8 +88,6 @@ class CB_CommentAdapter(private val fragment: CB_PostDetailFragment,
             override fun onCancelled(error: DatabaseError)
             {
                 Log.e(strTag, "onCancelled:comment list")
-                CB_AppFunc.okDialog(fragment.requireActivity(), R.string.str_error,
-                    R.string.str_comment_list_load_failed, R.drawable.error_icon, true)
             }
         }
 

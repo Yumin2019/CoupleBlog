@@ -49,6 +49,12 @@ class CB_DeveloperFragment : CB_BaseFragment()
         findNavController().popBackStack()
     }
 
+    fun instaLinkButton()
+    {
+        val strUrl = getString(R.string.str_insta_link)
+        startActivity(Intent(Intent.ACTION_VIEW, Uri.parse(strUrl)))
+    }
+
     fun githubLinkButton()
     {
         val strUrl = getString(R.string.str_couple_blog_github_link)

@@ -4,8 +4,15 @@
     xmlns:bind="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools">
 
-    <data class="com.coupleblog.dialog.PasswordChangeBinding">
+    <data class="com.coupleblog.dialog.ChangeBinding">
 
+        <variable
+            name="dialog"
+            type="com.coupleblog.dialog.CB_ChangeDialog" />
+
+        <variable
+            name="isPassword"
+            type="boolean" />
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout
@@ -73,7 +80,8 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="@dimen/margin_24dp"
-                    android:text="@string/str_new_password"
+                    android:text="@{isPassword ? @string/str_new_password : @string/str_new_email}"
+                    tools:text="@string/str_new_password"
                     app:layout_constraintStart_toStartOf="@+id/current_password_layout"
                     app:layout_constraintTop_toBottomOf="@+id/current_password_layout" />
 
@@ -81,7 +89,8 @@
                     android:id="@+id/new_password_layout"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
-                    app:endIconMode="password_toggle"
+                    tools:endIconMode="password_toggle"
+                    bind:password_layout_or_not="@{isPassword}"
                     app:errorEnabled="true"
                     app:hintEnabled="true"
                     app:layout_constraintEnd_toEndOf="@+id/cancel_button"
@@ -94,8 +103,9 @@
                         android:id="@+id/new_password_edit_text"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:hint="@string/str_input_password"
-                        android:inputType="textPassword" />
+                        tools:hint="@string/str_input_password"
+                        android:hint="@{isPassword ? @string/str_input_password : @string/str_input_email}"
+                        bind:password_type_or_email="@{isPassword}"/>
 
                 </com.google.android.material.textfield.TextInputLayout>
 
@@ -105,7 +115,8 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="@dimen/margin_24dp"
-                    android:text="@string/str_new_password"
+                    tools:text="@string/str_new_password"
+                    android:text="@{isPassword ? @string/str_new_password : @string/str_new_email}"
                     app:layout_constraintStart_toStartOf="@+id/current_password_layout"
                     app:layout_constraintTop_toBottomOf="@+id/new_password_layout" />
 
@@ -113,7 +124,8 @@
                     android:id="@+id/new_password_again_layout"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
-                    app:endIconMode="password_toggle"
+                    tools:endIconMode="password_toggle"
+                    bind:password_layout_or_not="@{isPassword}"
                     app:errorEnabled="true"
                     app:hintEnabled="true"
                     app:layout_constraintEnd_toEndOf="@+id/cancel_button"
@@ -125,8 +137,9 @@
                         android:id="@+id/new_password_again_edit_text"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:hint="@string/str_input_password_again"
-                        android:inputType="textPassword" />
+                        tools:hint="@string/str_input_password_again"
+                        android:hint="@{isPassword ? @string/str_input_password_again : @string/str_input_email_again}"
+                        bind:password_type_or_email="@{isPassword}" />
 
                 </com.google.android.material.textfield.TextInputLayout>
 
@@ -136,15 +149,15 @@
                     android:layout_width="0dp"
                     android:layout_height="@dimen/button_height"
                     android:layout_marginStart="@dimen/normal_margin"
-                    android:layout_marginTop="@dimen/normal_margin"
+                    android:layout_marginTop="@dimen/margin_64dp"
                     android:layout_marginEnd="4dp"
                     android:layout_marginBottom="@dimen/margin_16dp"
                     android:backgroundTint="@color/purple"
+                    android:onClick="@{()->dialog.changeButton()}"
                     android:text="@string/str_change"
                     android:textSize="@dimen/normal_text_size"
                     app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintEnd_toStartOf="@+id/cancel_button"
-                    app:layout_constraintHorizontal_bias="0.5"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toBottomOf="@+id/new_password_again_layout"
                     bind:rippleColor="@color/ripple_purple" />
@@ -155,10 +168,11 @@
                     android:layout_width="0dp"
                     android:layout_height="@dimen/button_height"
                     android:layout_marginStart="4dp"
-                    android:layout_marginTop="@dimen/normal_margin"
+                    android:layout_marginTop="@dimen/margin_64dp"
                     android:layout_marginEnd="@dimen/normal_margin"
                     android:layout_marginBottom="@dimen/margin_16dp"
                     android:backgroundTint="@color/grey"
+                    android:onClick="@{()->dialog.cancel()}"
                     android:text="@string/str_cancel"
                     android:textSize="@dimen/normal_text_size"
                     app:layout_constraintBottom_toBottomOf="parent"

@@ -544,6 +544,9 @@ Couple blog 은(는) 정보주체의 이용정보를 저장하고 수시로 불�
     </string>
 
     <string name="str_opensource_license_text" translatable="false">
+Freepik(Images)                                                                 \n
+https://www.flaticon.com/authors/freepik                                        \n
+                                                                                \n
 Kotlin                                                                          \n
 https://github.com/JetBrains/kotlin                                             \n
 Apache-2.0 License                                                              \n
@@ -797,7 +800,7 @@ OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.            
         I really wanted to release it on PlayStore.                                                  \n
         I\'ll be happy if this app is helpful to someone who has been loving with long distance.     \n
                                                                                                      \n
-        I hope that this app helps me connect with you, my girl PN                                   \n
+        I hope that this app helps me connect with you, my girl Poonam                               \n
                                                                                                      \n
         if you guys happen to have something to tell, always open to send mails                      \n
         My Email: yumingames@gmail.com                                                               \n
@@ -815,6 +818,8 @@ OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.            
     <string name="str_days_notification">%s made a days item.</string>
     <string name="str_comment_notification">%s wrote a comment.</string>
     <string name="str_couple_blog_github">Couple Blog github</string>
+    <string name="str_insta_link">https://www.instagram.com/poonyandyumin/</string>
+    <string name="str_insta">Couple Blog instagram</string>
     <string name="str_couple_blog_github_link">https://github.com/Yumin2019/CoupleBlog</string>
     <string name="str_developer_blog">Developer Blog</string>
     <string name="str_developer_blog_link">https://blog.naver.com/lmj3322</string>
@@ -877,6 +882,7 @@ OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.            
     <string name="str_opensource_license">Open Source</string>
     <string name="str_account">Account</string>
     <string name="str_change_password">Change Password</string>
+    <string name="str_change_email">Change email</string>
     <string name="str_developer">Developer</string>
     <string name="str_recipients">Recipients</string>
     <string name="str_add_image">Add image</string>
@@ -887,6 +893,8 @@ OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.            
     <string name="str_current_password">Current Password</string>
     <string name="str_new_password">New Password</string>
     <string name="str_new_password_again">New Password again</string>
+    <string name="str_new_email">New Email</string>
+    <string name="str_new_email_again">New Email again</string>
     <string name="str_password">Password</string>
     <string name="str_password_again">Password again</string>
     <string name="str_to">To</string>
@@ -900,6 +908,12 @@ OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.            
     <string name="str_camera">Camera</string>
     <string name="str_break_up">Break up</string>
     <string name="str_delete_account">Delete account</string>
+    <string name="str_delete_account_desc">
+    We\'ll delete your account on Couple Blog\n
+    1. Your User Information\n
+    2. Your Post Information\n
+    3. Your Mail Box\n
+    </string>
     <string name="str_storage">Storage</string>
     <string name="str_gallery">Gallery</string>
     <string name="str_change_profile_image">Change profile image</string>
@@ -961,6 +975,7 @@ OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.            
     <string name="str_personal_info_policy">Personal information processing policy</string>
     <string name="str_login_again">Please restart couple blog</string>
     <string name="str_input_email">Please input your email</string>
+    <string name="str_input_email_again">Please input your email again</string>
     <string name="str_input_password">Please input your password</string>
     <string name="str_input_current_password">Please input your current password</string>
     <string name="str_input_password_again">Please input your password again</string>
@@ -983,6 +998,7 @@ OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.            
     <string name="str_user_image">User Image</string>
     <string name="str_comment_hint">Write a comment…</string>
     <string name="str_password_again_error">Password isn\'t same</string>
+    <string name="str_email_again_error">Email isn\'n same</string>
     <string name="str_invalid_format_error">It\'s invalid format</string>
     <string name="str_invalid_date_error">It\'s invalid date</string>
     <string name="str_sign_in_failed">Failed to sign in</string>
@@ -990,6 +1006,7 @@ OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.            
     <string name="str_invalid_auth">Invalid authentication</string>
     <string name="str_forgot_password">Forgot password</string>
     <string name="str_password_change_failed">Failed to change password</string>
+    <string name="str_email_change_failed">Failed to change email</string>
     <string name="str_failed_to_upload_image">Failed to upload image</string>
     <string name="str_failed_to_delete_account">Failed to delete account</string>
     <string name="str_failed_to_delete_couple">Failed to delete couple</string>
@@ -1026,6 +1043,7 @@ OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.            
     <string name="str_done">Done</string>
     <string name="str_password_reset_mail_success">Email sent.</string>
     <string name="str_password_change_success">Password changed.</string>
+    <string name="str_email_change_success">Email changed.</string>
     <string name="str_auto_login_success">Auto login was successful.</string>
     <string name="str_send_mail_success">Sending mail was successful.</string>
     <string name="str_mail_deleted">You deleted this mail.</string>

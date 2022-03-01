@@ -1,7 +1,9 @@
 package com.coupleblog.util
 
 import android.graphics.Bitmap
+import android.text.InputType
 import android.view.View
+import android.view.inputmethod.EditorInfo
 import android.widget.ArrayAdapter
 import android.widget.AutoCompleteTextView
 import android.widget.ImageView
@@ -18,6 +20,8 @@ import com.coupleblog.singleton.CB_AppFunc
 import com.coupleblog.singleton.CB_AppFunc.Companion.toCalendar
 import com.coupleblog.singleton.CB_ViewModel
 import com.google.android.material.floatingactionbutton.FloatingActionButton
+import com.google.android.material.textfield.TextInputEditText
+import com.google.android.material.textfield.TextInputLayout
 import com.google.firebase.database.DataSnapshot
 import com.google.firebase.database.DatabaseError
 import com.google.firebase.database.ValueEventListener
@@ -564,6 +568,22 @@ fun setIsEmpty(view: View, iSize: Int)
 fun setIsNotEmpty(view: View, iSize: Int)
 {
     view.visibility = if(iSize != 0) View.VISIBLE else View.GONE
+}
+
+@BindingAdapter("bind:password_type_or_email")
+fun setPasswordInputTypeOrEmail(editText: TextInputEditText, isPassword: Boolean)
+{
+    editText.inputType = if(isPassword) InputType.TYPE_CLASS_TEXT or InputType.TYPE_TEXT_VARIATION_PASSWORD
+                         else           InputType.TYPE_CLASS_TEXT or InputType.TYPE_TEXT_VARIATION_EMAIL_ADDRESS
+}
+
+@BindingAdapter("bind:password_layout_or_not")
+fun setPasswordLayoutOrNot(inputLayout: TextInputLayout, isPassword: Boolean)
+{
+    inputLayout.endIconMode = if(isPassword) TextInputLayout.END_ICON_PASSWORD_TOGGLE
+                              else           TextInputLayout.END_ICON_NONE
+
+    inputLayout.error = null
 }
 
 @BindingAdapter("bind:request_mail")

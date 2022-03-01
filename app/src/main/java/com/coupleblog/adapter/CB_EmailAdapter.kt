@@ -93,8 +93,6 @@ class CB_EmailAdapter(private val fragment: CB_MailBoxFragment,
             override fun onCancelled(error: DatabaseError)
             {
                 Log.e(strTag, "onCancelled:mail list")
-                CB_AppFunc.okDialog(fragment.requireActivity(), R.string.str_error,
-                    R.string.str_comment_list_load_failed, R.drawable.error_icon, true)
             }
         }
 

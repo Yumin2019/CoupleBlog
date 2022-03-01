@@ -23,7 +23,7 @@ class CB_SingleSystemMgr
         ITEM_LIST_DIALOG,
         COMMENT_EDIT_DIALOG,
         EDIT_DIALOG,
-        PASSWORD_CHANGE,
+        CHANGE_DIALOG,
         IMAGE,
         STICKER,
 

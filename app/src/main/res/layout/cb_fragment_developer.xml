@@ -51,7 +51,7 @@
                     style="@style/subtitle_text_style"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginTop="@dimen/margin_64dp"
+                    android:layout_marginTop="@dimen/margin_32dp"
                     android:text="@{viewModel.strVersion}"
                     app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintEnd_toEndOf="parent"
@@ -82,16 +82,44 @@
                     app:layout_constraintTop_toBottomOf="@+id/couple_blog_image_view" />
 
                 <TextView
+                    android:id="@+id/insta_link"
+                    style="@style/normal_text_style"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/margin_32dp"
+                    android:text="@string/str_insta"
+                    android:textSize="@dimen/text_size_16sp"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/developer_text" />
+
+                <TextView
+                    android:id="@+id/insta_link_text"
+                    style="@style/normal_text_style"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:background="?android:attr/selectableItemBackground"
+                    android:onClick="@{()->fragment.instaLinkButton()}"
+                    android:text="@string/str_insta_link"
+                    android:textColor="@color/blue"
+                    android:textSize="@dimen/text_size_16sp"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintHorizontal_bias="0.492"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/insta_link" />
+
+                <TextView
                     android:id="@+id/github_text"
                     style="@style/normal_text_style"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/margin_16dp"
                     android:text="@string/str_couple_blog_github"
                     android:textSize="@dimen/text_size_16sp"
                     app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintHorizontal_bias="0.495"
+                    app:layout_constraintHorizontal_bias="0.498"
                     app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@+id/developer_text" />
+                    app:layout_constraintTop_toBottomOf="@+id/insta_link_text" />
 
                 <TextView
                     android:id="@+id/github_link_text"

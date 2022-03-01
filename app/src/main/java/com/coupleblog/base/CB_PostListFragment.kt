@@ -7,12 +7,10 @@ import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.coupleblog.adapter.CB_PostAdapter
 import com.coupleblog.R
-import com.coupleblog.dialog.CB_PasswordChangeDialog
 import com.coupleblog.fragment.AllPostsBinding
 import com.coupleblog.fragment.post.CB_PostDetailFragment
 import com.coupleblog.model.CB_Post
 import com.coupleblog.singleton.CB_AppFunc
-import com.coupleblog.singleton.CB_SingleSystemMgr
 import com.firebase.ui.database.FirebaseRecyclerOptions
 import com.google.firebase.database.Query
 
