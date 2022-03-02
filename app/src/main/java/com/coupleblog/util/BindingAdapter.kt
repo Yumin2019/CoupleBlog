@@ -3,7 +3,6 @@ package com.coupleblog.util
 import android.graphics.Bitmap
 import android.text.InputType
 import android.view.View
-import android.view.inputmethod.EditorInfo
 import android.widget.ArrayAdapter
 import android.widget.AutoCompleteTextView
 import android.widget.ImageView

@@ -290,7 +290,7 @@
                     android:layout_height="wrap_content"
                     android:layout_marginTop="@dimen/normal_margin"
                     android:textAlignment="center"
-                    android:textColor="@color/purple"
+                    android:textColor="@color/purple_text"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="@+id/region_text_view"
                     app:layout_constraintTop_toBottomOf="@+id/region_text_view"

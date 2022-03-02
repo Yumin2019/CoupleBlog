@@ -58,7 +58,7 @@
     </style>
 
     <style name="mtrl_button_style">
-        <item name="android:textColor">@color/white</item>
+        <item name="android:textColor">@color/mtrl_button_color</item>
         <item name="android:textSize">@dimen/button_text_size</item>
         <item name="android:fontFamily">@font/lora_regular</item>
         <item name="android:insetTop">0dp</item>
@@ -69,7 +69,16 @@
     <style name="card_view_style">
         <item name="cardPreventCornerOverlap">true</item>
         <item name="cardElevation">6dp</item>
-        <item name="cardBackgroundColor">@color/white</item>
+        <item name="cardBackgroundColor">@color/card_view_background</item>
+        <item name="layout_constraintWidth_max">@dimen/button_max_length</item>
+        <item name="android:layout_margin">@dimen/normal_margin</item>
+        <item name="android:clipToPadding">true</item>
+    </style>
+
+    <style name="parent_card_view_style">
+        <item name="cardPreventCornerOverlap">true</item>
+        <item name="cardElevation">6dp</item>
+        <item name="cardBackgroundColor">@color/parent_card_view_background</item>
         <item name="layout_constraintWidth_max">@dimen/button_max_length</item>
         <item name="android:layout_margin">@dimen/normal_margin</item>
         <item name="android:clipToPadding">true</item>
@@ -150,7 +159,7 @@
     </style>
 
     <style name="toolbarTextStyle" parent="TextAppearance.Widget.AppCompat.Toolbar.Title">
-        <item name="android:textColor">@color/white</item>
+        <item name="android:textColor">@color/toolbar_title_text_color</item>
         <item name="android:textSize">@dimen/subtitle_text_size</item>
         <item name="android:fontFamily">@font/lora_regular</item>
     </style>

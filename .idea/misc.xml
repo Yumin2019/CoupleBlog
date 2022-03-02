@@ -3,17 +3,43 @@
   <component name="DesignSurface">
     <option name="filePathToZoomLevelMap">
       <map>
+        <entry key="..\:/Users/kym/Documents/CoupleBlog/app/src/main/res/drawable-night/card_background_rect.xml" value="0.38229166666666664" />
+        <entry key="..\:/Users/kym/Documents/CoupleBlog/app/src/main/res/drawable-night/toolbar_dropshadow.xml" value="0.38229166666666664" />
+        <entry key="..\:/Users/kym/Documents/CoupleBlog/app/src/main/res/drawable/card_background.xml" value="0.38229166666666664" />
         <entry key="..\:/Users/kym/Documents/CoupleBlog/app/src/main/res/drawable/ic_baseline_favorite_border_24.xml" value="0.22083333333333333" />
         <entry key="..\:/Users/kym/Documents/CoupleBlog/app/src/main/res/drawable/ic_baseline_list_24.xml" value="0.30925925925925923" />
         <entry key="..\:/Users/kym/Documents/CoupleBlog/app/src/main/res/drawable/ic_baseline_mail_24.xml" value="0.30925925925925923" />
         <entry key="..\:/Users/kym/Documents/CoupleBlog/app/src/main/res/drawable/ic_baseline_mark_email_read_24.xml" value="0.30925925925925923" />
         <entry key="..\:/Users/kym/Documents/CoupleBlog/app/src/main/res/drawable/rounded_border.xml" value="0.30925925925925923" />
+        <entry key="..\:/Users/kym/Documents/CoupleBlog/app/src/main/res/drawable/toolbar_dropshadow.xml" value="0.38229166666666664" />
         <entry key="..\:/Users/kym/Documents/CoupleBlog/app/src/main/res/layout/activity_cb_main.xml" value="0.36614583333333334" />
+        <entry key="..\:/Users/kym/Documents/CoupleBlog/app/src/main/res/layout/activity_photo_editor.xml" value="0.36614583333333334" />
+        <entry key="..\:/Users/kym/Documents/CoupleBlog/app/src/main/res/layout/cb_comment_item.xml" value="0.36614583333333334" />
+        <entry key="..\:/Users/kym/Documents/CoupleBlog/app/src/main/res/layout/cb_days_item.xml" value="0.2" />
+        <entry key="..\:/Users/kym/Documents/CoupleBlog/app/src/main/res/layout/cb_days_widget.xml" value="0.36614583333333334" />
+        <entry key="..\:/Users/kym/Documents/CoupleBlog/app/src/main/res/layout/cb_fragment_developer.xml" value="0.36614583333333334" />
+        <entry key="..\:/Users/kym/Documents/CoupleBlog/app/src/main/res/layout/cb_list_dialog_item.xml" value="0.36614583333333334" />
+        <entry key="..\:/Users/kym/Documents/CoupleBlog/app/src/main/res/layout/cb_mail_item.xml" value="0.36614583333333334" />
+        <entry key="..\:/Users/kym/Documents/CoupleBlog/app/src/main/res/layout/cb_post_item.xml" value="0.36614583333333334" />
+        <entry key="..\:/Users/kym/Documents/CoupleBlog/app/src/main/res/layout/cb_spinner_item.xml" value="0.36614583333333334" />
+        <entry key="..\:/Users/kym/Documents/CoupleBlog/app/src/main/res/layout/dialog_cb_change.xml" value="0.36614583333333334" />
+        <entry key="..\:/Users/kym/Documents/CoupleBlog/app/src/main/res/layout/dialog_cb_warn_behavior.xml" value="0.36614583333333334" />
+        <entry key="..\:/Users/kym/Documents/CoupleBlog/app/src/main/res/layout/fragment_cb_days.xml" value="0.36614583333333334" />
+        <entry key="..\:/Users/kym/Documents/CoupleBlog/app/src/main/res/layout/fragment_cb_days_detail.xml" value="0.36614583333333334" />
         <entry key="..\:/Users/kym/Documents/CoupleBlog/app/src/main/res/layout/fragment_cb_edit_profile.xml" value="0.2" />
+        <entry key="..\:/Users/kym/Documents/CoupleBlog/app/src/main/res/layout/fragment_cb_info.xml" value="0.36614583333333334" />
+        <entry key="..\:/Users/kym/Documents/CoupleBlog/app/src/main/res/layout/fragment_cb_login.xml" value="0.25" />
         <entry key="..\:/Users/kym/Documents/CoupleBlog/app/src/main/res/layout/fragment_cb_mail_detail.xml" value="0.36614583333333334" />
+        <entry key="..\:/Users/kym/Documents/CoupleBlog/app/src/main/res/layout/fragment_cb_main.xml" value="0.36614583333333334" />
+        <entry key="..\:/Users/kym/Documents/CoupleBlog/app/src/main/res/layout/fragment_cb_new_days.xml" value="0.2" />
+        <entry key="..\:/Users/kym/Documents/CoupleBlog/app/src/main/res/layout/fragment_cb_new_mail.xml" value="0.25" />
+        <entry key="..\:/Users/kym/Documents/CoupleBlog/app/src/main/res/layout/fragment_cb_new_post.xml" value="0.2" />
+        <entry key="..\:/Users/kym/Documents/CoupleBlog/app/src/main/res/layout/fragment_cb_permission.xml" value="0.36614583333333334" />
         <entry key="..\:/Users/kym/Documents/CoupleBlog/app/src/main/res/layout/fragment_cb_post_detail.xml" value="0.2" />
         <entry key="..\:/Users/kym/Documents/CoupleBlog/app/src/main/res/layout/fragment_cb_profile.xml" value="0.33" />
-        <entry key="..\:/Users/kym/Documents/CoupleBlog/app/src/main/res/layout/fragment_cb_profile_info.xml" value="0.25" />
+        <entry key="..\:/Users/kym/Documents/CoupleBlog/app/src/main/res/layout/fragment_cb_profile_info.xml" value="0.33" />
+        <entry key="..\:/Users/kym/Documents/CoupleBlog/app/src/main/res/layout/fragment_cb_register.xml" value="0.36614583333333334" />
+        <entry key="..\:/Users/kym/Documents/CoupleBlog/app/src/main/res/menu/menu_mail_box.xml" value="0.36614583333333334" />
         <entry key="..\:/Users/lmj33/CoupleBlog/app/src/main/res/drawable-v21/app_widget_background.xml" value="0.26979166666666665" />
         <entry key="..\:/Users/lmj33/CoupleBlog/app/src/main/res/drawable-v21/app_widget_inner_view_background.xml" value="0.26979166666666665" />
         <entry key="..\:/Users/lmj33/CoupleBlog/app/src/main/res/drawable-v21/drawable.xml" value="0.38229166666666664" />

@@ -111,7 +111,7 @@
                 app:layout_constraintStart_toEndOf="@+id/heart_image_view"
                 app:layout_constraintTop_toTopOf="parent"
                 tools:textColor="@color/grey"
-                android:textColor="@{mailData.BRead ? @color/grey : @color/blue}"
+                android:textColor="@{mailData.BRead ? @color/grey : @color/link_color}"
                 tools:text="How to love you"
                 />
 

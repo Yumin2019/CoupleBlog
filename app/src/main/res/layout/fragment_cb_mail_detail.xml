@@ -163,7 +163,7 @@
                     android:background="?android:attr/selectableItemBackground"
                     android:onClick="@{()->fragment.coupleRequestButton()}"
                     android:text="@string/str_couple_request_mail"
-                    android:textColor="@color/blue"
+                    android:textColor="@color/link_color"
                     app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"

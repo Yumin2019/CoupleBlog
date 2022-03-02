@@ -18,13 +18,13 @@
     <color name="teal_700">#FF018786</color>
     <color name="mtrl_button_color">#FFFFFFFF</color>
     <color name="toolbar_title_text_color">#FFFFFFFF</color>
-    <color name="tab_selected_text_color">@color/white</color>
-    <color name="tab_indicator_color">@color/white</color>
-    <color name="card_view_background">@color/white</color>
-    <color name="parent_card_view_background">@color/white</color>
+    <color name="tab_selected_text_color">#FFFFFFFF</color>
+    <color name="tab_indicator_color">#FFFFFFFF</color>
+    <color name="card_view_background">#272727</color>
+    <color name="parent_card_view_background">#FF000000</color>
 
-    <color name="black">#FF000000</color>
-    <color name="white">#FFFFFFFF</color>
+    <color name="black">#FFFFFFFF</color>
+    <color name="white">#FF000000</color>
     <color name="darker_white">#CCCCCC</color>
     <color name="grey">#AAAAAA</color>
     <color name="brighter_grey">#D5D5D5</color>
@@ -35,9 +35,9 @@
     <color name="ripple_purple">#3B008F</color>
     <color name="purple">#995FFD</color>
     <color name="light_purple">#B388FF</color>
-    <color name="purple_text">@color/purple</color>
+    <color name="purple_text">#A97AFA</color>
 
-    <color name="link_color">#2979FF</color>
+    <color name="link_color">#FFAF29</color>
     <color name="blue">#2979FF</color>
     <color name="red">#F50057</color>
     <color name="green">#46AC4B</color>

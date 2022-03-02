@@ -40,7 +40,7 @@
                     style="@style/post_title_text_view"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:textColor="@color/purple"
+                    android:textColor="@color/purple_text"
                     android:layout_marginStart="@dimen/margin_16dp"
                     android:background="?android:attr/selectableItemBackground"
                     android:onClick="@{()->fragment.showEditDialog(fragment.NAME)}"
@@ -121,7 +121,7 @@
                     bind:age="@{viewModel.curUser}"
                     android:textSize="@dimen/subtitle_text_size"
                     tools:text="@string/str_user_age_exam"
-                    tools:textColor="@color/blue" />
+                    tools:textColor="@color/link_color" />
 
                 <View
                     android:id="@+id/divider1"
@@ -135,7 +135,7 @@
                     android:id="@+id/birth_text_view"
                     style="@style/post_title_text_view"
                     android:onClick="@{()->fragment.birthDateButton()}"
-                    android:textColor="@color/purple"
+                    android:textColor="@color/purple_text"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginStart="@dimen/margin_16dp"
@@ -164,7 +164,7 @@
                     android:id="@+id/region_text_view"
                     style="@style/post_title_text_view"
                     android:layout_width="0dp"
-                    android:textColor="@color/purple"
+                    android:textColor="@color/purple_text"
                     android:onClick="@{()->fragment.showEditDialog(fragment.REGION)}"
                     android:background="?android:attr/selectableItemBackground"
                     android:layout_height="wrap_content"
@@ -201,7 +201,7 @@
                 <TextView
                     android:id="@+id/introduction_text_view"
                     style="@style/post_title_text_view"
-                    android:textColor="@color/purple"
+                    android:textColor="@color/purple_text"
                     android:background="?android:attr/selectableItemBackground"
                     android:onClick="@{()->fragment.showEditDialog(fragment.INTRODUCTION)}"
                     android:layout_width="0dp"
@@ -247,7 +247,7 @@
                     android:background="?android:attr/selectableItemBackground"
                     android:text="@string/str_education"
                     android:textAlignment="viewStart"
-                    android:textColor="@color/purple"
+                    android:textColor="@color/purple_text"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toBottomOf="@+id/divider3" />
 
@@ -275,7 +275,7 @@
                     android:onClick="@{()->fragment.showEditDialog(fragment.CAREER)}"
                     android:background="?android:attr/selectableItemBackground"
                     android:text="@string/str_career"
-                    android:textColor="@color/purple"
+                    android:textColor="@color/purple_text"
                     android:textAlignment="viewStart"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toBottomOf="@+id/education_value_text_view" />
@@ -304,7 +304,7 @@
                     android:background="?android:attr/selectableItemBackground"
                     android:text="@string/str_phone_number"
                     android:textAlignment="viewStart"
-                    android:textColor="@color/purple"
+                    android:textColor="@color/purple_text"
                     app:layout_constraintStart_toStartOf="@+id/career_text_view"
                     app:layout_constraintTop_toBottomOf="@+id/career_value_text_view" />
 
@@ -340,7 +340,7 @@
                     android:background="?android:attr/selectableItemBackground"
                     android:text="@string/str_favorites"
                     android:textAlignment="viewStart"
-                    android:textColor="@color/purple"
+                    android:textColor="@color/purple_text"
                     app:layout_constraintStart_toStartOf="@+id/career_text_view"
                     app:layout_constraintTop_toBottomOf="@+id/divider4" />
 
@@ -365,7 +365,7 @@
                     android:layout_height="wrap_content"
                     android:layout_marginTop="@dimen/margin_16dp"
                     android:text="@string/str_dislikes"
-                    android:textColor="@color/purple"
+                    android:textColor="@color/purple_text"
                     android:background="?android:attr/selectableItemBackground"
                     android:onClick="@{()->fragment.showEditDialog(fragment.DISLIKES)}"
                     android:textAlignment="viewStart"

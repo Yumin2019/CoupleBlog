@@ -63,7 +63,7 @@
                 android:layout_marginStart="@dimen/margin_16dp"
                 android:text="@string/str_camera"
                 android:textAlignment="viewStart"
-                android:textColor="@color/purple"
+                android:textColor="@color/purple_text"
                 app:layout_constraintStart_toEndOf="@+id/camera_image_view"
                 app:layout_constraintTop_toTopOf="parent" />
 
@@ -106,7 +106,7 @@
                 android:layout_marginStart="@dimen/margin_16dp"
                 android:text="@string/str_storage"
                 android:textAlignment="viewStart"
-                android:textColor="@color/purple"
+                android:textColor="@color/purple_text"
                 app:layout_constraintStart_toEndOf="@+id/storage_image_view"
                 app:layout_constraintTop_toTopOf="parent" />
 
