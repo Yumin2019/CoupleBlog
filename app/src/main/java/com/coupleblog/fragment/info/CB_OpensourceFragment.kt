@@ -24,6 +24,8 @@ class CB_OpensourceFragment : CB_BaseFragment()
             lifecycleOwner  = viewLifecycleOwner
             strTitle = getString(R.string.str_opensource_license)
             strText = getString(R.string.str_opensource_license_text)
+
+            parentLayout.fitsSystemWindows = true
         }
         return binding.root
     }

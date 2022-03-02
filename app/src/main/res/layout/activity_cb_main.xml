@@ -28,8 +28,9 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content">
 
-            <androidx.appcompat.widget.Toolbar
+            <com.google.android.material.appbar.MaterialToolbar
                 android:id="@+id/toolbar"
+                android:theme="@style/App.ToolbarStyle"
                 android:layout_width="match_parent"
                 android:layout_height="?attr/actionBarSize"
                 android:background="?attr/colorPrimary" />
@@ -46,7 +47,7 @@
             android:onClick="@{()->activity.floatingButton()}"
             android:src="@drawable/ic_add"
             app:maxImageSize="35dp"
-            app:tint="@color/white"
+            app:tint="@color/static_white"
             bind:page_idx="@{viewModel.IPageType}"
             bind:visibility="@{viewModel.bAddButton}"
             tools:visibility="visible" />

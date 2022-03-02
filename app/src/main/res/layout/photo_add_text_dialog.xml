@@ -18,7 +18,7 @@
         android:padding="10dp"
         android:text="Done"
         android:textAllCaps="false"
-        android:textColor="@color/white"
+        android:textColor="@color/static_white"
         android:textSize="15sp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toTopOf="parent" />

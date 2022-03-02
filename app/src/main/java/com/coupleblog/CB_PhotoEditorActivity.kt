@@ -1,6 +1,7 @@
 package com.coupleblog
 
 import android.graphics.Bitmap
+import android.graphics.Color
 import android.graphics.Typeface
 import android.os.Bundle
 import android.util.Log
@@ -84,6 +85,8 @@ class CB_PhotoEditorActivity: CB_BaseActivity(CB_SingleSystemMgr.ACTIVITY_TYPE.P
             val adRequest = AdRequest.Builder().build()
             adView.loadAd(adRequest)
         }
+
+        window.statusBarColor = Color.TRANSPARENT
 
         // bottom text view
         CB_ViewModel.strCurTool.postValue(getString(R.string.app_name))

@@ -58,7 +58,7 @@
     </style>
 
     <style name="mtrl_button_style">
-        <item name="android:textColor">@color/mtrl_button_color</item>
+        <item name="android:textColor">@color/static_white</item>
         <item name="android:textSize">@dimen/button_text_size</item>
         <item name="android:fontFamily">@font/lora_regular</item>
         <item name="android:insetTop">0dp</item>
@@ -100,7 +100,7 @@
     <style name="BodyTextStyle" parent="MaterialAlertDialog.MaterialComponents.Title.Text">
         <item name="fontFamily">@font/lora_regular</item>
         <item name="android:textSize">18sp</item>
-        <item name="android:textColor">@color/darker_grey</item>
+        <item name="android:textColor">@color/mtrl_text_color</item>
         <item name="android:singleLine">false</item>
         <item name="android:maxLines">100</item>
         <item name="android:ellipsize">none</item>
@@ -140,7 +140,7 @@
         <item name="backgroundTint">@android:color/transparent</item>
         <item name="rippleColor">@color/ripple_grey</item>
         <item name="fontFamily">@font/lora_regular</item>
-        <item name="android:textColor">@color/purple</item>
+        <item name="android:textColor">@color/purple_text</item>
         <item name="android:textSize">18sp</item>
         <item name="android:paddingStart">@dimen/margin_24dp</item>
         <item name="android:paddingEnd">@dimen/margin_24dp</item>
@@ -159,7 +159,7 @@
     </style>
 
     <style name="toolbarTextStyle" parent="TextAppearance.Widget.AppCompat.Toolbar.Title">
-        <item name="android:textColor">@color/toolbar_title_text_color</item>
+        <item name="android:textColor">@color/static_white</item>
         <item name="android:textSize">@dimen/subtitle_text_size</item>
         <item name="android:fontFamily">@font/lora_regular</item>
     </style>
@@ -173,6 +173,10 @@
     <style name="tabTextStyle">
         <item name="android:textSize">18sp</item>
         <item name="android:fontFamily">@font/lora_regular</item>
+    </style>
+
+    <style name="App.ToolbarStyle" parent="ThemeOverlay.MaterialComponents.Toolbar.Primary">
+        <item name="colorOnPrimary">@color/static_white</item>
     </style>
 
 </resources>

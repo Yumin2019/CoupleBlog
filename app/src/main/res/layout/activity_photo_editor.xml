@@ -33,6 +33,7 @@
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:id="@+id/rootView"
+        android:fitsSystemWindows="true"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:background="@android:color/black"
@@ -149,7 +150,7 @@
             android:singleLine="true"
             android:text="@{viewModel.strCurTool}"
             tools:text="@string/app_name"
-            android:textColor="@android:color/white"
+            android:textColor="@color/static_white"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
@@ -165,7 +166,7 @@
             android:onClick="@{()->activity.uploadImage()}"
             android:singleLine="true"
             android:text="@string/str_done"
-            android:textColor="@android:color/white"
+            android:textColor="@color/static_white"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/guideline" />

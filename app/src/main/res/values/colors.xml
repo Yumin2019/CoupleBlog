@@ -16,12 +16,11 @@
 
     <color name="teal_200">#FF03DAC5</color>
     <color name="teal_700">#FF018786</color>
-    <color name="mtrl_button_color">#FFFFFFFF</color>
-    <color name="toolbar_title_text_color">#FFFFFFFF</color>
-    <color name="tab_selected_text_color">@color/white</color>
-    <color name="tab_indicator_color">@color/white</color>
     <color name="card_view_background">@color/white</color>
     <color name="parent_card_view_background">@color/white</color>
+    <color name="mtrl_text_color">@color/darker_grey</color>
+    <color name="static_black">#FF000000</color>
+    <color name="static_white">#FFFFFFFF</color>
 
     <color name="black">#FF000000</color>
     <color name="white">#FFFFFFFF</color>
