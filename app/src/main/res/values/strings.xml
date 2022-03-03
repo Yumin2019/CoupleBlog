@@ -1,24 +1,379 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <!--  photo editor begin -->
-    <string name="label_brush">Brush</string>
-    <string name="label_shape">Shape</string>
-    <string name="label_oval">Oval</string>
-    <string name="label_rectangle">Rectangle</string>
-    <string name="label_line">Line</string>
-    <string name="label_emoji">Emoji</string>
-    <string name="label_sticker">Sticker</string>
-    <string name="label_eraser">Eraser</string>
-    <string name="label_eraser_mode">Eraser Mode</string>
-    <string name="label_text">Text</string>
-    <string name="label_filter">Filter</string>
-    <string name="label_adjust">Adjust</string>
-    <string name="msg_save_image">Are you want to exit without saving image?</string>
-    <string name="app_intent_name">PhotoEditor</string>
-    <string name="msg_save_image_to_share">Please save image to share</string>
-    <string name="msg_share_image">Share Image</string>
-    <string name="str_clear_all_views_msg">Do you really want to discard all changes?</string>
 
+    <!-- translatable false start -->
+     <string name="str_personal_info_policy_text" translatable="false">
+(Couple blog)(https://blog.naver.com/lmj3322 이하 Couple blog)은(는) 「개인정보 보호법」 제30조에 따라 정보주체의 개인정보를 보호하고 이와 관련한 고충을 신속하고 원활하게 처리할 수 있도록 하기 위하여 다음과 같이 개인정보 처리방침을 수립·공개합니다.\n\n
+
+○ 이 개인정보처리방침은 2021년 1월 1부터 적용됩니다.\n\n
+
+제1조(개인정보의 처리 목적)\n\n
+
+(Couple blog)(https://blog.naver.com/lmj3322 이하 Couple blog)은(는) 다음의 목적을 위하여 개인정보를 처리합니다. 처리하고 있는 개인정보는 다음의 목적 이외의 용도로는 이용되지 않으며 이용 목적이 변경되는 경우에는 「개인정보 보호법」 제18조에 따라 별도의 동의를 받는 등 필요한 조치를 이행할 예정입니다.\n\n
+
+1. 홈페이지 회원가입 및 관리\n\n
+
+회원제 서비스 제공에 따른 본인 식별·인증 목적으로 개인정보를 처리합니다.\n\n
+
+제2조(개인정보의 처리 및 보유 기간)\n\n
+
+① (Couple blog)은(는) 법령에 따른 개인정보 보유·이용기간 또는 정보주체로부터 개인정보를 수집 시에 동의받은 개인정보 보유·이용기간 내에서 개인정보를 처리·보유합니다.\n\n
+
+② 각각의 개인정보 처리 및 보유 기간은 다음과 같습니다.\n\n
+
+1.홈페이지 회원가입 및 관리\n\n
+\u0027홈페이지 회원가입 및 관리\u0027와 관련한 개인정보는 수집.이용에 관한 동의일로부터 서비스 사용 기한까지 위 이용목적을 위하여 보유.이용됩니다.\n\n
+보유근거 : Couple blog 회원 인증\n\n
+관련법령 : 신용정보의 수집/처리 및 이용 등에 관한 기록 : 3년\n\n
+예외사유 : 어플리케이션 지원 중단\n\n
+
+제3조(정보주체와 법정대리인의 권리·의무 및 그 행사방법)\n\n
+
+① 정보주체는 Couple blog에 대해 언제든지 개인정보 열람·정정·삭제·처리정지 요구 등의 권리를 행사할 수 있습니다.\n\n
+
+② 제1항에 따른 권리 행사는Couple blog에 대해 「개인정보 보호법」 시행령 제41조제1항에 따라 서면, 전자우편, 모사전송(FAX) 등을 통하여 하실 수 있으며 Couple blog은(는) 이에 대해 지체 없이 조치하겠습니다.\n\n
+
+③ 제1항에 따른 권리 행사는 정보주체의 법정대리인이나 위임을 받은 자 등 대리인을 통하여 하실 수 있습니다.이 경우 \“개인정보 처리 방법에 관한 고시(제2020-7호)\” 별지 제11호 서식에 따른 위임장을 제출하셔야 합니다.\n\n
+
+④ 개인정보 열람 및 처리정지 요구는 「개인정보 보호법」 제35조 제4항, 제37조 제2항에 의하여 정보주체의 권리가 제한 될 수 있습니다.\n\n
+
+⑤ 개인정보의 정정 및 삭제 요구는 다른 법령에서 그 개인정보가 수집 대상으로 명시되어 있는 경우에는 그 삭제를 요구할 수 없습니다.\n\n
+
+⑥ Couple blog은(는) 정보주체 권리에 따른 열람의 요구, 정정·삭제의 요구, 처리정지의 요구 시 열람 등 요구를 한 자가 본인이거나 정당한 대리인인지를 확인합니다.\n\n
+
+제4조(처리하는 개인정보의 항목 작성)\n\n
+
+① (Couple blog)은(는) 다음의 개인정보 항목을 처리하고 있습니다.\n\n
+
+필수항목 : 이메일, 비밀번호, 이름\n\n
+선택항목 : X\n\n
+
+제5조(개인정보의 파기)\n\n
+
+① (Couple blog) 은(는) 개인정보 보유기간의 경과, 처리목적 달성 등 개인정보가 불필요하게 되었을 때에는 지체없이 해당 개인정보를 파기합니다.\n\n
+
+② 정보주체로부터 동의받은 개인정보 보유기간이 경과하거나 처리목적이 달성되었음에도 불구하고 다른 법령에 따라 개인정보를 계속 보존하여야 하는 경우에는, 해당 개인정보를 별도의 데이터베이스(DB)로 옮기거나 보관장소를 달리하여 보존합니다.\n\n
+1. 법령 근거 :\n\n
+2. 보존하는 개인정보 항목 : 계좌정보, 거래날짜\n\n
+
+③ 개인정보 파기의 절차 및 방법은 다음과 같습니다.\n\n
+
+1. 파기절차\n\n
+(Couple blog) 은(는) 파기 사유가 발생한 개인정보를 선정하고, (Couple blog) 의 개인정보 보호책임자의 승인을 받아 개인정보를 파기합니다.\n\n
+
+2. 파기방법\n\n
+
+전자적 파일 형태의 정보는 기록을 재생할 수 없는 기술적 방법을 사용합니다.\n\n
+
+종이에 출력된 개인정보는 분쇄기로 분쇄하거나 소각을 통하여 파기합니다\n\n
+
+제6조(개인정보의 안전성 확보 조치)\n\n
+
+(Couple blog)은(는) 개인정보의 안전성 확보를 위해 다음과 같은 조치를 취하고 있습니다.\n\n
+
+1. 개인정보 취급 직원의 최소화 및 교육\n\n
+개인정보를 취급하는 직원을 지정하고 담당자에 한정시켜 최소화 하여 개인정보를 관리하는 대책을 시행하고 있습니다.\n\n
+
+제7조(개인정보 자동 수집 장치의 설치•운영 및 거부에 관한 사항)\n\n
+
+Couple blog 은(는) 정보주체의 이용정보를 저장하고 수시로 불러오는 ‘쿠키(cookie)’를 사용하지 않습니다.\n\n
+
+제8조 (개인정보 보호책임자)\n\n
+
+① Couple blog 은(는) 개인정보 처리에 관한 업무를 총괄해서 책임지고, 개인정보 처리와 관련한 정보주체의 불만처리 및 피해구제 등을 위하여 아래와 같이 개인정보 보호책임자를 지정하고 있습니다.\n\n
+
+▶ 개인정보 보호책임자\n\n
+성명 :김유민\n\n
+연락처 : 010-6464-2211, yumingames@gmail.com,\n\n
+※ 개인정보 보호 담당부서로 연결됩니다.\n\n
+
+▶ 개인정보 보호 담당부서\n\n
+담당자 : 김유민\n\n
+연락처 : 010-6464-2211, yumingames@gmail.com,\n\n
+② 정보주체께서는 Couple blog 의 서비스(또는 사업)을 이용하시면서 발생한 모든 개인정보 보호 관련 문의, 불만처리, 피해구제 등에 관한 사항을 개인정보 보호책임자 및 담당부서로 문의하실 수 있습니다. Couple blog 은(는) 정보주체의 문의에 대해 지체 없이 답변 및 처리해드릴 것입니다.\n\n
+
+제9조(개인정보 열람청구)\n\n
+정보주체는 ｢개인정보 보호법｣ 제35조에 따른 개인정보의 열람 청구를 아래의 부서에 할 수 있습니다.\n\n
+(Couple blog)은(는) 정보주체의 개인정보 열람청구가 신속하게 처리되도록 노력하겠습니다.\n\n
+
+▶ 개인정보 열람청구 접수·처리 부서\n\n
+담당자 : 김유민\n\n
+연락처 : 010-6464-2211, yumingames@gmail.com,\n\n
+
+제10조(권익침해 구제방법)\n\n
+
+정보주체는 개인정보침해로 인한 구제를 받기 위하여 개인정보분쟁조정위원회, 한국인터넷진흥원 개인정보침해신고센터 등에 분쟁해결이나 상담 등을 신청할 수 있습니다. 이 밖에 기타 개인정보침해의 신고, 상담에 대하여는 아래의 기관에 문의하시기 바랍니다.\n\n
+
+1. 개인정보분쟁조정위원회 : (국번없이) 1833-6972 (www.kopico.go.kr)\n\n
+2. 개인정보침해신고센터 : (국번없이) 118 (privacy.kisa.or.kr)\n\n
+3. 대검찰청 : (국번없이) 1301 (www.spo.go.kr)\n\n
+4. 경찰청 : (국번없이) 182 (ecrm.cyber.go.kr)\n\n
+
+「개인정보보호법」제35조(개인정보의 열람), 제36조(개인정보의 정정·삭제), 제37조(개인정보의 처리정지 등)의 규정에 의한 요구에 대 하여 공공기관의 장이 행한 처분 또는 부작위로 인하여 권리 또는 이익의 침해를 받은 자는 행정심판법이 정하는 바에 따라 행정심판을 청구할 수 있습니다.\n\n
+
+※ 행정심판에 대해 자세한 사항은 중앙행정심판위원회(www.simpan.go.kr) 홈페이지를 참고하시기 바랍니다.\n\n
+
+제11조(개인정보 처리방침 변경)\n\n
+
+① 이 개인정보처리방침은 2021년 1월 1부터 적용됩니다.\n\n
+    </string>
+
+    <string name="str_opensource_license_text" translatable="false">
+Freepik(Images)                                                                 \n
+https://www.flaticon.com/authors/freepik                                        \n
+                                                                                \n
+Kotlin                                                                          \n
+https://github.com/JetBrains/kotlin                                             \n
+Apache-2.0 License                                                              \n
+                                                                                \n
+Firebase                                                                        \n
+https://github.com/firebase/firebase-android-sdk                                \n
+Apache-2.0 License      														\n
+																				\n
+PhotoEditor                                                                     \n
+https://github.com/burhanrashid52/PhotoEditor                                   \n
+MIT License                                                              		\n
+																			    \n
+PhotoView                                                                       \n
+https://github.com/Baseflow/PhotoView                                           \n
+Apache-2.0 License                                                              \n
+																			    \n
+Glide                                                                           \n
+https://github.com/bumptech/glide                                               \n
+BSD 2-Clause, MIT, Apache-2.0                                                   \n
+																			    \n
+Android-SpinKit                                                                 \n
+https://github.com/ybq/Android-SpinKit                                          \n
+MIT License                                                                     \n
+																			    \n
+																			    \n
+The MIT License                                                                 \n
+																			    \n
+Permission is hereby granted, free of charge, to any person obtaining a copy    \n
+of this software and associated documentation files (the “Software“), to deal   \n
+in the Software without restriction, including without limitation the rights    \n
+to use, copy, modify, merge, publish, distribute, sublicense, and/or sell       \n
+copies of the Software, and to permit persons to whom the Software is           \n
+furnished to do so, subject to the following conditions:                        \n
+																			    \n
+The above copyright notice and this permission notice shall be included in      \n
+all copies or substantial portions of the Software.                             \n
+																			    \n
+THE SOFTWARE IS PROVIDED “AS IS“, WITHOUT WARRANTY OF ANY KIND, EXPRESS OR      \n
+IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,        \n
+FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE     \n
+AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER          \n
+LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,   \n
+OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN       \n
+THE SOFTWARE.                                                                   \n
+																			   	\n
+																			    \n
+                             Apache License                                     \n
+                        Version 2.0, January 2004                               \n
+                     https://www.apache.org/licenses/                           \n
+																			    \n
+TERMS AND CONDITIONS FOR USE, REPRODUCTION, AND DISTRIBUTION                    \n
+																			    \n
+1. Definitions.                                                                 \n
+																			    \n
+   “License“ shall mean the terms and conditions for use, reproduction,         \n
+   and distribution as defined by Sections 1 through 9 of this document.        \n
+																			    \n
+   “Licensor“ shall mean the copyright owner or entity authorized by            \n
+   the copyright owner that is granting the License.                            \n
+																			    \n
+   “Legal Entity“ shall mean the union of the acting entity and all             \n
+   other entities that control, are controlled by, or are under common          \n
+   control with that entity. For the purposes of this definition,               \n
+   “control“ means (i) the power, direct or indirect, to cause the              \n
+   direction or management of such entity, whether by contract or               \n
+   otherwise, or (ii) ownership of fifty percent (50%) or more of the           \n
+   outstanding shares, or (iii) beneficial ownership of such entity.            \n
+																			    \n
+   “You“ (or “Your“) shall mean an individual or Legal Entity                   \n
+   exercising permissions granted by this License.                              \n
+																			    \n
+   “Source“ form shall mean the preferred form for making modifications,        \n
+   including but not limited to software source code, documentation             \n
+   source, and configuration files.                                             \n
+																			    \n
+   “Object“ form shall mean any form resulting from mechanical                  \n
+   transformation or translation of a Source form, including but                \n
+   not limited to compiled object code, generated documentation,                \n
+   and conversions to other media types.                                        \n
+																			    \n
+   “Work“ shall mean the work of authorship, whether in Source or               \n
+   Object form, made available under the License, as indicated by a             \n
+   copyright notice that is included in or attached to the work                 \n
+   (an example is provided in the Appendix below).                              \n
+																			    \n
+   “Derivative Works“ shall mean any work, whether in Source or Object          \n
+   form, that is based on (or derived from) the Work and for which the          \n
+   editorial revisions, annotations, elaborations, or other modifications       \n
+   represent, as a whole, an original work of authorship. For the purposes      \n
+   of this License, Derivative Works shall not include works that remain        \n
+   separable from, or merely link (or bind by name) to the interfaces of,       \n
+   the Work and Derivative Works thereof.                                       \n
+																			    \n
+   “Contribution“ shall mean any work of authorship, including                  \n
+   the original version of the Work and any modifications or additions          \n
+   to that Work or Derivative Works thereof, that is intentionally              \n
+   submitted to Licensor for inclusion in the Work by the copyright owner       \n
+   or by an individual or Legal Entity authorized to submit on behalf of        \n
+   the copyright owner. For the purposes of this definition, “submitted“        \n
+   means any form of electronic, verbal, or written communication sent          \n
+   to the Licensor or its representatives, including but not limited to         \n
+   communication on electronic mailing lists, source code control systems,      \n
+   and issue tracking systems that are managed by, or on behalf of, the         \n
+   Licensor for the purpose of discussing and improving the Work, but           \n
+   excluding communication that is conspicuously marked or otherwise            \n
+   designated in writing by the copyright owner as “Not a Contribution.“        \n
+																			    \n
+   “Contributor“ shall mean Licensor and any individual or Legal Entity         \n
+   on behalf of whom a Contribution has been received by Licensor and           \n
+   subsequently incorporated within the Work.                                   \n
+																			    \n
+2. Grant of Copyright License. Subject to the terms and conditions of           \n
+   this License, each Contributor hereby grants to You a perpetual,             \n
+   worldwide, non-exclusive, no-charge, royalty-free, irrevocable               \n
+   copyright license to reproduce, prepare Derivative Works of,                 \n
+   publicly display, publicly perform, sublicense, and distribute the           \n
+   Work and such Derivative Works in Source or Object form.                     \n
+																			    \n
+3. Grant of Patent License. Subject to the terms and conditions of              \n
+   this License, each Contributor hereby grants to You a perpetual,             \n
+   worldwide, non-exclusive, no-charge, royalty-free, irrevocable               \n
+   (except as stated in this section) patent license to make, have made,        \n
+   use, offer to sell, sell, import, and otherwise transfer the Work,           \n
+   where such license applies only to those patent claims licensable            \n
+   by such Contributor that are necessarily infringed by their                  \n
+   Contribution(s) alone or by combination of their Contribution(s)             \n
+   with the Work to which such Contribution(s) was submitted. If You            \n
+   institute patent litigation against any entity (including a                  \n
+   cross-claim or counterclaim in a lawsuit) alleging that the Work             \n
+   or a Contribution incorporated within the Work constitutes direct            \n
+   or contributory patent infringement, then any patent licenses                \n
+   granted to You under this License for that Work shall terminate              \n
+   as of the date such litigation is filed.                                     \n
+																			    \n
+4. Redistribution. You may reproduce and distribute copies of the               \n
+   Work or Derivative Works thereof in any medium, with or without              \n
+   modifications, and in Source or Object form, provided that You               \n
+   meet the following conditions:                                               \n
+																			    \n
+   (a) You must give any other recipients of the Work or                        \n
+       Derivative Works a copy of this License; and                             \n
+																			    \n
+   (b) You must cause any modified files to carry prominent notices             \n
+       stating that You changed the files; and                                  \n
+																			    \n
+   (c) You must retain, in the Source form of any Derivative Works              \n
+       that You distribute, all copyright, patent, trademark, and               \n
+       attribution notices from the Source form of the Work,                    \n
+       excluding those notices that do not pertain to any part of               \n
+       the Derivative Works; and                                                \n
+																			    \n
+   (d) If the Work includes a “NOTICE“ text file as part of its                 \n
+       distribution, then any Derivative Works that You distribute must         \n
+       include a readable copy of the attribution notices contained             \n
+       within such NOTICE file, excluding those notices that do not             \n
+       pertain to any part of the Derivative Works, in at least one             \n
+       of the following places: within a NOTICE text file distributed           \n
+       as part of the Derivative Works; within the Source form or               \n
+       documentation, if provided along with the Derivative Works; or,          \n
+       within a display generated by the Derivative Works, if and               \n
+       wherever such third-party notices normally appear. The contents          \n
+       of the NOTICE file are for informational purposes only and               \n
+       do not modify the License. You may add Your own attribution              \n
+       notices within Derivative Works that You distribute, alongside           \n
+       or as an addendum to the NOTICE text from the Work, provided             \n
+       that such additional attribution notices cannot be construed             \n
+       as modifying the License.                                                \n
+																			    \n
+   You may add Your own copyright statement to Your modifications and           \n
+   may provide additional or different license terms and conditions             \n
+   for use, reproduction, or distribution of Your modifications, or             \n
+   for any such Derivative Works as a whole, provided Your use,                 \n
+   reproduction, and distribution of the Work otherwise complies with           \n
+   the conditions stated in this License.                                       \n
+																			    \n
+5. Submission of Contributions. Unless You explicitly state otherwise,          \n
+   any Contribution intentionally submitted for inclusion in the Work           \n
+   by You to the Licensor shall be under the terms and conditions of            \n
+   this License, without any additional terms or conditions.                    \n
+   Notwithstanding the above, nothing herein shall supersede or modify          \n
+   the terms of any separate license agreement you may have executed            \n
+   with Licensor regarding such Contributions.                                  \n
+																			    \n
+6. Trademarks. This License does not grant permission to use the trade          \n
+   names, trademarks, service marks, or product names of the Licensor,          \n
+   except as required for reasonable and customary use in describing the        \n
+   origin of the Work and reproducing the content of the NOTICE file.           \n
+																			    \n
+7. Disclaimer of Warranty. Unless required by applicable law or                 \n
+   agreed to in writing, Licensor provides the Work (and each                   \n
+   Contributor provides its Contributions) on an “AS IS“ BASIS,                 \n
+   WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or              \n
+   implied, including, without limitation, any warranties or conditions         \n
+   of TITLE, NON-INFRINGEMENT, MERCHANTABILITY, or FITNESS FOR A                \n
+   PARTICULAR PURPOSE. You are solely responsible for determining the           \n
+   appropriateness of using or redistributing the Work and assume any           \n
+   risks associated with Your exercise of permissions under this License.       \n
+																			    \n
+8. Limitation of Liability. In no event and under no legal theory,              \n
+   whether in tort (including negligence), contract, or otherwise,              \n
+   unless required by applicable law (such as deliberate and grossly            \n
+   negligent acts) or agreed to in writing, shall any Contributor be            \n
+   liable to You for damages, including any direct, indirect, special,          \n
+   incidental, or consequential damages of any character arising as a           \n
+   result of this License or out of the use or inability to use the             \n
+   Work (including but not limited to damages for loss of goodwill,             \n
+   work stoppage, computer failure or malfunction, or any and all               \n
+   other commercial damages or losses), even if such Contributor                \n
+   has been advised of the possibility of such damages.                         \n
+																			    \n
+9. Accepting Warranty or Additional Liability. While redistributing             \n
+   the Work or Derivative Works thereof, You may choose to offer,               \n
+   and charge a fee for, acceptance of support, warranty, indemnity,            \n
+   or other liability obligations and/or rights consistent with this            \n
+   License. However, in accepting such obligations, You may act only            \n
+   on Your own behalf and on Your sole responsibility, not on behalf            \n
+   of any other Contributor, and only if You agree to indemnify,                \n
+   defend, and hold each Contributor harmless for any liability                 \n
+   incurred by, or claims asserted against, such Contributor by reason          \n
+   of your accepting any such warranty or additional liability.                 \n
+																			    \n
+END OF TERMS AND CONDITIONS                                                     \n
+																			    \n
+																			    \n
+The 2-Clause BSD License                                                        \n
+																			    \n
+Redistribution and use in source and binary forms, with or without              \n
+modification, are permitted provided that the following conditions are met:     \n
+																			    \n
+   1. Redistributions of source code must retain the above copyright notice,    \n
+   this list of conditions and the following disclaimer.                        \n
+																			    \n
+   2. Redistributions in binary form must reproduce the above copyright notice, \n
+   this list of conditions and the following disclaimer in the documentation    \n
+   and/or other materials provided with the distribution.                       \n
+																			    \n
+THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS “AS IS“     \n
+AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE       \n
+IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE  \n
+DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT HOLDER OR CONTRIBUTORS BE LIABLE    \n
+FOR ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL      \n
+DAMAGES (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR      \n
+SERVICES; LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER      \n
+CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY,   \n
+OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE   \n
+OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.            \n
+    </string>
+
+    <string name="default_notification_channel_id" translatable="false">ChannelId</string>
+    <string name="default_notification_channel_name" translatable="false">ChannelName</string>
+
+    <!--  photo editor begin -->
     <string-array name="photo_editor_emoji">
 
         <!-- Smiles -->
@@ -425,375 +780,38 @@
         <item>u+1f4cd</item>
         <item>u+1f6a9</item>
     </string-array>
+
+    <string name="str_developer_blog_link" translatable="false">https://blog.naver.com/lmj3322</string>
+    <string name="str_insta_link" translatable="false">https://www.instagram.com/poonyandyumin/</string>
+    <string name="str_couple_blog_github_link" translatable="false">https://github.com/Yumin2019/CoupleBlog</string>
+    <string name="str_user_age_exam" translatable="false">19</string>
+    <string name="str_profile_email_exam" translatable="false">yumingames@gmail.com</string>
+    <string name="str_date_of_birth_exam" translatable="false">2002. 12. 03</string>
+    <string name="str_to" translatable="false">To</string>
+    <string name="str_title" translatable="false">Title</string>
+    <string name="str_text" translatable="false">Text</string>
+
+    <string name="str_admob_banner_id" translatable="false">ca-app-pub-6742614297266407/7657086441</string>
+    <string name="str_admob_banner_test_id" translatable="false">ca-app-pub-3940256099942544/6300978111</string>
+    <string name="file_provider" translatable="false">"com.coupleblog.fileprovider"</string>
+
+    <!-- translatable false end -->
+
+    <!-- translatable true start -->
+    <string name="label_brush">Brush</string>
+    <string name="label_shape">Shape</string>
+    <string name="label_oval">Oval</string>
+    <string name="label_rectangle">Rectangle</string>
+    <string name="label_line">Line</string>
+    <string name="label_emoji">Emoji</string>
+    <string name="label_sticker">Sticker</string>
+    <string name="label_eraser">Eraser</string>
+    <string name="label_eraser_mode">Eraser Mode</string>
+    <string name="label_text">Text</string>
+    <string name="label_filter">Filter</string>
+    <string name="msg_save_image">Do you want to exit without saving image?</string>
+    <string name="str_clear_all_views_msg">Do you really want to discard all changes?</string>
     <!--  photo editor end -->
-
-    <string name="str_personal_info_policy_text" translatable="false">
-(Couple blog)(https://blog.naver.com/lmj3322 이하 Couple blog)은(는) 「개인정보 보호법」 제30조에 따라 정보주체의 개인정보를 보호하고 이와 관련한 고충을 신속하고 원활하게 처리할 수 있도록 하기 위하여 다음과 같이 개인정보 처리방침을 수립·공개합니다.\n\n
-
-○ 이 개인정보처리방침은 2021년 1월 1부터 적용됩니다.\n\n
-
-제1조(개인정보의 처리 목적)\n\n
-
-(Couple blog)(https://blog.naver.com/lmj3322 이하 Couple blog)은(는) 다음의 목적을 위하여 개인정보를 처리합니다. 처리하고 있는 개인정보는 다음의 목적 이외의 용도로는 이용되지 않으며 이용 목적이 변경되는 경우에는 「개인정보 보호법」 제18조에 따라 별도의 동의를 받는 등 필요한 조치를 이행할 예정입니다.\n\n
-
-1. 홈페이지 회원가입 및 관리\n\n
-
-회원제 서비스 제공에 따른 본인 식별·인증 목적으로 개인정보를 처리합니다.\n\n
-
-제2조(개인정보의 처리 및 보유 기간)\n\n
-
-① (Couple blog)은(는) 법령에 따른 개인정보 보유·이용기간 또는 정보주체로부터 개인정보를 수집 시에 동의받은 개인정보 보유·이용기간 내에서 개인정보를 처리·보유합니다.\n\n
-
-② 각각의 개인정보 처리 및 보유 기간은 다음과 같습니다.\n\n
-
-1.홈페이지 회원가입 및 관리\n\n
-\u0027홈페이지 회원가입 및 관리\u0027와 관련한 개인정보는 수집.이용에 관한 동의일로부터 서비스 사용 기한까지 위 이용목적을 위하여 보유.이용됩니다.\n\n
-보유근거 : Couple blog 회원 인증\n\n
-관련법령 : 신용정보의 수집/처리 및 이용 등에 관한 기록 : 3년\n\n
-예외사유 : 어플리케이션 지원 중단\n\n
-
-제3조(정보주체와 법정대리인의 권리·의무 및 그 행사방법)\n\n
-
-① 정보주체는 Couple blog에 대해 언제든지 개인정보 열람·정정·삭제·처리정지 요구 등의 권리를 행사할 수 있습니다.\n\n
-
-② 제1항에 따른 권리 행사는Couple blog에 대해 「개인정보 보호법」 시행령 제41조제1항에 따라 서면, 전자우편, 모사전송(FAX) 등을 통하여 하실 수 있으며 Couple blog은(는) 이에 대해 지체 없이 조치하겠습니다.\n\n
-
-③ 제1항에 따른 권리 행사는 정보주체의 법정대리인이나 위임을 받은 자 등 대리인을 통하여 하실 수 있습니다.이 경우 \“개인정보 처리 방법에 관한 고시(제2020-7호)\” 별지 제11호 서식에 따른 위임장을 제출하셔야 합니다.\n\n
-
-④ 개인정보 열람 및 처리정지 요구는 「개인정보 보호법」 제35조 제4항, 제37조 제2항에 의하여 정보주체의 권리가 제한 될 수 있습니다.\n\n
-
-⑤ 개인정보의 정정 및 삭제 요구는 다른 법령에서 그 개인정보가 수집 대상으로 명시되어 있는 경우에는 그 삭제를 요구할 수 없습니다.\n\n
-
-⑥ Couple blog은(는) 정보주체 권리에 따른 열람의 요구, 정정·삭제의 요구, 처리정지의 요구 시 열람 등 요구를 한 자가 본인이거나 정당한 대리인인지를 확인합니다.\n\n
-
-제4조(처리하는 개인정보의 항목 작성)\n\n
-
-① (Couple blog)은(는) 다음의 개인정보 항목을 처리하고 있습니다.\n\n
-
-필수항목 : 이메일, 비밀번호, 이름\n\n
-선택항목 : X\n\n
-
-제5조(개인정보의 파기)\n\n
-
-① (Couple blog) 은(는) 개인정보 보유기간의 경과, 처리목적 달성 등 개인정보가 불필요하게 되었을 때에는 지체없이 해당 개인정보를 파기합니다.\n\n
-
-② 정보주체로부터 동의받은 개인정보 보유기간이 경과하거나 처리목적이 달성되었음에도 불구하고 다른 법령에 따라 개인정보를 계속 보존하여야 하는 경우에는, 해당 개인정보를 별도의 데이터베이스(DB)로 옮기거나 보관장소를 달리하여 보존합니다.\n\n
-1. 법령 근거 :\n\n
-2. 보존하는 개인정보 항목 : 계좌정보, 거래날짜\n\n
-
-③ 개인정보 파기의 절차 및 방법은 다음과 같습니다.\n\n
-
-1. 파기절차\n\n
-(Couple blog) 은(는) 파기 사유가 발생한 개인정보를 선정하고, (Couple blog) 의 개인정보 보호책임자의 승인을 받아 개인정보를 파기합니다.\n\n
-
-2. 파기방법\n\n
-
-전자적 파일 형태의 정보는 기록을 재생할 수 없는 기술적 방법을 사용합니다.\n\n
-
-종이에 출력된 개인정보는 분쇄기로 분쇄하거나 소각을 통하여 파기합니다\n\n
-
-제6조(개인정보의 안전성 확보 조치)\n\n
-
-(Couple blog)은(는) 개인정보의 안전성 확보를 위해 다음과 같은 조치를 취하고 있습니다.\n\n
-
-1. 개인정보 취급 직원의 최소화 및 교육\n\n
-개인정보를 취급하는 직원을 지정하고 담당자에 한정시켜 최소화 하여 개인정보를 관리하는 대책을 시행하고 있습니다.\n\n
-
-제7조(개인정보 자동 수집 장치의 설치•운영 및 거부에 관한 사항)\n\n
-
-Couple blog 은(는) 정보주체의 이용정보를 저장하고 수시로 불러오는 ‘쿠키(cookie)’를 사용하지 않습니다.\n\n
-
-제8조 (개인정보 보호책임자)\n\n
-
-① Couple blog 은(는) 개인정보 처리에 관한 업무를 총괄해서 책임지고, 개인정보 처리와 관련한 정보주체의 불만처리 및 피해구제 등을 위하여 아래와 같이 개인정보 보호책임자를 지정하고 있습니다.\n\n
-
-▶ 개인정보 보호책임자\n\n
-성명 :김유민\n\n
-연락처 : 010-6464-2211, yumingames@gmail.com,\n\n
-※ 개인정보 보호 담당부서로 연결됩니다.\n\n
-
-▶ 개인정보 보호 담당부서\n\n
-담당자 : 김유민\n\n
-연락처 : 010-6464-2211, yumingames@gmail.com,\n\n
-② 정보주체께서는 Couple blog 의 서비스(또는 사업)을 이용하시면서 발생한 모든 개인정보 보호 관련 문의, 불만처리, 피해구제 등에 관한 사항을 개인정보 보호책임자 및 담당부서로 문의하실 수 있습니다. Couple blog 은(는) 정보주체의 문의에 대해 지체 없이 답변 및 처리해드릴 것입니다.\n\n
-
-제9조(개인정보 열람청구)\n\n
-정보주체는 ｢개인정보 보호법｣ 제35조에 따른 개인정보의 열람 청구를 아래의 부서에 할 수 있습니다.\n\n
-(Couple blog)은(는) 정보주체의 개인정보 열람청구가 신속하게 처리되도록 노력하겠습니다.\n\n
-
-▶ 개인정보 열람청구 접수·처리 부서\n\n
-담당자 : 김유민\n\n
-연락처 : 010-6464-2211, yumingames@gmail.com,\n\n
-
-제10조(권익침해 구제방법)\n\n
-
-정보주체는 개인정보침해로 인한 구제를 받기 위하여 개인정보분쟁조정위원회, 한국인터넷진흥원 개인정보침해신고센터 등에 분쟁해결이나 상담 등을 신청할 수 있습니다. 이 밖에 기타 개인정보침해의 신고, 상담에 대하여는 아래의 기관에 문의하시기 바랍니다.\n\n
-
-1. 개인정보분쟁조정위원회 : (국번없이) 1833-6972 (www.kopico.go.kr)\n\n
-2. 개인정보침해신고센터 : (국번없이) 118 (privacy.kisa.or.kr)\n\n
-3. 대검찰청 : (국번없이) 1301 (www.spo.go.kr)\n\n
-4. 경찰청 : (국번없이) 182 (ecrm.cyber.go.kr)\n\n
-
-「개인정보보호법」제35조(개인정보의 열람), 제36조(개인정보의 정정·삭제), 제37조(개인정보의 처리정지 등)의 규정에 의한 요구에 대 하여 공공기관의 장이 행한 처분 또는 부작위로 인하여 권리 또는 이익의 침해를 받은 자는 행정심판법이 정하는 바에 따라 행정심판을 청구할 수 있습니다.\n\n
-
-※ 행정심판에 대해 자세한 사항은 중앙행정심판위원회(www.simpan.go.kr) 홈페이지를 참고하시기 바랍니다.\n\n
-
-제11조(개인정보 처리방침 변경)\n\n
-
-① 이 개인정보처리방침은 2021년 1월 1부터 적용됩니다.\n\n
-    </string>
-
-    <string name="str_opensource_license_text" translatable="false">
-Freepik(Images)                                                                 \n
-https://www.flaticon.com/authors/freepik                                        \n
-                                                                                \n
-Kotlin                                                                          \n
-https://github.com/JetBrains/kotlin                                             \n
-Apache-2.0 License                                                              \n
-                                                                                \n
-Firebase                                                                        \n
-https://github.com/firebase/firebase-android-sdk                                \n
-Apache-2.0 License      														\n
-																				\n
-PhotoEditor                                                                     \n
-https://github.com/burhanrashid52/PhotoEditor                                   \n
-MIT License                                                              		\n
-																			    \n
-PhotoView                                                                       \n
-https://github.com/Baseflow/PhotoView                                           \n
-Apache-2.0 License                                                              \n
-																			    \n
-Glide                                                                           \n
-https://github.com/bumptech/glide                                               \n
-BSD 2-Clause, MIT, Apache-2.0                                                   \n
-																			    \n
-Android-SpinKit                                                                 \n
-https://github.com/ybq/Android-SpinKit                                          \n
-MIT License                                                                     \n
-																			    \n
-																			    \n
-The MIT License                                                                 \n
-																			    \n
-Permission is hereby granted, free of charge, to any person obtaining a copy    \n
-of this software and associated documentation files (the “Software“), to deal   \n
-in the Software without restriction, including without limitation the rights    \n
-to use, copy, modify, merge, publish, distribute, sublicense, and/or sell       \n
-copies of the Software, and to permit persons to whom the Software is           \n
-furnished to do so, subject to the following conditions:                        \n
-																			    \n
-The above copyright notice and this permission notice shall be included in      \n
-all copies or substantial portions of the Software.                             \n
-																			    \n
-THE SOFTWARE IS PROVIDED “AS IS“, WITHOUT WARRANTY OF ANY KIND, EXPRESS OR      \n
-IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,        \n
-FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE     \n
-AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER          \n
-LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,   \n
-OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN       \n
-THE SOFTWARE.                                                                   \n
-																			   	\n
-																			    \n
-                             Apache License                                     \n
-                        Version 2.0, January 2004                               \n
-                     https://www.apache.org/licenses/                           \n
-																			    \n
-TERMS AND CONDITIONS FOR USE, REPRODUCTION, AND DISTRIBUTION                    \n
-																			    \n
-1. Definitions.                                                                 \n
-																			    \n
-   “License“ shall mean the terms and conditions for use, reproduction,         \n
-   and distribution as defined by Sections 1 through 9 of this document.        \n
-																			    \n
-   “Licensor“ shall mean the copyright owner or entity authorized by            \n
-   the copyright owner that is granting the License.                            \n
-																			    \n
-   “Legal Entity“ shall mean the union of the acting entity and all             \n
-   other entities that control, are controlled by, or are under common          \n
-   control with that entity. For the purposes of this definition,               \n
-   “control“ means (i) the power, direct or indirect, to cause the              \n
-   direction or management of such entity, whether by contract or               \n
-   otherwise, or (ii) ownership of fifty percent (50%) or more of the           \n
-   outstanding shares, or (iii) beneficial ownership of such entity.            \n
-																			    \n
-   “You“ (or “Your“) shall mean an individual or Legal Entity                   \n
-   exercising permissions granted by this License.                              \n
-																			    \n
-   “Source“ form shall mean the preferred form for making modifications,        \n
-   including but not limited to software source code, documentation             \n
-   source, and configuration files.                                             \n
-																			    \n
-   “Object“ form shall mean any form resulting from mechanical                  \n
-   transformation or translation of a Source form, including but                \n
-   not limited to compiled object code, generated documentation,                \n
-   and conversions to other media types.                                        \n
-																			    \n
-   “Work“ shall mean the work of authorship, whether in Source or               \n
-   Object form, made available under the License, as indicated by a             \n
-   copyright notice that is included in or attached to the work                 \n
-   (an example is provided in the Appendix below).                              \n
-																			    \n
-   “Derivative Works“ shall mean any work, whether in Source or Object          \n
-   form, that is based on (or derived from) the Work and for which the          \n
-   editorial revisions, annotations, elaborations, or other modifications       \n
-   represent, as a whole, an original work of authorship. For the purposes      \n
-   of this License, Derivative Works shall not include works that remain        \n
-   separable from, or merely link (or bind by name) to the interfaces of,       \n
-   the Work and Derivative Works thereof.                                       \n
-																			    \n
-   “Contribution“ shall mean any work of authorship, including                  \n
-   the original version of the Work and any modifications or additions          \n
-   to that Work or Derivative Works thereof, that is intentionally              \n
-   submitted to Licensor for inclusion in the Work by the copyright owner       \n
-   or by an individual or Legal Entity authorized to submit on behalf of        \n
-   the copyright owner. For the purposes of this definition, “submitted“        \n
-   means any form of electronic, verbal, or written communication sent          \n
-   to the Licensor or its representatives, including but not limited to         \n
-   communication on electronic mailing lists, source code control systems,      \n
-   and issue tracking systems that are managed by, or on behalf of, the         \n
-   Licensor for the purpose of discussing and improving the Work, but           \n
-   excluding communication that is conspicuously marked or otherwise            \n
-   designated in writing by the copyright owner as “Not a Contribution.“        \n
-																			    \n
-   “Contributor“ shall mean Licensor and any individual or Legal Entity         \n
-   on behalf of whom a Contribution has been received by Licensor and           \n
-   subsequently incorporated within the Work.                                   \n
-																			    \n
-2. Grant of Copyright License. Subject to the terms and conditions of           \n
-   this License, each Contributor hereby grants to You a perpetual,             \n
-   worldwide, non-exclusive, no-charge, royalty-free, irrevocable               \n
-   copyright license to reproduce, prepare Derivative Works of,                 \n
-   publicly display, publicly perform, sublicense, and distribute the           \n
-   Work and such Derivative Works in Source or Object form.                     \n
-																			    \n
-3. Grant of Patent License. Subject to the terms and conditions of              \n
-   this License, each Contributor hereby grants to You a perpetual,             \n
-   worldwide, non-exclusive, no-charge, royalty-free, irrevocable               \n
-   (except as stated in this section) patent license to make, have made,        \n
-   use, offer to sell, sell, import, and otherwise transfer the Work,           \n
-   where such license applies only to those patent claims licensable            \n
-   by such Contributor that are necessarily infringed by their                  \n
-   Contribution(s) alone or by combination of their Contribution(s)             \n
-   with the Work to which such Contribution(s) was submitted. If You            \n
-   institute patent litigation against any entity (including a                  \n
-   cross-claim or counterclaim in a lawsuit) alleging that the Work             \n
-   or a Contribution incorporated within the Work constitutes direct            \n
-   or contributory patent infringement, then any patent licenses                \n
-   granted to You under this License for that Work shall terminate              \n
-   as of the date such litigation is filed.                                     \n
-																			    \n
-4. Redistribution. You may reproduce and distribute copies of the               \n
-   Work or Derivative Works thereof in any medium, with or without              \n
-   modifications, and in Source or Object form, provided that You               \n
-   meet the following conditions:                                               \n
-																			    \n
-   (a) You must give any other recipients of the Work or                        \n
-       Derivative Works a copy of this License; and                             \n
-																			    \n
-   (b) You must cause any modified files to carry prominent notices             \n
-       stating that You changed the files; and                                  \n
-																			    \n
-   (c) You must retain, in the Source form of any Derivative Works              \n
-       that You distribute, all copyright, patent, trademark, and               \n
-       attribution notices from the Source form of the Work,                    \n
-       excluding those notices that do not pertain to any part of               \n
-       the Derivative Works; and                                                \n
-																			    \n
-   (d) If the Work includes a “NOTICE“ text file as part of its                 \n
-       distribution, then any Derivative Works that You distribute must         \n
-       include a readable copy of the attribution notices contained             \n
-       within such NOTICE file, excluding those notices that do not             \n
-       pertain to any part of the Derivative Works, in at least one             \n
-       of the following places: within a NOTICE text file distributed           \n
-       as part of the Derivative Works; within the Source form or               \n
-       documentation, if provided along with the Derivative Works; or,          \n
-       within a display generated by the Derivative Works, if and               \n
-       wherever such third-party notices normally appear. The contents          \n
-       of the NOTICE file are for informational purposes only and               \n
-       do not modify the License. You may add Your own attribution              \n
-       notices within Derivative Works that You distribute, alongside           \n
-       or as an addendum to the NOTICE text from the Work, provided             \n
-       that such additional attribution notices cannot be construed             \n
-       as modifying the License.                                                \n
-																			    \n
-   You may add Your own copyright statement to Your modifications and           \n
-   may provide additional or different license terms and conditions             \n
-   for use, reproduction, or distribution of Your modifications, or             \n
-   for any such Derivative Works as a whole, provided Your use,                 \n
-   reproduction, and distribution of the Work otherwise complies with           \n
-   the conditions stated in this License.                                       \n
-																			    \n
-5. Submission of Contributions. Unless You explicitly state otherwise,          \n
-   any Contribution intentionally submitted for inclusion in the Work           \n
-   by You to the Licensor shall be under the terms and conditions of            \n
-   this License, without any additional terms or conditions.                    \n
-   Notwithstanding the above, nothing herein shall supersede or modify          \n
-   the terms of any separate license agreement you may have executed            \n
-   with Licensor regarding such Contributions.                                  \n
-																			    \n
-6. Trademarks. This License does not grant permission to use the trade          \n
-   names, trademarks, service marks, or product names of the Licensor,          \n
-   except as required for reasonable and customary use in describing the        \n
-   origin of the Work and reproducing the content of the NOTICE file.           \n
-																			    \n
-7. Disclaimer of Warranty. Unless required by applicable law or                 \n
-   agreed to in writing, Licensor provides the Work (and each                   \n
-   Contributor provides its Contributions) on an “AS IS“ BASIS,                 \n
-   WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or              \n
-   implied, including, without limitation, any warranties or conditions         \n
-   of TITLE, NON-INFRINGEMENT, MERCHANTABILITY, or FITNESS FOR A                \n
-   PARTICULAR PURPOSE. You are solely responsible for determining the           \n
-   appropriateness of using or redistributing the Work and assume any           \n
-   risks associated with Your exercise of permissions under this License.       \n
-																			    \n
-8. Limitation of Liability. In no event and under no legal theory,              \n
-   whether in tort (including negligence), contract, or otherwise,              \n
-   unless required by applicable law (such as deliberate and grossly            \n
-   negligent acts) or agreed to in writing, shall any Contributor be            \n
-   liable to You for damages, including any direct, indirect, special,          \n
-   incidental, or consequential damages of any character arising as a           \n
-   result of this License or out of the use or inability to use the             \n
-   Work (including but not limited to damages for loss of goodwill,             \n
-   work stoppage, computer failure or malfunction, or any and all               \n
-   other commercial damages or losses), even if such Contributor                \n
-   has been advised of the possibility of such damages.                         \n
-																			    \n
-9. Accepting Warranty or Additional Liability. While redistributing             \n
-   the Work or Derivative Works thereof, You may choose to offer,               \n
-   and charge a fee for, acceptance of support, warranty, indemnity,            \n
-   or other liability obligations and/or rights consistent with this            \n
-   License. However, in accepting such obligations, You may act only            \n
-   on Your own behalf and on Your sole responsibility, not on behalf            \n
-   of any other Contributor, and only if You agree to indemnify,                \n
-   defend, and hold each Contributor harmless for any liability                 \n
-   incurred by, or claims asserted against, such Contributor by reason          \n
-   of your accepting any such warranty or additional liability.                 \n
-																			    \n
-END OF TERMS AND CONDITIONS                                                     \n
-																			    \n
-																			    \n
-The 2-Clause BSD License                                                        \n
-																			    \n
-Redistribution and use in source and binary forms, with or without              \n
-modification, are permitted provided that the following conditions are met:     \n
-																			    \n
-   1. Redistributions of source code must retain the above copyright notice,    \n
-   this list of conditions and the following disclaimer.                        \n
-																			    \n
-   2. Redistributions in binary form must reproduce the above copyright notice, \n
-   this list of conditions and the following disclaimer in the documentation    \n
-   and/or other materials provided with the distribution.                       \n
-																			    \n
-THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS “AS IS“     \n
-AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE       \n
-IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE  \n
-DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT HOLDER OR CONTRIBUTORS BE LIABLE    \n
-FOR ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL      \n
-DAMAGES (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR      \n
-SERVICES; LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER      \n
-CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY,   \n
-OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE   \n
-OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.            \n
-    </string>
 
     <string name="str_developer_text">
         I\'ve made this program since 10, 2021.                                                      \n
@@ -806,9 +824,6 @@ OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.            
         My Email: yumingames@gmail.com                                                               \n
     </string>
 
-    <string name="default_notification_channel_id">ChannelId</string>
-    <string name="default_notification_channel_name">ChannelName</string>
-
     <string name="str_new_comment">New Comment</string>
     <string name="str_new_comment_notification">%s posted a new comment.</string>
     <string name="str_new_couple">New Couple</string>
@@ -816,31 +831,20 @@ OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.            
     <string name="str_post_notification">%s posted a new post.</string>
     <string name="str_mail_notification">%s sent a mail.</string>
     <string name="str_days_notification">%s made a days item.</string>
-    <string name="str_comment_notification">%s wrote a comment.</string>
     <string name="str_couple_blog_github">Couple Blog github</string>
-    <string name="str_insta_link">https://www.instagram.com/poonyandyumin/</string>
     <string name="str_insta">Couple Blog instagram</string>
-    <string name="str_couple_blog_github_link">https://github.com/Yumin2019/CoupleBlog</string>
     <string name="str_developer_blog">Developer Blog</string>
-    <string name="str_developer_blog_link">https://blog.naver.com/lmj3322</string>
-    <string name="str_user_age_exam">19</string>
     <string name="str_profile_name_exam">Yumin Kim</string>
-    <string name="str_profile_email_exam">yumingames@gmail.com</string>
     <string name="str_user_presence_exam">◆ 1h 30m ago</string>
     <string name="str_region_exam">9:00 AM, Korea</string>
-    <string name="str_date_of_birth_exam">2002. 12. 03</string>
     <string name="str_joined_n_days_ago_exam">Joined Couple blog 3 days ago</string>
     <string name="str_days_desc_exam">We can share our special days.</string>
     <string name="str_days_item_title_desc">Yumin ♥ Jihae</string>
     <string name="str_days_exam">300 days</string>
 
-    <string name="str_admob_banner_id">ca-app-pub-6742614297266407/7657086441</string>
-    <string name="str_admob_banner_test_id">ca-app-pub-3940256099942544/6300978111</string>
-
     <!-- example texts -->
 
     <string name="app_name">Couple Blog</string>
-    <string name="file_provider">"com.coupleblog.fileprovider"</string>
 
     <string name="str_year_ago">year ago</string>
     <string name="str_years_ago">years ago</string>
@@ -900,10 +904,6 @@ OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.            
     <string name="str_new_email_again">New Email again</string>
     <string name="str_password">Password</string>
     <string name="str_password_again">Password again</string>
-    <string name="str_to">To</string>
-    <string name="str_title">Title</string>
-    <string name="str_text">Text</string>
-    <string name="str_description">Description</string>
     <string name="str_cancel">Cancel</string>
     <string name="str_discard">Discard</string>
     <string name="str_delete">Delete</string>
