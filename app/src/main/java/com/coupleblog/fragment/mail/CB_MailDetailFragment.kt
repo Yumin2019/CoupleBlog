@@ -217,7 +217,7 @@ class CB_MailDetailFragment : CB_BaseFragment()
             return
 
         val listItem = arrayListOf(
-            DialogItem(getString(R.string.str_delete_post), R.drawable.trash_can,
+            DialogItem(getString(R.string.str_delete_mail), R.drawable.trash_can,
                 callback = { deleteMail() }),
 
           /*  답장(나중에 구현)
@@ -275,7 +275,7 @@ class CB_MailDetailFragment : CB_BaseFragment()
 
                 // 다른 사람이 보낸 요청이고 두 사람 모두 커플이 아닌 경우에 dialog 를 출력하여 여부를 확인한다.
                 CB_AppFunc.confirmDialog(requireActivity(), getString(R.string.str_request_couple),
-                    getString(R.string.str_request_couple_msg) + senderUserInfo.strUserName,
+                    String.format(getString(R.string.str_request_couple_msg), senderUserInfo.strUserName),
                     strImgStoragePath = senderUserInfo.strImgPath,
                     iDefaultIcon =  R.drawable.notification_icon, true,
                     getString(R.string.str_yes),

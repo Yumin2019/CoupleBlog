@@ -824,6 +824,10 @@ OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.            
         My Email: yumingames@gmail.com                                                               \n
     </string>
 
+    <string name="str_profile">Profile</string>
+    <string name="str_mail">Mail</string>
+    <string name="str_my_posts">My Posts</string>
+    <string name="str_couple_posts">Couple Posts</string>
     <string name="str_new_comment">New Comment</string>
     <string name="str_new_comment_notification">%s posted a new comment.</string>
     <string name="str_new_couple">New Couple</string>
@@ -948,6 +952,7 @@ OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.            
     <string name="str_my_post_menu">Post menu</string>
     <string name="str_comment_menu">Comment menu</string>
     <string name="str_mail_menu">Mail menu</string>
+    <string name="str_days_menu">Days menu</string>
     <string name="str_setting">Setting</string>
 
     <string name="str_choose_mail_type">Choose mail type</string>
@@ -957,7 +962,7 @@ OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.            
     <string name="str_permission_desc">You have to allow these\npermissions for use</string>
     <string name="str_permission_camera_desc">Used for profile image</string>
     <string name="str_permission_storage_desc">Used for profile image</string>
-    <string name="str_request_couple_msg">You want to allow this request from\n</string>
+    <string name="str_request_couple_msg">You want to allow this request from\n%s</string>
     <string name="str_couple_request_mail">This is a couple request mail.</string>
     <string name="str_normal_permission_message">You have to allow this permission for use.</string>
     <string name="str_downloading">Downloading…</string>
@@ -1040,7 +1045,6 @@ OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.            
     <string name="str_failed_to_change_read_state">Failed to change read state</string>
     <string name="str_reaction_icon_attach_failed">Reaction icon attach failed</string>
     <string name="str_you_became_couple">You became a couple.</string>
-    <string name="str_select_sticker">Select a sticker</string>
     <string name="str_unknown">Unknown</string>
     <string name="str_yes">Yes</string>
     <string name="str_no">No</string>

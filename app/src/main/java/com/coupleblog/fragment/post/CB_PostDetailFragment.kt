@@ -109,6 +109,7 @@ class CB_PostDetailFragment: CB_BaseFragment()
     override fun onStart()
     {
         super.onStart()
+        CB_AppFunc.clearFocusing(requireActivity())
 
         // add value event listener to the post
         val postListener = object : ValueEventListener

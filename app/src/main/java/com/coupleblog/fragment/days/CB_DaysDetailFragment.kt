@@ -138,7 +138,7 @@ class CB_DaysDetailFragment : CB_BaseFragment()
                 callback = { deleteDays() })
         )
 
-        CB_ItemListDialog(requireActivity(), getString(R.string.str_mail_menu), listItem, true)
+        CB_ItemListDialog(requireActivity(), getString(R.string.str_days_menu), listItem, true)
     }
 
     private fun editDays()

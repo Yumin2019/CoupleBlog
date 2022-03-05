@@ -186,7 +186,7 @@ class CB_MainFragment : CB_BaseFragment()
                tabLayout.text = when(position)
                {
                    // 마지막에 추가된 Fragment가 backPress 이벤트를 받는다.
-                   PROFILE.ordinal     -> "Profile"
+                   PROFILE.ordinal     -> CB_AppFunc.getString(R.string.str_profile)
 
                    // MainFragment means this user already did login
                    MY_POSTS.ordinal     ->
@@ -195,7 +195,7 @@ class CB_MainFragment : CB_BaseFragment()
                        // if this user isn't a couple
                        if(CB_AppFunc.curUser.strCoupleUid.isNullOrEmpty() || userName.isEmpty())
                        {
-                           "My Posts"
+                           CB_AppFunc.getString(R.string.str_my_posts)
                        }
                        else
                        {
@@ -212,7 +212,7 @@ class CB_MainFragment : CB_BaseFragment()
 
                        if(CB_AppFunc.curUser.strCoupleUid.isNullOrEmpty() || coupleUserName.isEmpty())
                        {
-                           "Couple Posts"
+                           CB_AppFunc.getString(R.string.str_couple_posts)
                        }
                        else
                        {
@@ -222,7 +222,7 @@ class CB_MainFragment : CB_BaseFragment()
                                CB_AppFunc.coupleUser.strUserName!!.substring(0, 8)
                        }
                    }
-                   else -> "Mail"
+                   else -> CB_AppFunc.getString(R.string.str_mail)
                }
 
            }.attach()
