@@ -1,4 +1,282 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-<!-- not supported yet -->
+    <!-- translatable true start -->
+    <string name="str_thickness">मोटाई</string>
+    <string name="str_opacity">अपारदर्शिता</string>
+    <string name="label_brush">ब्रश</string>
+    <string name="label_shape">आकार</string>
+    <string name="label_oval">अंडाकार</string>
+    <string name="label_rectangle">आयताकार</string>
+    <string name="label_line">रेखा</string>
+    <string name="label_emoji">इमोजी</string>
+    <string name="label_sticker">स्टिकर</string>
+    <string name="label_eraser">रबर</string>
+    <string name="label_eraser_mode">रबर मोड</string>
+    <string name="label_text">टेक्स्ट</string>
+    <string name="label_filter">फोटो फिल्टर</string>
+    <string name="msg_save_image">क्या आप छवि सहेजे बिना बाहर निकलना चाहते हैं</string>
+    <string name="str_clear_all_views_msg">क्या आप सभी बदलाव रद्द करना चाहते हैं?</string>
+    <!--  photo editor end -->
+
+    <string name="str_developer_text">
+        मैंने यह प्रोग्राम 10, 2021 से बनाया हैं.                                                    \n
+        मैं वास्तव में इसे प्लेस्टोर पर रिलीज करना चाहता हूँ.                                            \n
+        मुझे खुशी होगी अगर यह ऐप किसी ऐसे लोगों के लिए मददगार है जो काफी लंबी दूरी के रिश्ते में प्यार कर रहे है। \n
+                                                                                          \n
+        मुझे उम्मीद है कि यह ऐप मुझे आपसे जुड़ने में मदद करता है, मेरी लड़की पूनम                          \n
+        \n अगर आप लोगों के पास कहने के लिए कुछ है, हमेशा खोले मेल भेजने के लिये                       \n
+        मेरा मेल: yumingames@gmail.com                                                       \n
+    </string>
+
+    <string name="str_profile">प्रोफ़ाइल</string>
+    <string name="str_mail">डाक</string>
+    <string name="str_my_posts">मेरे पोस्ट</string>
+    <string name="str_couple_posts">दो पोस्ट</string>
+    <string name="str_new_comment">नई टिप्पणी</string>
+    <string name="str_new_comment_notification">%sएक नई टिप्पणी पोस्ट की.</string>
+    <string name="str_new_couple">नया प्रेमी जोड़ा</string>
+    <string name="str_new_couple_notification">आप युगल हैं %sके साथ .\n इस संदेश पर क्लिक करें.</string>
+    <string name="str_post_notification">%s ने एक नई पोस्ट पोस्ट की.</string>
+    <string name="str_mail_notification">%s ने एक नया मेल भेजा.</string>
+    <string name="str_days_notification">%s ने एक दिन की सूची बनाई.</string>
+    <string name="str_couple_blog_github">जोड़ा ब्लॉग गिथब</string>
+    <string name="str_insta">युगल ब्लॉग इंस्टाग्राम</string>
+    <string name="str_developer_blog">डेवलपर ब्लॉग</string>
+    <string name="str_profile_name_exam">युमिन किम</string>
+    <string name="str_user_presence_exam">◆ 1घंटा 30मिनट पहले</string>
+    <string name="str_region_exam">9:00 AM, दक्षिण कोरिया</string>
+    <string name="str_joined_n_days_ago_exam">युगल ब्लॉग में शामिल हुए 3 दिन पहले</string>
+    <string name="str_days_desc_exam">हम अपने विशेष दिनों को सांझा कर सकते हैं.</string>
+    <string name="str_days_item_title_desc">युमिन ♥ जिहै</string>
+    <string name="str_days_exam">300 दिन</string>
+
+    <!-- example texts -->
+
+    <string name="app_name">युगल ब्लॉग</string>
+
+    <string name="str_year_ago">साल पहले</string>
+    <string name="str_years_ago">सालो पहले</string>
+    <string name="str_month_ago">महीने पहले</string>
+    <string name="str_months_ago">महीनों पहले</string>
+    <string name="str_d">दिन</string>
+    <string name="str_h">घंटा</string>
+    <string name="str_h_ago">घंटा पहले</string>
+    <string name="str_m_ago">मिनिट पहले</string>
+    <string name="str_ago">पहले</string>
+    <string name="str_days">दिन</string>
+    <string name="str_months">महीनें</string>
+    <string name="str_years">साले</string>
+    <string name="str_past_event">पिछली घटना</string>
+    <string name="str_future_event">भविष्य की घटना</string>
+    <string name="str_annual_event">सालगिरह</string>
+    <string name="str_write_event">घटना लिखें</string>
+    <string name="str_edit_event">घटना संपादित करें</string>
+
+    <string name="str_introduction">परिचय</string>
+    <string name="str_region">क्षेत्र</string>
+    <string name="str_education">शिक्षा</string>
+    <string name="str_career">आजीविका</string>
+    <string name="str_favorites">पसंदीदा</string>
+    <string name="str_dislikes">नापसंद</string>
+    <string name="str_phone_number">मोबाइल नंबर</string>
+    <string name="str_date_of_birth">जन्म की तारीख</string>
+    <string name="str_gender">लिंग</string>
+    <string name="str_not_set">सेट नहीं</string>
+
+    <string name="str_today">आज</string>
+    <string name="str_one_month">एक महीना</string>
+    <string name="str_one_year">एक साल</string>
+
+    <string name="str_joined_n_days_ago">युगलब्लॉग में शामिल हुए%d दिनों पहले</string>
+    <string name="str_joined_one_day_ago">युगलब्लॉग में शामिल हुए एक दिन पहले</string>
+    <string name="str_online">◆ऑनलाइन</string>
+    <string name="str_mailbox"> मेल बॉक्स</string>
+    <string name="str_sign_in">साइन इन करें</string>
+    <string name="str_sign_out">साइन आउट करें</string>
+    <string name="str_sign_up">साइन अप करें</string>
+    <string name="str_opensource_license">स्त्रोत खोले</string>
+    <string name="str_account">अकाउंट</string>
+    <string name="str_change_password">पासवर्ड बदले</string>
+    <string name="str_change_email">ईमेल बदले</string>
+    <string name="str_developer">डेवलपर</string>
+    <string name="str_recipients">प्राप्तकर्ता</string>
+    <string name="str_add_image">इमेज जोड़े</string>
+    <string name="str_add_item">आइटम जोड़े</string>
+    <string name="str_no_image">कोई इमेज नहीं</string>
+    <string name="str_email">ईमेल</string>
+    <string name="str_email_desc">ईमेल</string>
+    <string name="str_current_password">मौजूदा पासवर्ड</string>
+    <string name="str_new_password">नया पासवर्ड</string>
+    <string name="str_new_password_again">नया पासवर्ड दोबारा</string>
+    <string name="str_new_email">नया ईमेल</string>
+    <string name="str_new_email_again">नया ईमेल दोबारा</string>
+    <string name="str_password">पासवर्ड</string>
+    <string name="str_password_again">पासवर्ड दोबारा</string>
+    <string name="str_cancel">रद्द करें</string>
+    <string name="str_discard">निरस्त करें</string>
+    <string name="str_delete">हटाना</string>
+    <string name="str_loading">लोड हो रहा है …</string>
+    <string name="str_camera">कैमरा</string>
+    <string name="str_break_up">रिश्ता तोडना</string>
+    <string name="str_delete_account">अकाउंट हटाये</string>
+    <string name="str_delete_account_desc">
+        हम आपका अकाउंट युगल ब्लॉग से हटा देंगे \n
+        1. उपयोगकर्ता की जानकारी\n
+        2. आपकी पोस्टे\n
+        3. आपका मेल बॉक्स\n
+    </string>
+    <string name="str_break_up_desc">
+        हम आपके युगल जोड़े को युगल ब्लॉग पर हटा देंगे\n
+        1.युगल की जानकारी\n
+        (युगल का प्रोफ़ाइल, दिन)
+    </string>
+    <string name="str_storage">स्टोरेंग</string>
+    <string name="str_gallery">गेलरी</string>
+    <string name="str_change_profile_image">प्रोफ़ाइल इमेज बदले</string>
+    <string name="str_read_mark">मार्क पढ़ने का चिन्ह्</string>
+    <string name="str_heart_mark">दिल का चिन्ह्</string>
+    <string name="str_select_all">सभी चयन करे</string>
+
+    <string name="str_none_icon">कोई आइकन नहीं</string>
+    <string name="str_heart">दिल</string>
+    <string name="str_heart_icon">दिल</string>
+    <string name="str_like_icon">पसंद करना</string>
+    <string name="str_check_icon">जाँच करना</string>
+    <string name="str_haha_icon">हँसना</string>
+    <string name="str_wow_icon">वाह</string>
+    <string name="str_sad_icon">दुःखी</string>
+    <string name="str_edit_post">पोस्ट एडिट करें</string>
+    <string name="str_delete_post">पोस्ट हटाये</string>
+    <string name="str_edit_days">दिन को एडिट करें</string>
+    <string name="str_delete_days">दिन को हटाये</string>
+    <string name="str_edit_comment">टिप्पणी एडिट करें</string>
+    <string name="str_delete_mail">मेल हटाये</string>
+    <string name="str_reply_mail">जवाब दे</string>
+    <string name="str_delete_comment">टिप्पणी हटाये </string>
+    <string name="str_reaction_icons">प्रतिक्रिया का आइकन</string>
+    <string name="str_my_post_menu">पोस्ट मेनू</string>
+    <string name="str_comment_menu">टिप्पणी मेनू</string>
+    <string name="str_mail_menu">मेल मेनू</string>
+    <string name="str_days_menu">दिनों का मेनू</string>
+    <string name="str_setting">सेटिंग</string>
+
+    <string name="str_choose_mail_type">मेल का प्रकार चयन करे</string>
+    <string name="str_mail_type_normal">मेल</string>
+    <string name="str_mail_type_release_note">रिलीज़ नोट</string>
+    <string name="str_request_couple">युगल का अनुरोध</string>
+    <string name="str_permission_desc">आपको उपयोग के लिए अनुमति देनी होगी</string>
+    <string name="str_permission_camera_desc">प्रोफ़ाइल इमेज के लिए उपयोग किया जाता है</string>
+    <string name="str_permission_storage_desc">प्रोफ़ाइल इमेज के लिए उपयोग किया जाता है</string>
+    <string name="str_request_couple_msg">आप इस अनुरोध की अनुमति देना चाहते हैं\n%s</string>
+    <string name="str_couple_request_mail">यह एक युगल का मेल अनुरोध हैं.</string>
+    <string name="str_normal_permission_message">आपको उपयोग के लिए अनुमति देनी होगी .</string>
+    <string name="str_downloading">डाउनलोड हो रहा हैं…</string>
+    <string name="str_uploading">अपलोड हो रहा हैं…</string>
+    <string name="str_download_success">डाउनलोड हो गया हैं</string>
+    <string name="str_download_fail">डाउनलोड विफल हो गया</string>
+    <string name="str_upload_success">अपलोड हो गया हैं </string>
+    <string name="str_upload_fail">अपलोड विफल हो गया हैं</string>
+    <string name="str_ok">ओके</string>
+    <string name="str_edit">एडिट करे</string>
+    <string name="str_change">बदलाव करे</string>
+    <string name="str_register">रेजिस्टर करे</string>
+    <string name="str_write">लिखे</string>
+    <string name="str_post">पोस्ट करे</string>
+    <string name="str_send">भेजे</string>
+    <string name="str_unspecified">अनिर्दिष्ट</string>
+    <string name="str_me">(मैं)</string>
+    <string name="str_male">पुरुष</string>
+    <string name="str_female">महिला</string>
+    <string name="str_register_msg">अगर आपका कोई अकाउंट नहीं हैं</string>
+    <string name="str_personal_information_policy_msg">अगर आप देखना चाहते हैं</string>
+    <string name="str_personal_info_policy">व्यक्तिगत जानकारी प्रसंस्करण नीति</string>
+    <string name="str_login_again">कृपया युगल ब्लॉग को दोबारा आरंभ करें</string>
+    <string name="str_input_email">कृपया अपना ईमेल डाले</string>
+    <string name="str_input_email_again">कृपया अपना ईमेल दोबारा डाले</string>
+    <string name="str_input_password">कृपया अपना पासवर्ड डाले</string>
+    <string name="str_input_current_password">कृपया अपना मौजूदा पासवर्ड डाले</string>
+    <string name="str_input_password_again">कृपया अपना पासवर्ड दोबारा डाले</string>
+    <string name="str_input_comment">कृपया अपनी टिप्पणी डाले</string>
+    <string name="str_input_title">कृपया अपना शीर्षक डाले</string>
+    <string name="str_input_letter">कृपया कम से कम एक अक्षर डाले </string>
+    <string name="str_select_icon">कृपया अपने आइकन का चयन करे</string>
+    <string name="str_input_recipient">कृपया कम से कम एक निर्दिष्ट करें प्राप्तकर्ता.।</string>
+    <string name="str_check_mail">कृपया कम से कम एक निर्दिष्ट करें मेल.</string>
+    <string name="str_delete_account_msg">क्या आप वास्तव मे अपना अकाउंट हटाना चाहते हैं?\nYour information will be deleted.</string>
+    <string name="str_break_up_msg">क्या आप वास्तव मे रिस्ता तोड़ना चाहते हैं?\nयुगल की सारी जानकारी हटा दी जायेगी.</string>
+    <string name="str_deleted_account">आपका अकाउंट सफलतापूर्वक हटा दिया गया.</string>
+    <string name="str_deleted_couple">युगल की सभी जानकारी सफलतापूर्वक हटा दी गयी हैं.</string>
+    <string name="str_days_confirm">क्या आप वास्तव मे लिखना चाहते हैं?</string>
+    <string name="str_post_confirm">क्या आप वास्तव मे पोस्ट करना चाहते हैं?</string>
+    <string name="str_discard_msg">क्या आप वास्तव मे निरस्त करना चाहते हैं?</string>
+    <string name="str_delete_msg">क्या आप वास्तव मे हटाना चाहते हैं?</string>
+    <string name="str_press_back_to_exit">बाहर निकलने के लिए फिर से दबाएं</string>
+    <string name="str_user_name">उपयोगकर्ता का नाम(प्रदर्शित होने वाला नाम)</string>
+    <string name="str_user_image">उपयोगकर्ता की इमेज</string>
+    <string name="str_comment_hint">टिप्पणी लिखे…</string>
+    <string name="str_password_again_error">पासवर्ड समान नहीं है </string>
+    <string name="str_email_again_error">इमोजी समान नहीं हैं</string>
+    <string name="str_invalid_format_error">यह अमान्य प्रारूप है</string>
+    <string name="str_invalid_date_error">यह अमान्य तारीख हैं</string>
+    <string name="str_sign_in_failed">साइन इन करने में विफल</string>
+    <string name="str_sign_up_failed">साइन आउट करने में विफल</string>
+    <string name="str_invalid_auth">अमान्य प्रमाणीकरण</string>
+    <string name="str_forgot_password">पासवर्ड भूल गए</string>
+    <string name="str_password_change_failed">पासवर्ड बदलने मे विफल</string>
+    <string name="str_email_change_failed">ईमेल बदलने मे विफल</string>
+    <string name="str_failed_to_upload_image">इमेज अपलोड करने मे विफल</string>
+    <string name="str_failed_to_delete_account">अकाउंट हटाने मे विफल</string>
+    <string name="str_failed_to_delete_couple">युगल हटाने मे विफल</string>
+    <string name="str_select_image_from_gallery">गैलेरी से इमेज का चयन करे</string>
+    <string name="str_failed_to_find_user">उपयोगकर्ता को खोजने में विफल</string>
+    <string name="str_tried_to_request_to_yourself">आप अपने साथ युगल नहीं बन सकते </string>
+    <string name="str_user_is_couple_already">यह उपयोगकर्ता पहले से ही युगल हैं</string>
+    <string name="str_value_update_failed">मूल्य अपडेट विफल</string>
+    <string name="str_post_failed">पोस्ट विफल</string>
+    <string name="str_writing_failed">लिखाई विफल</string>
+    <string name="str_mail_send_failed">मेल भेजने मे विफल</string>
+    <string name="str_user_info_load_failed">उपयोगकर्ता की जानकारी लोड होने मे विफल</string>
+    <string name="str_comment_list_load_failed">टिप्पणी सूची विफल</string>
+    <string name="str_mail_load_failed">मेल लोड होने मे विफल</string>
+    <string name="str_mail_list_load_failed">मेल सूची विफल</string>
+    <string name="str_post_data_load_failed">पोस्ट डेटा लोड विफल</string>
+    <string name="str_days_data_load_failed">दिनों का डेटा लोड होने मे विफल</string>
+    <string name="str_post_delete_failed">पोस्ट हटाने मे विफल</string>
+    <string name="str_days_delete_failed">दिन आइटम को हटाने में विफल</string>
+    <string name="str_failed_to_delete_mail">मेल हटाने मे विफल</string>
+    <string name="str_invalid_mail">अमान्य मेल</string>
+    <string name="str_failed_to_auto_login">ऑटोलॉगिन विफल</string>
+    <string name="str_failed_to_change_heart_state">दिल की स्थिति बदलने में विफल</string>
+    <string name="str_failed_to_change_read_state">पढ़ने की स्थिति बदलने मे विफल</string>
+    <string name="str_reaction_icon_attach_failed">प्रतिक्रिया चिह्न संलग्न विफल</string>
+    <string name="str_you_became_couple">आप युगल बन गए.</string>
+    <string name="str_unknown">अज्ञात</string>
+    <string name="str_yes">हाँ</string>
+    <string name="str_no">नहीं</string>
+    <string name="str_error">त्रुटि</string>
+    <string name="str_warning">चेतावनी</string>
+    <string name="str_information">जानकारी</string>
+    <string name="str_done">पूर्ण</string>
+    <string name="str_password_reset_mail_success">ईमेल भेजे.</string>
+    <string name="str_password_change_success">पासवर्ड बदल गया.</string>
+    <string name="str_email_change_success">ईमेल बदल गया.</string>
+    <string name="str_auto_login_success">ऑटोलॉगिन सफल रहा.</string>
+    <string name="str_send_mail_success">मेल भेजना सफलतापूर्वक था.</string>
+    <string name="str_mail_deleted">आपने यह मेल हटाया.</string>
+    <string name="str_deleted_these">आपने ये हटाये.</string>
+    <string name="str_post_deleted">आपने यह पोस्ट हटाई.</string>
+    <string name="str_days_deleted">आपने दिन आइटम हटाये.</string>
+    <string name="str_post_edited"> आपने यह पोस्ट एडिट की.</string>
+    <string name="str_days_added"> आपने दिन आइटम लिखे.</string>
+    <string name="str_days_edited">आपने दिन आइटम एडिट किये .</string>
+    <string name="str_post_posted">पोस्टिंग सफल रही.</string>
+    <string name="str_comment_posted">आपने एक टिप्पणी पोस्ट की.</string>
+    <string name="str_comment_edited">आपने यह टिप्पणी एडिट की.</string>
+    <string name="str_comment_deleted">आपने यह टिप्पणी हटाई.</string>
+    <string name="str_registration_success">पंजीकरण सफल रहा.</string>
+
+    <string name="str_widget_login_error">आपको युगल ब्लॉग लॉगिन करने की जरूरत है</string>
+    <string name="str_widget_couple_error">आप युगल नहीं हैं</string>
+    <string name="str_widget_info_error">अमान्य जानकारी</string>
+
 </resources>

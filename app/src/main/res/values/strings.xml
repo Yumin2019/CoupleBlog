@@ -902,7 +902,7 @@ OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.            
     <string name="str_add_item">Add item</string>
     <string name="str_no_image">No image</string>
     <string name="str_email">Email</string>
-    <string name="str_email_desc">Email(It is used to change passwords.)</string>
+    <string name="str_email_desc">Email</string>
     <string name="str_current_password">Current Password</string>
     <string name="str_new_password">New Password</string>
     <string name="str_new_password_again">New Password again</string>

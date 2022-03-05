@@ -104,7 +104,7 @@
     <string name="str_add_item">항목 추가</string>
     <string name="str_no_image">이미지 없애기</string>
     <string name="str_email">이메일</string>
-    <string name="str_email_desc">이메일(비밀번호 변경에 사용)</string>
+    <string name="str_email_desc">이메일</string>
     <string name="str_current_password">현재 비밀번호</string>
     <string name="str_new_password">새 비밀번호</string>
     <string name="str_new_password_again">새 비밀번호 확인</string>
