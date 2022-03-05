@@ -17,12 +17,26 @@ import com.google.firebase.database.DatabaseError
 import com.google.firebase.database.ValueEventListener
 import com.google.firebase.database.ktx.getValue
 import android.app.PendingIntent
+import android.content.ComponentName
 
 class CB_DaysWidgetProvider : AppWidgetProvider() {
 
     private var strDaysKey = ""
     private var strEventType = ""
     private var strCoupleKey = ""
+
+    // 브로드 캐스트를 이용하여 업데이트 신호 보내기
+    // val intentAction = Intent(this, CB_DaysWidgetProvider::class.java)
+    // intentAction.setAction(AppWidgetManager.ACTION_APPWIDGET_UPDATE)
+    // val ids = AppWidgetManager.getInstance(this).getAppWidgetIds(ComponentName(this, CB_DaysWidgetProvider::class.java))
+    // intentAction.putExtra(AppWidgetManager.EXTRA_APPWIDGET_IDS, ids)
+    // sendBroadcast(intentAction)
+
+    override fun onReceive(context: Context, intent: Intent) {
+        val ids = AppWidgetManager.getInstance(context).getAppWidgetIds(ComponentName(context, CB_DaysWidgetProvider::class.java))
+        val myWidget = CB_DaysWidgetProvider()
+        myWidget.onUpdate(context, AppWidgetManager.getInstance(context), ids)
+    }
 
     override fun onUpdate(
         context: Context,
@@ -41,6 +55,10 @@ class CB_DaysWidgetProvider : AppWidgetProvider() {
                 strCoupleKey = getString("strCoupleKey", "") ?: ""
             }
 
+            Log.i("WIDGET", "strEventType : $strEventType")
+            Log.i("WIDGET", "strDaysKey : $strDaysKey")
+            Log.i("WIDGET", "strCoupleKey : $strCoupleKey")
+
             val remoteViews = RemoteViews(context.packageName, R.layout.cb_days_widget)
             var hasError = false
             var strErrorText = ""
@@ -54,12 +72,12 @@ class CB_DaysWidgetProvider : AppWidgetProvider() {
                 hasError = true
             }
 
+            Log.e("WIDGET", "id: $appWidgetId hasError: $hasError")
             if (hasError) {
                 remoteViews.apply {
                     setTextViewText(R.id.item_text_view, strErrorText)
                     setViewVisibility(R.id.days_text_view, View.GONE)
                     setViewVisibility(R.id.icon_image_view, View.GONE)
-                    Log.e("widget", "id: $appWidgetId has error")
                 }
                 continue
             }
@@ -77,20 +95,24 @@ class CB_DaysWidgetProvider : AppWidgetProvider() {
                         days?.let {
                             remoteViews.apply {
                                 val iResIdx = CB_AppFunc.getDrawableIdentifier(context, it.strIconRes!!)
+
+                                Log.i("WIDGET",  "title : " + days.strTitle!!)
+                                Log.i("WIDGET",  "daystime : " + setDaysTime(null, days))
                                 setTextViewText(R.id.item_text_view, days.strTitle)
                                 setTextViewText(R.id.days_text_view, setDaysTime(null, days))
+
                                 if(iResIdx != 0){
                                     setImageViewResource(R.id.icon_image_view, iResIdx)
                                 }
 
-                                Log.i("widget", "id: $appWidgetId finish")
+                                Log.i("WIDGET", "id: $appWidgetId updated")
                                 appWidgetManager.updateAppWidget(appWidgetId, remoteViews)
                             }
                         }
                     }
 
                     override fun onCancelled(databaseError: DatabaseError) {
-                        Log.e("daysWidgetProvider", "onCancelled: $databaseError")
+                        Log.i("WIDGET", "onCancelled : $databaseError")
                     }
                 })
 
