@@ -15,7 +15,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.coupleblog.R;
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment;
 
-import ja.burhanrashid52.photoeditor.shape.ShapeType;
+import com.coupleblog.a200photoeditor.shape.ShapeType;
 
 public class ShapeBSFragment extends BottomSheetDialogFragment implements SeekBar.OnSeekBarChangeListener {
 

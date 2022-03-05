@@ -51,12 +51,6 @@
             android:name=".widget.CB_DaysWidgetActivity"
             android:screenOrientation="portrait" />
 
-        <!-- unused -->
-        <activity
-            android:name=".a100photo.EditImageActivity"
-            android:screenOrientation="portrait"
-            android:theme="@android:style/Theme.Black.NoTitleBar.Fullscreen" />
-
         <activity
             android:name=".CB_MainActivity"
             android:exported="true"

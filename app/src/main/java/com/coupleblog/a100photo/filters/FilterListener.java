@@ -1,6 +1,6 @@
 package com.coupleblog.a100photo.filters;
 
-import ja.burhanrashid52.photoeditor.PhotoFilter;
+import com.coupleblog.a200photoeditor.PhotoFilter;
 
 public interface FilterListener {
     void onFilterSelected(PhotoFilter photoFilter);

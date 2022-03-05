@@ -21,7 +21,7 @@ import java.io.InputStream;
 import java.util.ArrayList;
 import java.util.List;
 
-import ja.burhanrashid52.photoeditor.PhotoFilter;
+import com.coupleblog.a200photoeditor.PhotoFilter;
 
 /**
  * @author <a href="https://github.com/burhanrashid52">Burhanuddin Rashid</a>

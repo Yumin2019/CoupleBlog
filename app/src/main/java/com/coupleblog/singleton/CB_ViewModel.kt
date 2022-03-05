@@ -29,7 +29,6 @@ class CB_ViewModel
 
         // photoEditor Fragment
         var editorBitmap: Bitmap? = null
-        var strCurTool = MutableLiveData("")
 
         // when you go out of MainFragment
         // when you click view pages

@@ -11,10 +11,6 @@
             type="com.coupleblog.CB_PhotoEditorActivity" />
 
         <variable
-            name="viewModel"
-            type="com.coupleblog.singleton.CB_ViewModel.Companion" />
-
-        <variable
             name="llmTools"
             type="androidx.recyclerview.widget.LinearLayoutManager" />
 
@@ -46,15 +42,14 @@
             android:orientation="horizontal"
             app:layout_constraintGuide_end="?attr/actionBarSize" />
 
-        <ja.burhanrashid52.photoeditor.PhotoEditorView
+        <com.coupleblog.a200photoeditor.PhotoEditorView
             android:id="@+id/photoEditorView"
             android:layout_width="0dp"
             android:layout_height="0dp"
             app:layout_constraintBottom_toTopOf="@+id/rvConstraintTools"
             app:layout_constraintLeft_toLeftOf="parent"
             app:layout_constraintRight_toRightOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
-            app:photo_src="@drawable/blank_image" />
+            app:layout_constraintTop_toTopOf="parent"/>
 
         <com.google.android.gms.ads.AdView
             android:id="@+id/adView"
@@ -145,11 +140,10 @@
         <TextView
             android:id="@+id/txtCurrentTool"
             style="@style/subtitle_text_style"
-            android:layout_width="wrap_content"
+            android:layout_width="250dp"
             android:layout_height="wrap_content"
             android:singleLine="true"
-            android:text="@{viewModel.strCurTool}"
-            tools:text="@string/app_name"
+            android:text="@string/app_name"
             android:textColor="@color/static_white"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"

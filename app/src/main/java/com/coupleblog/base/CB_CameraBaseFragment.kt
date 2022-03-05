@@ -1,37 +1,28 @@
 package com.coupleblog.base
 
-import android.app.Activity
 import android.app.Dialog
 import android.content.Intent
 import android.graphics.Bitmap
-import android.graphics.ImageDecoder
-import android.graphics.drawable.BitmapDrawable
 import android.media.ExifInterface
 import android.net.Uri
 import android.os.Build
 import android.os.Bundle
 import android.os.Environment
-import android.provider.MediaStore
 import android.util.Log
-import android.view.ScaleGestureDetector
 import androidx.activity.result.ActivityResultLauncher
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.core.content.FileProvider
-import androidx.navigation.fragment.findNavController
 import com.coupleblog.CB_PhotoEditorActivity
 import com.coupleblog.R
-import com.coupleblog.a100photo.EditImageActivity
 import com.coupleblog.dialog.CB_LoadingDialog
 import com.coupleblog.singleton.CB_AppFunc
 import com.coupleblog.singleton.CB_SingleSystemMgr
 import com.coupleblog.singleton.CB_ViewModel
 import com.coupleblog.storage.CB_UploadService
 import com.coupleblog.storage.UPLOAD_TYPE
-import ja.burhanrashid52.photoeditor.PhotoEditor
 import kotlinx.coroutines.launch
 import java.io.File
 import java.io.IOException
-import java.lang.Exception
 
 // all of fragments want to use camera function, extend this fragment
 abstract class CB_CameraBaseFragment(protected val uploadType: UPLOAD_TYPE,

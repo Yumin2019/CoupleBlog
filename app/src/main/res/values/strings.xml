@@ -798,6 +798,8 @@ OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.            
     <!-- translatable false end -->
 
     <!-- translatable true start -->
+    <string name="str_thickness">Thickness</string>
+    <string name="str_opacity">Opacity</string>
     <string name="label_brush">Brush</string>
     <string name="label_shape">Shape</string>
     <string name="label_oval">Oval</string>

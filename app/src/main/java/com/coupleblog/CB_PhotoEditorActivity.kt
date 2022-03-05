@@ -4,10 +4,8 @@ import android.graphics.Bitmap
 import android.graphics.Color
 import android.graphics.Typeface
 import android.os.Bundle
-import android.util.Log
 import android.view.*
 import android.view.animation.AnticipateOvershootInterpolator
-import androidx.appcompat.app.AppCompatActivity
 import androidx.constraintlayout.widget.ConstraintSet
 import androidx.core.content.res.ResourcesCompat
 import androidx.databinding.DataBindingUtil
@@ -25,10 +23,10 @@ import com.coupleblog.singleton.CB_SingleSystemMgr
 import com.coupleblog.singleton.CB_ViewModel
 import com.google.android.gms.ads.AdRequest
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment
-import ja.burhanrashid52.photoeditor.*
-import ja.burhanrashid52.photoeditor.shape.ShapeBuilder
-import ja.burhanrashid52.photoeditor.shape.ShapeType
-import java.lang.Exception
+import com.coupleblog.a200photoeditor.*
+import com.coupleblog.a200photoeditor.shape.ShapeBuilder
+import com.coupleblog.a200photoeditor.shape.ShapeType
+import kotlin.Exception
 
 class CB_PhotoEditorActivity: CB_BaseActivity(CB_SingleSystemMgr.ACTIVITY_TYPE.PHOTO_EDTIOR),
      OnPhotoEditorListener,
@@ -71,7 +69,6 @@ class CB_PhotoEditorActivity: CB_BaseActivity(CB_SingleSystemMgr.ACTIVITY_TYPE.P
         binding   = DataBindingUtil.setContentView(this, R.layout.activity_photo_editor)
         binding.apply {
             activity = this@CB_PhotoEditorActivity
-            viewModel = CB_ViewModel.Companion
 
             llmTools = LinearLayoutManager(this@CB_PhotoEditorActivity, LinearLayoutManager.HORIZONTAL, false)
             toolsAdapter = EditingToolsAdapter(this@CB_PhotoEditorActivity)
@@ -89,7 +86,6 @@ class CB_PhotoEditorActivity: CB_BaseActivity(CB_SingleSystemMgr.ACTIVITY_TYPE.P
         window.statusBarColor = Color.TRANSPARENT
 
         // bottom text view
-        CB_ViewModel.strCurTool.postValue(getString(R.string.app_name))
         mPropertiesBSFragment = PropertiesBSFragment()
         mEmojiBSFragment = EmojiBSFragment()
         mStickerBSFragment = StickerBSFragment()
@@ -166,7 +162,7 @@ class CB_PhotoEditorActivity: CB_BaseActivity(CB_SingleSystemMgr.ACTIVITY_TYPE.P
 
         mPhotoEditor.saveAsBitmap(saveSettings, object : OnSaveBitmap
         {
-            override fun onBitmapReady(saveBitmap: Bitmap)
+            override fun onBitmapReady(saveBitmap: Bitmap?)
             {
                 infoLog("mPhotoEditor: uploadImage")
                 CB_ViewModel.editorBitmap = saveBitmap
@@ -174,9 +170,9 @@ class CB_PhotoEditorActivity: CB_BaseActivity(CB_SingleSystemMgr.ACTIVITY_TYPE.P
                 finish()
             }
 
-            override fun onFailure(e: Exception)
+            override fun onFailure(e: Exception?)
             {
-                e.printStackTrace()
+                e?.printStackTrace()
                 CB_AppFunc.okDialog(this@CB_PhotoEditorActivity, R.string.str_error,
                     R.string.str_failed_to_upload_image, R.drawable.error_icon, true)
             }
@@ -189,7 +185,7 @@ class CB_PhotoEditorActivity: CB_BaseActivity(CB_SingleSystemMgr.ACTIVITY_TYPE.P
         {
             // if filter is visible, turn off the filter
             showFilter(false)
-            CB_ViewModel.strCurTool.postValue(getString(R.string.app_name))
+            binding.txtCurrentTool.text = getString(R.string.app_name)
         }
         else if(!mPhotoEditor.isCacheEmpty)
         {
@@ -210,14 +206,17 @@ class CB_PhotoEditorActivity: CB_BaseActivity(CB_SingleSystemMgr.ACTIVITY_TYPE.P
         }
     }
 
-    override fun onEditTextChangeListener(rootView: View, text: String, colorCode: Int)
+    override fun onEditTextChangeListener(rootView: View?, text: String?, colorCode: Int)
     {
+        if(rootView == null || text == null)
+            return
+
         val textEditorDialogFragment = TextEditorDialogFragment.show(this, text, colorCode)
         textEditorDialogFragment.setOnTextEditorListener { inputText: String?, newColorCode: Int ->
             val styleBuilder = TextStyleBuilder()
             styleBuilder.withTextColor(newColorCode)
             mPhotoEditor.editText(rootView, inputText, styleBuilder)
-            CB_ViewModel.strCurTool.postValue(getString(R.string.label_text))
+            binding.txtCurrentTool.text = getString(R.string.label_text)
         }
     }
 
@@ -249,37 +248,31 @@ class CB_PhotoEditorActivity: CB_BaseActivity(CB_SingleSystemMgr.ACTIVITY_TYPE.P
     override fun onColorChanged(colorCode: Int)
     {
         mPhotoEditor.setShape(mShapeBuilder.withShapeColor(colorCode))
-        CB_ViewModel.strCurTool.postValue(getString(R.string.label_brush))
     }
 
     override fun onOpacityChanged(opacity: Int)
     {
         mPhotoEditor.setShape(mShapeBuilder.withShapeOpacity(opacity))
-        CB_ViewModel.strCurTool.postValue(getString(R.string.label_brush))
     }
 
     override fun onShapeSizeChanged(shapeSize: Int)
     {
         mPhotoEditor.setShape(mShapeBuilder.withShapeSize(shapeSize.toFloat()))
-        CB_ViewModel.strCurTool.postValue(getString(R.string.label_brush))
     }
 
     override fun onShapePicked(shapeType: ShapeType?)
     {
         mPhotoEditor.setShape(mShapeBuilder.withShapeType(shapeType))
-        CB_ViewModel.strCurTool.postValue(getString(R.string.label_brush))
     }
 
     override fun onEmojiClick(emojiUnicode: String?)
     {
         mPhotoEditor.addEmoji(emojiUnicode)
-        CB_ViewModel.strCurTool.postValue(getString(R.string.label_emoji))
     }
 
     override fun onStickerClick(bitmap: Bitmap?)
     {
         mPhotoEditor.addImage(bitmap)
-        CB_ViewModel.strCurTool.postValue(getString(R.string.label_sticker))
     }
 
     override fun onFilterSelected(photoFilter: PhotoFilter?)
@@ -299,7 +292,7 @@ class CB_PhotoEditorActivity: CB_BaseActivity(CB_SingleSystemMgr.ACTIVITY_TYPE.P
                     setShape(mShapeBuilder)
                 }
                 showBottomSheetDialogFragment(mShapeBSFragment)
-                CB_ViewModel.strCurTool.postValue(getString(R.string.label_shape))
+                binding.txtCurrentTool.text = getString(R.string.label_shape)
             }
 
             ToolType.TEXT ->
@@ -311,24 +304,32 @@ class CB_PhotoEditorActivity: CB_BaseActivity(CB_SingleSystemMgr.ACTIVITY_TYPE.P
                     styleBuilder.withTextColor(colorCode)
 
                     mPhotoEditor.addText(inputText, styleBuilder)
-                    CB_ViewModel.strCurTool.postValue(getString(R.string.label_text))
+                    binding.txtCurrentTool.text = getString(R.string.label_text)
                 }
             }
 
             ToolType.ERASER ->
             {
                 mPhotoEditor.brushEraser()
-                CB_ViewModel.strCurTool.postValue(getString(R.string.label_eraser_mode))
+                binding.txtCurrentTool.text = getString(R.string.label_eraser_mode)
             }
 
             ToolType.FILTER ->
             {
                 showFilter(true)
-                CB_ViewModel.strCurTool.postValue(getString(R.string.label_filter))
+                binding.txtCurrentTool.text = getString(R.string.label_filter)
             }
 
-            ToolType.EMOJI -> showBottomSheetDialogFragment(mEmojiBSFragment)
-            ToolType.STICKER -> showBottomSheetDialogFragment(mStickerBSFragment)
+            ToolType.EMOJI ->
+            {
+                showBottomSheetDialogFragment(mEmojiBSFragment)
+                binding.txtCurrentTool.text = getString(R.string.label_emoji)
+            }
+            ToolType.STICKER ->
+            {
+                showBottomSheetDialogFragment(mStickerBSFragment)
+                binding.txtCurrentTool.text = getString(R.string.label_sticker)
+            }
         }
     }
 

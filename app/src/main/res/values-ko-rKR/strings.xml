@@ -1,6 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <!-- translatable true start -->
+    <string name="str_thickness">두께</string>
+    <string name="str_opacity">불투명도</string>
     <string name="label_brush">브러시</string>
     <string name="label_shape">도형</string>
     <string name="label_oval">타원</string>

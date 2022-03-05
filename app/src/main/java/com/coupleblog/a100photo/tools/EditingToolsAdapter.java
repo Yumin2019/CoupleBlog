@@ -10,6 +10,7 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.coupleblog.R;
+import com.coupleblog.singleton.CB_AppFunc;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -26,12 +27,12 @@ public class EditingToolsAdapter extends RecyclerView.Adapter<EditingToolsAdapte
 
     public EditingToolsAdapter(OnItemSelected onItemSelected) {
         mOnItemSelected = onItemSelected;
-        mToolList.add(new ToolModel("Shape", R.drawable.ic_oval, ToolType.SHAPE));
-        mToolList.add(new ToolModel("Text", R.drawable.ic_text, ToolType.TEXT));
-        mToolList.add(new ToolModel("Eraser", R.drawable.ic_eraser, ToolType.ERASER));
-        mToolList.add(new ToolModel("Filter", R.drawable.ic_photo_filter, ToolType.FILTER));
-        mToolList.add(new ToolModel("Emoji", R.drawable.ic_insert_emoticon, ToolType.EMOJI));
-        mToolList.add(new ToolModel("Sticker", R.drawable.ic_sticker, ToolType.STICKER));
+        mToolList.add(new ToolModel(CB_AppFunc.Companion.getString(R.string.label_shape), R.drawable.ic_oval, ToolType.SHAPE));
+        mToolList.add(new ToolModel(CB_AppFunc.Companion.getString(R.string.label_text), R.drawable.ic_text, ToolType.TEXT));
+        mToolList.add(new ToolModel(CB_AppFunc.Companion.getString(R.string.label_eraser), R.drawable.ic_eraser, ToolType.ERASER));
+        mToolList.add(new ToolModel(CB_AppFunc.Companion.getString(R.string.label_filter), R.drawable.ic_photo_filter, ToolType.FILTER));
+        mToolList.add(new ToolModel(CB_AppFunc.Companion.getString(R.string.label_emoji), R.drawable.ic_insert_emoticon, ToolType.EMOJI));
+        mToolList.add(new ToolModel(CB_AppFunc.Companion.getString(R.string.label_sticker), R.drawable.ic_sticker, ToolType.STICKER));
     }
 
     public interface OnItemSelected {
