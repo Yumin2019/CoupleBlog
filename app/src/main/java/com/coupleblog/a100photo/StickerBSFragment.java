@@ -2,6 +2,7 @@ package com.coupleblog.a100photo;
 
 import android.annotation.SuppressLint;
 import android.app.Dialog;
+import android.content.DialogInterface;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.os.Bundle;
@@ -17,6 +18,7 @@ import androidx.coordinatorlayout.widget.CoordinatorLayout;
 import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.coupleblog.CB_PhotoEditorActivity;
 import com.coupleblog.R;
 import com.coupleblog.singleton.CB_AppFunc;
 import com.google.android.material.bottomsheet.BottomSheetBehavior;
@@ -26,6 +28,12 @@ public class StickerBSFragment extends BottomSheetDialogFragment {
 
     public StickerBSFragment() {
         // Required empty public constructor
+    }
+
+    @Override
+    public void onDismiss(@NonNull DialogInterface dialog) {
+        super.onDismiss(dialog);
+        CB_PhotoEditorActivity.Companion.setMHasBSSheet(false);
     }
 
     private StickerListener mStickerListener;

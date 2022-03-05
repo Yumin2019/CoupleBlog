@@ -2,6 +2,7 @@ package com.coupleblog.a100photo;
 
 import android.app.Dialog;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
 import android.text.TextUtils;
@@ -21,6 +22,7 @@ import androidx.fragment.app.DialogFragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.coupleblog.CB_PhotoEditorActivity;
 import com.coupleblog.R;
 
 /**
@@ -42,6 +44,11 @@ public class TextEditorDialogFragment extends DialogFragment {
         void onDone(String inputText, int colorCode);
     }
 
+    @Override
+    public void onDismiss(@NonNull DialogInterface dialog) {
+        super.onDismiss(dialog);
+        CB_PhotoEditorActivity.Companion.setMHasBSSheet(false);
+    }
 
     //Show dialog with provide text and text color
     public static TextEditorDialogFragment show(@NonNull AppCompatActivity appCompatActivity,

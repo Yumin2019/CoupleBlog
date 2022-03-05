@@ -1,5 +1,6 @@
 package com.coupleblog.a100photo;
 
+import android.content.DialogInterface;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -12,6 +13,7 @@ import androidx.annotation.Nullable;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.coupleblog.CB_PhotoEditorActivity;
 import com.coupleblog.R;
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment;
 
@@ -21,6 +23,12 @@ public class ShapeBSFragment extends BottomSheetDialogFragment implements SeekBa
 
     public ShapeBSFragment() {
         // Required empty public constructor
+    }
+
+    @Override
+    public void onDismiss(@NonNull DialogInterface dialog) {
+        super.onDismiss(dialog);
+        CB_PhotoEditorActivity.Companion.setMHasBSSheet(false);
     }
 
     private Properties mProperties;

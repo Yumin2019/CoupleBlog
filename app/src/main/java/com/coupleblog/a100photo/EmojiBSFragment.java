@@ -5,6 +5,7 @@ import static com.coupleblog.singleton.CB_AppFunc.application;
 import android.annotation.SuppressLint;
 import android.app.Dialog;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
@@ -19,6 +20,7 @@ import androidx.coordinatorlayout.widget.CoordinatorLayout;
 import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.coupleblog.CB_PhotoEditorActivity;
 import com.coupleblog.R;
 import com.google.android.material.bottomsheet.BottomSheetBehavior;
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment;
@@ -31,6 +33,12 @@ public class EmojiBSFragment extends BottomSheetDialogFragment {
 
     public EmojiBSFragment() {
         // Required empty public constructor
+    }
+
+    @Override
+    public void onDismiss(@NonNull DialogInterface dialog) {
+        super.onDismiss(dialog);
+        CB_PhotoEditorActivity.Companion.setMHasBSSheet(false);
     }
 
     private EmojiListener mEmojiListener;

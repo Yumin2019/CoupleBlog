@@ -38,6 +38,7 @@ class CB_PhotoEditorActivity: CB_BaseActivity(CB_SingleSystemMgr.ACTIVITY_TYPE.P
     companion object
     {
         var cameraListener: CameraListener? = null
+        var mHasBSSheet = false
     }
 
     // PhotoEditor Begin
@@ -96,6 +97,8 @@ class CB_PhotoEditorActivity: CB_BaseActivity(CB_SingleSystemMgr.ACTIVITY_TYPE.P
         mPropertiesBSFragment!!.setPropertiesChangeListener(this)
         mShapeBSFragment!!.setPropertiesChangeListener(this)
 
+        mHasBSSheet = false
+
         // use custom fonts
         val loraRegularTf = ResourcesCompat.getFont(applicationContext, R.font.lora_regular)
 
@@ -120,6 +123,8 @@ class CB_PhotoEditorActivity: CB_BaseActivity(CB_SingleSystemMgr.ACTIVITY_TYPE.P
         {
             binding.photoEditorView.source.setBackgroundResource(R.color.white)
         }
+
+        mPhotoEditor.setFilterEffect(PhotoFilter.NONE)
     }
 
     override fun onPause()
@@ -286,17 +291,25 @@ class CB_PhotoEditorActivity: CB_BaseActivity(CB_SingleSystemMgr.ACTIVITY_TYPE.P
         {
             ToolType.SHAPE ->
             {
+                if(mHasBSSheet)
+                    return
+
                 _shapeBuilder = ShapeBuilder()
                 mPhotoEditor.apply {
                     setBrushDrawingMode(true)
                     setShape(mShapeBuilder)
                 }
+
                 showBottomSheetDialogFragment(mShapeBSFragment)
                 binding.txtCurrentTool.text = getString(R.string.label_shape)
+                mHasBSSheet = true
             }
 
             ToolType.TEXT ->
             {
+                if(mHasBSSheet)
+                    return
+
                 // show fragment -> select color and text -> process this function
                 val textEditorFragment = TextEditorDialogFragment.show(this@CB_PhotoEditorActivity)
                 textEditorFragment.setOnTextEditorListener { inputText, colorCode ->
@@ -306,6 +319,8 @@ class CB_PhotoEditorActivity: CB_BaseActivity(CB_SingleSystemMgr.ACTIVITY_TYPE.P
                     mPhotoEditor.addText(inputText, styleBuilder)
                     binding.txtCurrentTool.text = getString(R.string.label_text)
                 }
+
+                mHasBSSheet = true
             }
 
             ToolType.ERASER ->
@@ -322,13 +337,23 @@ class CB_PhotoEditorActivity: CB_BaseActivity(CB_SingleSystemMgr.ACTIVITY_TYPE.P
 
             ToolType.EMOJI ->
             {
+                if(mHasBSSheet)
+                    return
+
                 showBottomSheetDialogFragment(mEmojiBSFragment)
                 binding.txtCurrentTool.text = getString(R.string.label_emoji)
+
+                mHasBSSheet = true
             }
             ToolType.STICKER ->
             {
+                if(mHasBSSheet)
+                    return
+
                 showBottomSheetDialogFragment(mStickerBSFragment)
                 binding.txtCurrentTool.text = getString(R.string.label_sticker)
+
+                mHasBSSheet = true
             }
         }
     }
