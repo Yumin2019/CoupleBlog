@@ -199,6 +199,22 @@ class CB_PostDetailFragment: CB_BaseFragment()
         // post author permissions
         if(CB_ViewModel.isMyPost.value!!)
         {
+            var hasDeletePermission = false
+            for(i in 0 until listItem.size)
+            {
+                if(listItem[i].iIconRes == R.drawable.trash_can)
+                {
+                    hasDeletePermission = true
+                    break
+                }
+            }
+
+            if(!hasDeletePermission)
+            {
+                listItem.add(DialogItem(getString(R.string.str_delete_comment), R.drawable.trash_can,
+                    callback = { deleteComment(strCommentKey) }))
+            }
+
             listItem.add(DialogItem(getString(R.string.str_reaction_icons), R.drawable.haha_icon,
             callback = { commentReactionIconsButton(strCommentKey, commentData) }))
         }

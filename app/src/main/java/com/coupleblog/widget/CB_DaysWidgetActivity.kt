@@ -1,5 +1,6 @@
 package com.coupleblog.widget
 
+import android.annotation.SuppressLint
 import android.appwidget.AppWidgetManager
 import android.os.Bundle
 import android.util.Log
@@ -85,6 +86,7 @@ class CB_DaysWidgetActivity : CB_BaseActivity(CB_SingleSystemMgr.ACTIVITY_TYPE.D
         }
     }
 
+    @SuppressLint("NotifyDataSetChanged")
     override fun onStop()
     {
         super.onStop()
@@ -92,7 +94,7 @@ class CB_DaysWidgetActivity : CB_BaseActivity(CB_SingleSystemMgr.ACTIVITY_TYPE.D
         {
             eventAdapters[i].apply {
                 stopListening()
-                notifyItemRangeChanged(0, itemCount)
+                notifyDataSetChanged()
             }
         }
     }
@@ -158,6 +160,8 @@ class CB_DaysWidgetActivity : CB_BaseActivity(CB_SingleSystemMgr.ACTIVITY_TYPE.D
                 reverseLayout = true
                 stackFromEnd  = true
             }
+
+            daysCardView.fitsSystemWindows = true
         }
     }
 }

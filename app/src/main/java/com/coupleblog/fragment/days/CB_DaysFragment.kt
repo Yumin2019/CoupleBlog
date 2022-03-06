@@ -1,5 +1,6 @@
 package com.coupleblog.fragment.days
 
+import android.annotation.SuppressLint
 import android.os.Bundle
 import android.view.*
 import androidx.core.os.bundleOf
@@ -105,6 +106,7 @@ class CB_DaysFragment : CB_BaseFragment(), CB_DaysItemClickListener
         }
     }
 
+    @SuppressLint("NotifyDataSetChanged")
     override fun onStop()
     {
         super.onStop()
@@ -112,7 +114,7 @@ class CB_DaysFragment : CB_BaseFragment(), CB_DaysItemClickListener
         {
             eventAdapters[i].apply {
                 stopListening()
-                notifyItemRangeChanged(0, itemCount)
+                notifyDataSetChanged()
             }
         }
     }

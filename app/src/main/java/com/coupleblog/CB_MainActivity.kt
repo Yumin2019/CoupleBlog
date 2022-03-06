@@ -36,9 +36,6 @@ class CB_MainActivity : CB_BaseActivity(CB_SingleSystemMgr.ACTIVITY_TYPE.MAIN)
             activity       = this@CB_MainActivity
             viewModel      = CB_ViewModel.Companion
 
-            if(!BuildConfig.DEBUG)
-                adView.adUnitId = getString(R.string.str_admob_banner_id)
-
             setSupportActionBar(toolbar)
         }
 
@@ -83,6 +80,7 @@ class CB_MainActivity : CB_BaseActivity(CB_SingleSystemMgr.ACTIVITY_TYPE.MAIN)
 
         // Init
         MobileAds.initialize(this) {}
+
         val adRequest = AdRequest.Builder().build()
         binding.adView.loadAd(adRequest)
 

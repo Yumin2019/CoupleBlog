@@ -1,5 +1,6 @@
 package com.coupleblog.base
 
+import android.annotation.SuppressLint
 import android.os.Bundle
 import android.view.*
 import androidx.core.os.bundleOf
@@ -170,13 +171,14 @@ abstract class CB_PostListFragment : CB_BaseFragment()
         adapter?.startListening()
     }
 
+    @SuppressLint("NotifyDataSetChanged")
     override fun onStop()
     {
         super.onStop()
         // if adapter didn't have any listeners from array, list in adapter will be destroyed
         adapter?.let{
             it.stopListening()
-            it.notifyItemRangeChanged(0, it.itemCount)
+            it.notifyDataSetChanged()
         }
     }
 

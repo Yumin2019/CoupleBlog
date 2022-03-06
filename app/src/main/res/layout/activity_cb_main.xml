@@ -76,8 +76,8 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_gravity="bottom"
-            ads:adSize="BANNER"
-            ads:adUnitId="@string/str_admob_banner_test_id"/>
+            ads:adUnitId="@string/str_admob_banner_id"
+            ads:adSize="BANNER"/>
 
     </androidx.coordinatorlayout.widget.CoordinatorLayout>
 </layout>

@@ -55,11 +55,11 @@
             android:id="@+id/adView"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            ads:adUnitId="@string/str_admob_banner_id"
+            ads:adSize="BANNER"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
-            ads:adSize="BANNER"
-            ads:adUnitId="@string/str_admob_banner_test_id"/>
+            app:layout_constraintTop_toTopOf="parent"/>
 
         <ImageView
             android:id="@+id/imgClear"

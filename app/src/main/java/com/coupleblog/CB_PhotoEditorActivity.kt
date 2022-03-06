@@ -26,6 +26,7 @@ import com.google.android.material.bottomsheet.BottomSheetDialogFragment
 import com.coupleblog.a200photoeditor.*
 import com.coupleblog.a200photoeditor.shape.ShapeBuilder
 import com.coupleblog.a200photoeditor.shape.ShapeType
+import com.google.android.gms.ads.AdSize
 import kotlin.Exception
 
 class CB_PhotoEditorActivity: CB_BaseActivity(CB_SingleSystemMgr.ACTIVITY_TYPE.PHOTO_EDTIOR),
@@ -76,9 +77,6 @@ class CB_PhotoEditorActivity: CB_BaseActivity(CB_SingleSystemMgr.ACTIVITY_TYPE.P
 
             llmFilters = LinearLayoutManager(this@CB_PhotoEditorActivity, LinearLayoutManager.HORIZONTAL, false)
             filterViewAdapter = FilterViewAdapter(this@CB_PhotoEditorActivity)
-
-            if(!BuildConfig.DEBUG)
-                adView.adUnitId = getString(R.string.str_admob_banner_id)
 
             val adRequest = AdRequest.Builder().build()
             adView.loadAd(adRequest)
