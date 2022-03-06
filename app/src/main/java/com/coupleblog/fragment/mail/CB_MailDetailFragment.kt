@@ -298,9 +298,7 @@ class CB_MailDetailFragment : CB_BaseFragment()
 
                                     // 커플꺼
                                     CB_AppFunc._coupleUser = snapshot.getValue<CB_User>()!!
-                                    CB_AppFunc.coupleUser.strCoupleUid = myUid
-                                    CB_AppFunc.coupleUser.strCoupleKey = coupleKey
-                                    CB_AppFunc.getUsersRoot().child(coupleUid).setValue(CB_AppFunc.coupleUser)
+                                    CB_AppFunc.getUsersRoot().child(coupleUid).updateChildren(mapOf("strCoupleUid" to myUid, "strCoupleKey" to coupleKey))
 
                                     // 커플 정보
                                     CB_AppFunc.getCouplesRoot().child(coupleKey!!).setValue(coupleInfo)

@@ -667,7 +667,7 @@ class CB_AppFunc
             coupleUser.strCoupleKey = ""
 
             getUsersRoot().child(strUid).setValue(curUser)
-            getUsersRoot().child(strCoupleUid).setValue(coupleUser)
+            getUsersRoot().child(strCoupleUid).updateChildren(mapOf("strCoupleUid" to "", "strCoupleKey" to ""))
             Log.i(strTag, "clear couple info")
 
             return@async true

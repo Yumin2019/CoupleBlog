@@ -308,8 +308,8 @@ class CB_NewMailFragment: CB_CameraBaseFragment(UPLOAD_TYPE.EMAIL_IMAGE, bDeferr
                             }
 
                             // make Mail to send
-                            val uriRoot = CB_AppFunc.getMailBoxRoot().child(strRecipientUid)
-                            val mailKey = uriRoot.push().key
+                            val mailBoxRoot = CB_AppFunc.getMailBoxRoot()
+                            val mailKey = mailBoxRoot.child(strRecipientUid).push().key
                             if(mailKey == null)
                             {
                                 // if key is null
@@ -327,10 +327,18 @@ class CB_NewMailFragment: CB_CameraBaseFragment(UPLOAD_TYPE.EMAIL_IMAGE, bDeferr
                             if(CB_ViewModel.mailImage.value == null)
                             {
                                 // save mail data at user-mails/uid/mailKey/mail data
-                                uriRoot.child(mailKey).setValue(mail).await()
-                                Log.d(strTag, "sent a mail to recipient uid:$strRecipientUid")
+                                mailBoxRoot.updateChildren(mapOf("$strRecipientUid/$mailKey" to mail)).addOnCompleteListener {
 
-                                sentMail(dialog, strTitle, strRecipientFcmToken)
+                                    if(it.isSuccessful)
+                                    {
+                                        Log.d(strTag, "sent a mail to recipient uid:$strRecipientUid")
+                                        sentMail(dialog, strTitle, strRecipientFcmToken)
+                                    }
+                                    else
+                                    {
+                                        Log.d(strTag, "failed to send a mail ${it.exception}")
+                                    }
+                                }
                             }
                             else
                             {
@@ -342,12 +350,20 @@ class CB_NewMailFragment: CB_CameraBaseFragment(UPLOAD_TYPE.EMAIL_IMAGE, bDeferr
                                     {
                                         CB_AppFunc.networkScope.launch {
                                             mail.strImgPath = CB_UploadService.strPath
-                                            uriRoot.child(mailKey).setValue(mail).await()
-                                            Log.d(strTag, "sent a mail to recipient uid:$strRecipientUid")
-                                            Log.d(CB_AppFunc.strTag, "update img to users/$strRecipientUid/" +
-                                                    "user-mails/$mailKey/strImgPath")
+                                            mailBoxRoot.updateChildren(mapOf("$strRecipientUid/$mailKey" to mail)).addOnCompleteListener {
+                                                if(it.isSuccessful)
+                                                {
+                                                    Log.d(strTag, "sent a mail to recipient uid:$strRecipientUid")
+                                                    Log.d(CB_AppFunc.strTag, "update img to users/$strRecipientUid/" +
+                                                            "user-mails/$mailKey/strImgPath")
 
-                                            sentMail(dialog, strTitle, strRecipientFcmToken)
+                                                    sentMail(dialog, strTitle, strRecipientFcmToken)
+                                                }
+                                                else
+                                                {
+                                                    Log.d(strTag, "failed to send a mail ${it.exception}")
+                                                }
+                                            }
                                         }
                                     }
 
