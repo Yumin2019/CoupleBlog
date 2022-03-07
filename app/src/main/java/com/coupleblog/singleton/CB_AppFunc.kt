@@ -2,6 +2,7 @@ package com.coupleblog.singleton
 
 import android.annotation.SuppressLint
 import android.app.Activity
+import android.app.ActivityManager
 import android.app.Application
 import android.content.*
 import android.content.pm.ActivityInfo
@@ -210,6 +211,21 @@ class CB_AppFunc
              val bSnsUser            = pref.getBoolean("bSnsUser", false)
              val bAutoLogin          = pref.getBoolean("bAutoLogin", false)
          */
+
+        fun Context.isAppInForeground(): Boolean
+        {
+            val application = this.applicationContext
+            val activityManager = this.getSystemService(Context.ACTIVITY_SERVICE) as ActivityManager
+            val runningProcessList = activityManager.runningAppProcesses
+
+            if (runningProcessList != null) {
+                val myApp = runningProcessList.find { it.processName == application.packageName }
+                ActivityManager.getMyMemoryState(myApp)
+                return myApp?.importance == ActivityManager.RunningAppProcessInfo.IMPORTANCE_FOREGROUND
+            }
+
+            return false
+        }
 
         fun cancelWorker(context: Context, strDaysKey: String)
         {
@@ -661,10 +677,14 @@ class CB_AppFunc
             // root - users couple 정보를 정리한다.
             cleanUpCoupleUserListener(false)
 
+            sendFCM(coupleUser.strUserName!!, getString(R.string.str_widget_couple_error) + "\n" +
+                    getString(R.string.str_login_again), curUser.strFcmToken!!)
+
+            sendFCM(curUser.strUserName!!, getString(R.string.str_widget_couple_error) + "\n" +
+                    getString(R.string.str_login_again), coupleUser.strFcmToken!!)
+
             curUser.strCoupleUid = ""
             curUser.strCoupleKey = ""
-            coupleUser.strCoupleUid = ""
-            coupleUser.strCoupleKey = ""
 
             getUsersRoot().child(strUid).setValue(curUser)
             getUsersRoot().child(strCoupleUid).updateChildren(mapOf("strCoupleUid" to "", "strCoupleKey" to ""))

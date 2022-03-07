@@ -302,9 +302,7 @@ class CB_MailDetailFragment : CB_BaseFragment()
 
                                     // 커플 정보
                                     CB_AppFunc.getCouplesRoot().child(coupleKey!!).setValue(coupleInfo)
-
                                     CB_SingleSystemMgr.showToast(R.string.str_you_became_couple)
-                                    backPressed()
 
                                     // 나에게 알림을 보낸다.
                                     CB_AppFunc.sendFCM(getString(R.string.str_new_couple),
@@ -313,6 +311,10 @@ class CB_MailDetailFragment : CB_BaseFragment()
                                     // 상대에게 알림을 보낸다.
                                     CB_AppFunc.sendFCM(getString(R.string.str_new_couple),
                                         String.format(getString(R.string.str_new_couple_notification), CB_AppFunc.curUser.strUserName!!), CB_AppFunc.coupleUser.strFcmToken!!)
+
+                                    CB_AppFunc.postDelayedUI(2000, null, funcSecond = {
+                                        CB_AppFunc.restartApp(requireActivity())
+                                    })
                                 }
 
                                 override fun onCancelled(error: DatabaseError)

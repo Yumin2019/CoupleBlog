@@ -30,8 +30,8 @@
 
     <string name="str_profile">프로필</string>
     <string name="str_mail">메일</string>
-    <string name="str_my_posts">내 포스트</string>
-    <string name="str_couple_posts">커플 포스트</string>
+    <string name="str_my_posts">내 글</string>
+    <string name="str_couple_posts">커플 글</string>
     <string name="str_new_comment">새로운 댓글</string>
     <string name="str_new_comment_notification">%s님이 댓글을 작성했습니다.</string>
     <string name="str_new_couple">새로운 커플</string>

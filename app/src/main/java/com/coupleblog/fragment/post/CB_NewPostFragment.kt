@@ -275,17 +275,24 @@ class CB_NewPostFragment: CB_CameraBaseFragment(UPLOAD_TYPE.POST_IMAGE, bDeferre
                             }
 
                             CB_AppFunc.getUserPostsRoot().child(CB_AppFunc.getUid())
-                                .child(editPostKey).setValue(postData).await()
-                            Log.d(strTag, "post updated $editPostKey")
+                                .child(editPostKey).setValue(postData).addOnCompleteListener {
 
+                                    dialog.cancel()
+                                    if(it.isSuccessful)
+                                    {
+                                        // 저장을 완료한 이후에 다시 PostDetailFragment 로 이동한다.
+                                        CB_SingleSystemMgr.showToast(R.string.str_post_edited)
+                                        findNavController().popBackStack()
+                                        Log.d(strTag, "post updated $editPostKey")
+                                    }
+                                    else
+                                    {
+                                        CB_AppFunc.okDialog(activity, R.string.str_error,
+                                            R.string.str_post_failed, R.drawable.error_icon, true)
+                                        Log.e(strTag, "userPost edit failed error : ${it.exception}")
+                                    }
 
-                            launch(Dispatchers.Main)
-                            {
-                                // 저장을 완료한 이후에 다시 PostDetailFragment 로 이동한다.
-                                dialog.cancel()
-                                CB_SingleSystemMgr.showToast(R.string.str_post_edited)
-                                findNavController().popBackStack()
-                            }
+                                }
                         }
                         else
                         {
@@ -354,10 +361,21 @@ class CB_NewPostFragment: CB_CameraBaseFragment(UPLOAD_TYPE.POST_IMAGE, bDeferre
                         if(CB_ViewModel.postImage.value == null)
                         {
                             // 해당 경로에 Post 데이터를 저장한다.
-                            uidRootRef.child(postKey).setValue(tPost).await()
-                            Log.d(strTag, "postKey:$postKey setValue")
+                            uidRootRef.child(postKey).setValue(tPost).addOnCompleteListener {
 
-                            postPosted(strTitle, dialog)
+                                if(it.isSuccessful)
+                                {
+                                    Log.d(strTag, "postKey:$postKey setValue")
+                                    postPosted(strTitle, dialog)
+                                }
+                                else
+                                {
+                                    Log.e(strTag, "add post failed error : ${it.exception}")
+                                    dialog.cancel()
+                                    CB_AppFunc.okDialog(activity, R.string.str_error,
+                                        R.string.str_post_failed, R.drawable.error_icon, true)
+                                }
+                            }
                         }
                         else
                         {
