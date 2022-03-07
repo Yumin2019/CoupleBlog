@@ -279,27 +279,29 @@ class CB_PostDetailFragment: CB_BaseFragment()
 
         // CommentEditDialog call this func
         val dialog = CB_LoadingDialog(requireActivity()).apply { show() }
-        CB_AppFunc.networkScope.launch {
+        try
+        {
+            commentRef.child(strCommentKey).setValue(commentData).addOnCompleteListener {
 
-            try
-            {
-                commentRef.child(strCommentKey).setValue(commentData)
-                launch(Dispatchers.Main)
+                dialog.cancel()
+                if(it.isSuccessful)
                 {
-                    dialog.cancel()
                     CB_SingleSystemMgr.showToast(R.string.str_comment_edited)
                 }
-            }
-            catch (e: FirebaseException)
-            {
-                e.printStackTrace()
-                launch(Dispatchers.Main)
+                else
                 {
-                    dialog.cancel()
                     CB_AppFunc.okDialog(requireActivity(), R.string.str_error,
                         R.string.str_post_failed, R.drawable.error_icon, true)
+                    Log.e(strTag, "comment edit failed error : ${it.exception}")
                 }
             }
+        }
+        catch (e: FirebaseException)
+        {
+            e.printStackTrace()
+            dialog.cancel()
+            CB_AppFunc.okDialog(requireActivity(), R.string.str_error,
+                R.string.str_post_failed, R.drawable.error_icon, true)
         }
     }
 
@@ -318,31 +320,31 @@ class CB_PostDetailFragment: CB_BaseFragment()
 
                 // if user really want to delete, delete comment
                 val dialog = CB_LoadingDialog(requireActivity()).apply { show() }
+                try
+                {
+                    // delete post, post comments
+                    commentRef.child(strCommentKey).setValue(null).addOnCompleteListener {
 
-                CB_AppFunc.networkScope.launch {
-
-                    try
-                    {
-                        // delete post, post comments
-                        commentRef.child(strCommentKey).setValue(null).await()
-
-                        launch(Dispatchers.Main)
+                        dialog.cancel()
+                        if(it.isSuccessful)
                         {
-                            dialog.cancel()
                             CB_SingleSystemMgr.showToast(R.string.str_comment_deleted)
                         }
-                    }
-                    catch(e: FirebaseException)
-                    {
-                        // if fail, error dialog
-                        e.printStackTrace()
-                        launch(Dispatchers.Main)
+                        else
                         {
-                            dialog.cancel()
                             CB_AppFunc.okDialog(requireActivity(), R.string.str_error,
                                 R.string.str_post_delete_failed, R.drawable.error_icon, true)
+                            Log.e(strTag, "comment delete failed error : ${it.exception}")
                         }
                     }
+                }
+                catch(e: FirebaseException)
+                {
+                    // if fail, error dialog
+                    e.printStackTrace()
+                    dialog.cancel()
+                    CB_AppFunc.okDialog(requireActivity(), R.string.str_error,
+                        R.string.str_post_delete_failed, R.drawable.error_icon, true)
                 }
             }, R.string.str_cancel, null)
     }
@@ -389,30 +391,31 @@ class CB_PostDetailFragment: CB_BaseFragment()
             return
 
         val dialog = CB_LoadingDialog(requireActivity()).apply { show() }
-        CB_AppFunc.networkScope.launch {
+        try
+        {
+            // previous data and modify
+            commentData.iIconType = iReactionType.ordinal
+            commentRef.child(strCommentKey).setValue(commentData).addOnCompleteListener {
 
-            try
-            {
-                // previous data and modify
-                commentData.iIconType = iReactionType.ordinal
-                commentRef.child(strCommentKey).setValue(commentData).await()
-                Log.d(strTag, "commentRef updated")
-
-                launch(Dispatchers.Main)
+                dialog.cancel()
+                if(it.isSuccessful)
                 {
-                    dialog.cancel()
+                    Log.d(strTag, "commentRef updated")
                 }
-            }
-            catch (e: FirebaseException)
-            {
-                e.printStackTrace()
-                launch(Dispatchers.Main)
+                else
                 {
-                    dialog.cancel()
                     CB_AppFunc.okDialog(requireActivity(), R.string.str_error,
                         R.string.str_reaction_icon_attach_failed, R.drawable.error_icon, true)
+                    Log.e(strTag, "reaction icon attach failed error : ${it.exception}")
                 }
             }
+        }
+        catch (e: FirebaseException)
+        {
+            e.printStackTrace()
+            dialog.cancel()
+            CB_AppFunc.okDialog(requireActivity(), R.string.str_error,
+                R.string.str_reaction_icon_attach_failed, R.drawable.error_icon, true)
         }
     }
 
@@ -427,30 +430,31 @@ class CB_PostDetailFragment: CB_BaseFragment()
             return
 
         val dialog = CB_LoadingDialog(requireActivity()).apply { show() }
-        CB_AppFunc.networkScope.launch {
+        try
+        {
+            // previous data and modify
+            postData.iIconType = iReactionType.ordinal
+            postRef.setValue(postData).addOnCompleteListener {
 
-            try
-            {
-                // previous data and modify
-                postData.iIconType = iReactionType.ordinal
-                postRef.setValue(postData).await()
-                Log.d(strTag, "postRef updated")
-
-                launch(Dispatchers.Main)
+                dialog.cancel()
+                if(it.isSuccessful)
                 {
-                    dialog.cancel()
+                    Log.d(strTag, "postRef updated")
                 }
-            }
-            catch (e: FirebaseException)
-            {
-                e.printStackTrace()
-                launch(Dispatchers.Main)
+                else
                 {
-                    dialog.cancel()
                     CB_AppFunc.okDialog(requireActivity(), R.string.str_error,
                         R.string.str_reaction_icon_attach_failed, R.drawable.error_icon, true)
+                    Log.e(strTag, "reaction icon attach failed error : ${it.exception}")
                 }
             }
+        }
+        catch (e: FirebaseException)
+        {
+            e.printStackTrace()
+            dialog.cancel()
+            CB_AppFunc.okDialog(requireActivity(), R.string.str_error,
+                R.string.str_reaction_icon_attach_failed, R.drawable.error_icon, true)
         }
     }
 
@@ -474,47 +478,36 @@ class CB_PostDetailFragment: CB_BaseFragment()
 
                 // if user really want to delete, delete post
                 val dialog = CB_LoadingDialog(requireActivity()).apply { show() }
-
-                CB_AppFunc.networkScope.launch {
-
-                    try
+                try
+                {
+                    // delete post, post comments
+                    val imgPath = CB_ViewModel.tPost.value!!.strImgPath
+                    Log.d(strTag, "strImgPath:$imgPath")
+                    if(!imgPath.isNullOrEmpty())
                     {
-                        // delete post, post comments
-                        val imgPath = CB_ViewModel.tPost.value!!.strImgPath
-                        Log.d(strTag, "strImgPath:$imgPath")
-                        if(!imgPath.isNullOrEmpty())
-                        {
-                            // find upper folder for post
-                            CB_AppFunc.deleteFileFromStorage(imgPath, strTag,
-                                "post image deleted path:$imgPath",
-                                "post image delete failed path:$imgPath")
-                        }
-
-                        postRef.setValue(null).await()
-                        commentRef.setValue(null).await()
-                        Log.d(strTag, "postRef, commentRef deleted")
-
-                        launch(Dispatchers.Main)
-                        {
-                            // if success, move to MainFragment
-                            dialog.cancel()
-                            CB_SingleSystemMgr.showToast(R.string.str_post_deleted)
-                            backPressed()
-                        }
+                        // find upper folder for post
+                        CB_AppFunc.deleteFileFromStorage(imgPath, strTag,
+                            "post image deleted path:$imgPath",
+                            "post image delete failed path:$imgPath")
                     }
-                    catch(e: FirebaseException)
-                    {
-                        // if fail, error dialog
-                        e.printStackTrace()
-                        launch(Dispatchers.Main)
-                        {
-                            dialog.cancel()
-                            CB_AppFunc.okDialog(requireActivity(), R.string.str_error,
-                                R.string.str_post_delete_failed, R.drawable.error_icon, true)
-                        }
-                    }
+
+                    postRef.setValue(null)
+                    commentRef.setValue(null)
+                    Log.d(strTag, "postRef, commentRef deleted")
+
+                    // if success, move to MainFragment
+                    dialog.cancel()
+                    CB_SingleSystemMgr.showToast(R.string.str_post_deleted)
+                    backPressed()
                 }
-
+                catch(e: FirebaseException)
+                {
+                    // if fail, error dialog
+                    e.printStackTrace()
+                    dialog.cancel()
+                    CB_AppFunc.okDialog(requireActivity(), R.string.str_error,
+                        R.string.str_post_delete_failed, R.drawable.error_icon, true)
+                }
             }, R.string.str_cancel, null)
     }
 
@@ -539,21 +532,18 @@ class CB_PostDetailFragment: CB_BaseFragment()
             return
         }
 
-        // text clear
-        binding.commentEditText.text?.clear()
-
         val dialog = CB_LoadingDialog(requireActivity()).apply { show() }
+        binding.commentEditText.text?.clear() // text clear
 
-        CB_AppFunc.networkScope.launch {
+        try
+        {
+            val comment = CB_Comment(CB_AppFunc.getUid(), strComment, CB_AppFunc.getDateStringForSave())
+            val strKey = commentRef.push().key
+            commentRef.updateChildren(mapOf(strKey to comment)).addOnCompleteListener {
 
-            try
-            {
-                val comment = CB_Comment(CB_AppFunc.getUid(), strComment, CB_AppFunc.getDateStringForSave())
-                commentRef.push().setValue(comment).await()
-
-                launch(Dispatchers.Main)
+                dialog.cancel()
+                if(it.isSuccessful)
                 {
-                    dialog.cancel()
                     CB_SingleSystemMgr.showToast(R.string.str_comment_posted)
 
                     // scroll to bottom
@@ -568,20 +558,23 @@ class CB_PostDetailFragment: CB_BaseFragment()
                             String.format(getString(R.string.str_new_comment_notification), CB_AppFunc.curUser.strUserName),
                             CB_AppFunc.coupleUser.strFcmToken!!)
                     }
+
+                    Log.i(strTag, "comment posted")
                 }
-            }
-            catch(e: FirebaseException)
-            {
-                e.printStackTrace()
-                launch(Dispatchers.Main)
+                else
                 {
-                    dialog.cancel()
                     CB_AppFunc.okDialog(requireActivity(), R.string.str_error,
                         R.string.str_post_failed, R.drawable.error_icon, true)
+                    Log.e(strTag, "comment post failed error : ${it.exception}")
                 }
             }
         }
-
+        catch(e: FirebaseException)
+        {
+            e.printStackTrace()
+            dialog.cancel()
+            CB_AppFunc.okDialog(requireActivity(), R.string.str_error,
+                R.string.str_post_failed, R.drawable.error_icon, true)
+        }
     }
-
 }
