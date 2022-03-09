@@ -1,5 +1,6 @@
 
 
+
 # Couple Blog💕
 <img src="https://user-images.githubusercontent.com/49779139/157382168-869a6bcd-73d6-42c3-9a83-b32cae665e5e.png" width="20%" height="20%" />
 
@@ -34,6 +35,8 @@ Firebase realtime DB / Storage, FCM, Retrofit
 - [Glide](https://github.com/bumptech/glide)(이미지 처리)📗
 - [PhotoView](https://github.com/Baseflow/PhotoView)(이미지 확대)📘
 - [SpinKit](https://github.com/ybq/Android-SpinKit)(로딩 애니메이션)📙
+- [Freepik](https://www.flaticon.com/authors/freepik)(이미지)💟
+
 
 # Registration & Login🙆
 <img src="https://user-images.githubusercontent.com/49779139/157393554-5e077cab-fd03-4f95-9a55-1163f999d52b.png" width="20%" height="20%" /> <img src="https://user-images.githubusercontent.com/49779139/157393560-71870d81-7ea5-4abc-ae29-832b06fcbb45.png" width="20%" height="20%" /> <img src="https://user-images.githubusercontent.com/49779139/157393564-a8573512-e8e2-4d37-8364-26af65f5dcfd.png" width="20%" height="20%" />
