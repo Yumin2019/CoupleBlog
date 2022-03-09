@@ -862,8 +862,10 @@ OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.            
     <string name="str_m_ago">m ago</string>
     <string name="str_ago">ago</string>
     <string name="str_days">Days</string>
+    <string name="str_days_item">Days</string>
     <string name="str_months">Months</string>
     <string name="str_years">Years</string>
+    <string name="str_left">Left</string>
     <string name="str_past_event">Past Event</string>
     <string name="str_future_event">Future Event</string>
     <string name="str_annual_event">Anniversary</string>

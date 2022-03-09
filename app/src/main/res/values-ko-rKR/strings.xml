@@ -63,9 +63,11 @@
     <string name="str_h_ago">시간 전</string>
     <string name="str_m_ago">분 전</string>
     <string name="str_ago">전</string>
-    <string name="str_days">Days</string>
+    <string name="str_days">일</string>
+    <string name="str_days_item">Days</string>
     <string name="str_months">달</string>
     <string name="str_years">년</string>
+    <string name="str_left">남음</string>
     <string name="str_past_event">과거 이벤트</string>
     <string name="str_future_event">미래 이벤트</string>
     <string name="str_annual_event">기념일</string>

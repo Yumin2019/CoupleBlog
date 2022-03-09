@@ -410,7 +410,7 @@ fun setDaysTime(textView: TextView?, tDays: CB_Days): String
         DAYS_ITEM_TYPE.FUTURE_EVENT.ordinal ->
         {
             if(iDay != 0)
-                strDate += " Left"
+                strDate += " " + CB_AppFunc.getString(R.string.str_left)
         }
 
         DAYS_ITEM_TYPE.ANNUAL_EVENT.ordinal ->
@@ -437,7 +437,7 @@ fun setDaysTime(textView: TextView?, tDays: CB_Days): String
             iHour = iMin / 60
             iDay = iHour / 24
             strDate = iDay.toString() + " " + CB_AppFunc.getString(R.string.str_days)
-            strDate += " Left"
+            strDate += " " + CB_AppFunc.getString(R.string.str_left)
         }
     }
 

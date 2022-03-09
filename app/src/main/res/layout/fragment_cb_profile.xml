@@ -198,11 +198,11 @@
                     android:layout_marginStart="@dimen/margin_16dp"
                     android:paddingStart="@dimen/margin_16dp"
                     android:paddingEnd="@dimen/margin_16dp"
-                    android:text="@string/str_days"
+                    android:text="@string/str_days_item"
                     app:layout_constraintBottom_toTopOf="@+id/days_desc_text_view"
                     app:layout_constraintStart_toEndOf="@+id/days_image_view"
                     app:layout_constraintTop_toTopOf="@+id/days_image_view"
-                    tools:text="@string/str_days" />
+                    tools:text="@string/str_days_item" />
 
                 <TextView
                     android:id="@+id/days_desc_text_view"

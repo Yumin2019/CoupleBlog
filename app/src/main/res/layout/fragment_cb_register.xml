@@ -18,18 +18,17 @@
             android:id="@+id/constraintLayout"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:layout_marginTop="@dimen/normal_margin"
             app:layout_constraintEnd_toStartOf="@+id/right_margin_line"
             app:layout_constraintStart_toStartOf="@+id/left_margin_line"
-            app:layout_constraintTop_toBottomOf="@+id/login_button">
+            app:layout_constraintTop_toBottomOf="@+id/password_again_text_input_layout">
 
             <TextView
                 android:id="@+id/policy_text_view"
                 style="@style/normal_text_style"
-                android:onClick="@{()->fragment.personalInfoPolicyButton()}"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:background="?android:attr/selectableItemBackground"
+                android:onClick="@{()->fragment.personalInfoPolicyButton()}"
                 android:text="@string/str_personal_info_policy"
                 android:textColor="@color/link_color"
                 app:layout_constraintBottom_toBottomOf="parent"
@@ -151,15 +150,15 @@
         <com.google.android.material.button.MaterialButton
             android:id="@+id/login_button"
             style="@style/mtrl_button_style"
-            android:onClick="@{()->fragment.signUpButton()}"
             android:layout_width="0dp"
             android:layout_height="@dimen/button_height"
-            android:layout_marginTop="@dimen/margin_24dp"
+            android:layout_marginTop="@dimen/normal_margin"
             android:backgroundTint="@color/purple"
+            android:onClick="@{()->fragment.signUpButton()}"
             android:text="@string/str_sign_up"
             app:layout_constraintEnd_toStartOf="@+id/right_margin_line"
             app:layout_constraintStart_toStartOf="@+id/left_margin_line"
-            app:layout_constraintTop_toBottomOf="@+id/password_again_text_input_layout"
+            app:layout_constraintTop_toBottomOf="@+id/constraintLayout"
             app:rippleColor="@color/ripple_purple" />
 
         <androidx.constraintlayout.widget.Guideline
