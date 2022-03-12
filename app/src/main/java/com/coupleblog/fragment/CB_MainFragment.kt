@@ -129,7 +129,7 @@ class CB_MainFragment : CB_BaseFragment()
             CB_AppFunc.networkScope.launch {
                 CB_AppFunc.loadDaysItem(coupleRef, "future-event-list", daysList, daysKeyList)
                 CB_AppFunc.loadDaysItem(coupleRef, "annual-event-list", daysList, daysKeyList)
-                delay(500)
+                delay(2000)
 
                 val strToday = CB_AppFunc.getString(R.string.str_today)
                 for(i in 0 until daysList.size)

@@ -587,7 +587,7 @@ class CB_AppFunc
             val postList: ArrayList<CB_Post> = arrayListOf()
             val keyList: ArrayList<String> = arrayListOf()
             getPostItems(getUserPostsRoot(), getUid(), postList, keyList)
-            delay(500)
+            delay(2000)
 
             for(i in 0 until postList.size)
             {
@@ -611,7 +611,7 @@ class CB_AppFunc
             val mailList: ArrayList<CB_Mail> = arrayListOf()
             keyList.clear()
             getMailItems(getMailBoxRoot(), getUid(), mailList, keyList)
-            delay(500)
+            delay(2000)
 
             for(i in 0 until mailList.size)
             {
@@ -640,7 +640,15 @@ class CB_AppFunc
 
             cleanUpListener()
             getUsersRoot().child(getUid()).setValue(null)
-            FirebaseAuth.getInstance().currentUser?.delete()
+            FirebaseAuth.getInstance().currentUser?.delete()?.addOnCompleteListener {
+                if(it.isSuccessful) {
+                    Log.i(strTag, "account deleted")
+                } else {
+                    Log.e(strTag, "account not deleted error: ${it.exception} " +
+                            "uid : ${FirebaseAuth.getInstance().currentUser?.uid}, retry")
+                    FirebaseAuth.getInstance().currentUser?.delete()
+                }
+            }
 
             return@async true
         }.await()
@@ -664,7 +672,7 @@ class CB_AppFunc
 
             loadDaysItem(coupleRef, "future-event-list", daysList, daysKeyList)
             loadDaysItem(coupleRef, "annual-event-list", daysList, daysKeyList)
-            delay(500)
+            delay(2000)
 
             for(i in 0 until daysList.size) {
                 cancelWorker(application, daysKeyList[i])
