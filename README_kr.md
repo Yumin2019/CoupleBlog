@@ -2,13 +2,13 @@
 - [English](README.md)
 - [Korean](README_kr.md)
 
-
 # Couple Blog💕
-<img src="https://user-images.githubusercontent.com/49779139/157382168-869a6bcd-73d6-42c3-9a83-b32cae665e5e.png" width="20%" height="20%" />  
+<img src="https://user-images.githubusercontent.com/49779139/158020852-f4a3bd97-adeb-45eb-9e65-177c40d4b074.jpg" width="95%" height="95%" />  
 
 ### Couple Blog는 커플들을 위한 2인용 블로그입니다. 💑
 
-주요 기능 - 프로필 설정💏
+주요 기능 
+- 프로필 설정💏
 - 기념일 관리📆
 - 포스트 작성📑
 - 메일 보내기💌
