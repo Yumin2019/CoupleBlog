@@ -22,7 +22,7 @@ android {
         targetSdk 30
         versionCode 112
         versionName "1.1.2"
-
+        archivesBaseName = "${rootProject.name}-${versionName}"
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
     }
 
@@ -37,12 +37,6 @@ android {
             minifyEnabled false
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
             signingConfig signingConfigs.config
-        }
-
-        android.applicationVariants.all { variant ->
-            variant.outputs.all { output ->
-                outputFileName = "${rootProject.name}_${variant.buildType.name}_${versionName}.apk"
-            }
         }
     }
 
