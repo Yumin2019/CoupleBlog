@@ -18,19 +18,13 @@ import com.google.firebase.database.ValueEventListener
 import com.google.firebase.database.ktx.getValue
 import android.app.PendingIntent
 import android.content.ComponentName
+import com.coupleblog.BuildConfig
 
 class CB_DaysWidgetProvider : AppWidgetProvider() {
 
     private var strDaysKey = ""
     private var strEventType = ""
     private var strCoupleKey = ""
-
-    // 브로드 캐스트를 이용하여 업데이트 신호 보내기
-    // val intentAction = Intent(this, CB_DaysWidgetProvider::class.java)
-    // intentAction.setAction(AppWidgetManager.ACTION_APPWIDGET_UPDATE)
-    // val ids = AppWidgetManager.getInstance(this).getAppWidgetIds(ComponentName(this, CB_DaysWidgetProvider::class.java))
-    // intentAction.putExtra(AppWidgetManager.EXTRA_APPWIDGET_IDS, ids)
-    // sendBroadcast(intentAction)
 
     override fun onReceive(context: Context, intent: Intent) {
         val ids = AppWidgetManager.getInstance(context).getAppWidgetIds(ComponentName(context, CB_DaysWidgetProvider::class.java))
@@ -46,7 +40,6 @@ class CB_DaysWidgetProvider : AppWidgetProvider() {
         for (appWidgetId in appWidgetIds) {
             val intent = Intent(context, CB_MainActivity::class.java)
             val pendingIntent = PendingIntent.getActivity(context, 0, intent, 0)
-
 
             // load data from sharedPreferences
             CB_AppFunc.getSharedPref(context).apply {
@@ -74,10 +67,12 @@ class CB_DaysWidgetProvider : AppWidgetProvider() {
 
             Log.e("WIDGET", "id: $appWidgetId hasError: $hasError")
             if (hasError) {
-                remoteViews.apply {
-                    setTextViewText(R.id.item_text_view, strErrorText)
-                    setViewVisibility(R.id.days_text_view, View.GONE)
-                    setViewVisibility(R.id.icon_image_view, View.GONE)
+                if(BuildConfig.DEBUG){
+                    remoteViews.apply {
+                        setTextViewText(R.id.item_text_view, strErrorText)
+                        setViewVisibility(R.id.days_text_view, View.GONE)
+                        setViewVisibility(R.id.icon_image_view, View.GONE)
+                    }
                 }
                 continue
             }

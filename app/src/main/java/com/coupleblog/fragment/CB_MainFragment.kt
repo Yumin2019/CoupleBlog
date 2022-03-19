@@ -1,5 +1,8 @@
 package com.coupleblog.fragment
 
+import android.appwidget.AppWidgetManager
+import android.content.ComponentName
+import android.content.Intent
 import android.os.Bundle
 import android.util.Log
 import android.view.*
@@ -18,6 +21,7 @@ import com.coupleblog.fragment.mail.CB_MailBoxFragment
 import com.coupleblog.fragment.profile.CB_ProfileFragment
 import com.coupleblog.model.CB_Couple
 import com.coupleblog.model.CB_Days
+import com.coupleblog.widget.CB_DaysWidgetProvider
 import com.google.android.gms.tasks.OnCompleteListener
 import com.google.android.material.tabs.TabLayoutMediator
 import com.google.firebase.database.DataSnapshot
@@ -138,6 +142,13 @@ class CB_MainFragment : CB_BaseFragment()
                         strToday, CB_AppFunc.curUser.strFcmToken, daysList[i].strEventDate!!)
                 }
             }
+
+            // 브로드 캐스트를 이용하여 업데이트 신호 보내기
+            val intentAction = Intent(requireContext(), CB_DaysWidgetProvider::class.java)
+            intentAction.action = AppWidgetManager.ACTION_APPWIDGET_UPDATE
+            val ids = AppWidgetManager.getInstance(requireContext()).getAppWidgetIds(ComponentName(requireContext(), CB_DaysWidgetProvider::class.java))
+            intentAction.putExtra(AppWidgetManager.EXTRA_APPWIDGET_IDS, ids)
+            requireContext().sendBroadcast(intentAction)
         }
 
        // ViewPager 설정
