@@ -350,14 +350,18 @@ fun setUserPresence(textView: TextView, userData: CB_User)
     textView.text = strPresence
 }
 
-@BindingAdapter("bind:days_time")
-fun setDaysTime(textView: TextView?, tDays: CB_Days): String
+@BindingAdapter(value = ["bind:days_time", "bind:show_date"], requireAll = true)
+fun setDaysTime(textView: TextView?, tDays: CB_Days, showDate: Boolean): String
 {
     val eventCalendar = tDays.strEventDate.toCalendar()
     val curCalendar = CB_AppFunc.getCurCalendar()
     var eventDate = eventCalendar.time
     var curDate = curCalendar.time
-    var iMin = ((curDate.time - eventDate.time).absoluteValue / (60 * 1000)).toInt() // millisecond to minute
+    var iMin = ((curDate.time - eventDate.time) / (60 * 1000)).toInt() // millisecond to minute
+
+    if(tDays.iEventType == DAYS_ITEM_TYPE.FUTURE_EVENT.ordinal)
+        iMin *= -1;
+
     var iHour = iMin / 60
     var iDay = iHour / 24
     val iMonth = iDay / 30
@@ -405,12 +409,23 @@ fun setDaysTime(textView: TextView?, tDays: CB_Days): String
     {
         DAYS_ITEM_TYPE.PAST_EVENT.ordinal ->
         {
+            if(showDate)
+                strDate += "(" + CB_AppFunc.getDateStringWithoutTime(eventCalendar) + ")"
         }
 
         DAYS_ITEM_TYPE.FUTURE_EVENT.ordinal ->
         {
-            if(iDay != 0)
+            if(iDay > 0)
+            {
                 strDate += " " + CB_AppFunc.getString(R.string.str_left)
+            }
+            else if(iDay < 0)
+            {
+                strDate = CB_AppFunc.getString(R.string.str_finished)
+            }
+
+            if(showDate)
+                strDate += "(" + CB_AppFunc.getDateStringWithoutTime(eventCalendar) + ")"
         }
 
         DAYS_ITEM_TYPE.ANNUAL_EVENT.ordinal ->
@@ -421,6 +436,10 @@ fun setDaysTime(textView: TextView?, tDays: CB_Days): String
                     eventCalendar[Calendar.DAY_OF_MONTH] == curCalendar[Calendar.DAY_OF_MONTH])
             {
                 strDate = CB_AppFunc.getString(R.string.str_today)
+
+                if(showDate)
+                    strDate += "(" + CB_AppFunc.getDateStringWithoutTime(eventCalendar) + ")"
+
                 textView?.text = strDate
                 return strDate
             }
@@ -438,6 +457,9 @@ fun setDaysTime(textView: TextView?, tDays: CB_Days): String
             iDay = iHour / 24
             strDate = iDay.toString() + " " + CB_AppFunc.getString(R.string.str_days)
             strDate += " " + CB_AppFunc.getString(R.string.str_left)
+
+            if(showDate)
+                strDate += "(" + CB_AppFunc.getDateStringWithoutTime(eventCalendar) + ")"
         }
     }
 

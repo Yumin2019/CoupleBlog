@@ -92,9 +92,9 @@ class CB_DaysWidgetProvider : AppWidgetProvider() {
                                 val iResIdx = CB_AppFunc.getDrawableIdentifier(context, it.strIconRes!!)
 
                                 Log.i("WIDGET",  "title : " + days.strTitle!!)
-                                Log.i("WIDGET",  "daystime : " + setDaysTime(null, days))
+                                Log.i("WIDGET",  "daystime : " + setDaysTime(null, days, false))
                                 setTextViewText(R.id.item_text_view, days.strTitle)
-                                setTextViewText(R.id.days_text_view, setDaysTime(null, days))
+                                setTextViewText(R.id.days_text_view, setDaysTime(null, days, false))
 
                                 if(iResIdx != 0){
                                     setImageViewResource(R.id.icon_image_view, iResIdx)

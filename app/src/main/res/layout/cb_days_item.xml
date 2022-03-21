@@ -50,6 +50,7 @@
                 android:layout_height="wrap_content"
                 android:textSize="@dimen/text_size_16sp"
                 bind:days_time="@{tDays}"
+                bind:show_date="@{false}"
                 android:layout_marginEnd="@dimen/normal_margin"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"

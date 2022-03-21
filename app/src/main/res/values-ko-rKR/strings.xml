@@ -68,6 +68,7 @@
     <string name="str_months">달</string>
     <string name="str_years">년</string>
     <string name="str_left">남음</string>
+    <string name="str_finished">종료됨</string>
     <string name="str_past_event">과거 이벤트</string>
     <string name="str_future_event">미래 이벤트</string>
     <string name="str_annual_event">기념일</string>

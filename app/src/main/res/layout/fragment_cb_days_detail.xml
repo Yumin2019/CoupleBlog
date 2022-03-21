@@ -145,6 +145,7 @@
                             app:layout_constraintStart_toStartOf="parent"
                             app:layout_constraintTop_toTopOf="parent"
                             bind:days_time="@{viewModel.tDays}"
+                            bind:show_date="@{true}"
                             tools:text="@string/str_date_of_birth_exam" />
 
                         <ImageView

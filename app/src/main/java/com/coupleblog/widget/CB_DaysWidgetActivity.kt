@@ -58,7 +58,7 @@ class CB_DaysWidgetActivity : CB_BaseActivity(CB_SingleSystemMgr.ACTIVITY_TYPE.D
         remoteViews.apply {
             val iResIdx = CB_AppFunc.getDrawableIdentifier(applicationContext, tDays.strIconRes!!)
             setTextViewText(R.id.item_text_view, tDays.strTitle)
-            setTextViewText(R.id.days_text_view, setDaysTime(null, tDays))
+            setTextViewText(R.id.days_text_view, setDaysTime(null, tDays, false))
             if(iResIdx != 0){
                 setImageViewResource(R.id.icon_image_view, iResIdx)
             }
