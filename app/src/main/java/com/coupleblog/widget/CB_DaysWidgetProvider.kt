@@ -37,6 +37,8 @@ class CB_DaysWidgetProvider : AppWidgetProvider() {
         appWidgetManager: AppWidgetManager,
         appWidgetIds: IntArray
     ) {
+        CB_AppFunc.application = context
+
         for (appWidgetId in appWidgetIds) {
             val intent = Intent(context, CB_MainActivity::class.java)
             val pendingIntent = PendingIntent.getActivity(context, 0, intent, 0)

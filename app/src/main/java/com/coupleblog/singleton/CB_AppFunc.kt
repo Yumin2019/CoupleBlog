@@ -98,7 +98,7 @@ class CB_AppFunc
         val defaultScope                     = CoroutineScope(Dispatchers.Default)
         val networkScope                     = CoroutineScope(Dispatchers.IO)
 
-        lateinit var application: Application
+        lateinit var application: Context
         var binding: MainActivityBinding? = null
 
         val apiService: CB_APIService by lazy {
