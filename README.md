@@ -55,7 +55,7 @@ It supports registration and login function using Firebase.
 if you forget your password, it'll send reset mail to your mail. (forgot password)
 
 Password Reset & Change Email(Firebase)  
-https://blog.naver.com/lmj3322/222652918527
+https://blog.naver.com/lmj3322/222652939250
 
 # Profile Page💜
 <img src="https://user-images.githubusercontent.com/49779139/157394885-45a9b8c6-b7df-4a3c-b2ea-bba6f3d264bf.png" width="20%" height="20%" /> <img src="https://user-images.githubusercontent.com/49779139/157395335-0610095c-7587-461b-b627-6ef68f5240bf.png" width="20%" height="20%" /> <img src="https://user-images.githubusercontent.com/49779139/157395340-b0306e39-36e2-47d9-9ee3-4505c03f2770.png" width="20%" height="20%" />
