@@ -22,7 +22,8 @@
 |SITE|URL|
 |------|---|
 |<img src="https://user-images.githubusercontent.com/49779139/158043216-7dfe7f80-9bfc-425a-a7cf-7db2faba6c7c.jpg" width="25px" height="25px"/> | [Instagram](https://www.instagram.com/poonyandyumin/) |
-| <img src="https://user-images.githubusercontent.com/49779139/158043353-fa9cf336-e669-490c-ba27-d0b9d5a6c773.png" width="25px" height="25px"/> | [Developer Blog](https://blog.naver.com/lmj3322) |
+| <img src="https://user-images.githubusercontent.com/49779139/158043353-fa9cf336-e669-490c-ba27-d0b9d5a6c773.png" width="25px" height="25px"/> | [Naver Blog](https://blog.naver.com/lmj3322) | 
+| <img src="https://user-images.githubusercontent.com/49779139/162625158-78712282-9fe4-4533-b998-5db5974125a7.png" width="25px" height="25px"/> | [Tistory Blog](https://kymworld.tistory.com/) | 
 
 # Reasons for development🤔
 1. Client 개발을 주로 하다보니 Database나 서버쪽 처리를 해볼 기회가 없어 '서버'를 사용하는 어플을 만들어 보고 싶었습니다.
