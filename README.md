@@ -15,10 +15,15 @@ Main Contents
 
 #### Record memories between couples. ❤️
 
+<a href="https://play.google.com/store/apps/details?id=com.coupleblog" target="_blank">
+<img src="https://user-images.githubusercontent.com/49779139/160992314-bdd034e0-c3b0-44f7-8cf8-126454bfad5e.png" width="20%" height="20%"/>
+</a>
+
 |SITE|URL|
 |------|---|
 |<img src="https://user-images.githubusercontent.com/49779139/158043216-7dfe7f80-9bfc-425a-a7cf-7db2faba6c7c.jpg" width="25px" height="25px"/> | [Instagram](https://www.instagram.com/poonyandyumin/) |
-| <img src="https://user-images.githubusercontent.com/49779139/158043353-fa9cf336-e669-490c-ba27-d0b9d5a6c773.png" width="25px" height="25px"/> | [Developer Blog](https://blog.naver.com/lmj3322) |
+| <img src="https://user-images.githubusercontent.com/49779139/158043353-fa9cf336-e669-490c-ba27-d0b9d5a6c773.png" width="25px" height="25px"/> | [Naver Blog](https://blog.naver.com/lmj3322) | 
+| <img src="https://user-images.githubusercontent.com/49779139/162625158-78712282-9fe4-4533-b998-5db5974125a7.png" width="25px" height="25px"/> | [Tistory Blog](https://kymworld.tistory.com/) | 
 
 # Reasons for development🤔
 1. I had no experiences with backend part so I wanted to make an application with a server.
@@ -33,11 +38,20 @@ Kotlin
 Couroutine, Navigation Component, LiveData, Databinding, ViewModel, WorkManager, ViewPager2  
 Firebase realtime DB / Storage, FCM, Retrofit
 
+# Firebase Structure🧱
+<details markdown="1">
+<summary>Close/Open</summary>
+<img src="https://user-images.githubusercontent.com/49779139/166130557-3d116c9a-72c2-4539-acfe-40db83ff793b.png"/>
+<img src="https://user-images.githubusercontent.com/49779139/166130564-00351eaa-4eda-40c4-9265-67046c0de6f1.png"/>
+<img src="https://user-images.githubusercontent.com/49779139/166130623-db44528c-0fef-422a-8a7f-1f45067a447b.png"/>
+<img src="https://user-images.githubusercontent.com/49779139/166130585-6d5ab306-fc83-4cfe-98b5-aa6f4bf7be71.png"/>
+</details>
+
 # Navigation Graph🚗
 <img src="https://user-images.githubusercontent.com/49779139/157049174-211ee7b6-e330-4265-a1e5-3dae46bfce46.png" width="50%" height="50%">
 
 # Used libraries🔖
--  [PhotoEditor](https://github.com/burhanrashid52/PhotoEditor)(Image editor)📕
+- [PhotoEditor](https://github.com/burhanrashid52/PhotoEditor)(Image editor)📕
 - [Glide](https://github.com/bumptech/glide)(Image processing)📗
 - [PhotoView](https://github.com/Baseflow/PhotoView)(Zoom in Images)📘
 - [SpinKit](https://github.com/ybq/Android-SpinKit)(Loading animations)📙
@@ -51,7 +65,7 @@ It supports registration and login function using Firebase.
 if you forget your password, it'll send reset mail to your mail. (forgot password)
 
 Password Reset & Change Email(Firebase)  
-https://blog.naver.com/lmj3322/222652918527
+https://blog.naver.com/lmj3322/222652939250
 
 # Profile Page💜
 <img src="https://user-images.githubusercontent.com/49779139/157394885-45a9b8c6-b7df-4a3c-b2ea-bba6f3d264bf.png" width="20%" height="20%" /> <img src="https://user-images.githubusercontent.com/49779139/157395335-0610095c-7587-461b-b627-6ef68f5240bf.png" width="20%" height="20%" /> <img src="https://user-images.githubusercontent.com/49779139/157395340-b0306e39-36e2-47d9-9ee3-4505c03f2770.png" width="20%" height="20%" />
@@ -140,7 +154,7 @@ Days Widget supported.
 
 - I was able to experience FrontEnd and BackEnd as well. and It made me think about Synchronization of data, Access, Data structure in Database)
 
--  I was able to experience supporting 3 languages(English, Hindi and Korean) to the application.
+- I was able to experience supporting 3 languages(English, Hindi and Korean) to the application.
 
 - I was able to experience applying dark theme directly to the application.
 
