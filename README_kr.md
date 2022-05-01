@@ -38,11 +38,20 @@ Kotlin
 Couroutine, Navigation Component, LiveData, Databinding, ViewModel, WorkManager, ViewPager2    
 Firebase realtime DB / Storage, FCM, Retrofit
 
+# Firebase Structure🧱
+<details markdown="1">
+<summary>닫기/열기</summary>
+<img src="https://user-images.githubusercontent.com/49779139/166130557-3d116c9a-72c2-4539-acfe-40db83ff793b.png"/>
+<img src="https://user-images.githubusercontent.com/49779139/166130564-00351eaa-4eda-40c4-9265-67046c0de6f1.png"/>
+<img src="https://user-images.githubusercontent.com/49779139/166130623-db44528c-0fef-422a-8a7f-1f45067a447b.png"/>
+<img src="https://user-images.githubusercontent.com/49779139/166130585-6d5ab306-fc83-4cfe-98b5-aa6f4bf7be71.png"/>
+</details>
+
 # Navigation Graph🚗
 <img src="https://user-images.githubusercontent.com/49779139/157049174-211ee7b6-e330-4265-a1e5-3dae46bfce46.png" width="50%" height="50%">  
 
 # Used libraries🔖
--  [PhotoEditor](https://github.com/burhanrashid52/PhotoEditor)(이미지 편집)📕
+- [PhotoEditor](https://github.com/burhanrashid52/PhotoEditor)(이미지 편집)📕
 - [Glide](https://github.com/bumptech/glide)(이미지 처리)📗
 - [PhotoView](https://github.com/Baseflow/PhotoView)(이미지 확대)📘
 - [SpinKit](https://github.com/ybq/Android-SpinKit)(로딩 애니메이션)📙
