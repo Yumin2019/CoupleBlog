@@ -2,8 +2,10 @@ package com.coupleblog
 
 import android.graphics.Bitmap
 import android.graphics.Color
+import android.graphics.Matrix
 import android.graphics.Typeface
 import android.os.Bundle
+import android.util.Log
 import android.view.*
 import android.view.animation.AnticipateOvershootInterpolator
 import androidx.constraintlayout.widget.ConstraintSet
@@ -111,15 +113,48 @@ class CB_PhotoEditorActivity: CB_BaseActivity(CB_SingleSystemMgr.ACTIVITY_TYPE.P
             .build()
 
         mPhotoEditor.setOnPhotoEditorListener(this@CB_PhotoEditorActivity)
+    }
+
+    private fun getResizedBitmap(bm: Bitmap, newWidth: Int): Bitmap? {
+        val width = bm.width
+        val height = bm.height
+        val fWidthRatio = newWidth.toFloat() / width
+        val matrix = Matrix()
+        // RESIZE THE BIT MAP
+        matrix.postScale(fWidthRatio, fWidthRatio - 0.25f)
+        // RECREATE THE NEW BITMAP
+        return Bitmap.createBitmap(
+            bm, 0, 0, width, height,
+            matrix, false
+        )
+    }
+
+    override fun onStart() {
+        super.onStart()
+
+        val width = resources.displayMetrics.widthPixels
+        val height = resources.displayMetrics.heightPixels - CB_AppFunc.convertDpToPixel(250)
 
         // set bitmap to imageView
         if(CB_ViewModel.editorBitmap != null)
         {
+            CB_ViewModel.editorBitmap = getResizedBitmap(CB_ViewModel.editorBitmap!!, width)
             binding.photoEditorView.source.setImageBitmap(CB_ViewModel.editorBitmap)
         }
         else
         {
-            binding.photoEditorView.source.setBackgroundResource(R.color.white)
+            val imageBitmap = Bitmap.createBitmap(width, height, Bitmap.Config.ARGB_8888)
+            imageBitmap.eraseColor(Color.WHITE)
+
+            if(imageBitmap == null)
+            {
+                Log.e(strTag, "invalid bitmap data")
+                finish()
+                return
+            }
+
+            CB_ViewModel.editorBitmap = imageBitmap
+            binding.photoEditorView.source.setImageBitmap(imageBitmap)
         }
 
         mPhotoEditor.setFilterEffect(PhotoFilter.NONE)

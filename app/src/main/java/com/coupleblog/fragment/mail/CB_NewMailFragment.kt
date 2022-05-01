@@ -99,11 +99,13 @@ class CB_NewMailFragment: CB_CameraBaseFragment(UPLOAD_TYPE.EMAIL_IMAGE, bDeferr
                         callback =
                         {
                             Log.i(strTag, "no image")
-                            CB_ViewModel.mailImage.postValue(null)
+                            CB_ViewModel.postImage.postValue(null)
+                            binding.postImageView.setImageBitmap(null)
                         }),
                     DialogItem(getString(R.string.str_camera), R.drawable.camera,
                         callback =
                         {
+                            super.createTempFile()
                             Log.i(strTag, "camera")
                             cameraLauncher.launch(imageUri)
                         }),
@@ -112,7 +114,13 @@ class CB_NewMailFragment: CB_CameraBaseFragment(UPLOAD_TYPE.EMAIL_IMAGE, bDeferr
                         {
                             Log.i(strTag, "gallery")
                             galleryLauncher.launch("image/*")
-                        })
+                        }),
+                    DialogItem(getString(R.string.str_drawing), R.drawable.pencil,
+                        callback =
+                        {
+                            Log.i(strTag, "draw")
+                            drawProcess()
+                        }),
                 )
 
                 CB_ItemListDialog(requireActivity(), getString(R.string.str_add_image), listItem, true)

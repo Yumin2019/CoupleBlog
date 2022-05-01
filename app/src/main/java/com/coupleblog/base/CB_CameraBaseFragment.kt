@@ -101,6 +101,15 @@ abstract class CB_CameraBaseFragment(protected val uploadType: UPLOAD_TYPE,
         }
     }
 
+    fun drawProcess()
+    {
+        CB_AppFunc.mainScope.launch {
+            CB_ViewModel.editorBitmap = null
+            CB_PhotoEditorActivity.cameraListener = this@CB_CameraBaseFragment
+            startActivity(Intent(requireActivity(), CB_PhotoEditorActivity::class.java))
+        }
+    }
+
     protected fun imageProcess()
     {
         CB_AppFunc.networkScope.launch {
@@ -169,7 +178,7 @@ abstract class CB_CameraBaseFragment(protected val uploadType: UPLOAD_TYPE,
         requireActivity().startService(intent)
     }
 
-    private fun createTempFile()
+    fun createTempFile()
     {
         val strTime = CB_AppFunc.getDateStringForSave()
         val storageDir = requireActivity().getExternalFilesDir(Environment.DIRECTORY_PICTURES)

@@ -932,6 +932,7 @@ OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.            
     </string>
     <string name="str_storage">Storage</string>
     <string name="str_gallery">Gallery</string>
+    <string name="str_drawing">Drawing</string>
     <string name="str_change_profile_image">Change profile image</string>
     <string name="str_read_mark">Read mark</string>
     <string name="str_heart_mark">Heart mark</string>

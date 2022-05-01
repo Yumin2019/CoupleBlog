@@ -134,6 +134,7 @@
     </string>
     <string name="str_storage">저장소</string>
     <string name="str_gallery">갤러리</string>
+    <string name="str_drawing">그리기</string>
     <string name="str_change_profile_image">프로필 이미지 변경</string>
     <string name="str_read_mark">읽음 처리</string>
     <string name="str_heart_mark">하트 처리</string>

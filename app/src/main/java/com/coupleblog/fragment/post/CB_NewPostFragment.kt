@@ -191,11 +191,13 @@ class CB_NewPostFragment: CB_CameraBaseFragment(UPLOAD_TYPE.POST_IMAGE, bDeferre
                         {
                             Log.i(strTag, "no image")
                             CB_ViewModel.postImage.postValue(null)
+                            binding.postImageView.setImageBitmap(null)
                             bImageChanged = true
                         }),
                     DialogItem(getString(R.string.str_camera), R.drawable.camera,
                         callback =
                         {
+                            super.createTempFile()
                             Log.i(strTag, "camera")
                             cameraLauncher.launch(imageUri)
                         }),
@@ -204,7 +206,13 @@ class CB_NewPostFragment: CB_CameraBaseFragment(UPLOAD_TYPE.POST_IMAGE, bDeferre
                         {
                             Log.i(strTag, "gallery")
                             galleryLauncher.launch("image/*")
-                        })
+                        }),
+                    DialogItem(getString(R.string.str_drawing), R.drawable.pencil,
+                        callback =
+                        {
+                            Log.i(strTag, "draw")
+                            drawProcess()
+                        }),
                 )
 
                 CB_ItemListDialog(requireActivity(), getString(R.string.str_add_image), listItem, true)
