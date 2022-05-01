@@ -38,11 +38,12 @@ class CB_DaysWidgetProvider : AppWidgetProvider() {
         appWidgetIds: IntArray
     ) {
         CB_AppFunc.application = context
+        CB_AppFunc.registerNetworkCallback(context)
+
+        val intent = Intent(context, CB_MainActivity::class.java)
+        val pendingIntent = PendingIntent.getActivity(context, 0, intent, 0)
 
         for (appWidgetId in appWidgetIds) {
-            val intent = Intent(context, CB_MainActivity::class.java)
-            val pendingIntent = PendingIntent.getActivity(context, 0, intent, 0)
-
             // load data from sharedPreferences
             CB_AppFunc.getSharedPref(context).apply {
                 strEventType = getString("strEventType$appWidgetId", "") ?: ""
@@ -65,7 +66,10 @@ class CB_DaysWidgetProvider : AppWidgetProvider() {
             } else if (strEventType.isEmpty() || strDaysKey.isEmpty()) {
                 strErrorText = context.getString(R.string.str_days_data_load_failed)
                 hasError = true
-            }
+            } else if(!CB_AppFunc.isNetworkActive) {
+               strErrorText = "internet issue"
+               hasError = true
+           }
 
             Log.e("WIDGET", "id: $appWidgetId hasError: $hasError")
             if (hasError) {
@@ -112,8 +116,9 @@ class CB_DaysWidgetProvider : AppWidgetProvider() {
                         Log.i("WIDGET", "onCancelled : $databaseError")
                     }
                 })
-
         }
+
+        CB_AppFunc.releaseNetworkCallback(context)
     }
 }
 

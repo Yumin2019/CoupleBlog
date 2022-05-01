@@ -3,7 +3,6 @@ package com.coupleblog.singleton
 import android.annotation.SuppressLint
 import android.app.Activity
 import android.app.ActivityManager
-import android.app.Application
 import android.content.*
 import android.content.pm.ActivityInfo
 import android.content.pm.PackageManager
@@ -13,7 +12,7 @@ import android.graphics.*
 import android.graphics.drawable.BitmapDrawable
 import android.graphics.drawable.Drawable
 import android.media.ExifInterface
-import android.net.Uri
+import android.net.*
 import android.os.Build
 import android.provider.MediaStore
 import android.text.Editable
@@ -35,6 +34,7 @@ import androidx.annotation.StringRes
 import androidx.appcompat.content.res.AppCompatResources
 import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
+import androidx.core.content.ContextCompat.getSystemService
 import androidx.work.Data
 import androidx.work.ExistingWorkPolicy
 import androidx.work.OneTimeWorkRequest
@@ -57,7 +57,6 @@ import com.google.firebase.database.ktx.getValue
 import com.google.firebase.ktx.Firebase
 import com.google.firebase.storage.ktx.storage
 import kotlinx.coroutines.*
-import kotlinx.coroutines.tasks.await
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
@@ -120,6 +119,31 @@ class CB_AppFunc
         var userInfoListener: ValueEventListener? = null
         var coupleUserInfoListener: ValueEventListener? = null
         var presenceListener: ValueEventListener? = null
+
+        var isNetworkActive = false
+        private val networkCallBack = object : ConnectivityManager.NetworkCallback() {
+            override fun onAvailable(network: Network) {
+                isNetworkActive = true
+            }
+
+            override fun onLost(network: Network) {
+                isNetworkActive = false
+            }
+        }
+
+         fun registerNetworkCallback(context: Context) {
+            val connectivityManager = getSystemService(context, ConnectivityManager::class.java)
+            val networkRequest = NetworkRequest.Builder()
+                .addTransportType(NetworkCapabilities.TRANSPORT_WIFI)
+                .addTransportType(NetworkCapabilities.TRANSPORT_CELLULAR)
+                .build()
+            connectivityManager?.registerNetworkCallback(networkRequest, networkCallBack)
+        }
+
+        fun releaseNetworkCallback(context: Context) {
+            val connectivityManager = getSystemService(context, ConnectivityManager::class.java)
+            connectivityManager?.unregisterNetworkCallback(networkCallBack)
+        }
 
         // Firebase Realtime Database
         fun getUid() = FirebaseAuth.getInstance().currentUser!!.uid

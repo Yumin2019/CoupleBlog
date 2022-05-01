@@ -123,8 +123,14 @@ class CB_MainActivity : CB_BaseActivity(CB_SingleSystemMgr.ACTIVITY_TYPE.MAIN)
 
     override fun onResume()
     {
+        CB_AppFunc.registerNetworkCallback(this)
         binding.adView.resume()
         super.onResume()
+    }
+
+    override fun onStop() {
+        CB_AppFunc.releaseNetworkCallback(this)
+        super.onStop()
     }
 
     override fun onDestroy()

@@ -73,7 +73,7 @@ abstract class CB_BaseTaskService: Service()
 
         createDefaultChannel()
         val builder = NotificationCompat.Builder(this, CHANNEL_ID_DEFAULT)
-            .setSmallIcon(R.drawable.ic_file_upload_white_24dp)
+            .setSmallIcon(R.drawable.notification_icon)
             .setLargeIcon(BitmapFactory.decodeResource(resources, R.drawable.couple_blog))
             .setContentTitle(getString(R.string.app_name))
             .setContentText(getString(iResCaption))
@@ -94,10 +94,9 @@ abstract class CB_BaseTaskService: Service()
         val pendingIntent = PendingIntent.getActivity(this,
             /* request Code */ 0, intent, PendingIntent.FLAG_UPDATE_CURRENT)
 
-        val iIcon = if(bSuccess) R.drawable.ic_check_white_24 else R.drawable.ic_error_white_24dp
         createDefaultChannel()
         val builder = NotificationCompat.Builder(this, CHANNEL_ID_DEFAULT)
-            .setSmallIcon(iIcon)
+            .setSmallIcon(R.drawable.notification_icon)
             .setLargeIcon(BitmapFactory.decodeResource(resources, R.drawable.couple_blog))
             .setContentTitle(getString(R.string.app_name))
             .setContentText(getString(iResCaption))
