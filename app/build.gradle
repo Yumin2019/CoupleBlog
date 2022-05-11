@@ -30,8 +30,8 @@ android {
         applicationId "com.coupleblog"
         minSdk 21
         targetSdk 30
-        versionCode 116
-        versionName "1.1.6"
+        versionCode 117
+        versionName "1.1.7"
         archivesBaseName = "${rootProject.name}-${versionName}"
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
     }

@@ -1,5 +1,6 @@
 package com.coupleblog
 
+import android.R.attr
 import android.graphics.Bitmap
 import android.graphics.Color
 import android.graphics.Matrix
@@ -30,6 +31,12 @@ import com.coupleblog.a200photoeditor.shape.ShapeBuilder
 import com.coupleblog.a200photoeditor.shape.ShapeType
 import com.google.android.gms.ads.AdSize
 import kotlin.Exception
+import android.R.attr.scaleHeight
+
+import android.R.attr.scaleWidth
+
+
+
 
 class CB_PhotoEditorActivity: CB_BaseActivity(CB_SingleSystemMgr.ACTIVITY_TYPE.PHOTO_EDTIOR),
      OnPhotoEditorListener,
@@ -115,17 +122,43 @@ class CB_PhotoEditorActivity: CB_BaseActivity(CB_SingleSystemMgr.ACTIVITY_TYPE.P
         mPhotoEditor.setOnPhotoEditorListener(this@CB_PhotoEditorActivity)
     }
 
-    private fun getResizedBitmap(bm: Bitmap, newWidth: Int): Bitmap? {
+    private fun getResizedBitmap(bm: Bitmap, destWidth: Int, destHeight: Int): Bitmap? {
         val width = bm.width
         val height = bm.height
-        val fWidthRatio = newWidth.toFloat() / width
+
+        if(width >= height)
+        {
+            // 세로 기준으로 비율을 잡아 확대하고 이미지 좌우를 자른다.
+            val heightRatio = (destHeight / height.toFloat())
+            val matrix = Matrix()
+            matrix.postScale(heightRatio, heightRatio)
+            val resizedBitmap = Bitmap.createBitmap(
+                bm, 0, 0, width, height, matrix, false
+            )
+
+            return Bitmap.createBitmap(
+                resizedBitmap,
+                (resizedBitmap.width - destWidth) / 2,
+                0,
+                destWidth,
+                destHeight
+            )
+        }
+
+        // 가로 기준으로 비율을 잡아 확대하고 이미지 위아래를 자른다.
+        val widthRatio = (destWidth / width.toFloat())
         val matrix = Matrix()
-        // RESIZE THE BIT MAP
-        matrix.postScale(fWidthRatio, fWidthRatio - 0.25f)
-        // RECREATE THE NEW BITMAP
+        matrix.postScale(widthRatio, widthRatio)
+        val resizedBitmap = Bitmap.createBitmap(
+            bm, 0, 0, width, height, matrix, false
+        )
+
         return Bitmap.createBitmap(
-            bm, 0, 0, width, height,
-            matrix, false
+            resizedBitmap,
+            0,
+            (resizedBitmap.height - destHeight) / 2,
+            destWidth,
+            destHeight
         )
     }
 
@@ -138,7 +171,7 @@ class CB_PhotoEditorActivity: CB_BaseActivity(CB_SingleSystemMgr.ACTIVITY_TYPE.P
         // set bitmap to imageView
         if(CB_ViewModel.editorBitmap != null)
         {
-            CB_ViewModel.editorBitmap = getResizedBitmap(CB_ViewModel.editorBitmap!!, width)
+            CB_ViewModel.editorBitmap = getResizedBitmap(CB_ViewModel.editorBitmap!!, width, height)
             binding.photoEditorView.source.setImageBitmap(CB_ViewModel.editorBitmap)
         }
         else
