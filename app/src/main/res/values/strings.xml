@@ -990,7 +990,7 @@ OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.            
     <string name="str_female">Female</string>
     <string name="str_register_msg">if you don\'t have an account</string>
     <string name="str_personal_information_policy_msg">if you want to see</string>
-    <string name="str_personal_info_policy">Personal information processing policy</string>
+    <string name="str_personal_info_policy">Privacy Policy</string>
     <string name="str_login_again">Please restart couple blog</string>
     <string name="str_input_email">Please input your email</string>
     <string name="str_input_email_again">Please input your email again</string>
