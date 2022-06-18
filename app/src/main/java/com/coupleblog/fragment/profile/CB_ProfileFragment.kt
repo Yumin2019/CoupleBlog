@@ -126,6 +126,22 @@ class CB_ProfileFragment: CB_BaseFragment()
         }, uid)
     }
 
+    fun callButton()
+    {
+        val listItem: ArrayList<DialogItem> = arrayListOf(
+            DialogItem(getString(R.string.str_call), R.drawable.call,
+                callback =
+                {
+                }),
+
+            DialogItem(getString(R.string.str_video_call), R.drawable.camera_on,
+                callback =
+                {
+                }))
+
+        CB_ItemListDialog(requireActivity(), getString(R.string.str_call), listItem, true)
+    }
+
     fun daysButton()
     {
         beginAction(R.id.action_CB_MainFragment_to_CB_DaysFragment, R.id.CB_MainFragment)

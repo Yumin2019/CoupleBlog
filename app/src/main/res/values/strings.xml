@@ -1079,4 +1079,12 @@ OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.            
     <string name="str_widget_login_error">You need to login on Couple Blog</string>
     <string name="str_widget_couple_error">You\'re not a couple</string>
     <string name="str_widget_info_error">Invalid information</string>
+
+    <string name="str_call">Call</string>
+    <string name="str_call_desc">Try calling your lover.</string>
+    <string name="str_video_call">Video Call</string>
+    <string name="str_mic">Mic</string>
+    <string name="str_permission_mic_desc">Used for Video Call</string>
+
+
 </resources>

@@ -70,7 +70,7 @@
             <TextView
                 android:id="@+id/camera_desc_text_view"
                 style="@style/normal_text_style"
-                android:layout_width="@dimen/normal_field_size"
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="@string/str_permission_camera_desc"
                 android:textAlignment="viewStart"
@@ -79,8 +79,8 @@
 
         </androidx.constraintlayout.widget.ConstraintLayout>
 
-       <!-- <androidx.constraintlayout.widget.ConstraintLayout
-            android:id="@+id/storage_container_layout"
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/mic_container_layout"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_marginStart="@dimen/margin_16dp"
@@ -90,37 +90,37 @@
             app:layout_constraintTop_toBottomOf="@+id/camera_container_layout">
 
             <ImageView
-                android:id="@+id/storage_image_view"
+                android:id="@+id/mic_image_view"
                 android:layout_width="@dimen/icon_image_size"
                 android:layout_height="@dimen/icon_image_size"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent"
-                android:src="@drawable/folder" />
+                android:src="@drawable/mic_on" />
 
             <TextView
-                android:id="@+id/storage_text_view"
+                android:id="@+id/mic_text_view"
                 style="@style/post_title_text_view"
                 android:layout_width="@dimen/normal_field_size"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="@dimen/margin_16dp"
-                android:text="@string/str_storage"
+                android:text="@string/str_mic"
                 android:textAlignment="viewStart"
                 android:textColor="@color/purple_text"
-                app:layout_constraintStart_toEndOf="@+id/storage_image_view"
+                app:layout_constraintStart_toEndOf="@+id/mic_image_view"
                 app:layout_constraintTop_toTopOf="parent" />
 
             <TextView
-                android:id="@+id/storage_desc_text_view"
+                android:id="@+id/mic_desc_text_view"
                 style="@style/normal_text_style"
-                android:layout_width="@dimen/normal_field_size"
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="@string/str_permission_storage_desc"
+                android:text="@string/str_permission_mic_desc"
                 android:textAlignment="viewStart"
-                app:layout_constraintStart_toStartOf="@+id/storage_text_view"
-                app:layout_constraintTop_toBottomOf="@+id/storage_text_view" />
+                app:layout_constraintStart_toStartOf="@+id/mic_text_view"
+                app:layout_constraintTop_toBottomOf="@+id/mic_text_view" />
 
-        </androidx.constraintlayout.widget.ConstraintLayout>-->
+        </androidx.constraintlayout.widget.ConstraintLayout>
 
         <TextView
             android:id="@+id/desc_text_view"

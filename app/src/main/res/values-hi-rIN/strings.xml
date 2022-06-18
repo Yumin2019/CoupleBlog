@@ -283,4 +283,10 @@
     <string name="str_widget_couple_error">आप युगल नहीं हैं</string>
     <string name="str_widget_info_error">अमान्य जानकारी</string>
 
+    <string name="str_call">कॉल करें</string>
+    <string name="str_call_desc">Try calling your lover.</string>
+    <string name="str_video_call">Video Call</string>
+    <string name="str_mic">Mic</string>
+    <string name="str_permission_mic_desc">Used for Video Call</string>
+
 </resources>

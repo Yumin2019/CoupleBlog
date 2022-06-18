@@ -22,7 +22,7 @@ class CB_PermissionFragment : CB_BaseFragment()
 
     // permissions
     private lateinit var permissionLauncher: ActivityResultLauncher<Array<String>>
-    val permissions = arrayOf(Manifest.permission.CAMERA)
+    private val permissions = arrayOf(Manifest.permission.CAMERA, Manifest.permission.RECORD_AUDIO)
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View
     {
@@ -44,9 +44,20 @@ class CB_PermissionFragment : CB_BaseFragment()
             // permission denied
             if(!CB_AppFunc.checkPermission(Manifest.permission.CAMERA))
             {
-                // Camera
                 CB_AppFunc.confirmDialog(requireActivity(), R.string.str_camera,
                     R.string.str_normal_permission_message, R.drawable.camera, false,
+                    R.string.str_setting,
+                    { _, _ ->
+                        val intent = Intent(Settings.ACTION_APPLICATION_DETAILS_SETTINGS)
+                        intent.data = Uri.parse("package:${requireActivity().packageName}")
+                        startActivity(intent)
+
+                    }, R.string.str_cancel, null)
+            }
+            else if(!CB_AppFunc.checkPermission(Manifest.permission.RECORD_AUDIO))
+            {
+                CB_AppFunc.confirmDialog(requireActivity(), R.string.str_mic,
+                    R.string.str_normal_permission_message, R.drawable.mic_on, false,
                     R.string.str_setting,
                     { _, _ ->
                         val intent = Intent(Settings.ACTION_APPLICATION_DETAILS_SETTINGS)

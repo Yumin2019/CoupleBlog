@@ -85,8 +85,8 @@
                     android:layout_width="@dimen/profile_image_size"
                     android:layout_height="@dimen/profile_image_size"
                     android:layout_marginStart="@dimen/margin_16dp"
-                    android:layout_marginTop="@dimen/margin_24dp"
-                    android:layout_marginBottom="@dimen/margin_24dp"
+                    android:layout_marginTop="@dimen/margin_16dp"
+                    android:layout_marginBottom="@dimen/margin_16dp"
                     app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toTopOf="parent"
@@ -162,8 +162,8 @@
                     style="@style/circle_shape_image_view"
                     bind:image_uid="@{viewModel.curUser.strCoupleUid}"
                     android:layout_marginStart="@dimen/margin_16dp"
-                    android:layout_marginTop="@dimen/margin_24dp"
-                    android:layout_marginBottom="@dimen/margin_24dp"
+                    android:layout_marginTop="@dimen/margin_16dp"
+                    android:layout_marginBottom="@dimen/margin_16dp"
                     app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toTopOf="parent"
@@ -173,8 +173,9 @@
 
         </com.google.android.material.card.MaterialCardView>
 
+
         <com.google.android.material.card.MaterialCardView
-            android:id="@+id/days_card_view"
+            android:id="@+id/call_card_view"
             style="@style/card_view_style"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
@@ -186,9 +187,70 @@
             <androidx.constraintlayout.widget.ConstraintLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                bind:visibility="@{!viewModel.curUser.strCoupleUid.isEmpty()}"
+                android:background="?android:attr/selectableItemBackgroundBorderless"
+                android:onClick="@{()->fragment.callButton()}"
+                bind:visibility="@{!viewModel.curUser.strCoupleUid.isEmpty()}">
+
+                <TextView
+                    android:id="@+id/call_text_view"
+                    style="@style/post_title_text_view"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="@dimen/margin_16dp"
+                    android:paddingStart="@dimen/margin_16dp"
+                    android:paddingEnd="@dimen/margin_16dp"
+                    android:text="@string/str_call"
+                    app:layout_constraintBottom_toTopOf="@+id/call_desc_text_view"
+                    app:layout_constraintStart_toEndOf="@+id/call_image_view"
+                    app:layout_constraintTop_toTopOf="@+id/call_image_view"/>
+
+                <TextView
+                    android:id="@+id/call_desc_text_view"
+                    style="@style/normal_text_style"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:paddingStart="@dimen/margin_16dp"
+                    android:paddingEnd="@dimen/margin_16dp"
+                    android:text="@string/str_call_desc"
+                    android:textAlignment="viewStart"
+                    android:textColor="@color/grey"
+                    app:layout_constraintBottom_toBottomOf="@+id/call_image_view"
+                    app:layout_constraintStart_toStartOf="@+id/call_text_view"
+                    app:layout_constraintTop_toBottomOf="@+id/call_text_view" />
+
+                <ImageView
+                    android:id="@+id/call_image_view"
+                    style="@style/circle_shape_image_view"
+                    android:padding="@dimen/normal_margin"
+                    android:layout_width="@dimen/profile_image_size"
+                    android:layout_height="@dimen/profile_image_size"
+                    android:layout_marginStart="@dimen/margin_16dp"
+                    android:layout_marginTop="@dimen/margin_16dp"
+                    android:layout_marginBottom="@dimen/margin_16dp"
+                    android:src="@drawable/call"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent" />
+            </androidx.constraintlayout.widget.ConstraintLayout>
+
+        </com.google.android.material.card.MaterialCardView>
+
+        <com.google.android.material.card.MaterialCardView
+            android:id="@+id/days_card_view"
+            style="@style/card_view_style"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/call_card_view"
+            bind:visibility="@{!viewModel.curUser.strCoupleUid.isEmpty()}">
+
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="?android:attr/selectableItemBackgroundBorderless"
                 android:onClick="@{()->fragment.daysButton()}"
-                android:background="?android:attr/selectableItemBackgroundBorderless">
+                bind:visibility="@{!viewModel.curUser.strCoupleUid.isEmpty()}">
 
                 <TextView
                     android:id="@+id/days_text_view"
@@ -216,17 +278,18 @@
                     android:textColor="@color/grey"
                     app:layout_constraintBottom_toBottomOf="@+id/days_image_view"
                     app:layout_constraintStart_toStartOf="@+id/days_text_view"
-                    app:layout_constraintTop_toBottomOf="@+id/days_text_view"
-                    tools:text="@string/str_days_desc_exam" />
+                    app:layout_constraintTop_toBottomOf="@+id/days_text_view" 
+                    />
 
                 <ImageView
                     android:id="@+id/days_image_view"
                     style="@style/circle_shape_image_view"
+                    android:padding="@dimen/normal_margin"
                     android:layout_width="@dimen/profile_image_size"
                     android:layout_height="@dimen/profile_image_size"
                     android:layout_marginStart="@dimen/margin_16dp"
-                    android:layout_marginTop="@dimen/margin_24dp"
-                    android:layout_marginBottom="@dimen/margin_24dp"
+                    android:layout_marginTop="@dimen/margin_16dp"
+                    android:layout_marginBottom="@dimen/margin_16dp"
                     android:src="@drawable/calendar"
                     app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
@@ -234,7 +297,7 @@
             </androidx.constraintlayout.widget.ConstraintLayout>
 
         </com.google.android.material.card.MaterialCardView>
-
+        
     </androidx.constraintlayout.widget.ConstraintLayout>
 
 
