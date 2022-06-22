@@ -32,11 +32,7 @@ import com.coupleblog.a200photoeditor.shape.ShapeType
 import com.google.android.gms.ads.AdSize
 import kotlin.Exception
 import android.R.attr.scaleHeight
-
 import android.R.attr.scaleWidth
-
-
-
 
 class CB_PhotoEditorActivity: CB_BaseActivity(CB_SingleSystemMgr.ACTIVITY_TYPE.PHOTO_EDTIOR),
      OnPhotoEditorListener,

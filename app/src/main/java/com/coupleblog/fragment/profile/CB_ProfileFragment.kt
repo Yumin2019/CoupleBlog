@@ -1,9 +1,11 @@
 package com.coupleblog.fragment.profile
 
+import android.content.Intent
 import android.os.Bundle
 import android.view.*
 import androidx.core.os.bundleOf
 import androidx.navigation.fragment.findNavController
+import com.coupleblog.CB_VideoCallActivity
 import com.coupleblog.R
 import com.coupleblog.base.CB_BaseFragment
 import com.coupleblog.dialog.CB_ItemListDialog
@@ -14,7 +16,6 @@ import com.coupleblog.fragment.ProfileBinding
 import com.coupleblog.singleton.CB_AppFunc
 import com.coupleblog.singleton.CB_SingleSystemMgr
 import com.coupleblog.singleton.CB_ViewModel
-import kotlinx.coroutines.launch
 
 class CB_ProfileFragment: CB_BaseFragment()
 {
@@ -128,18 +129,17 @@ class CB_ProfileFragment: CB_BaseFragment()
 
     fun callButton()
     {
-        val listItem: ArrayList<DialogItem> = arrayListOf(
-            DialogItem(getString(R.string.str_call), R.drawable.call,
-                callback =
-                {
-                }),
+        if (CB_SingleSystemMgr.isDialog(CB_SingleSystemMgr.DIALOG_TYPE.CONFIRM_DIALOG))
+            return
 
-            DialogItem(getString(R.string.str_video_call), R.drawable.camera_on,
-                callback =
-                {
-                }))
+        if(CB_SingleSystemMgr.isActivity(CB_SingleSystemMgr.ACTIVITY_TYPE.VIDEO_CALL))
+            return
 
-        CB_ItemListDialog(requireActivity(), getString(R.string.str_call), listItem, true)
+        CB_AppFunc.confirmDialog(requireActivity(), R.string.str_video_call,
+            R.string.str_call_dialog_message, R.drawable.camera_on, true, R.string.str_call,
+            yesListener = {  _, _ ->
+                startActivity(Intent(requireActivity(), CB_VideoCallActivity::class.java))
+            }, R.string.str_cancel, null)
     }
 
     fun daysButton()

@@ -11,6 +11,7 @@ class CB_SingleSystemMgr
     {
         MAIN,
         PHOTO_EDTIOR,
+        VIDEO_CALL,
         DAYS_WIDGET,
         ACTIVITY_TYPE_END
     }

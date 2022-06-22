@@ -199,10 +199,10 @@
                     android:layout_marginStart="@dimen/margin_16dp"
                     android:paddingStart="@dimen/margin_16dp"
                     android:paddingEnd="@dimen/margin_16dp"
-                    android:text="@string/str_call"
+                    android:text="@string/str_video_call"
                     app:layout_constraintBottom_toTopOf="@+id/call_desc_text_view"
-                    app:layout_constraintStart_toEndOf="@+id/call_image_view"
-                    app:layout_constraintTop_toTopOf="@+id/call_image_view"/>
+                    app:layout_constraintStart_toEndOf="@+id/video_call_image_view"
+                    app:layout_constraintTop_toTopOf="@+id/video_call_image_view"/>
 
                 <TextView
                     android:id="@+id/call_desc_text_view"
@@ -214,12 +214,12 @@
                     android:text="@string/str_call_desc"
                     android:textAlignment="viewStart"
                     android:textColor="@color/grey"
-                    app:layout_constraintBottom_toBottomOf="@+id/call_image_view"
+                    app:layout_constraintBottom_toBottomOf="@+id/video_call_image_view"
                     app:layout_constraintStart_toStartOf="@+id/call_text_view"
                     app:layout_constraintTop_toBottomOf="@+id/call_text_view" />
 
                 <ImageView
-                    android:id="@+id/call_image_view"
+                    android:id="@+id/video_call_image_view"
                     style="@style/circle_shape_image_view"
                     android:padding="@dimen/normal_margin"
                     android:layout_width="@dimen/profile_image_size"
@@ -227,7 +227,7 @@
                     android:layout_marginStart="@dimen/margin_16dp"
                     android:layout_marginTop="@dimen/margin_16dp"
                     android:layout_marginBottom="@dimen/margin_16dp"
-                    android:src="@drawable/call"
+                    android:src="@drawable/camera_on"
                     app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toTopOf="parent" />

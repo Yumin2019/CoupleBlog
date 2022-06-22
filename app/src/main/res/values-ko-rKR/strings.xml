@@ -282,6 +282,9 @@
     <string name="str_widget_couple_error">커플이 아닙니다.</string>
     <string name="str_widget_info_error">정상적인 데이터가 아닙니다.</string>
 
+    <string name="str_call_off">통화 종료</string>
+    <string name="str_failed_to_call">연결에 실패했습니다.</string>
+    <string name="str_call_dialog_message">연인에게 전화를 거시겠습니까?</string>
     <string name="str_call">전화하기</string>
     <string name="str_call_desc">연인에게 전화를 걸어보세요.</string>
     <string name="str_video_call">영상 통화</string>

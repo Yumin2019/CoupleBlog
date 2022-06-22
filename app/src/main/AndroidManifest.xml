@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
-    package="com.coupleblog" >
+    package="com.coupleblog">
 
     <uses-permission android:name="android.permission.INTERNET" />
     <uses-permission android:name="android.permission.CAMERA" />
@@ -17,15 +17,18 @@
         android:requestLegacyExternalStorage="true"
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
-        android:theme="@style/Theme.Coupleblog" >
+        android:theme="@style/Theme.Coupleblog">
+        <activity
+            android:name=".CB_VideoCallActivity"
+            android:exported="true" />
 
         <meta-data
             android:name="com.google.android.gms.ads.APPLICATION_ID"
-            android:value="ca-app-pub-6742614297266407~2815823304"/>
+            android:value="ca-app-pub-6742614297266407~2815823304" />
 
         <receiver
             android:name=".widget.CB_DaysWidgetProvider"
-            android:exported="true" >
+            android:exported="true">
             <intent-filter>
                 <action android:name="android.appwidget.action.APPWIDGET_UPDATE" />
             </intent-filter>
@@ -39,7 +42,7 @@
             android:name="androidx.core.content.FileProvider"
             android:authorities="com.coupleblog.fileprovider"
             android:exported="false"
-            android:grantUriPermissions="true" >
+            android:grantUriPermissions="true">
             <meta-data
                 android:name="android.support.FILE_PROVIDER_PATHS"
                 android:resource="@xml/file_paths" />
@@ -49,17 +52,15 @@
             android:name=".CB_PhotoEditorActivity"
             android:hardwareAccelerated="true"
             android:screenOrientation="portrait" />
-
         <activity
             android:name=".widget.CB_DaysWidgetActivity"
             android:screenOrientation="portrait" />
-
         <activity
             android:name=".CB_MainActivity"
             android:exported="true"
             android:hardwareAccelerated="true"
             android:screenOrientation="portrait"
-            android:windowSoftInputMode="adjustPan" >
+            android:windowSoftInputMode="adjustPan">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
@@ -73,7 +74,6 @@
         <service
             android:name=".storage.CB_DownloadService"
             android:exported="false" />
-
         <service
             android:name=".notifications.CB_FirebaseMessagingService"
             android:exported="false">
@@ -85,7 +85,6 @@
         <meta-data
             android:name="com.google.firebase.messaging.default_notification_icon"
             android:resource="@drawable/notification_icon" />
-
     </application>
 
 </manifest>

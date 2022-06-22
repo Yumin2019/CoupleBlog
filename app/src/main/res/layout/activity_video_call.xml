@@ -1,0 +1,112 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:bind="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <data class="com.coupleblog.VideoCallBinding">
+
+        <variable
+            name="activity"
+            type="com.coupleblog.CB_VideoCallActivity" />
+
+        <variable
+            name="viewModel"
+            type="com.coupleblog.singleton.CB_ViewModel.Companion" />
+
+    </data>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        tools:context=".CB_VideoCallActivity">
+
+        <WebView
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            app:layout_constraintBottom_toTopOf="@+id/call_option_layout"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <ImageView
+            android:id="@+id/banner_image_view"
+            android:layout_width="0dp"
+            android:layout_height="200dp"
+            android:layout_marginTop="64dp"
+            android:src="@drawable/cb_banner_white"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            bind:visibility="@{!viewModel.isConnected}" />
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/call_option_layout"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            bind:visibility="@{viewModel.isConnected}"
+            android:background="@color/darker_grey"
+            android:paddingVertical="@dimen/normal_margin"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent">
+
+            <ImageView
+                android:id="@+id/switch_camera_image_view"
+                android:layout_width="@dimen/call_toolbar_icon_size"
+                android:layout_height="@dimen/call_toolbar_icon_size"
+                android:background="?android:attr/selectableItemBackgroundBorderless"
+                android:src="@drawable/switch_camera"
+                android:onClick="@{()->activity.switchCamera()}"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toStartOf="@+id/camera_image_view"
+                app:layout_constraintHorizontal_bias="0.5"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <ImageView
+                android:id="@+id/camera_image_view"
+                android:layout_width="@dimen/call_toolbar_icon_size"
+                android:layout_height="@dimen/call_toolbar_icon_size"
+                android:background="?android:attr/selectableItemBackgroundBorderless"
+                android:src="@{viewModel.isCameraEnabled() ? @drawable/camera_on : @drawable/camera_off}"
+                tools:src="@drawable/camera_on"
+                android:onClick="@{()->activity.cameraButton()}"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toStartOf="@+id/mic_image_view"
+                app:layout_constraintHorizontal_bias="0.5"
+                app:layout_constraintStart_toEndOf="@+id/switch_camera_image_view"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <ImageView
+                android:id="@+id/mic_image_view"
+                android:layout_width="@dimen/call_toolbar_icon_size"
+                android:layout_height="@dimen/call_toolbar_icon_size"
+                android:background="?android:attr/selectableItemBackgroundBorderless"
+                tools:src="@drawable/mic_on"
+                android:src="@{viewModel.isMicEnabled() ? @drawable/mic_on : @drawable/mic_off}"
+                android:onClick="@{()->activity.micButton()}"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toStartOf="@+id/call_off_image_view"
+                app:layout_constraintHorizontal_bias="0.5"
+                app:layout_constraintStart_toEndOf="@+id/camera_image_view"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <ImageView
+                android:id="@+id/call_off_image_view"
+                android:layout_width="@dimen/call_toolbar_icon_size"
+                android:layout_height="@dimen/call_toolbar_icon_size"
+                android:background="?android:attr/selectableItemBackgroundBorderless"
+                android:src="@drawable/call_off"
+                android:onClick="@{()->activity.callOffButton(true)}"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="0.5"
+                app:layout_constraintStart_toEndOf="@+id/mic_image_view"
+                app:layout_constraintTop_toTopOf="parent" />
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+</layout>

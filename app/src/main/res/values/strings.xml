@@ -2,7 +2,7 @@
 <resources>
 
     <!-- translatable false start -->
-     <string name="str_personal_info_policy_text" translatable="false">
+    <string name="str_personal_info_policy_text" translatable="false">
 (Couple blog)(https://blog.naver.com/lmj3322 이하 Couple blog)은(는) 「개인정보 보호법」 제30조에 따라 정보주체의 개인정보를 보호하고 이와 관련한 고충을 신속하고 원활하게 처리할 수 있도록 하기 위하여 다음과 같이 개인정보 처리방침을 수립·공개합니다.\n\n
 
 ○ 이 개인정보처리방침은 2021년 1월 1부터 적용됩니다.\n\n
@@ -1080,6 +1080,9 @@ OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.            
     <string name="str_widget_couple_error">You\'re not a couple</string>
     <string name="str_widget_info_error">Invalid information</string>
 
+    <string name="str_call_off">Hang up</string>
+    <string name="str_failed_to_call">Failed to call your lover</string>
+    <string name="str_call_dialog_message">Do you really want to call your lover?</string>
     <string name="str_call">Call</string>
     <string name="str_call_desc">Try calling your lover.</string>
     <string name="str_video_call">Video Call</string>

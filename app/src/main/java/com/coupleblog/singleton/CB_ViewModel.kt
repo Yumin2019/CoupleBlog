@@ -1,13 +1,9 @@
 package com.coupleblog.singleton
-import androidx.lifecycle.ViewModel
-
 import android.graphics.Bitmap
-import android.os.Build
 import android.util.Log
 import androidx.lifecycle.MutableLiveData
 import androidx.recyclerview.widget.RecyclerView
 import com.coupleblog.BuildConfig
-import com.coupleblog.ListLiveData
 import com.coupleblog.R
 import com.coupleblog.adapter.CB_EmailAdapter
 import com.coupleblog.fragment.PAGE_TYPE
@@ -192,5 +188,19 @@ class CB_ViewModel
 
         // DaysDetailsFragment
         var tDays               = MutableLiveData(CB_Days())
+
+        // VideoCallActivity
+        var isConnected = MutableLiveData(false)
+        var isCameraEnabled = MutableLiveData(true)
+        var isMicEnabled = MutableLiveData(true)
+        var isFrontCamera = MutableLiveData(true)
+
+        fun resetVideoCallActivityLiveData()
+        {
+            isConnected.postValue(false)
+            isCameraEnabled.postValue(true)
+            isMicEnabled.postValue(true)
+            isFrontCamera.postValue(true)
+        }
     }
 }
