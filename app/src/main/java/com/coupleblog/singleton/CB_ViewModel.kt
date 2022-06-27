@@ -188,19 +188,5 @@ class CB_ViewModel
 
         // DaysDetailsFragment
         var tDays               = MutableLiveData(CB_Days())
-
-        // VideoCallActivity
-        var isConnected = MutableLiveData(false)
-        var isCameraEnabled = MutableLiveData(true)
-        var isMicEnabled = MutableLiveData(true)
-        var isFrontCamera = MutableLiveData(true)
-
-        fun resetVideoCallActivityLiveData()
-        {
-            isConnected.postValue(false)
-            isCameraEnabled.postValue(true)
-            isMicEnabled.postValue(true)
-            isFrontCamera.postValue(true)
-        }
     }
 }

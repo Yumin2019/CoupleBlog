@@ -1,128 +1,116 @@
 package com.coupleblog
 
+import android.content.BroadcastReceiver
+import android.content.Context
+import android.content.Intent
+import android.content.IntentFilter
 import android.os.Bundle
-import androidx.databinding.DataBindingUtil
+import android.util.Log
+import androidx.localbroadcastmanager.content.LocalBroadcastManager
 import com.coupleblog.base.CB_BaseActivity
-import com.coupleblog.dialog.CB_LoadingDialog
 import com.coupleblog.singleton.CB_AppFunc
 import com.coupleblog.singleton.CB_SingleSystemMgr
-import com.coupleblog.singleton.CB_SingleSystemMgr.Companion.showToast
-import com.coupleblog.singleton.CB_ViewModel
+import java.net.MalformedURLException
+import java.net.URL
+import org.jitsi.meet.sdk.*
 
 class CB_VideoCallActivity : CB_BaseActivity(CB_SingleSystemMgr.ACTIVITY_TYPE.VIDEO_CALL)
 {
-    private lateinit var binding    : VideoCallBinding
-    private lateinit var dialog     : CB_LoadingDialog
+    private val broadcastReceiver = object : BroadcastReceiver() {
+        override fun onReceive(context: Context?, intent: Intent?) {
+            onBroadcastReceived(intent)
+        }
+    }
 
-    private var firstTime : Long = 0
-    private var secondTime : Long = 0
-
-    override fun onCreate(savedInstanceState: Bundle?)
-    {
+    override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        binding   = DataBindingUtil.setContentView(this, R.layout.activity_video_call)
-        binding.apply {
-            lifecycleOwner = this@CB_VideoCallActivity
-            activity       = this@CB_VideoCallActivity
-            viewModel      = CB_ViewModel.Companion
+        setContentView(R.layout.activity_video_call)
+        val strCoupleKey = CB_AppFunc.getSharedPref(this).getString("strCoupleKey", "")
+        val strCoupleFcmToken = CB_AppFunc.getSharedPref(this).getString("strCoupleFcmToken", "")
+        if(strCoupleKey.isNullOrEmpty() || strCoupleFcmToken.isNullOrEmpty()) {
+            exitButton()
         }
 
-        dialog = CB_LoadingDialog(this@CB_VideoCallActivity).apply { show() }
+        // Initialize default options for Jitsi Meet conferences.
+        val serverURL: URL = try {
+            // When using JaaS, replace "https://meet.jit.si" with the proper serverURL
+            URL("https://meet.jit.si")
+        } catch (e: MalformedURLException) {
+            e.printStackTrace()
+            throw RuntimeException("Invalid server URL!")
+        }
+        val defaultOptions = JitsiMeetConferenceOptions.Builder()
+            .setServerURL(serverURL)
+            // Different features flags can be set
+            //.setFeatureFlag("toolbox.enabled", false)
+            //.setFeatureFlag("filmstrip.enabled", false)
+            .setFeatureFlag("welcomepage.enabled", false)
+            .build()
+        JitsiMeet.setDefaultConferenceOptions(defaultOptions)
 
-        CB_AppFunc.postDelayedUI(3000, null, funcSecond = {
+        registerForBroadcastMessages()
 
-            val call = false
-            CB_ViewModel.isConnected.value = call
-            dialog.cancel()
+        val options = JitsiMeetConferenceOptions.Builder()
+            .setRoom(strCoupleKey)
+            // Settings for audio and video
+            //.setAudioMuted(true)
+            //.setVideoMuted(true)
+            .build()
+        // Launch the new activity with the given options. The launch() method takes care
+        // of creating the required Intent and passing the options.
+        JitsiMeetActivity.launch(this, options)
 
-            if(call)
-            {
+        CB_AppFunc.sendFCM(
+            "onVideoCallStart",
+            getString(R.string.str_video_call_notification_msg),
+            strCoupleFcmToken!!,
+            CB_AppFunc.FCM_TYPE.CALL_EVENT
+        )
+    }
 
+    override fun onDestroy() {
+        LocalBroadcastManager.getInstance(this).unregisterReceiver(broadcastReceiver)
+        super.onDestroy()
+    }
+
+
+    private fun registerForBroadcastMessages() {
+        val intentFilter = IntentFilter()
+        intentFilter.addAction(BroadcastEvent.Type.CONFERENCE_TERMINATED.action)
+
+        /* This registers for every possible event sent from JitsiMeetSDK
+           If only some of the events are needed, the for loop can be replaced
+           with individual statements:
+           ex:  intentFilter.addAction(BroadcastEvent.Type.AUDIO_MUTED_CHANGED.action);
+                ... other events
+         */
+        for (type in BroadcastEvent.Type.values()) {
+            intentFilter.addAction(type.action)
+        }
+
+        LocalBroadcastManager.getInstance(this).registerReceiver(broadcastReceiver, intentFilter)
+    }
+
+    // Example for handling different JitsiMeetSDK events
+    private fun onBroadcastReceived(intent: Intent?) {
+        if (intent != null) {
+            val event = BroadcastEvent(intent)
+            when (event.type) {
+                BroadcastEvent.Type.CONFERENCE_JOINED -> Log.i("Conference Joined with url%s",
+                    event.getData().get("url").toString()
+                )
+                BroadcastEvent.Type.PARTICIPANT_JOINED -> Log.i("Participant joined%s",
+                    event.getData().get("name").toString()
+                )
+                BroadcastEvent.Type.CONFERENCE_TERMINATED -> exitButton()
+                else -> Log.i("Received event: %s", event.type.toString())
             }
-            else
-            {
-                // tried to call your lover but not connected
-                callOffButton(false)
-            }
-        })
-    }
-
-    fun switchCamera()
-    {
-        if(CB_ViewModel.isConnected.value == false)
-            return
-
-        val call = true
-        if(call)
-        {
-            val flag = !CB_ViewModel.isFrontCamera.value!!
-            CB_ViewModel.isFrontCamera.postValue(flag)
-            if(flag)
-            {
-                showToast("Front")
-            }
-            else
-            {
-                showToast("Back")
-            }
         }
     }
 
-    fun cameraButton()
-    {
-        if(CB_ViewModel.isConnected.value == false)
-            return
-
-        val call = true
-        if(call) {
-            CB_ViewModel.isCameraEnabled.value = !CB_ViewModel.isCameraEnabled.value!!
-            showToast("카메라 on/off")
-        }
-    }
-
-    fun micButton()
-    {
-        if(CB_ViewModel.isConnected.value == false)
-            return
-
-        // on off
-
-        val call = true
-        if(call) {
-            CB_ViewModel.isMicEnabled.value = !CB_ViewModel.isMicEnabled.value!!
-            showToast("마이크 on/off")
-
-        }
-    }
-
-    fun callOffButton(isSelected: Boolean)
-    {
-        // 닫는 처리를 해준다.
-        if(isSelected)
-            showToast(R.string.str_call_off)
-        else
-            showToast(R.string.str_failed_to_call)
-
-        exitButton()
-        CB_AppFunc.postDelayedUI(500, null, funcSecond = {
-            CB_ViewModel.resetVideoCallActivityLiveData()
-        })
-
-        // 통신에 대한 처리 진행
-    }
-
-    override fun onBackPressed()
-    {
-        secondTime = System.currentTimeMillis()
-        if(secondTime - firstTime < 2000)
-        {
-            callOffButton(true)
-        }
-        else
-        {
-            showToast(R.string.str_press_back_to_exit)
-        }
-
-        firstTime = secondTime
+    // Example for sending actions to JitsiMeetSDK
+    private fun hangUp() {
+        val hangupBroadcastIntent: Intent = BroadcastIntentHelper.buildHangUpIntent()
+        LocalBroadcastManager.getInstance(this.applicationContext).sendBroadcast(hangupBroadcastIntent)
     }
 }

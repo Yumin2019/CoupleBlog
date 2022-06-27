@@ -106,11 +106,6 @@ class CB_MainFragment : CB_BaseFragment()
            }
        }
 
-        Log.d(strTag, "onViewCreated: saved couple key")
-        CB_AppFunc.getSharedPref(requireActivity()).edit().apply {
-            putString("strCoupleKey", CB_AppFunc.curUser.strCoupleKey)
-        }.apply()
-
         // if user has no token, make one
         Firebase.messaging.token.addOnCompleteListener(OnCompleteListener { task ->
             if (!task.isSuccessful) {
@@ -149,6 +144,11 @@ class CB_MainFragment : CB_BaseFragment()
             val ids = AppWidgetManager.getInstance(requireContext()).getAppWidgetIds(ComponentName(requireContext(), CB_DaysWidgetProvider::class.java))
             intentAction.putExtra(AppWidgetManager.EXTRA_APPWIDGET_IDS, ids)
             requireContext().sendBroadcast(intentAction)
+
+            CB_AppFunc.getSharedPref(requireActivity()).edit().apply {
+                putString("strCoupleKey", CB_AppFunc.curUser.strCoupleKey)
+                putString("strCoupleFcmToken", CB_AppFunc.coupleUser.strFcmToken)
+            }.apply()
         }
 
        // ViewPager 설정

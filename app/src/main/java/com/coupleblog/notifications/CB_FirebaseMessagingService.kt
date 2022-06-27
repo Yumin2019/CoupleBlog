@@ -12,6 +12,7 @@ import android.os.Build
 import android.util.Log
 import androidx.core.app.NotificationCompat
 import com.coupleblog.CB_MainActivity
+import com.coupleblog.CB_VideoCallActivity
 import com.coupleblog.R
 import com.coupleblog.singleton.CB_AppFunc
 import com.google.firebase.messaging.FirebaseMessagingService
@@ -19,8 +20,9 @@ import com.google.firebase.messaging.RemoteMessage
 
 class CB_FirebaseMessagingService : FirebaseMessagingService() {
 
-    fun notify(strTitle: String, strContent: String)
+    private fun notify(strTitle: String, strContent: String)
     {
+        // 개선사항: 어떠한 페이지로 이동을 해야 하는지에 대한 정보가 없다. (route 정보가 필요하다)
         val intent = Intent(this, CB_MainActivity::class.java).apply { addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP) }
         val pendingIntent = PendingIntent.getActivity(this, 0, intent, PendingIntent.FLAG_ONE_SHOT)
 
@@ -102,7 +104,50 @@ class CB_FirebaseMessagingService : FirebaseMessagingService() {
                     val strEventDate = arrText[5]
                     CB_AppFunc.requestWorker(applicationContext, strAddItem, strTitle, arrText[1], strFcmToken, strEventDate)
                 }
+            }
 
+            // VideoCall
+            CB_AppFunc.FCM_TYPE.CALL_EVENT.ordinal ->
+            {
+                val strContent = arrText[1]
+                val intent = Intent(this, CB_VideoCallActivity::class.java).apply {
+                    addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP)
+                }
+                val pendingIntent = PendingIntent.getActivity(this, 0, intent, PendingIntent.FLAG_ONE_SHOT)
+                val channelId = getString(R.string.default_notification_channel_id)
+                val channelName = getString(R.string.default_notification_channel_name)
+                val defaultSoundUri = RingtoneManager.getDefaultUri(RingtoneManager.TYPE_RINGTONE)
+                val notificationBuilder = NotificationCompat.Builder(this, channelId)
+                    .setLargeIcon(BitmapFactory.decodeResource(resources, R.drawable.camera_on))
+                    .setSmallIcon(R.drawable.notification_icon)
+                    .setContentTitle(getString(R.string.str_video_call))
+                    .setContentText(strContent)
+                    .setAutoCancel(true)
+                    .setPriority(NotificationCompat.PRIORITY_MAX)
+                    .setDefaults(Notification.DEFAULT_SOUND)
+                    .setSound(defaultSoundUri)
+                    .setChannelId(channelId)
+                    .setGroup(getString(R.string.app_name))
+                    .setGroupSummary(true)
+                    .setTimeoutAfter(15000) // 15s
+                    .setContentIntent(pendingIntent)
+
+                val notificationManager = getSystemService(Context.NOTIFICATION_SERVICE) as NotificationManager
+
+                // Since android Oreo notification channel is needed.
+                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+                    val channel = NotificationChannel(
+                        channelId,
+                        channelName,
+                        NotificationManager.IMPORTANCE_HIGH
+                    )
+                    channel.enableLights(false)
+                    channel.enableVibration(true)
+                    channel.lockscreenVisibility = Notification.VISIBILITY_PRIVATE
+                    notificationManager.createNotificationChannel(channel)
+                }
+
+                notificationManager.notify(0 /* ID of notification */, notificationBuilder.build())
             }
         }
     }

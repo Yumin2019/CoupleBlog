@@ -1080,14 +1080,11 @@ OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.            
     <string name="str_widget_couple_error">You\'re not a couple</string>
     <string name="str_widget_info_error">Invalid information</string>
 
-    <string name="str_call_off">Hang up</string>
-    <string name="str_failed_to_call">Failed to call your lover</string>
-    <string name="str_call_dialog_message">Do you really want to call your lover?</string>
-    <string name="str_call">Call</string>
+    <string name="str_video_call_notification_msg">Let\'s call</string>
     <string name="str_call_desc">Try calling your lover.</string>
     <string name="str_video_call">Video Call</string>
     <string name="str_mic">Mic</string>
     <string name="str_permission_mic_desc">Used for Video Call</string>
-
+    <string name="str_call_dialog_message">Do you really want to call your lover?</string>
 
 </resources>

@@ -87,7 +87,8 @@ class CB_AppFunc
     enum class FCM_TYPE
     {
         NOTIFY,
-        DAYS_WORKER
+        DAYS_WORKER,
+        CALL_EVENT,
     }
 
     companion object
@@ -596,7 +597,6 @@ class CB_AppFunc
         })
 
         suspend fun tryDeleteAccount() = networkScope.async {
-
             Log.i(strTag, "tryDeleteAccount userUid: ${getUid()}")
 
             // if couple, delete couple info
@@ -678,7 +678,6 @@ class CB_AppFunc
         }.await()
 
         suspend fun tryBreakingUp() = networkScope.async {
-
             Log.i(strTag, "tryBreakingUp")
             if(curUser.strCoupleKey.isNullOrEmpty() || curUser.strCoupleKey.isNullOrEmpty()) {
                 Log.e(strTag, "tryBreakingUp: User's not a couple")
@@ -721,6 +720,11 @@ class CB_AppFunc
             getUsersRoot().child(strUid).setValue(curUser)
             getUsersRoot().child(strCoupleUid).updateChildren(mapOf("strCoupleUid" to "", "strCoupleKey" to ""))
             Log.i(strTag, "clear couple info")
+
+            getSharedPref(application).edit().apply {
+                putString("strCoupleKey", "")
+                putString("strCoupleFcmToken", "")
+            }.apply()
 
             return@async true
         }.await()
@@ -1154,107 +1158,6 @@ class CB_AppFunc
             }
             return inSampleSize
         }
-
-     /*   fun requestPermissionAll(activity: Activity)
-        {
-            ActivityCompat.requestPermissions(activity, arrayOf(
-                    Manifest.permission.CAMERA,
-                    Manifest.permission.RECORD_AUDIO,
-                    Manifest.permission.MODIFY_AUDIO_SETTINGS,
-                    Manifest.permission.WRITE_EXTERNAL_STORAGE,
-                    Manifest.permission.READ_EXTERNAL_STORAGE,
-                    Manifest.permission.VIBRATE,
-                ), PERMISSION_REQUEST)
-        }
-
-        fun getPermissionString(): Array<String>
-        {
-            return arrayOf(
-                Manifest.permission.CAMERA,
-                Manifest.permission.RECORD_AUDIO,
-                Manifest.permission.MODIFY_AUDIO_SETTINGS,
-                Manifest.permission.WRITE_EXTERNAL_STORAGE,
-                Manifest.permission.READ_EXTERNAL_STORAGE,
-                Manifest.permission.VIBRATE
-            )
-        }
-
-
-
-
-
-        fun checkEssentialPermission(context: Context): Boolean
-        {
-            return (ContextCompat.checkSelfPermission(context, Manifest.permission.CAMERA)
-                    == PackageManager.PERMISSION_GRANTED
-                    && ContextCompat.checkSelfPermission(context, Manifest.permission.RECORD_AUDIO)
-                    == PackageManager.PERMISSION_GRANTED
-                    && ContextCompat.checkSelfPermission(context, Manifest.permission.MODIFY_AUDIO_SETTINGS)
-                    == PackageManager.PERMISSION_GRANTED)
-        }
-
-        fun checkPermissionAll(context: Context): Boolean
-        {
-            return (ContextCompat.checkSelfPermission(context, Manifest.permission.CAMERA)
-                    == PackageManager.PERMISSION_GRANTED &&
-                    ContextCompat.checkSelfPermission(context, Manifest.permission.RECORD_AUDIO)
-                    == PackageManager.PERMISSION_GRANTED &&
-                    ContextCompat.checkSelfPermission(context, Manifest.permission.MODIFY_AUDIO_SETTINGS)
-                    == PackageManager.PERMISSION_GRANTED &&
-                    ContextCompat.checkSelfPermission(context, Manifest.permission.WRITE_EXTERNAL_STORAGE)
-                    == PackageManager.PERMISSION_GRANTED &&
-                    ContextCompat.checkSelfPermission(context, Manifest.permission.READ_EXTERNAL_STORAGE)
-                    == PackageManager.PERMISSION_GRANTED
-                    && ContextCompat.checkSelfPermission(context, Manifest.permission.VIBRATE)
-                    == PackageManager.PERMISSION_GRANTED
-                    )
-        }
-
-        fun getPathFromURI(context: Context, ContentUri: Uri): String?
-        {
-            var res: String? = null
-            val proj = arrayOf(MediaStore.Images.Media.DATA)
-            val cursor: Cursor? = context.contentResolver
-                .query(ContentUri, proj, null, null, null)
-            if (cursor != null)
-            {
-                cursor.moveToFirst()
-                res = cursor.getString(cursor.getColumnIndexOrThrow(MediaStore.Images.Media.DATA))
-                cursor.close()
-            }
-            return res
-        }
-
-        fun setBitmapFromPath(fullPath: String, imageView: ImageView)
-        {
-            val imgFile = File(fullPath)
-            if (imgFile.exists())
-            {
-                val myBitmap = BitmapFactory.decodeFile(imgFile.absolutePath)
-                imageView.setImageBitmap(myBitmap)
-            }
-        }
-
-        fun RotateBitmap(bitmap: Bitmap, fAngle: Float): Bitmap?
-        = Matrix().let { matrix ->
-
-            matrix.postRotate(fAngle)
-            Bitmap.createBitmap(bitmap, 0, 0, bitmap.width, bitmap.height, matrix, true)
-        }
-
-        fun saveBitmapToFileCache(bitmap: Bitmap, strFilePath: String)
-        {
-            try
-            {
-                val outputStream = FileOutputStream(File(strFilePath))
-                bitmap.compress(Bitmap.CompressFormat.JPEG, 40, outputStream)
-                outputStream.close()
-            }
-            catch (e: Exception)
-            {
-                e.printStackTrace()
-            }
-        }*/
 
         fun getString(iStrRes: Int): String { return application.getString(iStrRes) }
 

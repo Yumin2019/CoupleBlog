@@ -56,12 +56,32 @@ class CB_SingleSystemMgr
         }
 
         @SuppressLint("ShowToast")
+        fun showToast(context: Context, text : CharSequence)
+        {
+            if (isToastMessage())
+                toast?.cancel()
+
+            toast = Toast.makeText(context, text, Toast.LENGTH_SHORT)
+            toast!!.show()
+        }
+
+        @SuppressLint("ShowToast")
         fun showToast(resId : Int)
         {
             if (isToastMessage())
                 toast?.cancel()
 
             toast = Toast.makeText(CB_AppFunc.application, resId, Toast.LENGTH_SHORT)
+            toast!!.show()
+        }
+
+        @SuppressLint("ShowToast")
+        fun showToast(context: Context, resId : Int)
+        {
+            if (isToastMessage())
+                toast?.cancel()
+
+            toast = Toast.makeText(context, resId, Toast.LENGTH_SHORT)
             toast!!.show()
         }
 

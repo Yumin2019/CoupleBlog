@@ -283,13 +283,11 @@
     <string name="str_widget_couple_error">आप युगल नहीं हैं</string>
     <string name="str_widget_info_error">अमान्य जानकारी</string>
 
-    <string name="str_call_off">Hang up</string>
-    <string name="str_failed_to_call">Failed to call your lover</string>
-    <string name="str_call_dialog_message">Do you really want to call your lover?</string>
-    <string name="str_call">कॉल करें</string>
-    <string name="str_call_desc">Try calling your lover.</string>
-    <string name="str_video_call">Video Call</string>
-    <string name="str_mic">Mic</string>
-    <string name="str_permission_mic_desc">Used for Video Call</string>
+    <string name="str_video_call_notification_msg">चलो कॉल करते हैं</string>
+    <string name="str_call_desc">अपने प्रेमी को बुलाने की कोशिश करो।</string>
+    <string name="str_video_call">वीडियो कॉल</string>
+    <string name="str_mic">माइक</string>
+    <string name="str_permission_mic_desc">वीडियो कॉल के लिए उपयोग में लिया जाता है</string>
+    <string name="str_call_dialog_message">क्या आप वाकई अपने प्रेमी को फोन करना चाहते हैं?</string>
 
 </resources>

@@ -129,17 +129,10 @@ class CB_ProfileFragment: CB_BaseFragment()
 
     fun callButton()
     {
-        if (CB_SingleSystemMgr.isDialog(CB_SingleSystemMgr.DIALOG_TYPE.CONFIRM_DIALOG))
-            return
-
         if(CB_SingleSystemMgr.isActivity(CB_SingleSystemMgr.ACTIVITY_TYPE.VIDEO_CALL))
             return
 
-        CB_AppFunc.confirmDialog(requireActivity(), R.string.str_video_call,
-            R.string.str_call_dialog_message, R.drawable.camera_on, true, R.string.str_call,
-            yesListener = {  _, _ ->
-                startActivity(Intent(requireActivity(), CB_VideoCallActivity::class.java))
-            }, R.string.str_cancel, null)
+        startActivity(Intent(requireActivity(), CB_VideoCallActivity::class.java))
     }
 
     fun daysButton()
