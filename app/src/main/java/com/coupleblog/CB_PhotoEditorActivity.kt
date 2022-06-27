@@ -118,44 +118,53 @@ class CB_PhotoEditorActivity: CB_BaseActivity(CB_SingleSystemMgr.ACTIVITY_TYPE.P
         mPhotoEditor.setOnPhotoEditorListener(this@CB_PhotoEditorActivity)
     }
 
-    private fun getResizedBitmap(bm: Bitmap, destWidth: Int, destHeight: Int): Bitmap? {
-        val width = bm.width
-        val height = bm.height
-
-        if(width >= height)
+    private fun getResizedBitmap(bm: Bitmap, destWidth: Int, destHeight: Int): Bitmap?
+    {
+        try
         {
-            // 세로 기준으로 비율을 잡아 확대하고 이미지 좌우를 자른다.
-            val heightRatio = (destHeight / height.toFloat())
+            val width = bm.width
+            val height = bm.height
+            if(width >= height)
+            {
+                // 세로 기준으로 비율을 잡아 확대하고 이미지 좌우를 자른다.
+                val heightRatio = (destHeight / height.toFloat())
+                val matrix = Matrix()
+                matrix.postScale(heightRatio, heightRatio)
+                val resizedBitmap = Bitmap.createBitmap(
+                    bm, 0, 0, width, height, matrix, false
+                )
+
+                return Bitmap.createBitmap(
+                    resizedBitmap,
+                    (resizedBitmap.width - destWidth) / 2,
+                    0,
+                    destWidth,
+                    destHeight
+                )
+            }
+
+            // 가로 기준으로 비율을 잡아 확대하고 이미지 위아래를 자른다.
+            val widthRatio = (destWidth / width.toFloat())
             val matrix = Matrix()
-            matrix.postScale(heightRatio, heightRatio)
+            matrix.postScale(widthRatio, widthRatio)
             val resizedBitmap = Bitmap.createBitmap(
                 bm, 0, 0, width, height, matrix, false
             )
 
             return Bitmap.createBitmap(
                 resizedBitmap,
-                (resizedBitmap.width - destWidth) / 2,
                 0,
+                (resizedBitmap.height - destHeight) / 2,
                 destWidth,
                 destHeight
             )
         }
-
-        // 가로 기준으로 비율을 잡아 확대하고 이미지 위아래를 자른다.
-        val widthRatio = (destWidth / width.toFloat())
-        val matrix = Matrix()
-        matrix.postScale(widthRatio, widthRatio)
-        val resizedBitmap = Bitmap.createBitmap(
-            bm, 0, 0, width, height, matrix, false
-        )
-
-        return Bitmap.createBitmap(
-            resizedBitmap,
-            0,
-            (resizedBitmap.height - destHeight) / 2,
-            destWidth,
-            destHeight
-        )
+        catch(e: Exception)
+        {
+            e.printStackTrace()
+            Log.e(strTag, "getResizedBitmap occurs error")
+            return bm
+        }
     }
 
     override fun onStart() {
